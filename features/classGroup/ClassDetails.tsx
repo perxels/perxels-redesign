@@ -16,6 +16,8 @@ import React from 'react'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { ClassGroupDetailsProps } from '../../constant'
 
+// added class details props
+
 export const ClassDetails = ({
   title,
   classDur,
