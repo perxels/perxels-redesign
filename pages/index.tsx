@@ -6,11 +6,11 @@ import { Hero, HeroSubSection } from '../features/home'
 import { Portfolio } from '../features/portfolio'
 import { Story } from '../features/story'
 import { Testimonial } from '../features/testimonial'
+import { MainLayout } from '../layouts'
 
 export default function Home() {
   return (
-    <>
-      <Header />
+    <MainLayout>
       <Banner/>
       <Hero /> 
       <HeroSubSection />
@@ -18,7 +18,6 @@ export default function Home() {
       <OurClassGroup />
       <Portfolio />
       <Testimonial />
-      <Footer />
-    </>
+    </MainLayout>
   )
 }

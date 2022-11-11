@@ -21,6 +21,10 @@ export const Button: ComponentStyleConfig = {
       fontSize: 'md',
       height: '34px',
     },
+    lg: {
+      fontSize: '2xl',
+      height: '73px',
+    }
   },
   variants: {
     link: {
