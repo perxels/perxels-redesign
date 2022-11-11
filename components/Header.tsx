@@ -23,16 +23,16 @@ const Header = () => {
               gap="4.375rem"
             >
               <Link href="#">
-                <Text fontSize="xl">Testimonies</Text>
+                <Text _hover={{ color: 'brand.yellow.500' }} fontSize="xl">Testimonies</Text>
               </Link>
               <Link href="#">
-                <Text fontSize="xl">Student Works</Text>
+                <Text _hover={{ color: 'brand.yellow.500' }} fontSize="xl">Student Works</Text>
               </Link>
               <Link href="#">
-                <Text fontSize="xl">Events</Text>
+                <Text _hover={{ color: 'brand.yellow.500' }} fontSize="xl">Events</Text>
               </Link>
               <Link href="#">
-                <Text fontSize="xl">Hire</Text>
+                <Text _hover={{ color: 'brand.yellow.500' }} fontSize="xl">Hire</Text>
               </Link>
             </Flex>
           </Flex>

@@ -70,6 +70,7 @@ const Footer = () => {
                     h="1.875rem"
                     bg="brand.white"
                     rounded="full"
+                    _hover={{ bg: 'brand.yellow.500' }}
                   >
                     <Icon
                       as={icon}
@@ -97,6 +98,7 @@ const Footer = () => {
                       textAlign="left"
                       fontSize="0.875rem"
                       color="brand.white"
+                      _hover={{ color: 'brand.yellow.500' }}
                     >
                       {name}
                     </Text>
@@ -143,6 +145,7 @@ const Footer = () => {
                 fontSize={['md', 'xl', '2xl']}
                 textAlign="center"
                 color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
               >
                 Class Plans
               </Text>
@@ -153,6 +156,7 @@ const Footer = () => {
                 fontSize={['md', 'xl', '2xl']}
                 textAlign="center"
                 color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
               >
                 Be a Partner
               </Text>
@@ -175,6 +179,7 @@ const Footer = () => {
                 fontSize={['md', 'xl', '2xl']}
                 textAlign="center"
                 color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
               >
                 perxels@gmail.com
               </Text>
@@ -185,6 +190,7 @@ const Footer = () => {
                 fontSize={['md', 'xl', '2xl']}
                 textAlign="center"
                 color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
               >
                 +234 801 234 5678
               </Text>

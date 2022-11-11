@@ -28,6 +28,7 @@ export const Button: ComponentStyleConfig = {
       backgroundColor: 'transparent',
       _hover: {
         textDecoration: 'none',
+        border: 'none',
       },
     },
     solid: {
