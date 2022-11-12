@@ -37,7 +37,7 @@ const Header = () => {
             </Flex>
           </Flex>
 
-          <Button display={['none', 'none', 'none', 'flex']}>Enroll Now</Button>
+          <Button display={['none', 'none', 'none', 'flex']}>View Class Plans</Button>
 
           <Icon
             as={RiMenu3Line}

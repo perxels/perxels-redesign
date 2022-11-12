@@ -7,7 +7,6 @@ export const Hero = () => {
   return (
     <Box
       w="full"
-      // h="100vh"
       bg={`url(./assets/images/heroBg.png) center/cover no-repeat`}
     >
       <MainContainer bg="none">
