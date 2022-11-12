@@ -22,7 +22,7 @@ const HeaderDropdown = ({
         <Link onClick={() => setShowDropdown(false)} href="#">
           <Text fontSize="xl">Hire</Text>
         </Link>
-
+        {/* change button content */}
         <Button onClick={() => setShowDropdown(false)}>View Class Plans</Button>
       </Flex>
     </Center>
