@@ -1,4 +1,4 @@
-import { Box, Center, Heading, Text } from '@chakra-ui/react'
+import { Box, Center, Heading, Img, Text } from '@chakra-ui/react'
 import React from 'react'
 
 interface SectionHeaderProps {
@@ -6,6 +6,11 @@ interface SectionHeaderProps {
   title: string
   paragraph?: string
   isWhite?: boolean
+  isArrow?: boolean
+  arrowLeftPos?: string
+  arrowTopPos?: string
+  arrowRightPos?: string
+  arrowRightBottomPos?: string
 }
 
 const SectionHeader = ({
@@ -13,9 +18,38 @@ const SectionHeader = ({
   title,
   paragraph,
   isWhite,
+  isArrow,
+  arrowLeftPos,
+  arrowTopPos,
+  arrowRightPos,
+  arrowRightBottomPos,
 }: SectionHeaderProps) => {
   return (
-    <Box mb="2.375rem">
+    <Box pos="relative" mb="2.375rem">
+      {isArrow ? (
+        <>
+          <Img
+            src="/assets/icons/arrow-left-down.svg"
+            pos="absolute"
+            width="12rem"
+            height="auto"
+            top={arrowTopPos || "0"}
+            left={arrowLeftPos || "0"}
+            display={['none', 'none', 'none', 'block']}
+          />
+
+          <Img
+            src="/assets/icons/arrow-right-down.svg"
+            pos="absolute"
+            width="12rem"
+            height="auto"
+            top={arrowRightBottomPos || "-4rem"}
+            right={arrowRightPos || "10rem"}
+            display={['none', 'none', 'none', 'block']}
+          />
+        </>
+      ) : null}
+
       <Center>
         <Box
           as="span"
