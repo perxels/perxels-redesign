@@ -6,14 +6,14 @@ export const TestimonyHero = () => {
   return (
     <Box
     mt="3.5625rem"
-    mb="6.043125rem"
+    mb={["3.04rem", "3.04rem", "6.043125rem"]}
     display={"flex"}
     justifyContent={"center"}
-    h={"100vh"}
+    h={["70vh", '50vh', "90vh"]}
    backgroundImage={"url('/assets/images/testimonial/Map.png')"}
     backgroundRepeat="no-repeat"
-    backgroundSize={'contain'}
-    backgroundPosition={['bottom center', 'center center']}
+    backgroundSize={{base:"contain", lg:"90% 100%"}}
+    backgroundPosition={['bottom center', 'top center', 'center center']}
     padding={['0 1.25rem', '0 0' ]}
     >
     <Box
