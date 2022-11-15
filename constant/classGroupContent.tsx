@@ -77,7 +77,7 @@ export const classGroupDetails = [
         classTime: "2-3 times a week.",
         classType: "Live Virtual Training.",
         installments: ["70% On Admission,", "30% after one month."],
-        tuition: "₦40,000",
+        tuition: "₦70,000",
         courseOutline: [
             "For Intermediate designers in the design industry looking to expand their knowledge and scale up their skill",
             "In-depth training on the core of UIUX design: information architecture, visual design, interaction design, usability testing, wireframing and prototyping.",

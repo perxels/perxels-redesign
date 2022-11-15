@@ -24,7 +24,7 @@ export const TestimonialSlider = () => {
         </Center>
         <HStack justifyContent="space-between" spacing="1.25rem" display={["none", "none", "none", "flex"]} w="100%" h="full">
           {
-            testimonialSliderContent.map(({ title, name, id, imgUrl }) => (
+            testimonialSliderContent.map(({ title, name, id, imgUrl, smallImgUrl }) => (
               <TestimonialSliderCard 
                 key={id}
                 title={title}
@@ -32,6 +32,7 @@ export const TestimonialSlider = () => {
                 imgUrl={imgUrl}
                 id={id}
                 active={id === 2}
+                smallImgUrl={smallImgUrl}
               />
             ))
           }

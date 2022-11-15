@@ -35,7 +35,7 @@ const Footer = () => {
             Want to transition into Design?
           </Text>
 
-          <Button variant="rounded-solid">Enrol Now</Button>
+          <Button variant="rounded-solid">Enroll Now</Button>
         </Flex>
 
         {/* links */}
@@ -119,7 +119,7 @@ const Footer = () => {
             Want to transition into Design?
           </Heading>
 
-          <Button variant="rounded-solid-yellow-with-outline">Enrol Now</Button>
+          <Button variant="rounded-solid-yellow-with-outline">Enroll Now</Button>
         </VStack>
 
         <SimpleGrid

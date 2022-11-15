@@ -3,6 +3,7 @@ export interface TestimonialCardProps {
     title: string
     content?: string
     imgUrl: string
+    smallImgUrl?: string
     id: number
 }
 
@@ -18,6 +19,7 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
     name: 'Sharon',
     title: 'Product Designer, Huzz Tecnologies',
     imgUrl: '/assets/images/testimonyThumb-2.jpg',
+    smallImgUrl: '/assets/images/class-group/sharon_sm.jpg',
   },
   {
     id: 3,

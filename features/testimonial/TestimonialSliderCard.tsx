@@ -3,7 +3,7 @@ import React from 'react'
 import { TestimonialCardProps } from '../../constant'
 
 interface TestimonialSliderCardProps extends TestimonialCardProps {
-    active?: boolean
+  active?: boolean
 }
 
 export const TestimonialSliderCard = ({
@@ -12,10 +12,23 @@ export const TestimonialSliderCard = ({
   title,
   name,
   active,
+  smallImgUrl,
 }: TestimonialSliderCardProps) => {
   return (
-    <Box pos="relative" w={active ? "290px" : "235px"} h={active ? "171px" : "138px"} bg="brand.pink.500" rounded="8px">
-      <Img w="full" h="full" src={imgUrl} alt={title} rounded="8px" />
+    <Box
+      pos="relative"
+      w={active ? '290px' : '235px'}
+      h={active ? '171px' : '138px'}
+      bg="brand.pink.500"
+      rounded="8px"
+    >
+      <Img
+        w="full"
+        h="full"
+        src={smallImgUrl || imgUrl}
+        alt={title}
+        rounded="8px"
+      />
 
       <Flex
         pos="absolute"
@@ -30,8 +43,12 @@ export const TestimonialSliderCard = ({
         justifyContent="flex-end"
         rounded="8px"
       >
-        <Heading color="brand.white" fontSize="1rem">{name}</Heading>
-        <Text color="brand.white" fontSize="0.75rem">{title}</Text>
+        <Heading color="brand.white" fontSize="1rem">
+          {name}
+        </Heading>
+        <Text color="brand.white" fontSize="0.75rem">
+          {title}
+        </Text>
       </Flex>
     </Box>
   )
