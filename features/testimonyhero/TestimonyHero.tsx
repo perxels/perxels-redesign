@@ -14,7 +14,7 @@ export const TestimonyHero = () => {
     backgroundRepeat="no-repeat"
     backgroundSize={{base:"contain", lg:"90% 100%"}}
     backgroundPosition={['bottom center', 'top center', 'center center']}
-    padding={['0 1.25rem', '0 0' ]}
+    padding={['0 1.25rem', '0 0']}
     >
     <Box
        display={['flex']}
