@@ -12,19 +12,19 @@ export const Story = () => {
         align={{ base: 'flex-start', lg: 'center' }}
         w="100%"
         h="100%"
-        py={["3.1875rem", "3.4375rem" ]}
+        py={["4.5rem", "3.4375rem" ]}
         bg="brand.purple.500"
       >
         <Box>
           <Img
-            w={{ base: '3.12rem', lg: '6.25rem' }}
-            h={{ base: '3.12rem', lg: '6.25rem' }}
+            w={['6.25rem']}
+            h={['6.25rem']}
             src="/assets/images/story/storyIcon.png"
             alt="Story Icon"
           />
 
           <Heading
-            fontSize={['6xl', '7xl', '7xl']}
+            fontSize={['7xl', '7xl', '7xl']}
             fontWeight="black"
             color="brand.white"
             mt="1.5rem"
@@ -35,7 +35,7 @@ export const Story = () => {
           <Text
             fontSize={["xl", "2xl"]}
             color="brand.white"
-            mt="1.5rem"
+            mt="1.2rem"
             maxW={{ base: '100%', lg: '27.3125rem' }}
           >
             With our in-depth training and mentorship program, you will learn the

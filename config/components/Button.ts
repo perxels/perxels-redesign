@@ -91,10 +91,9 @@ export const Button: ComponentStyleConfig = {
       py: '1.75rem',
       transition: 'all 0.35s ease-in-out',
       position: 'relative',
-      // _hover: {
-      //   borderRadius: '30px',
-      //   bg: 'brand.yellow.700',
-      // },
+      _hover: {
+        borderRadius: '30px',
+      },
       _before: {
         content: '""',
         position: 'absolute',

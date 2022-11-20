@@ -11,6 +11,9 @@ export const colors = {
         500: "#F3D400",
         700: "#FCD900"
     },
+    green: {
+        100: "rgba(29, 182, 188, 0.4)",
+    },
     pink: {
         100: "#FFCED7",
         500: "#FF9CAE",

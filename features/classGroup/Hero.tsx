@@ -18,7 +18,7 @@ export const Hero = () => {
   return (
     <Box w="full" bg={`url(./assets/images/heroBg.png) center/cover no-repeat`}>
       <MainContainer bg="none">
-        <SimpleGrid columns={[1, 1, 1, 12]} spacing="2.5rem">
+        <SimpleGrid py="2.5rem" columns={[1, 1, 1, 12]} spacing="2.5rem">
           <GridItem
             h="full"
             colSpan={[1, 1, 1, 5]}
@@ -80,7 +80,7 @@ export const Hero = () => {
           </GridItem>
 
           <GridItem h="full" colSpan={[1, 1, 1, 7]}>
-            <Box mr={['0', '0', '0', '0', '-6rem', '0']} pos="relative">
+            <Box roundedLeft="10px" overflow="hidden" mr={['0', '0', '0', '0', '-6rem', '0']} pos="relative">
               <Center
                 w="full"
                 h="full"

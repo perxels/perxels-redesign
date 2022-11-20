@@ -17,12 +17,12 @@ export const StoryCard = () => {
           return (
             <Box key={storyCard.studentStat}>
               <Heading
-                fontSize={["1rem", "1.25rem", "1.5rem", "2.25rem"]}
+                fontSize={["1.5rem", "1.5rem", "1.5rem", "2.25rem"]}
               >
                 {storyCard.studentStat}
               </Heading>
               <Text
-                fontSize={["0.6rem", "xs", "sm", "xl"]}
+                fontSize={["0.75rem", "0.75rem", "sm", "xl"]}
                 textAlign="left"
               >
                 {storyCard.studentStatText}
