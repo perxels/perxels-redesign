@@ -1,10 +1,13 @@
 import React from 'react'
 import { MainLayout } from '../layouts'
-import { EventHero } from '../features/events/'
+import { EventCommunity, EventHero, EventPlayback, EventTwitter } from '../features/events/'
 const events = () => {
   return (
     <MainLayout>
       <EventHero />
+      <EventCommunity/>
+      <EventPlayback/>
+      <EventTwitter/>
     </MainLayout>
   )
 }

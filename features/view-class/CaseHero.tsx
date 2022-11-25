@@ -27,8 +27,8 @@ export const CaseHero = () => {
         alignItems={['flex-start', 'center']}
       >
         <Box
-        pl={["1.25rem", 0]}
-        transform={["translate(0, -50%)", "translate(0, 0)"]}
+          pl={['1.25rem', 0]}
+          transform={['translate(0, -50%)', 'translate(0, 0)']}
         >
           <Heading
             as="h2"
@@ -49,7 +49,7 @@ export const CaseHero = () => {
           >
             Mosope Aderibigbe
           </Text>
-          <Flex flexDirection={[ "row", "column"]} gap={5} mt={5}>
+          <Flex flexDirection={['row', 'column']} gap={5} mt={5}>
             <HStack spacing={'0.625rem'}>
               <Center
                 w={10}
@@ -61,7 +61,11 @@ export const CaseHero = () => {
               >
                 <FaLinkedin />
               </Center>
-              <Text fontSize={{ base: '1.125rem', md: '1rem' }} color="#E3E4E6" display={["none", "block"]}>
+              <Text
+                fontSize={{ base: '1.125rem', md: '1rem' }}
+                color="#E3E4E6"
+                display={['none', 'block']}
+              >
                 Mosope Aderibigbe
               </Text>
             </HStack>
@@ -76,7 +80,11 @@ export const CaseHero = () => {
               >
                 <FaTwitter />
               </Center>
-              <Text fontSize={{ base: '1.125rem', md: '1rem' }} color="#E3E4E6" display={["none", "block"]}>
+              <Text
+                fontSize={{ base: '1.125rem', md: '1rem' }}
+                color="#E3E4E6"
+                display={['none', 'block']}
+              >
                 Mosope Aderibigbe
               </Text>
             </HStack>
@@ -91,7 +99,11 @@ export const CaseHero = () => {
               >
                 <FaBehance />
               </Center>
-              <Text fontSize={{ base: '1.125rem', md: '1rem' }} color="#E3E4E6" display={["none", "block"]}>
+              <Text
+                fontSize={{ base: '1.125rem', md: '1rem' }}
+                color="#E3E4E6"
+                display={['none', 'block']}
+              >
                 Mosope Aderibigbe
               </Text>
             </HStack>
