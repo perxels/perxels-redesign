@@ -60,8 +60,8 @@ const Hero = () => {
               alt="pattern"
             />
             <Img
-              w="5.75rem"
-              h="5.75rem"
+              w="5.753125rem"
+              h="5.753125rem"
               pos="absolute"
               left="8rem"
               top="3rem"

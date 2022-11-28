@@ -16,8 +16,17 @@ export const TestimonyVideo = () => {
       <Img
         w="full"
         h="full"
-        src="/assets/images/testimonyThumb-2.jpg"
+        src={'/assets/images/testimonyThumb-2.jpg'}
         alt="Testimonial Video"
+        display={['none', 'none', 'block', 'block']}
+      />
+      <Img
+        w="full"
+        h="full"
+        objectFit={'cover'}
+        src={'/assets/images/testimonyThumb-5.png'}
+        alt="Testimonial Video"
+        display={['block', 'block', 'none', 'none']}
       />
 
       <Center
