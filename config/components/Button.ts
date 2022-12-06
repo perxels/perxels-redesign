@@ -29,10 +29,15 @@ export const Button: ComponentStyleConfig = {
   variants: {
     link: {
       padding: 0,
+      color: 'brand.purple.500',
+      fontWeight: '700',
+      fontSize: '1.125rem',
       backgroundColor: 'transparent',
       _hover: {
         textDecoration: 'none',
         border: 'none',
+        backgroundColor: 'transparent',
+        color: 'brand.yellow.700',
       },
     },
     solid: {
@@ -80,6 +85,16 @@ export const Button: ComponentStyleConfig = {
         borderRadius: '30px',
         bg: 'brand.yellow.700',
       },
+    },
+    'outline': {
+      bg: 'transparent',
+      color: 'brand.purple.500',
+      borderColor: 'brand.purple.500',
+
+      _hover: {
+        bg: 'brand.purple.500',
+        color: 'brand.white',
+      }
     },
     'rounded-solid-yellow-with-outline': {
       bg: 'brand.yellow.700',

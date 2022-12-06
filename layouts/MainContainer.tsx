@@ -2,12 +2,13 @@ import { Box, Container } from '@chakra-ui/react'
 import React from 'react'
 
 interface MainContainerProps extends React.PropsWithChildren {
-    bg?: string
+    bg?: string,
+    h?: string,
 }
 
-export const MainContainer = ({ children, bg }: MainContainerProps) => {
+export const MainContainer = ({ children, bg, h }: MainContainerProps) => {
   return (
-    <Box bg={bg || "brand.white"}>
+    <Box bg={bg || "brand.white"} h={h || "auto"}>
       <Container maxW="container.xl">{children}</Container>
     </Box>
   )
