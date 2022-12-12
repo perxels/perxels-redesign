@@ -7,7 +7,7 @@ export const HireColumns = () => {
   return (
     <Box py="3.75rem">
         <MainContainer>
-            <SimpleGrid py="3.75rem" columns={2} gap="1.875rem">
+            <SimpleGrid py="3.75rem" columns={[1, 1, 1, 2]} gap="1.875rem">
                 <HireCard 
                     bgImage="./assets/images/hire/hireCard1.jpg"
                     icon="./assets/images/hire/iconCompany.svg"

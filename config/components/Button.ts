@@ -7,7 +7,7 @@ export const Button: ComponentStyleConfig = {
     fontSize: ['0.853rem', '0.853rem', 'xl'],
     borderRadius: '10px',
     color: 'brand.white',
-    px: '2.25rem',
+    px: ['1.5rem', '1.5rem', '2.25rem'],
     py: '0.875rem',
     _hover: {
       bg: 'brand.yellow.700',

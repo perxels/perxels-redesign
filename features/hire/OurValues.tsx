@@ -13,7 +13,7 @@ export const OurValues = () => {
           subTitle="Our values"
         />
 
-        <SimpleGrid columns={3} gap="1.25rem">
+        <SimpleGrid columns={[1, 1, 1, 3]} gap={["0.75rem", "0.75rem", "1.25rem"]}>
           <Values
             icon="./assets/images/hire/like.svg"
             title="Pixels Perfection"

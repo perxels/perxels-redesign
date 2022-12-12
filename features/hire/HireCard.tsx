@@ -12,7 +12,7 @@ const HireCard = ({ bgImage, title, description, icon }: HireCardProps) => {
   return (
     <Box
       w="full"
-      h="35.875rem"
+      h={["25rem", "25rem", "35.875rem"]}
       rounded="10px"
       overflow="hidden"
       bgImage={bgImage}
@@ -28,21 +28,21 @@ const HireCard = ({ bgImage, title, description, icon }: HireCardProps) => {
       >
         <Box
           w="full"
-          p="2.625rem"
+          p={["2rem", "2rem", "2rem", "2.625rem"]}
           bg="linear-gradient(180deg, rgba(0, 0, 0, 0) 6.94%, rgba(0, 0, 0, 0.55) 33.53%);"
           pt="6.813rem"
         >
-          <Grid templateColumns="4.375rem 1fr" gap="1.35rem">
+          <Grid templateColumns={["3.5rem 1fr", "4.375rem 1fr"]} gap="1.35rem">
             <GridItem>
               <Img
                 src={icon}
-                w="4.375rem"
-                h="4.375rem"
+                w={["3.5rem", "3.5rem", "3.5rem", "4.375rem"]}
+                h={["3.5rem", "3.5rem", "3.5rem", "4.375rem"]}
               />
             </GridItem>
             <GridItem>
-              <Heading fontSize="1.875rem" color="brand.white">{title}</Heading>
-              <Text color="brand.white" fontSize="1.125rem" mt="0.75rem" mb="1.25rem">
+              <Heading fontSize={["2xl", "2xl", "1.875rem"]} color="brand.white">{title}</Heading>
+              <Text color="brand.white" fontSize={["md", "md", "1.125rem"]} mt="0.75rem" mb="1.25rem">
                 {description}
               </Text>
 

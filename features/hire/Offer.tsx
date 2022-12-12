@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from '@chakra-ui/react'
+import { Box, Grid, SimpleGrid } from '@chakra-ui/react'
 import React from 'react'
 import { SectionHeader } from '../../components'
 import { hireCardContent } from '../../constant'
@@ -14,9 +14,10 @@ export const Offer = () => {
             title="We have in 1000+ talents so you can hire without the cost, time and effort"
             subTitle="What we offer"
             maxW='936px'
+            headingSize={['3xl', '3xl', '4xl', '8xl']}
           />
 
-          <SimpleGrid columns={3} gap="1.85rem">
+          <Grid gridTemplateColumns="repeat(3, 1fr)" overflowX="auto" gap={["0.75rem", "0.75rem", "0.75rem", "1.85rem"]}>
             {
                 hireCardContent.map(({
                     title,
@@ -37,7 +38,7 @@ export const Offer = () => {
                     />
                 ))
             }
-          </SimpleGrid>
+          </Grid>
         </Box>
       </MainContainer>
     </Box>

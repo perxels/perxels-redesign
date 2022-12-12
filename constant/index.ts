@@ -4,3 +4,5 @@ export * from "./classGroupContent";
 export * from "./bannerContent"
 export * from "./workDetails"
 export * from "./hireCardContent";
+export * from "./sponsporshipContent";
+export * from "./marketPlaceContent";

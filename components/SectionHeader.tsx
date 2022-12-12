@@ -12,6 +12,7 @@ interface SectionHeaderProps {
   arrowRightPos?: string
   arrowRightBottomPos?: string
   maxW?: string
+  headingSize?: string[]
 }
 
 const SectionHeader = ({
@@ -24,7 +25,8 @@ const SectionHeader = ({
   arrowTopPos,
   arrowRightPos,
   arrowRightBottomPos,
-  maxW
+  maxW,
+  headingSize,
 }: SectionHeaderProps) => {
   return (
     <Box pos="relative" mb="2.375rem">
@@ -69,7 +71,7 @@ const SectionHeader = ({
       <Heading
         color={isWhite ? 'brand.white' : 'brand.purple.500'}
         textAlign="center"
-        fontSize={['2rem', '2rem', '7xl']}
+        fontSize={headingSize || ['2rem', '2rem', '7xl']}
         maxW={maxW || "auto"}
         m="0 auto"
         mb="1rem"

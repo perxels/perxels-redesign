@@ -3,7 +3,7 @@ export interface hireCardContentProps {
   title?: string
   description?: string
   icon?: string
-  w?: string
+  w?: string[]
   r?: string
 }
 
@@ -21,7 +21,7 @@ export const hireCardContent: hireCardContentProps[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. At adipiscing proin facilisis nulla ut suspendisse sit tempor.',
     icon: '/assets/images/hire/cable.svg',
     bg: 'brand.yellow.500',
-    w: '350.37px',
+    w: ['300px', '300px', '300px', '350.37px'],
     r: '-1rem',
   },
   {
@@ -30,7 +30,7 @@ export const hireCardContent: hireCardContentProps[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. At adipiscing proin facilisis nulla ut suspendisse sit tempor.',
     icon: '/assets/images/hire/traffic.svg',
     bg: 'brand.pink.500',
-    w: '123.12px',
+    w: ['100px', '100px', '100px', '123.12px'],
     r: '2rem',
   },
 ]

@@ -1,4 +1,4 @@
-import { Box, Button, Heading, HStack, Input, Text, Textarea, VStack } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, Input, SimpleGrid, Text, Textarea, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { SectionHeader } from '../../components'
 import { InputWrapper } from '../../components/InputWrapper'
@@ -45,7 +45,7 @@ export const HireForm = () => {
                 </InputWrapper>
             </HStack>
             {/* contact */}
-            <HStack w="full" spacing="2rem">
+            <SimpleGrid columns={[1, 1, 1, 2]} w="full" spacing="2rem">
                 <InputWrapper label="PHONE NUMBER">
                     <Input 
                         type="tel"
@@ -62,12 +62,12 @@ export const HireForm = () => {
                         h="5rem"
                     />
                 </InputWrapper>
-            </HStack>
+            </SimpleGrid>
 
             <Heading fontSize="1.5rem" w="full">What is the best time to schdule a meeting with you?</Heading>
 
             {/* contact */}
-            <HStack w="full" spacing="2rem">
+            <SimpleGrid columns={[1, 1, 2, 3]} w="full" spacing="2rem">
                 <InputWrapper label="Date">
                     <Input 
                         type="date"
@@ -89,9 +89,9 @@ export const HireForm = () => {
                         h="5rem"
                     />
                 </InputWrapper>
-            </HStack>
+            </SimpleGrid>
 
-            <Button h="5rem" w="437px">Submit</Button>
+            <Button h="5rem" w="full" maxW="437px">Submit</Button>
           </VStack>
         </Box>
       </MainContainer>
