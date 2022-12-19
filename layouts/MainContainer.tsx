@@ -2,7 +2,7 @@ import { Box, Container } from '@chakra-ui/react'
 import React from 'react'
 
 interface MainContainerProps extends React.PropsWithChildren {
-    bg?: string,
+    bg?: string | string[],
     h?: string,
 }
 
