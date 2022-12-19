@@ -9,7 +9,7 @@ export const TestimonyHero = () => {
     mb={["3.04rem", "3.04rem", "6.043125rem"]}
     display={"flex"}
     justifyContent={"center"}
-    h={["auto", 'auto', "auto"]}
+    h={["auto", 'auto', "100vh"]}
    backgroundImage={"url('/assets/images/testimonial/Map.png')"}
     backgroundRepeat="no-repeat"
     backgroundSize={{base:"contain", lg:"90% 100%"}}
