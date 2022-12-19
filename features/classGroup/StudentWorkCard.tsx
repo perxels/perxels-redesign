@@ -10,6 +10,8 @@ const StudentWorkCard = ({ imgUrl }: { imgUrl: string }) => {
       onMouseLeave={() => setIsHover(false)}
       key={imgUrl}
       pos="relative"
+      rounded="8px"
+      overflow="hidden"
     >
       {isHover && (
         <Center

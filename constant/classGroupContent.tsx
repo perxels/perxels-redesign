@@ -114,7 +114,7 @@ export const classGroupDetails = [
 
 export const StudentWorks: string[] = [
     '/assets/images/class-group/mini-student-work-1.png',
-    '/assets/images/class-group/mini-student-work-2.png',
-    '/assets/images/class-group/mini-student-work-3.png',
-    '/assets/images/class-group/mini-student-work-4.png',
+    '/assets/images/class-group/mini-student-work-2.jpg',
+    '/assets/images/class-group/mini-student-work-3.jpg',
+    '/assets/images/class-group/mini-student-work-4.jpg',
 ]
