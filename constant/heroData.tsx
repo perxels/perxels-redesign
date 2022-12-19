@@ -7,23 +7,23 @@ export interface HeroDataProps {
 
 export const heroData: HeroDataProps[] = [
   {
-    title: 'Become a skilled UI/UX Designer',
+    title: 'In-depth training and mentorship.',
     content:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia',
+      'With experienced designers who will not only teach you practically, but would also mentor you through.',
     image: '/assets/icons/chart.svg',
     color: 'brand.purple.100',
   },
   {
-    title: 'Become a skilled UI/UX Designer',
+    title: 'Internship placement.',
     content:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia',
+      'At the end of the training you would be placed into an internship program where you get to use your design skills in a product team**',
     image: '/assets/icons/dekstop.svg',
     color: 'brand.yellow.100',
   },
   {
-    title: 'Become a skilled UI/UX Designer',
+    title: 'Supportive design community.',
     content:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia',
+      'A fun & interactive community of designers from all over the world who are committed to helping each other grow.',
     image: '/assets/icons/flame.svg',
     color: 'brand.pink.100',
   },

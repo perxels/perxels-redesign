@@ -16,18 +16,18 @@ import { MainContainer } from '../../layouts'
 export const SponsorHero = () => {
   return (
     <MainContainer>
-      <SimpleGrid columns={[1, 1, 1, 2]} gap="3rem" w="full" h={["auto", "auto", "auto", "100vh"]}>
+      <SimpleGrid py={["3rem", "3rem", "3rem", "0", "0"]} columns={[1, 1, 1, 2]} gap="3rem" w="full" h={["auto", "auto", "auto", "auto", "100vh"]}>
         <Flex flexDir="column" justifyContent="center" w="full" h="full">
           <HStack
             as="span"
             w="auto"
-            maxW={["300px", "300px", "300px", "362px"]}
+            maxW={["260px", "300px", "300px", "362px"]}
             bg="brand.purple.100"
             p="4px"
             rounded="1rem"
           >
             <Box
-              fontSize={["sm", "sm", "sm", "lg"]}
+              fontSize={["0.65rem", "sm", "sm", "lg"]}
               fontWeight="500"
               as="span"
               bg="brand.white"
@@ -38,7 +38,7 @@ export const SponsorHero = () => {
               We’re sponsoring!
             </Box>
             <HStack spacing="4px">
-              <Box fontSize={["sm", "sm", "sm", "lg"]} fontWeight="500" as="span" px="10px" py="2px">
+              <Box fontSize={["0.65rem", "sm", "sm", "lg"]} fontWeight="500" as="span" px="10px" py="2px">
                 Join our design class
               </Box>
               <Icon as={IoMdArrowForward} />

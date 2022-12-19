@@ -66,7 +66,7 @@ export const Intermediate = () => {
                 access to 25% discount of Perxels paid training
               </Text>
 
-              <HStack mt="1.875rem" spacing="2rem">
+              <HStack flexDir={["column", "row"]} mt="1.875rem" gap={["2rem", "0"]} spacing={["0", "2rem"]}>
                 <Button bg="brand.yellow.500" color="brand.purple.500" _hover={{ bg: "brand.yellow.700" }} h="3.875rem">Join Basic Class</Button>
                 <Button
                   h="3.875rem"

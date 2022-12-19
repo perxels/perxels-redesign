@@ -11,7 +11,7 @@ export const MasterclassHero = () => {
     >
       <MainContainer bg="none">
         <Center flexDir="column" pt="4rem">
-          <Heading maxW="810px" lineHeight="1.2" fontSize={["2.5rem", "2.5rem", "2.5rem", "4.30rem"]} textAlign="center">
+          <Heading maxW="810px" lineHeight="1.2" fontSize={["2rem", "2.5rem", "2.5rem", "4.30rem"]} textAlign="center">
             Welcome to <br />Perxels Free UIUX Design Masterclass
           </Heading>
 

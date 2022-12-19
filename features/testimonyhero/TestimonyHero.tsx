@@ -9,12 +9,14 @@ export const TestimonyHero = () => {
     mb={["3.04rem", "3.04rem", "6.043125rem"]}
     display={"flex"}
     justifyContent={"center"}
-    h={["70vh", '50vh', "90vh"]}
+    h={["auto", 'auto', "auto"]}
    backgroundImage={"url('/assets/images/testimonial/Map.png')"}
     backgroundRepeat="no-repeat"
     backgroundSize={{base:"contain", lg:"90% 100%"}}
     backgroundPosition={['bottom center', 'top center', 'center center']}
-    padding={['0 1.25rem', '0 0']}
+    p={['0 1.25rem', '0 0']}
+    pb={['8rem', '0', '0']}
+    lineHeight={['0.7', 'auto', 'auto']}
     >
     <Box
        display={['flex']}
@@ -23,18 +25,18 @@ export const TestimonyHero = () => {
           >
         <Heading
         textAlign={['left', 'center', 'center']}
-        fontSize={['7xl', '8xl', '9xl']} 
+        fontSize={['4xl', '8xl', '9xl']} 
         fontWeight={['800']}
         lineHeight={['3.196875rem', '3.89rem', '4.475625rem']}
         mb={['0.9375rem','1.375rem']}
         w={['100%','70%']}
         >
-        Hear what they  say about us.
+        Hear what our Alumni’s have to say about learning at Perxels
         </Heading>
         <Text 
         textAlign={['left', 'center', 'center']}
         maxW={['31.5625rem']}
-        fontSize={['1.375rem', 'xl']} 
+        fontSize={['lg', 'xl']} 
         lineHeight={['2.005rem','1.64rem']}
         color={'brand.dark.200'}
         mb={['0.9375rem','1.375rem']}

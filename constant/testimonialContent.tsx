@@ -32,16 +32,16 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
 export const testimonialContent: TestimonialCardProps[] = [
   {
     id: 1,
-    imgUrl: '/assets/images/testimonial1.png',
-    name: 'Tobi Dasilva',
-    title: 'Product Designer, Huzz Tecnologies',
-    content: `Learning at Perxels helped me with understanding the basics of UIUX design as well as working with tools used in daily communication between team members in a real life work environment. `,
+    imgUrl: '/assets/images/testimonial/testi1.png',
+    name: 'Idris Ayoola',
+    title: 'Product Designer, Vitract',
+    content: `Learning at Perxels helped me with understanding the basics of UIUX design as well as working with tools used in daily communication between team members in a real life work environment.`,
   },
   {
     id: 2,
-    imgUrl: '/assets/images/testimonial2.png',
-    name: 'Tobi Dasilva',
-    title: 'Product Designer, Huzz Tecnologies',
+    imgUrl: '/assets/images/testimonial/testi2.png',
+    name: 'Victoria Alli-Johnson',
+    title: 'Product Designer, OneID Global Tech. Inc.',
     content: `Learning at Perxels helped me with understanding the basics of UIUX design as well as working with tools used in daily communication between team members in a real life work environment. `,
   },
   {
