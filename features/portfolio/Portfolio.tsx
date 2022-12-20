@@ -12,6 +12,7 @@ export const Portfolio = () => {
         subTitle="Our Portfolio"
         title="Meet some of our Alumni"
         paragraph="We are proud to see our students getting design jobs, impacting product teams with their skills and being paid well for their value."
+        maxW={['240px', 'full']}
       />
 
       <SimpleGrid mb={["3.75rem", "3.75rem", "6.25rem"]} columns={[2, 2, 2, 4]} spacing={["0.5rem", "0.5rem", "0"]}>

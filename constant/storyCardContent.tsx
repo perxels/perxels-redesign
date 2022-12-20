@@ -5,15 +5,15 @@ export interface StoryCardProps {
 
 export const storyCardContent: StoryCardProps[] = [
     {
-        studentStat: '200+',
-        studentStatText: 'Students Trained.',
+        studentStat: '1,000+',
+        studentStatText: 'Trained.',
     },
     {
-        studentStat: '500+',
-        studentStatText: 'Mentored',
+        studentStat: '70%',
+        studentStatText: 'Employed',
     },
     {
-        studentStat: '1000+',
+        studentStat: '15,000+',
         studentStatText: 'Community Members',
     }
 ]

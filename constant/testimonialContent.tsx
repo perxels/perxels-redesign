@@ -27,6 +27,12 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
     title: 'Product Designer, Huzz Tecnologies',
     imgUrl: '/assets/images/testimonyThumb-3.png',
   },
+  {
+    id: 4,
+    name: 'Testimony 4',
+    title: 'Product Designer, Huzz Tecnologies',
+    imgUrl: '/assets/images/testimonyThumb-3.png',
+  },
 ]
 
 export const testimonialContent: TestimonialCardProps[] = [

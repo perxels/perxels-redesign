@@ -8,27 +8,27 @@ export interface PortfolioContentProps {
 export const portfolioContent: PortfolioContentProps[] = [
     {
         id: 1,
-        name: "Idris Ayoola",
+        name: "Oladayo Oyindamola",
         image: "./assets/images/portfolio/testimony1.jpg",
-        title: "Product Designer, Vitract.",
+        title: "FBIS technologies",
     },
     {
         id: 2,
-        name: "Nicholas Olaleye",
+        name: "Idris Ayoola",
         image: "./assets/images/portfolio/testimony2.jpg",
-        title: "Brand Designer, NowNow",
+        title: "Product Designer, Vitract.",
     },
     {
         id: 3,
-        name: "Pelumi Oyelakin Bamgboye",
+        name: "Victoria Alli-Johnson",
         image: "./assets/images/portfolio/testimony3.jpg",
-        title: "BingHR",
+        title: "Product Designer, OneID Global Tech. Inc.",
     },
     {
         id: 4,
-        name: "Victoria Alli-Johnson",
+        name: "Pelumi Oyelakin Bamgboye",
         image: "./assets/images/portfolio/testimony4.jpg",
-        title: "Product Designer, OneID Global Tech. Inc.",
+        title: "BingHR",
     },
     {
         id: 5,
@@ -38,9 +38,9 @@ export const portfolioContent: PortfolioContentProps[] = [
     },
     {
         id: 6,
-        name: "Olaoluwa",
+        name: "Oluwabukola Jegede",
         image: "./assets/images/portfolio/testimony6.jpg",
-        title: "Product Designer, Hala Message",
+        title: "CEO, The Giant Creative Brand",
     },
     {
         id: 7,
@@ -50,32 +50,32 @@ export const portfolioContent: PortfolioContentProps[] = [
     },
     {
         id: 8,
-        name: "Favour Aderemi",
+        name: "Nicholas Olaleye",
         image: "./assets/images/portfolio/testimony8.jpg",
-        title: "UX Designer, Paramount Students",
+        title: "Brand Designer, NowNow",
     },
     {
         id: 9,
-        name: "Clavers Chabi",
+        name: "Oladayo Oyindamola",
         image: "./assets/images/portfolio/testimony9.jpg",
-        title: "UI/UX All Web Service",
+        title: "FBIS technologies",
     },
     {
         id: 10,
-        name: "Oladapo Koiki",
+        name: "Clavers Chabi",
         image: "./assets/images/portfolio/testimony10.jpg",
-        title: "Design Lead, Loxdord Trading UK Limited",
+        title: "UI/UX All Web Service",
     },
     {
         id: 11,
-        name: "Nuel Wogundu",
+        name: "Uthman Abolaji Osuolale",
         image: "./assets/images/portfolio/testimony11.jpg",
-        title: "Product Designer - Renaissance Innovations Labs (RIL)",
+        title: "Product Designer, Calm Global Infotech",
     },
     {
         id: 12,
-        name: "Uthman Abolaji Osuolale",
+        name: "Duru Donald",
         image: "./assets/images/portfolio/testimony12.jpg",
-        title: "Product Designer, Calm Global Infotech",
+        title: "Product Designer (Contract), Parivest",
     }
 ]

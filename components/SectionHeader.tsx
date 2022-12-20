@@ -11,7 +11,7 @@ interface SectionHeaderProps {
   arrowTopPos?: string
   arrowRightPos?: string
   arrowRightBottomPos?: string
-  maxW?: string
+  maxW?: string | string[]
   headingSize?: string[]
 }
 

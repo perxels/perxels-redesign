@@ -1,6 +1,8 @@
 import { Box, Flex, Heading, Img, Text } from '@chakra-ui/react'
 import React from 'react'
-import { TestimonialCardProps } from '../../constant'
+import { TestimonialCardProps, testimonialSliderContent } from '../../constant'
+import { setSelectedTestimonial, setSelectedTestimonialIndex } from '../../state/features/TestimonialSlice'
+import { useAppDispatch } from '../../state/store'
 
 interface TestimonialSliderCardProps extends TestimonialCardProps {
   active?: boolean
@@ -14,6 +16,7 @@ export const TestimonialSliderCard = ({
   active,
   smallImgUrl,
 }: TestimonialSliderCardProps) => {
+  const dispatch = useAppDispatch()
   return (
     <Box
       pos="relative"
@@ -21,6 +24,17 @@ export const TestimonialSliderCard = ({
       h={active ? '171px' : '138px'}
       bg="brand.pink.500"
       rounded="8px"
+      cursor="pointer"
+      onClick={() => {
+        dispatch(
+          setSelectedTestimonial(
+            testimonialSliderContent[id - 1],
+          ),
+        )
+        dispatch(
+          setSelectedTestimonialIndex(id - 1),
+        )
+      }}
     >
       <Img
         w="full"

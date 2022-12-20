@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@chakra-ui/react'
 import React from 'react'
 
 function Logo({
@@ -9,11 +10,12 @@ function Logo({
   width?: string
   height?: string
 }) {
+  const [isLargerThan800] = useMediaQuery('(min-width: 800px)')
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width || '146'}
-      height={height || '40'}
+      width={width || isLargerThan800 ? '109' : '116.8'}
+      height={height || isLargerThan800 ? '29.86' : '32'}
       fill="none"
       viewBox="0 0 146 40"
     >

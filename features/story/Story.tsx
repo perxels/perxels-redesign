@@ -12,14 +12,14 @@ export const Story = () => {
         align={{ base: 'flex-start', lg: 'center' }}
         w="100%"
         h="100%"
-        py={["4.5rem", "3.4375rem" ]}
+        py={['4.5rem', '3.4375rem']}
         bg="brand.purple.500"
       >
         <Box>
           <Img
             w={['6.25rem']}
             h={['6.25rem']}
-            src="/assets/images/story/storyIcon.png"
+            src="/assets/images/story/mission.svg"
             alt="Story Icon"
           />
 
@@ -29,35 +29,18 @@ export const Story = () => {
             color="brand.white"
             mt="1.5rem"
           >
-            Our Story
+            Our Mission
           </Heading>
 
           <Text
-            fontSize={["xl", "2xl"]}
+            fontSize={['xl', '2xl']}
             color="brand.white"
             mt="1.2rem"
             maxW={{ base: '100%', lg: '27.3125rem' }}
           >
-            With our in-depth training and mentorship program, you will learn the
-            core design skills and soft skills to function effectively as a
-            designer.
+            Equipping designers with the core design skills and soft skills to
+            become proficient in solving problems with design.
           </Text>
-
-          <Flex mt="1.25rem" gap="0.75rem" align="center" cursor={'pointer'}>
-            <Text
-              fontSize={{ base: '1.25rem', lg: '1.375rem' }}
-              color="brand.yellow.300"
-              fontWeight="bold"
-            >
-              Get Started
-            </Text>
-            <Text
-              fontSize={{ base: '1.25rem', lg: '1.375rem' }}
-              color="brand.yellow.300"
-            >
-              <AiOutlineArrowRight />
-            </Text>
-          </Flex>
         </Box>
 
         <Box
@@ -67,16 +50,22 @@ export const Story = () => {
           alignContent="left"
         >
           <Img
-            w={["15rem", "20rem", "22rem", "31.875rem"]}
-            h={["15rem", "20rem", "22rem", "31.875rem"]}
+            w={['15rem', '20rem', '22rem', '31.875rem']}
+            h={['15rem', '20rem', '22rem', '31.875rem']}
             src="/assets/images/story/storyImage.png"
             alt="Story Image"
           />
           <Box
             pos="absolute"
             // width={{ base: '65%', lg: '29.9375rem' }}
-            width={["80%", "65%", "29.9375rem", "29.9375rem"]}
-            transform={["translate(10%, -60%)", "translate(40%, -80%)", "translate(40%, -80%)", "translate(10%, -80%)", "translate(40%, -80%)"]}
+            width={['80%', '65%', '29.9375rem', '29.9375rem']}
+            transform={[
+              'translate(10%, -60%)',
+              'translate(40%, -80%)',
+              'translate(40%, -80%)',
+              'translate(10%, -80%)',
+              'translate(40%, -80%)',
+            ]}
           >
             <StoryCard />
           </Box>

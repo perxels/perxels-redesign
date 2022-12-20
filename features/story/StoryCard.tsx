@@ -8,16 +8,17 @@ export const StoryCard = () => {
   return (
     <Box
       bg="brand.yellow.300"
-      px={["1.5rem", "1.5rem", "1.5rem", "3.188rem"]}
+      px={["1.5rem", "1.5rem", "1.5rem", "2.5rem"]}
       py={["2rem", "2rem", "2rem", "2.563rem"]}
       rounded={{ base: '10px', lg: '10px' }}
+      maxW={["320px", "380px", "380px", "440px", "510px"]}
     >
-      <SimpleGrid columns={3} gap="2rem">
+      <SimpleGrid columns={3} gap="1.5rem">
         {storyCardContent.map((storyCard) => {
           return (
             <Box key={storyCard.studentStat}>
               <Heading
-                fontSize={["1.5rem", "1.5rem", "1.5rem", "2.25rem"]}
+                fontSize={["1.35rem", "1.35rem", "1.35rem", "2rem"]}
               >
                 {storyCard.studentStat}
               </Heading>

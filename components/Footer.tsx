@@ -125,8 +125,8 @@ const Footer = () => {
         <SimpleGrid
           display={['grid', 'grid', 'grid', 'none']}
           mt="2.5rem"
-          columns={2}
-          gap="2rem"
+          columns={1}
+          gap="1rem"
         >
           <VStack>
             <Text
