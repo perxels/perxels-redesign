@@ -65,7 +65,7 @@ const Hero = () => {
               pos="absolute"
               left="8rem"
               top="3rem"
-              src="./assets/images/sudent-work/student-pattern-1.svg"
+              src="./assets/images/sudent-work/student-pattern-1.png"
               alt="pattern"
             />
             <Img
@@ -75,17 +75,17 @@ const Hero = () => {
               right="16rem"
               top="3rem"
               display={["none", "none", "none", "block"]}
-              src="./assets/images/sudent-work/student-pattern-2.svg"
+              src="./assets/images/sudent-work/student-pattern-3.png"
               alt="pattern"
             />
             <Img
-              w="5rem"
-              h="5rem"
+              w="8rem"
+              h="8rem"
               pos="absolute"
-              right="4rem"
+              right="0"
               top="6rem"
               display={["none", "none", "none", "block"]}
-              src="./assets/images/sudent-work/student-pattern-5.svg"
+              src="./assets/images/sudent-work/student-pattern-4.png"
               alt="pattern"
             />
             <Img
@@ -94,17 +94,17 @@ const Hero = () => {
               pos="absolute"
               left={["60%", "60%", "60%", "8rem"]}
               bottom={["8rem", "8rem", "8rem", "6rem"]}
-              src="./assets/images/sudent-work/student-pattern-3.svg"
+              src="./assets/images/sudent-work/student-pattern-2.png"
               alt="pattern"
             />
             <Img
-              w="5.25rem"
-              h="5.25rem"
+              w="7rem"
+              h="7rem"
               pos="absolute"
               right="8rem"
               bottom="10rem"
               display={["none", "none", "none", "block"]}
-              src="./assets/images/sudent-work/student-pattern-4.svg"
+              src="./assets/images/sudent-work/student-pattern-5.png"
               alt="pattern"
             />
             <Heading textAlign="center" fontSize={["7xl", "9xl"]} color="brand.yellow.500">
