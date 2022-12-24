@@ -26,7 +26,7 @@ export const TestimonialGrid = ({
 
   return (
     <SimpleGrid columns={[1, 2, 2, 3]} spacing="1.375rem" py="3.75rem">
-      {trimmedContent.map(({ name, title, content, imgUrl, id }) => (
+      {trimmedContent?.map(({ name, title, content, imgUrl, id }) => (
         <TestimonialCard
           key={id}
           id={id}

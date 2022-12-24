@@ -44,8 +44,8 @@ export const StudentWorkWrapper = () => {
               columns={[1, 1, 1, 2]}
               gap={['1.25rem', '1.25rem', '1.25rem', '3.75rem']}
             >
-              {StudentWorks.map((imgUrl) => (
-                <StudentWorkCard key={imgUrl} imgUrl={imgUrl} />
+              {StudentWorks.map(({ imgUrl, link }) => (
+                <StudentWorkCard key={imgUrl} imgUrl={imgUrl} link={link} />
               ))}
             </SimpleGrid>
           </Box>

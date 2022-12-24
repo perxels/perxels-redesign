@@ -14,6 +14,11 @@ export interface ClassGroupDetailsProps {
     courseOutline: string[]
 }
 
+export interface StudentWorkProps {
+    imgUrl: string
+    link: string
+}
+
 export const ClassGroupContent: ClassGroupContentProps[] = [
     {
         title: 'Basic Class',
@@ -112,9 +117,21 @@ export const classGroupDetails = [
     },
 ]
 
-export const StudentWorks: string[] = [
-    '/assets/images/class-group/mini-student-work-1.png',
-    '/assets/images/class-group/mini-student-work-2.jpg',
-    '/assets/images/class-group/mini-student-work-3.jpg',
-    '/assets/images/class-group/mini-student-work-4.jpg',
+export const StudentWorks:StudentWorkProps[]  = [
+    {
+        imgUrl: '/assets/images/class-group/mini-student-work-1.png',
+        link: '/student-works/mosope',
+    },
+    {
+        imgUrl: '/assets/images/class-group/mini-student-work-2.jpg',
+        link: '/student-works/daniju',
+    },
+    {
+        imgUrl: '/assets/images/sudent-work/rebecca.jpg',
+        link: '/student-works/rebecca',
+    },
+    {
+        imgUrl: '/assets/images/sudent-work/favour.jpg',
+        link: '/student-works/favour',
+    },
 ]
