@@ -24,15 +24,21 @@ const lists: string[] = [
 
 export const Basic = () => {
   return (
-    <Box py="3rem" pt="0">
+    <Box
+      py="3rem"
+      pt="1rem"
+      backgroundImage={"url('/assets/images/hire/bgPatternYellow.png')"}
+      backgroundRepeat="repeat"
+      backgroundSize={'cover'}
+    >
       <MainContainer bg="none">
         <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem">
           <Center>
             <Box>
-              <Heading fontSize={["6xl", "6xl", "7xl"]} color="brand.dark.200">
+              <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.dark.200">
                 Basic Class
               </Heading>
-              <Text fontSize={["2xl", "2xl", "3xl"]} color="brand.gray.500">
+              <Text fontSize={['2xl', '2xl', '3xl']} color="brand.gray.500">
                 This class is for those with the following criteria:
               </Text>
 
@@ -51,21 +57,34 @@ export const Basic = () => {
                       color="brand.purple.500"
                     />
 
-                    <Text fontSize={["xl", "xl", "2xl"]}>{list}</Text>
+                    <Text fontSize={['xl', 'xl', '2xl']}>{list}</Text>
                   </Grid>
                 ))}
               </VStack>
 
-              <Heading fontSize={["xl", "xl", "2xl"]} color="brand.gray.500" mt="3rem">
+              <Heading
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.gray.500"
+                mt="3rem"
+              >
                 IMPORTANT INFORMATION:
               </Heading>
 
-              <Text fontSize={["xl", "xl", "2xl"]} color="brand.gray.500" mt="1rem">
+              <Text
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.gray.500"
+                mt="1rem"
+              >
                 Anyone who registers for this masterclass automatically have
                 access to 25% discount of Perxels paid training
               </Text>
 
-              <HStack flexDir={["column", "row"]} mt="1.875rem" gap={["2rem", "0"]} spacing={["0", "2rem"]}>
+              <HStack
+                flexDir={['column', 'row']}
+                mt="1.875rem"
+                gap={['2rem', '0']}
+                spacing={['0', '2rem']}
+              >
                 <Button h="3.875rem">Join Basic Class</Button>
                 <Button
                   h="3.875rem"

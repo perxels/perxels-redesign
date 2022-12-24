@@ -7,7 +7,7 @@ import { Intermediate } from './Intermediate'
 
 export const WhatToExpect = () => {
   return (
-    <Box mb="4rem">
+    <Box mb="3rem">
       <MainContainer>
         <Box py="4rem">
           <SectionHeader

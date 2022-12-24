@@ -23,17 +23,27 @@ const lists: string[] = [
 
 export const Intermediate = () => {
   return (
-    <Box py="3rem" bg="brand.purple.500">
+    <Box
+      py="3rem"
+      bg="brand.purple.500"
+      backgroundImage={"url('/assets/images/hire/bgPatternPurple.png')"}
+      backgroundRepeat="repeat"
+      backgroundSize={'cover'}
+    >
       <MainContainer bg="none">
         <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem">
-          <Img display={['none', 'none', 'none', 'block']} rounded="8px" src="/assets/images/masterclass/intermediate.jpg" />
+          <Img
+            display={['none', 'none', 'none', 'block']}
+            rounded="8px"
+            src="/assets/images/masterclass/intermediate.jpg"
+          />
 
           <Center>
             <Box>
-              <Heading fontSize={["6xl", "6xl", "7xl"]}  color="brand.white">
+              <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.white">
                 Intermediate Class
               </Heading>
-              <Text fontSize={["2xl", "2xl", "3xl"]}  color="brand.gray.200">
+              <Text fontSize={['2xl', '2xl', '3xl']} color="brand.white">
                 This class is for those with the following criteria:
               </Text>
 
@@ -52,28 +62,50 @@ export const Intermediate = () => {
                       color="brand.white"
                     />
 
-                    <Text color="brand.gray.200" fontSize={["xl", "xl", "2xl"]}>{list}</Text>
+                    <Text color="brand.white" fontSize={['xl', 'xl', '2xl']}>
+                      {list}
+                    </Text>
                   </Grid>
                 ))}
               </VStack>
 
-              <Heading fontSize={["xl", "xl", "2xl"]} color="brand.gray.200" mt="3rem">
+              <Heading
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.white"
+                mt="3rem"
+              >
                 IMPORTANT INFORMATION:
               </Heading>
 
-              <Text fontSize={["xl", "xl", "2xl"]} color="brand.gray.200" mt="1rem">
+              <Text
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.white"
+                mt="1rem"
+              >
                 Anyone who registers for this masterclass automatically have
                 access to 25% discount of Perxels paid training
               </Text>
 
-              <HStack flexDir={["column", "row"]} mt="1.875rem" gap={["2rem", "0"]} spacing={["0", "2rem"]}>
-                <Button bg="brand.yellow.500" color="brand.purple.500" _hover={{ bg: "brand.yellow.700" }} h="3.875rem">Join Basic Class</Button>
+              <HStack
+                flexDir={['column', 'row']}
+                mt="1.875rem"
+                gap={['2rem', '0']}
+                spacing={['0', '2rem']}
+              >
+                <Button
+                  bg="brand.yellow.500"
+                  color="brand.purple.500"
+                  _hover={{ bg: 'brand.yellow.700' }}
+                  h="3.875rem"
+                >
+                  Join Basic Class
+                </Button>
                 <Button
                   h="3.875rem"
                   variant="link"
                   rightIcon={<BsArrowRightCircle />}
                   color="brand.yellow.500"
-                  _hover={{ color: "brand.yellow.700" }}
+                  _hover={{ color: 'brand.yellow.700' }}
                 >
                   Download Project
                 </Button>
@@ -81,7 +113,11 @@ export const Intermediate = () => {
             </Box>
           </Center>
 
-          <Img display={['block', 'block', 'block', 'none']} rounded="8px" src="/assets/images/masterclass/intermediate.jpg" />
+          <Img
+            display={['block', 'block', 'block', 'none']}
+            rounded="8px"
+            src="/assets/images/masterclass/intermediate.jpg"
+          />
         </SimpleGrid>
       </MainContainer>
     </Box>
