@@ -6,13 +6,11 @@ import { MainLayout } from '../layouts'
 
 const masterclass = () => {
   return (
-    <Box maxW="100vw" overflowX="hidden">
-      <MainLayout>
-          <MasterclassHero />
-          <WhatToExpect />
-          <Portfolio />
-      </MainLayout>
-    </Box>
+    <MainLayout>
+      <MasterclassHero />
+      <WhatToExpect />
+      <Portfolio />
+    </MainLayout>
   )
 }
 
