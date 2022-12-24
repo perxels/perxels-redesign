@@ -110,16 +110,17 @@ const Footer = () => {
         </Grid>
 
         {/* mobile cta */}
-        <VStack display={['flex', 'flex', 'flex', 'none']} spacing="1.25rem">
+        <VStack display={['flex', 'flex', 'flex', 'none']} alignItems="flex-start" spacing="1.25rem">
           <Heading
-            textAlign="center"
-            fontSize={['3xl', '4xl']}
+            textAlign="left"
+            fontSize={['4xl', '5xl']}
+            maxW="300px"
             color="brand.white"
           >
-            Want to transition into Design?
+            Equpping designers to {' '}
+            <Box as="span" color="brand.yellow.500">solve problems</Box>
+            {' '}with design.
           </Heading>
-
-          <Button variant="rounded-solid-yellow-with-outline">Enroll Now</Button>
         </VStack>
 
         <SimpleGrid
@@ -128,47 +129,13 @@ const Footer = () => {
           columns={1}
           gap="1rem"
         >
-          <VStack>
+          <VStack alignItems="flex-start">
             <Text
               fontSize="1rem"
               fontWeight="400"
               color="#aaa"
               textTransform="uppercase"
-              textAlign="center"
-            >
-              Pages
-            </Text>
-
-            <Link w="full">
-              <Text
-                w="full"
-                fontSize={['md', 'xl', '2xl']}
-                textAlign="center"
-                color="brand.white"
-                _hover={{ color: 'brand.yellow.500' }}
-              >
-                Class Plans
-              </Text>
-            </Link>
-            <Link w="full">
-              <Text
-                w="full"
-                fontSize={['md', 'xl', '2xl']}
-                textAlign="center"
-                color="brand.white"
-                _hover={{ color: 'brand.yellow.500' }}
-              >
-                Be a Partner
-              </Text>
-            </Link>
-          </VStack>
-          <VStack>
-            <Text
-              fontSize="1rem"
-              fontWeight="400"
-              color="#aaa"
-              textTransform="uppercase"
-              textAlign="center"
+              textAlign="left"
             >
               Contact
             </Text>
@@ -176,8 +143,8 @@ const Footer = () => {
             <Link w="full">
               <Text
                 w="full"
-                fontSize={['md', 'xl', '2xl']}
-                textAlign="center"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
                 color="brand.white"
                 _hover={{ color: 'brand.yellow.500' }}
               >
@@ -187,8 +154,8 @@ const Footer = () => {
             <Link w="full">
               <Text
                 w="full"
-                fontSize={['md', 'xl', '2xl']}
-                textAlign="center"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
                 color="brand.white"
                 _hover={{ color: 'brand.yellow.500' }}
               >
@@ -196,15 +163,59 @@ const Footer = () => {
               </Text>
             </Link>
           </VStack>
+          <VStack alignItems="flex-start">
+            <Text
+              fontSize="1rem"
+              fontWeight="400"
+              color="#aaa"
+              textTransform="uppercase"
+              textAlign="left"
+            >
+              Pages
+            </Text>
+
+            <Link w="full">
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+                Testimonies
+              </Text>
+            </Link>
+            <Link w="full">
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+                Enroll now
+              </Text>
+            </Link>
+            <Link w="full">
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+                Class Plans
+              </Text>
+            </Link>
+          </VStack>
         </SimpleGrid>
 
-        <HStack
+        <VStack
           display={['flex', 'flex', 'flex', 'none']}
-          justifyContent="space-between"
-          mt="4rem"
+          alignItems="flex-start"
+          mt="1.5rem"
+          spacing="1.5rem"
         >
-          <Logo color="white" width="107px" height="29.32px" />
-
           <Flex alignItems="center" gap="0.75rem" mt="1.875rem">
             {FooterSocialLinks.map(({ name, url, icon }) => {
               if (name !== 'WhatsApp') {
@@ -229,12 +240,14 @@ const Footer = () => {
               }
             })}
           </Flex>
-        </HStack>
+
+          <Logo color="white" width="107px" height="29.32px" />
+        </VStack>
 
         <Text
-          textAlign="center"
-          fontSize="0.875rem"
-          mt={["3.125rem", "3.125rem", "5rem"]}
+          textAlign="left"
+          fontSize="lg"
+          mt={['3.125rem', '3.125rem', '5rem']}
           mb="1.5rem"
           color="brand.white"
         >

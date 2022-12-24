@@ -7,12 +7,17 @@ import {
   Image,
   SimpleGrid,
   Img,
+  Center,
+  Button,
+  Icon,
+  Link,
 } from '@chakra-ui/react'
 import { workDetails } from '../../constant'
 import { ContactStudent } from './'
 import { MainContainer } from '../../layouts'
 import { useRouter } from 'next/router'
 import { studentWorkDetails } from '../../constant/studentWorks'
+import { BsArrowLeftSquare, BsArrowRightSquare } from 'react-icons/bs'
 
 type ObjectKey = keyof typeof studentWorkDetails
 
@@ -57,7 +62,7 @@ export const CaseStudy = () => {
             right="-350px"
             bottom="15rem"
           />
-          <Box w="full">
+          <Box rounded="0.75rem" overflow="hidden" w="full">
             <Img
               src={studentData?.workCover?.w1}
               w="full"
@@ -76,9 +81,12 @@ export const CaseStudy = () => {
               >
                 Overview
               </Heading>
-              <Text color="brand.white" fontSize="xl" fontWeight="normal">
-                {studentData?.overview}
-              </Text>
+              <Text
+                color="brand.white"
+                fontSize="xl"
+                fontWeight="normal"
+                dangerouslySetInnerHTML={{ __html: studentData?.overview }}
+              />
             </Box>
             <Box>
               <Heading
@@ -90,12 +98,15 @@ export const CaseStudy = () => {
               >
                 Challenge
               </Heading>
-              <Text color="brand.white" fontSize="xl" fontWeight="normal">
-                {studentData?.challenge}
-              </Text>
+              <Text
+                color="brand.white"
+                fontSize="xl"
+                fontWeight="normal"
+                dangerouslySetInnerHTML={{ __html: studentData?.challenge }}
+              />
             </Box>
           </SimpleGrid>
-          <Box>
+          <Box rounded="0.75rem" overflow="hidden">
             <Image
               src={studentData?.workCover?.w2}
               alt={studentData?.projectName}
@@ -132,13 +143,17 @@ export const CaseStudy = () => {
                 >
                   Results
                 </Heading>
-                <Text color="brand.white" fontSize="xl" fontWeight="normal">
-                  {studentData?.results}
-                </Text>
+
+                <Text
+                  color="brand.white"
+                  fontSize="xl"
+                  fontWeight="normal"
+                  dangerouslySetInnerHTML={{ __html: studentData?.results }}
+                />
               </Box>
             )}
           </SimpleGrid>
-          <Box>
+          <Box rounded="0.75rem" overflow="hidden">
             <Image
               src={studentData?.workCover?.w3}
               alt={studentData?.projectName}
@@ -146,22 +161,37 @@ export const CaseStudy = () => {
               h="auto"
             />
           </Box>
-          {
-            studentData?.workCover?.w4 && (
-              <Box mt="2rem">
-                <Image
-                  src={studentData?.workCover?.w4}
-                  alt={studentData?.projectName}
-                  w="full"
-                  h="auto"
-                />
-              </Box>
-            )
-          }
+          {studentData?.workCover?.w4 && (
+            <Box mt="2rem" rounded="0.75rem" overflow="hidden">
+              <Image
+                src={studentData?.workCover?.w4}
+                alt={studentData?.projectName}
+                w="full"
+                h="auto"
+              />
+            </Box>
+          )}
 
           <Box>
             <ContactStudent />
           </Box>
+
+          <Center gap="2rem" mt="3rem">
+            {studentData?.prevLink && (
+              <Button as={Link} href={studentData?.prevLink} variant="link" color="brand.white">
+                <Icon as={BsArrowLeftSquare} fontSize="7xl" mr="1rem" /> Go to
+                previous project
+              </Button>
+            )}
+            {
+              studentData?.nextLink && (
+                <Button as={Link} href={studentData?.nextLink} variant="link" color="brand.white">
+                  Go to next project{' '}
+                  <Icon as={BsArrowRightSquare} fontSize="7xl" ml="1rem" />
+                </Button>
+              )
+            }
+          </Center>
         </Box>
       </MainContainer>
     </Box>
