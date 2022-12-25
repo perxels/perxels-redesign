@@ -6,3 +6,4 @@ export * from "./workDetails"
 export * from "./hireCardContent";
 export * from "./sponsporshipContent";
 export * from "./marketPlaceContent";
+export * from './testimonialContentSecond';

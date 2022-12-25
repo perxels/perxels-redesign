@@ -100,3 +100,4 @@ export const testimonialContent: TestimonialCardProps[] = [
     content: `Perxels helped me build a strong confidence in design skills, I learnt the most efficient and effective design process, soft skills and an eye for good designs.`,
   },
 ]
+
