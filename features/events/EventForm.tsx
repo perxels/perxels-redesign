@@ -49,7 +49,7 @@ export const EventForm = () => {
         />
       </FormControl>
       <Box width="full">
-        <Button w="full" fontSize={'lg'}>
+        <Button h="3.1875rem" w="full" fontSize={'lg'}>
           Register for this Session
         </Button>
       </Box>

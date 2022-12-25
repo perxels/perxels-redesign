@@ -7,7 +7,7 @@ export const ClassHire = () => {
     <Box
       px={{ base: 4, md: 32 }}
       py={{ base: 20, md: 32 }}
-      bgColor={'brand.yellow.300'}
+      bgColor={'#FDE85C'}
     >
       <Flex
         alignItems={{ base: 'flex-start', md: 'center' }}
