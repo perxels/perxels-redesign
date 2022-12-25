@@ -4,7 +4,6 @@ import { SectionHeader } from '../../components'
 import { testimonialContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import { TestimonialGrid } from '../testimonial'
-import { testimonialContent } from '../../constant'
 export const Testimonial = () => {
   return (
     <MainContainer>

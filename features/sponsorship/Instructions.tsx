@@ -49,6 +49,7 @@ export const Instructions = () => {
               <Img
                 src="./assets/images/sponsorship/instruction-mobile.png"
                 alt="Instructions"
+                display={['block', 'block', 'block', 'none']}
                 w="full"
                 h="auto"
               />
