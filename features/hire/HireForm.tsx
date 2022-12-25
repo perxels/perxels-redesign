@@ -1,4 +1,4 @@
-import { Box, Button, Heading, HStack, Input, SimpleGrid, Text, Textarea, VStack } from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, Input, Select, SimpleGrid, Text, Textarea, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { SectionHeader } from '../../components'
 import { InputWrapper } from '../../components/InputWrapper'
@@ -75,19 +75,18 @@ export const HireForm = () => {
                         h="5rem"
                     />
                 </InputWrapper>
-                <InputWrapper label="Month">
+                <InputWrapper label="Time">
                     <Input 
                         type="date"
                         w="full"
                         h="5rem"
                     />
                 </InputWrapper>
-                <InputWrapper label="Year">
-                    <Input 
-                        type="date"
-                        w="full"
-                        h="5rem"
-                    />
+                <InputWrapper label="Hiring type">
+                    <Select h="5rem">
+                        <option>Hire Perxels</option>
+                        <option>Hire a Graduate</option>
+                    </Select>
                 </InputWrapper>
             </SimpleGrid>
 
