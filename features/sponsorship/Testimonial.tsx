@@ -3,7 +3,7 @@ import React from 'react'
 import { SectionHeader } from '../../components'
 import { MainContainer } from '../../layouts'
 import { TestimonialGrid } from '../testimonial'
-
+import { testimonialContent } from '../../constant'
 export const Testimonial = () => {
   return (
     <MainContainer>
@@ -12,7 +12,7 @@ export const Testimonial = () => {
                 subTitle="Testimonials"
                 title="Our Students are getting jobs 100%"
             />
-            <TestimonialGrid />
+            <TestimonialGrid testimonialContent={testimonialContent} />
         </Box>
     </MainContainer>
   )
