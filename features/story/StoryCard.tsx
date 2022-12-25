@@ -11,7 +11,7 @@ export const StoryCard = () => {
       px={["1.5rem", "1.5rem", "1.5rem", "2.5rem"]}
       py={["2rem", "2rem", "2rem", "2.563rem"]}
       rounded={{ base: '10px', lg: '10px' }}
-      maxW={["320px", "380px", "380px", "440px", "510px"]}
+      maxW={["350px", "380px", "380px", "440px", "510px"]}
     >
       <SimpleGrid columns={3} gap="1.5rem">
         {storyCardContent.map((storyCard) => {

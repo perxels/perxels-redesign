@@ -13,6 +13,7 @@ interface SectionHeaderProps {
   arrowRightBottomPos?: string
   maxW?: string | string[]
   headingSize?: string[]
+  headingColor?: string | string[]
 }
 
 const SectionHeader = ({
@@ -27,6 +28,7 @@ const SectionHeader = ({
   arrowRightBottomPos,
   maxW,
   headingSize,
+  headingColor,
 }: SectionHeaderProps) => {
   return (
     <Box pos="relative" mb="2.375rem">
@@ -69,7 +71,7 @@ const SectionHeader = ({
         </Box>
       </Center>
       <Heading
-        color={isWhite ? 'brand.white' : 'brand.purple.500'}
+        color={isWhite ? 'brand.white' : headingColor ? headingColor : 'brand.purple.500'}
         textAlign="center"
         fontSize={headingSize || ['2rem', '2rem', '7xl']}
         maxW={maxW || "auto"}
@@ -81,16 +83,15 @@ const SectionHeader = ({
       </Heading>
 
       {paragraph && (
-        <Text
+        <Box
           textAlign="center"
           fontSize={['0.9rem', '0.9rem', '1.375rem']}
           lineHeight="1.5"
           maxW="669px"
           color="brand.dark.100"
           m="0 auto"
-        >
-          {paragraph}
-        </Text>
+          dangerouslySetInnerHTML={{ __html: paragraph }}
+        />
       )}
     </Box>
   )

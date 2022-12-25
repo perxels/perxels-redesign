@@ -9,27 +9,27 @@ export interface hireCardContentProps {
 
 export const hireCardContent: hireCardContentProps[] = [
   {
-    title: 'Designer Team',
+    title: 'UIUX Designers',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. At adipiscing proin facilisis nulla ut suspendisse sit tempor.',
+      'We have trained some of the best UIUX designers on the African continent, you can hire our trained designers with confidence.',
     icon: '/assets/images/hire/pencil.svg',
     bg: 'brand.purple.500',
   },
   {
-    title: 'Development Team',
+    title: 'Software Developers',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. At adipiscing proin facilisis nulla ut suspendisse sit tempor.',
+      'In partnership with Schfordevs, a software development training school which is in our ecosystem, you can get vetted developers from here.',
     icon: '/assets/images/hire/cable.svg',
     bg: 'brand.yellow.500',
     w: ['300px', '300px', '300px', '350.37px'],
     r: '-1rem',
   },
   {
-    title: 'Product Management Team',
+    title: 'Product Managers.',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. At adipiscing proin facilisis nulla ut suspendisse sit tempor.',
+      'Getting skilled product managers can’t be more easy with Enoverlab, a training institute also in our ecosystem.',
     icon: '/assets/images/hire/traffic.svg',
-    bg: 'brand.pink.500',
+    bg: 'brand.pink.700',
     w: ['100px', '100px', '100px', '123.12px'],
     r: '2rem',
   },

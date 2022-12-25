@@ -11,10 +11,11 @@ export const Offer = () => {
       <MainContainer>
         <Box py="3.75rem">
           <SectionHeader
-            title="We have in 1000+ talents so you can hire without the cost, time and effort"
-            subTitle="What we offer"
-            maxW='936px'
-            headingSize={['3xl', '3xl', '4xl', '8xl']}
+            title="Save time, energy, money trying to source skilled talents yourself and hire from the vetted talent pool in our ecosystem"
+            subTitle="Why Hire from Perxels"
+            maxW='1024px'
+            headingSize={['3xl', '3xl', '4xl', '2.5rem']}
+            headingColor="brand.dark.200"
           />
 
           <Grid gridTemplateColumns="repeat(3, 1fr)" overflowX="auto" gap={["0.75rem", "0.75rem", "0.75rem", "1.85rem"]}>

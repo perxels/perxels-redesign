@@ -13,29 +13,32 @@ export const OurValues = () => {
           subTitle="Our values"
         />
 
-        <SimpleGrid columns={[1, 1, 1, 3]} gap={["0.75rem", "0.75rem", "1.25rem"]}>
+        <SimpleGrid
+          columns={[1, 1, 1, 3]}
+          gap={['0.75rem', '0.75rem', '1.25rem']}
+        >
           <Values
             icon="./assets/images/hire/like.svg"
-            title="Pixels Perfection"
+            title="Problem solving"
             description={`
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            At adipiscing proin facilisis nulla ut suspendisse sit tempor.
+            Solving problems with design is at the heart of everything we 
+            do - we equip designers with the skills to solve problems with design.
             `}
           />
           <Values
             icon="./assets/images/hire/lightning.svg"
-            title="Pixels Perfection"
+            title="Detail Oriented"
             description={`
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            At adipiscing proin facilisis nulla ut suspendisse sit tempor.
+            Attention to details is one of our priorities - 
+            the biggest advantage a product has are in its smallest details and we focus on these details.
             `}
           />
           <Values
             icon="./assets/images/hire/bulb.svg"
-            title="Pixels Perfection"
+            title="Impact driven"
             description={`
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            At adipiscing proin facilisis nulla ut suspendisse sit tempor.
+            Making positive impact is what drives us and 
+            we are passionate and committed to making significant impact with every project.
             `}
           />
         </SimpleGrid>

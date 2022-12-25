@@ -64,7 +64,7 @@ export const HireForm = () => {
                 </InputWrapper>
             </SimpleGrid>
 
-            <Heading fontSize="1.5rem" w="full">What is the best time to schdule a meeting with you?</Heading>
+            <Heading color="brand.dark.200" fontSize="1.5rem" w="full">What is the best time to schdule a meeting with you?</Heading>
 
             {/* contact */}
             <SimpleGrid columns={[1, 1, 2, 3]} w="full" spacing="2rem">

@@ -43,6 +43,7 @@ export const CaseStudy = () => {
             pos="absolute"
             left="-350px"
             top="8rem"
+            display={['none', 'none', 'block']}
           />
           <Img
             src="/assets/images/sudent-work/circle-pattern.svg"
@@ -52,6 +53,7 @@ export const CaseStudy = () => {
             pos="absolute"
             right="-350px"
             top="10rem"
+            display={['none', 'none', 'block']}
           />
           <Img
             src="/assets/images/sudent-work/circle-pattern.svg"
@@ -61,6 +63,7 @@ export const CaseStudy = () => {
             pos="absolute"
             right="-350px"
             bottom="15rem"
+            display={['none', 'none', 'block']}
           />
           <Box rounded="0.75rem" overflow="hidden" w="full">
             <Img
@@ -176,18 +179,18 @@ export const CaseStudy = () => {
             <ContactStudent />
           </Box>
 
-          <Center gap="2rem" mt="3rem">
+          <Center gap="1rem" mt="3rem">
             {studentData?.prevLink && (
-              <Button as={Link} href={studentData?.prevLink} variant="link" color="brand.white">
-                <Icon as={BsArrowLeftSquare} fontSize="7xl" mr="1rem" /> Go to
-                previous project
+              <Button as={Link} href={studentData?.prevLink} variant="link" color="brand.gray.700">
+                <Text display={['none', 'none', 'none', 'block']}>Go to previous project{' '}</Text>
+                <Icon ml="1rem" as={BsArrowLeftSquare} fontSize="7xl" mr="1rem" />
               </Button>
             )}
             {
               studentData?.nextLink && (
                 <Button as={Link} href={studentData?.nextLink} variant="link" color="brand.white">
-                  Go to next project{' '}
-                  <Icon as={BsArrowRightSquare} fontSize="7xl" ml="1rem" />
+                  <Icon mr="1rem" as={BsArrowRightSquare} fontSize="7xl" ml="1rem" />
+                  <Text display={['none', 'none', 'none', 'block']}>Go to next project{' '}</Text>
                 </Button>
               )
             }

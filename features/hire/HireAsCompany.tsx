@@ -21,7 +21,12 @@ export const HireAsCompany = () => {
       backgroundSize={'cover'}
     >
       <MainContainer bg="none">
-        <SimpleGrid columns={[1, 1, 1, 2]} spacing={["2rme", "2rem", "2rem", "3.125rem"]} py={["3rem", "3rem", "5rem"]} px="1rem">
+        <SimpleGrid
+          columns={[1, 1, 1, 2]}
+          spacing={['2rme', '2rem', '2rem', '3.125rem']}
+          py={['3rem', '3rem', '5rem']}
+          px="1rem"
+        >
           <Img
             src="./assets/images/hire/hireCard1.jpg"
             alt="Hire as a Company"
@@ -38,19 +43,24 @@ export const HireAsCompany = () => {
             alignItems={['center', 'center', 'flex-start']}
             justifyContent="center"
           >
-            <BgHeader>HIRE As a company</BgHeader>
+            <BgHeader>HIRE Perxels</BgHeader>
 
-            <Heading textAlign={["center", "center", "left"]} fontSize={["4xl", "4xl", "7xl"]} color="brand.dark.200" py="1.875rem">
-              Why hire Perxels’ Team.
+            <Heading
+              textAlign={['center', 'center', 'left']}
+              fontSize={['4xl', '4xl', '7xl']}
+              color="brand.dark.200"
+              py="1.875rem"
+            >
+              Why Hire Perxels?
             </Heading>
 
             <ListWrapper
               lists={[
-                'Value 1 we bring to the table',
-                'Value 2 we bring to the table',
-                'Value 3 we bring to the table',
-                'Value 4 we bring to the table',
-                'Value 5 we bring to the table',
+                'Access to the best talents.',
+                '10+ years team management experience.',
+                'Industry standard tools & processes.',
+                'Faster project delivery.',
+                'Achieve your goals & objectives with less effort.',
               ]}
             />
 

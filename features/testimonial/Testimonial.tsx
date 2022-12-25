@@ -1,11 +1,11 @@
 import React from 'react'
 import { SectionHeader } from '../../components'
+import { testimonialContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 
 import { TestimonialGrid } from './TestimonialGrid'
 import { TestimonialSlider } from './TestimonialSlider'
 import { TestimonyVideo } from './TestimonyVideo'
-import { testimonialContent } from '../../constant'
 export const Testimonial = () => {
   return (
     <MainContainer>
@@ -15,7 +15,7 @@ export const Testimonial = () => {
       />
       <TestimonyVideo />
       <TestimonialSlider />
-      <TestimonialGrid  testimonialContent={testimonialContent}/>
+      <TestimonialGrid testimonialContent={testimonialContent} />
     </MainContainer>
   )
 }

@@ -87,21 +87,22 @@ export const Intermediate = () => {
               </Text>
 
               <HStack
-                flexDir={['column', 'row']}
                 mt="1.875rem"
-                gap={['2rem', '0']}
+                gap={['1rem', '0']}
                 spacing={['0', '2rem']}
               >
                 <Button
                   bg="brand.yellow.500"
                   color="brand.purple.500"
                   _hover={{ bg: 'brand.yellow.700' }}
-                  h="3.875rem"
+                  px={['1.25rem', '1.5rem', '2.5rem']}
+                  h={['3.5rem', '3.5rem', '3.875rem']}
                 >
                   Join Basic Class
                 </Button>
                 <Button
-                  h="3.875rem"
+                  px={['1.25rem', '1.5rem', '2.5rem']}
+                  h={['3.5rem', '3.5rem', '3.875rem']}
                   variant="link"
                   rightIcon={<BsArrowRightCircle />}
                   color="brand.yellow.500"

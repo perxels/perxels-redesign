@@ -9,11 +9,13 @@ export const WhatToExpect = () => {
   return (
     <Box mb="3rem">
       <MainContainer>
-        <Box py="4rem">
+        <Box py="4rem" pb={["1rem", "1rem", "1rem", "4rem"]}>
           <SectionHeader
             title="Everything you need to know about this Masterclass."
             subTitle="what to expect"
-            paragraph="This is a 2 Days Free Masterclass."
+            paragraph="This is a <b>2 DAYS FREE</b> Masterclass."
+            maxW={['300px', '300px', '300px', 'full']}
+            headingColor="brand.dark.200"
           />
         </Box>
       </MainContainer>

@@ -18,7 +18,7 @@ export const TestimonialGrid = ({
 
   const trimmedContent = useMemo(() => {
     if (isLargerThan800) {
-      return testimonialContent.slice(0, 3)
+      return testimonialContent?.slice(0, 3)
     }
 
     return testimonialContent
