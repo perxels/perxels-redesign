@@ -22,10 +22,10 @@ export const AboutTeen = () => {
           pos="relative"
           zIndex="2"
           templateColumns={['1fr', '1fr', '1fr', 'repeat(12, 1fr)']}
-          gap="4.5rem"
+          gap={["1.5rem", "1.5rem", "1.5rem", "4.5rem"]}
         >
           <GridItem colSpan={[1, 1, 1, 5]}>
-            <Text maxW="400px" textAlign={["center", "center", "center", "left"]} fontSize={["2xl", "2xl", "2xl", "4xl"]} pt="4rem" color="brand.dark.200">
+            <Text maxW={["320px", "320px", "320px", "400px"]} textAlign={["center", "center", "center", "left"]} fontSize={["3xl", "3xl", "3xl", "4xl"]} pt="4rem" color="brand.dark.200">
               A Special Design Training for Teenagers between the age of{' '}
               <Box fontWeight="bold" as="span">
                 13

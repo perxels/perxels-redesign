@@ -16,25 +16,25 @@ interface SliderDataProps {
 const sliderData: SliderDataProps[] = [
   {
     id: 1,
-    img: './assets/images/teens/alpha.jpg',
+    img: './assets/images/teens/rebecca.png',
     cat: 'UI/UX',
-    title: 'Fashion Commerce App',
+    title: 'Logistic Company Website',
   },
   {
     id: 2,
-    img: './assets/images/teens/coinpro.jpg',
+    img: './assets/images/teens/tolu.png',
     cat: 'UI/UX',
-    title: 'Coinpro - Cryptocurrency App',
+    title: 'Savings Mobile App',
   },
   {
     id: 3,
-    img: './assets/images/teens/alpha.jpg',
+    img: './assets/images/teens/daniju.png',
     cat: 'UI/UX',
-    title: 'Fashion Commerce App',
+    title: 'Charity Website',
   },
   {
     id: 4,
-    img: './assets/images/teens/coinpro.jpg',
+    img: './assets/images/teens/favour.png',
     cat: 'UI/UX',
     title: 'Coinpro - Cryptocurrency App',
   },
@@ -47,7 +47,28 @@ export const Expectation = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 900,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          vertical: true,
+          slidesToShow: 3,
+          slidesToScroll: 1
+        }
+      }
+    ]
   }
 
   return (
@@ -67,7 +88,7 @@ export const Expectation = () => {
 
         <Slider {...settings}>
           {sliderData.map(({ id, img, cat, title }) => (
-            <Box px="1rem" key={id}>
+            <Box px={["0", "0", "0", "1rem"]} py={["0.5rem", "0.5rem", "0.5rem", "0"]} key={id}>
               <Box w="full" p="1.1rem" rounded="1rem" bg="brand.white">
                 <Img src={img} alt={title} w="full" h="auto" rounded="1rem" />
                 <Text mt="1.5rem" fontSize="xl" color="brand.gray.200">

@@ -11,6 +11,7 @@ const SideImage = () => {
       px="2rem"
       alignItems="flex-end"
       position="relative"
+      display={['none', 'none', 'none', 'flex']}
     >
       <Box pos="absolute" top="3.125rem" left="6.25rem">
         <Logo color="#fff" />

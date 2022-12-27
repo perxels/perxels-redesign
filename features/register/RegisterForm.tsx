@@ -4,6 +4,7 @@ import {
   Flex,
   Heading,
   HStack,
+  Icon,
   Img,
   Input,
   Select,
@@ -13,10 +14,11 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React from 'react'
+import { IoLogoTwitter, IoLogoWhatsapp } from 'react-icons/io'
 
 const RegisterForm = () => {
   return (
-    <Box overflowY="auto" px="3rem" py="2rem">
+    <Box overflowY="auto" px={["1rem", "1rem", "3rem"]} py="2rem">
       <Heading fontSize="6xl" textAlign="center" color="brand.dark.100">
         Register now to Claim this Offer
       </Heading>
@@ -109,12 +111,7 @@ const RegisterForm = () => {
               w="100%"
               h="3.5rem"
               leftIcon={
-                <Img
-                  src="./assets/icons/whatsapp.svg"
-                  alt="whatsapp icon"
-                  w="1.5rem"
-                  h="1.5rem"
-                />
+                <Icon as={IoLogoWhatsapp} fontSize="3xl" />
               }
               variant="outline"
             >
@@ -124,12 +121,7 @@ const RegisterForm = () => {
               w="full"
               h="3.5rem"
               leftIcon={
-                <Img
-                  src="./assets/icons/twitter.svg"
-                  alt="whatsapp icon"
-                  w="1.5rem"
-                  h="1.5rem"
-                />
+                <Icon as={IoLogoTwitter} fontSize="3xl" />
               }
               variant="outline"
             >
