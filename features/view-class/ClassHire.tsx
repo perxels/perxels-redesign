@@ -18,12 +18,12 @@ export const ClassHire = () => {
         <Box>
           <Heading
             as="h2"
-            fontSize={{ base: '2.5rem', md: '4.5rem' }}
+            fontSize={{ base: '2.5rem', md: '4rem' }}
             maxWidth={{ base: '100%', md: '75%' }}
             textTransform="uppercase"
             color="#121212"
           >
-            Get Access to high-performing design talents.
+            Want to learn this design skills too?
           </Heading>
         </Box>
         <Box>
@@ -34,7 +34,7 @@ export const ClassHire = () => {
             p={{ base: '1.5rem 2.5rem', md: '2.25rem 2.5rem' }}
             _hover={{ bgColor: 'brand.dark.300' }}
           >
-            Hire our Grads
+            Start here
             <Text fontSize={'1.5rem'} ml="1.1875rem">
               <AiOutlineRightCircle />
             </Text>
