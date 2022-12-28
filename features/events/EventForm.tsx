@@ -14,8 +14,9 @@ import {
   HStack
 } from '@chakra-ui/react'
 import { EventInput } from './'
-import { FaClipboard, FaTwitter, FaWhatsapp } from 'react-icons/fa'
+import { FaTwitter } from 'react-icons/fa'
 import { BiCopy } from 'react-icons/bi'
+import {RiWhatsappFill} from 'react-icons/ri'
 export const EventForm = () => {
     const { hasCopied, onCopy } = useClipboard('https://perxels.com/events/dashboard-designs')
   return (
@@ -28,6 +29,7 @@ export const EventForm = () => {
     >
       <EventInput id="name" type="text" placeholder="Full Name*" />
       <EventInput id="email" type="email" placeholder="Email Address*" />
+      <EventInput id="phone" type="tel" placeholder="Phone Number*" />
       <FormControl id="how">
         <Select
           backgroundColor={'#FCFCFC'}
@@ -36,8 +38,12 @@ export const EventForm = () => {
           placeholder="How did you get to know about Us?"
           _placeholder={{ color: '#B4B4B4' }}
         >
-          <option value="option1">Twitter</option>
-          <option value="option2">Instagram</option>
+          <option value="Whatsapp">Whatsapp</option>
+          <option value="Instagram">Instagram</option>
+          <option value="Facebook">Facebook</option>
+          <option value="Twitter">Twitter</option>
+          <option value="Friend">Friend</option>
+          <option value="Others">Others</option>
         </Select>
       </FormControl>
       <FormControl id="questions">
@@ -107,7 +113,7 @@ export const EventForm = () => {
             }}
             w="full"
           >
-            <FaWhatsapp />{' '}
+            <RiWhatsappFill/>{' '}
             <Text ml={{base:"0.35rem", lg:"0.75rem"}} fontSize={{base:'1rem' ,lg:'1rem'}}>
               Share 
             </Text>

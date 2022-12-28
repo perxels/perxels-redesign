@@ -11,15 +11,8 @@ export const TestimonyGridContainer = () => {
 
   return (
     <Box p={['2rem 1.625rem', '2rem 1.1rem', '2rem 6.25rem']}>
-      <Box display={['block', 'block', 'none', 'none']}>
-        <SectionHeader
-          subTitle="Testimonials"
-          title="Hear what they say about us."
-        />
-        <TestimonyVideo />
-      </Box>
       <TestimonialGrid testimonialContent={testimonialContentSecond} />
-      <Box display={['none', 'none', 'block', 'block']}>
+      <Box display={['block', 'block', 'block', 'block']}>
         <TestimonyVideo />
         <TestimonialSlider />
       </Box>

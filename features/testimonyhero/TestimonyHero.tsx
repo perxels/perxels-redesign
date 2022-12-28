@@ -1,14 +1,14 @@
 import React from 'react'
-import { Box, Img, Heading, Text, Button, Center } from '@chakra-ui/react'
+import { Box, Img, Heading, Text, Button, Center, Image } from '@chakra-ui/react'
 import { MainContainer } from '../../layouts'
 import TestimonialTooltip from '../testimonial/TestimonialTooltip'
 
 export const TestimonyHero = () => {
   return (
-    <MainContainer bg="url('/assets/images/testimonial/Map.png') no-repeat center center">
+    <MainContainer bg={['', "url('/assets/images/testimonial/Map.png') no-repeat center center", "url('/assets/images/testimonial/Map.png') no-repeat center center"]}>
       <Box
         mt="3.5625rem"
-        mb={['3.04rem', '3.04rem', '6.043125rem']}
+        mb={['1.04rem', '3.04rem', '6.043125rem']}
         display={'flex'}
         justifyContent={'center'}
         h={['auto', 'auto', '100vh']}
@@ -27,7 +27,7 @@ export const TestimonyHero = () => {
             textAlign={['left', 'center', 'center']}
             fontSize={['4xl', '4xl', '6xl', '8xl', '9xl']}
             fontWeight={['800']}
-            lineHeight={['3.196875rem', '3.89rem', '4.475625rem']}
+            lineHeight={['2.196875rem', '3.89rem', '4.475625rem']}
             mb={['0.9375rem', '1.375rem']}
             w={['100%', '70%']}
           >
@@ -57,55 +57,62 @@ export const TestimonyHero = () => {
             Want to create your own story with Perxels?
           </Text>
           <Center>
-            <Button>Write Your Story</Button>
+            <Button>Enroll Now</Button>
           </Center>
+          <Box
+            display={['block', 'none', 'none']}
+            mt={['.5rem']}
+            boxSize={['100%', '100%', '100%']}
+          >
+            <Image src="/assets/images/testimonial/Map.png" alt="Map" />
+          </Box>
         </Box>
         <Box
         pos={'absolute'}
-        top={ ['20%','20%' ,'20%']}
-        left={['10%','10%','10%']}
+        top={ ['61%','20%' ,'20%']}
+        left={['16%','10%','10%']}
         >
         <TestimonialTooltip/>
         </Box>
         <Box
         pos={'absolute'}
-        top={ ['40%','40%' ,'40%']}
+        top={ ['65%','40%' ,'40%']}
         left={['20%','20%','20%']}
         >
         <TestimonialTooltip/>
         </Box>
         <Box
         pos={'absolute'}
-        bottom={ ['20%','20%' ,'20%']}
-        left={['40%','40%','28%']}
+        bottom={ ['27%','20%' ,'20%']}
+        left={['75%','40%','28%']}
         >
         <TestimonialTooltip/>
         </Box>
         <Box
         pos={'absolute'}
-        bottom={ ['20%','20%' ,'25%']}
-        left={['40%','40%','53%']}
+        bottom={ ['28%','20%' ,'25%']}
+        left={['49%','40%','53%']}
         >
         <TestimonialTooltip/>
         </Box>
         <Box
         pos={'absolute'}
-        bottom={ ['20%','20%' ,'37%']}
-        left={['40%','40%','53%']}
+        bottom={ ['22%','20%' ,'37%']}
+        left={['28%','40%','53%']}
         >
         <TestimonialTooltip/>
         </Box>
         <Box
         pos={'absolute'}
-        bottom={ ['20%','20%' ,'37%']}
-        left={['40%','40%','80%']}
+        bottom={ ['23%','20%' ,'37%']}
+        left={['52%','40%','80%']}
         >
         <TestimonialTooltip/>
         </Box>
         <Box
         pos={'absolute'}
-        bottom={ ['20%','20%' ,'57%']}
-        left={['40%','40%','73%']}
+        bottom={ ['37%','20%' ,'57%']}
+        left={['80%','40%','73%']}
         >
         <TestimonialTooltip/>
         </Box>

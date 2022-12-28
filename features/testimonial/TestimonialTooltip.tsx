@@ -25,7 +25,7 @@ const TestimonialTooltip = () => {
     <Box
       onMouseEnter={showTooltip}
       onMouseLeave={hideTooltip}
-      display="flex"
+      display={['flex', 'flex', 'flex']}
       flexDirection="column"
       alignItems="center"
       
@@ -114,9 +114,9 @@ const TestimonialTooltip = () => {
         </SlideFade>
       )}
 
-      <Box boxSize="1.875rem">
+      <Box boxSize={[ "1rem","1.875rem","1.875rem"]}>
         <Image
-          src="/assets/images/tooltip/location.png"
+          src="/assets/icons/locationPoint.svg"
           alt="testimonial image"
         />
       </Box>
