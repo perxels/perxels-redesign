@@ -27,12 +27,12 @@ export const EventPlayback = () => {
               md: 'repeat(3, 1fr)',
               lg: 'repeat(3, 1fr)',
             }}
-            gap={6}
+            gap={[4, 6,  6]}
           >
             {eventPlayBack.map(({ imageSrc }) => (
               <Box
                 key={imageSrc}
-                w={{ base: '23rem', md: '100%', lg: '100%' }}
+                w={{ base: '20rem', md: '100%', lg: '100%' }}
                 h="100%"
               >
                 <Image src={imageSrc} alt="event" />
@@ -41,7 +41,7 @@ export const EventPlayback = () => {
           </Grid>
         </Box>
 
-        <Center>
+        {/* <Center>
           <Button
             bg="transparent"
             border="1px solid #34296B"
@@ -51,7 +51,7 @@ export const EventPlayback = () => {
           >
             Load More
           </Button>
-        </Center>
+        </Center> */}
       </MainContainer>
     </Box>
   )

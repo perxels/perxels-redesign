@@ -15,6 +15,7 @@ import { AiOutlineCalendar } from 'react-icons/ai'
 import { IoLocationOutline } from 'react-icons/io5'
 import { EventForm } from './'
 import { MainContainer } from '../../layouts'
+import { BsBoxArrowDownLeft } from 'react-icons/bs'
 export const EventHero = () => {
   return (
     <MainContainer bg={`url(./assets/images/heroBg.png) center/cover no-repeat`}>
@@ -104,12 +105,12 @@ export const EventHero = () => {
               alignItems={'center'}
               columnGap={{ base: '0.3rem', lg: '0.5625rem' }}
             >
-              <Text
-            fontSize={{ base: '1rem', lg: '1.79875rem' }}
+              <Box
+            boxSize={{ base: '1rem', lg: '1.79875rem' }}
                 fontWeight={'bold'}
               >
-                <IoLocationOutline />
-              </Text>
+                <Image src="/assets/icons/gps.svg" alt="location" />
+              </Box>
               <Text
                   fontSize={{ base: '0.7rem', lg: '1.295rem' }}
                 fontWeight={'bold'}
