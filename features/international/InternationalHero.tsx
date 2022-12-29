@@ -15,9 +15,9 @@ export const InternationalHero = () => {
   return (
     <Box>
       <MainContainer>
-        <SimpleGrid columns={[2]} spacing="3rem" py="2rem">
+        <SimpleGrid columns={[1, 1, 1, 2]} spacing="3rem" py="2rem">
           <Center flexDir="column" alignItems="flex-start" pos="relative">
-            <Heading fontSize="8xl" color="brand.dark.200">
+            <Heading fontSize={["6xl", "6xl", "6xl", "8xl"]} color="brand.dark.200">
               Educating{' '}
               <Box color="brand.purple.500" as="span" textTransform="uppercase">
                 career switchers
@@ -28,7 +28,7 @@ export const InternationalHero = () => {
               </Box>
             </Heading>
 
-            <Text fontSize="3xl" color="brand.dark.200" mt="0.75rem">
+            <Text fontSize={["xl", "xl", "xl", "3xl"]} color="brand.dark.200" mt="0.75rem">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </Text>
@@ -41,8 +41,8 @@ export const InternationalHero = () => {
               src="/assets/images/international/flag.svg"
               alt="flag"
               pos="absolute"
-              right="9rem"
-              top="12rem"
+              right={["4rem", "4rem", "4rem", "9rem"]}
+              top={["2.5rem", "2.5rem", "2.5rem", "12rem"]}
               w="3.625rem"
               h="auto"
             />
@@ -65,10 +65,10 @@ export const InternationalHero = () => {
       <MainContainer bg="brand.purple.500">
         <Flex alignItems="center" justifyContent="space-between" py="1.875rem">
           <Box>
-            <Heading textTransform="uppercase" fontSize="4xl" color="brand.white">
+            <Heading textTransform="uppercase" fontSize={["2xl", "2xl", "2xl", "4xl"]} color="brand.white">
                 We have the vision to train in 2023{' '}
             </Heading>
-            <Heading textTransform="uppercase" fontSize="9xl" color="brand.white">2000+</Heading>
+            <Heading textTransform="uppercase" fontSize={["7xl", "7xl", "7xl", "9xl"]} color="brand.white">2000+</Heading>
           </Box>
 
           <Button h="3.75rem" w="12.75rem" variant="outline" borderColor="brand.white" color="brand.white" _hover={{

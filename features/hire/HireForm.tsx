@@ -13,15 +13,15 @@ export const HireForm = () => {
             title="Complete the form to hire."
             subTitle="HIRE OUR GRADUTES"
           />
-          <VStack spacing="3.125rem" as="form" maxW="1030px" m="0 auto">
+          <VStack spacing={["1rem", "1rem", "1rem", "3.125rem"]} as="form" maxW="1030px" m="0 auto">
             {/* name */}
-            <HStack w="full" spacing="2rem">
+            <SimpleGrid columns={[1, 1, 1, 2]} w="full" spacing={["1rem", "1rem", "1rem", "2rem"]}>
                 <InputWrapper label="FULL NAME">
                     <Input 
                         type="text"
                         placeholder="Enter your full name"
                         w="full"
-                        h="5rem"
+                        h={["3rem", "3rem", "3rem", "5rem"]}
                     />
                 </InputWrapper>
                 <InputWrapper label="COMPANY NAME">
@@ -29,12 +29,12 @@ export const HireForm = () => {
                         type="text"
                         placeholder="Enter Company Name"
                         w="full"
-                        h="5rem"
+                        h={["3rem", "3rem", "3rem", "5rem"]}
                     />
                 </InputWrapper>
-            </HStack>
+            </SimpleGrid>
             {/* Description */}
-            <HStack w="full" spacing="2rem">
+            <HStack w="full" spacing={["1rem", "1rem", "1rem", "2rem"]}>
                 <InputWrapper label="Project Description">
                     <Textarea
                         placeholder="Tell Us a little about your Project..."
@@ -45,13 +45,13 @@ export const HireForm = () => {
                 </InputWrapper>
             </HStack>
             {/* contact */}
-            <SimpleGrid columns={[1, 1, 1, 2]} w="full" spacing="2rem">
+            <SimpleGrid columns={[1, 1, 1, 2]} w="full" spacing={["1rem", "1rem", "1rem", "2rem"]}>
                 <InputWrapper label="PHONE NUMBER">
                     <Input 
                         type="tel"
                         placeholder="Enter your Phone Number"
                         w="full"
-                        h="5rem"
+                        h={["3rem", "3rem", "3rem", "5rem"]}
                     />
                 </InputWrapper>
                 <InputWrapper label="EMAIL ADDRESS">
@@ -59,7 +59,7 @@ export const HireForm = () => {
                         type="email"
                         placeholder="Enter Email Address"
                         w="full"
-                        h="5rem"
+                        h={["3rem", "3rem", "3rem", "5rem"]}
                     />
                 </InputWrapper>
             </SimpleGrid>
@@ -67,30 +67,30 @@ export const HireForm = () => {
             <Heading color="brand.dark.200" fontSize="1.5rem" w="full">What is the best time to schdule a meeting with you?</Heading>
 
             {/* contact */}
-            <SimpleGrid columns={[1, 1, 2, 3]} w="full" spacing="2rem">
+            <SimpleGrid pb={["2rem", "2rem", "2rem", "0"]} columns={[1, 1, 2, 3]} w="full" spacing={["1rem", "1rem", "1rem", "2rem"]}>
                 <InputWrapper label="Date">
                     <Input 
                         type="date"
                         w="full"
-                        h="5rem"
+                        h={["3rem", "3rem", "3rem", "5rem"]}
                     />
                 </InputWrapper>
                 <InputWrapper label="Time">
                     <Input 
                         type="date"
                         w="full"
-                        h="5rem"
+                        h={["3rem", "3rem", "3rem", "5rem"]}
                     />
                 </InputWrapper>
                 <InputWrapper label="Hiring type">
-                    <Select h="5rem">
+                    <Select h={["3rem", "3rem", "3rem", "5rem"]}>
                         <option>Hire Perxels</option>
                         <option>Hire a Graduate</option>
                     </Select>
                 </InputWrapper>
             </SimpleGrid>
 
-            <Button h="5rem" w="full" maxW="437px">Submit</Button>
+            <Button h={["3rem", "3rem", "3rem", "5rem"]} w="full" maxW="437px">Submit</Button>
           </VStack>
         </Box>
       </MainContainer>

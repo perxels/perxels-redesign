@@ -1,7 +1,5 @@
-import { FiInstagram, FiTwitter } from 'react-icons/fi';
-import { FaWhatsapp } from 'react-icons/fa';
-import { RiFacebookBoxLine, RiLinkedinBoxLine } from 'react-icons/ri';
-
+import { AiFillInstagram } from 'react-icons/ai';
+import { FaFacebookF, FaLinkedin, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 interface FooterSocialLink {
     name: string;
     url: string;
@@ -12,27 +10,22 @@ export const FooterSocialLinks: FooterSocialLink[] = [
     {
         name: 'Twitter',
         url: 'https://www.twitter.com/',
-        icon: FiTwitter,
+        icon: FaTwitter,
     },
     {
         name: 'Instagram',
         url: 'https://www.instagram.com/',
-        icon: FiInstagram,
+        icon: AiFillInstagram,
     },
     {
         name: 'LinkedIn',
         url: 'https://www.linkedin.com/',
-        icon: RiLinkedinBoxLine,
-    },
-    {
-        name: 'WhatsApp',
-        url: 'https://www.whatsapp.com/',
-        icon: FaWhatsapp,
+        icon: FaLinkedin,
     },
     {
         name: 'Facebook',
         url: 'https://www.facebook.com/',
-        icon: RiFacebookBoxLine,
+        icon: FaFacebookF,
     }
 ];
 

@@ -23,9 +23,9 @@ export const HireAsCompany = () => {
       <MainContainer bg="none">
         <SimpleGrid
           columns={[1, 1, 1, 2]}
-          spacing={['2rme', '2rem', '2rem', '3.125rem']}
+          spacing={['3rem', '3rem', '3rem', '3.125rem']}
           py={['3rem', '3rem', '5rem']}
-          px="1rem"
+          px={["0", "0", "0", "1rem"]}
         >
           <Img
             src="./assets/images/hire/hireCard1.jpg"
@@ -40,7 +40,7 @@ export const HireAsCompany = () => {
             h="full"
             w="full"
             flexDir="column"
-            alignItems={['center', 'center', 'flex-start']}
+            alignItems={['flex-start']}
             justifyContent="center"
           >
             <BgHeader>HIRE Perxels</BgHeader>

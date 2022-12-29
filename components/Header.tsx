@@ -1,6 +1,7 @@
 import { Box, Button, Container, Flex, Icon, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
+import { IoCloseSharp } from 'react-icons/io5'
 import { RiMenu3Line } from 'react-icons/ri'
 import { MainContainer } from '../layouts'
 import HeaderDropdown from './HeaderDropdown'
@@ -79,7 +80,7 @@ const Header = ({ isDark = false }) => {
           </Button>
 
           <Icon
-            as={RiMenu3Line}
+            as={!showDropdown ? RiMenu3Line : IoCloseSharp}
             fontSize="1.875rem"
             color={isDark ? 'brand.white' : 'brand.primary.500'}
             cursor="pointer"

@@ -17,12 +17,13 @@ export const ListWrapper = ({
       {lists.map((list) => (
         <ListItem
           key={list}
-          display="flex"
           alignItems="center"
           gap="1.25rem"
           fontSize="1.25rem"
           fontWeight="light"
           color={color}
+          display="grid"
+          gridTemplateColumns="1.25rem 1fr"
         >
           <Box w="1.25rem" h="1.25rem" bg={bg} rounded="3px" />{' '}
           {list}

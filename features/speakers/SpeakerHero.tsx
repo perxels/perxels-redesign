@@ -11,15 +11,15 @@ export const SpeakerHero = () => {
       backgroundSize={'cover'}
     >
       <MainContainer bg="none">
-        <SimpleGrid columns={2} gap="2rem" py="4rem">
-          <VStack justifyContent="center" position="relative">
+        <SimpleGrid columns={[1, 1, 1, 2]} gap="2rem" py="4rem">
+          <VStack pt={["2rem", "2rem", "2rem", "0"]} pb={["4rem", "4rem", "4rem", "0"]} justifyContent="center" position="relative">
             <Img
               src="/assets/images/speakers/pattern1.svg"
               w="2.5rem"
               h="auto"
               alt="pattern"
               pos="absolute"
-              top="3rem"
+              top={["-1rem", "-1rem", "-1rem", "3rem"]}
               left="0"
             />
 
@@ -29,8 +29,9 @@ export const SpeakerHero = () => {
               h="auto"
               alt="pattern"
               pos="absolute"
-              top="-2rem"
+              top="-4rem"
               left="8rem"
+            //   display={["none", "none", "none", "block"]}
             />
 
             <Img
@@ -41,16 +42,7 @@ export const SpeakerHero = () => {
               pos="absolute"
               top="-3rem"
               left="24rem"
-            />
-
-            <Img
-              src="/assets/images/speakers/pattern3.svg"
-              w="1.5rem"
-              h="auto"
-              alt="pattern"
-              pos="absolute"
-              top="-3rem"
-              left="24rem"
+              display={["none", "none", "none", "block"]}
             />
 
             <Img
@@ -61,15 +53,16 @@ export const SpeakerHero = () => {
               pos="absolute"
               top="-3rem"
               right="-16rem"
+              display={["none", "none", "none", "block"]}
             />
 
             <Img
               src="/assets/images/speakers/pattern5.svg"
-              w="3rem"
+              w={["2rem", "2rem", "2rem", "3rem"]}
               h="auto"
               alt="pattern"
               pos="absolute"
-              bottom="3rem"
+              bottom={["1rem", "1rem", "1rem", "3rem"]}
               left="0"
             />
 
@@ -79,17 +72,17 @@ export const SpeakerHero = () => {
               h="auto"
               alt="pattern"
               pos="absolute"
-              bottom="-2rem"
+              bottom={["-3rem", "-3rem", "-3rem", "-2rem"]}
               left="8rem"
             />
 
-            <Heading as="h1" fontSize="8xl" color="brand.dark.200">
+            <Heading as="h1" fontSize={["6xl", "6xl", "7xl", "8xl"]} pr={["2rem", "2rem", "2rem", "0"]} color="brand.dark.200">
               Thank you for accepting to speak at our{' '}
               <Box as="span" color="brand.pink.700">
                 AMA Session
               </Box>
             </Heading>
-            <Text fontSize="3xl" color="brand.dark.200">
+            <Text fontSize={["xl", "xl", "xl", "3xl"]} color="brand.dark.200">
               You have the knowledge and the expertise, we have the platform.
               Join us up-skill the next generation of tech talents..
             </Text>
@@ -100,9 +93,10 @@ export const SpeakerHero = () => {
       </MainContainer>
       <Img
         src="/assets/images/speakers/bottomPattern.png"
-        w="full"
-        h="auto"
+        w={["auto", "auto", "auto", "full"]}
+        h={["3rem", "3rem", "3rem", "auto"]}
         alt="bottom pattern"
+        objectFit="cover"
       />
     </Box>
   )

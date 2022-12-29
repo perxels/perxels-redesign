@@ -1,6 +1,7 @@
 import React from 'react'
+import { EventPlayback } from '../features/events'
 import { HeroSubSection } from '../features/home'
-import { SpeakerHero } from '../features/speakers'
+import { PastSpeakers, SpeakerHero } from '../features/speakers'
 import { MainLayout } from '../layouts'
 
 const speakers = () => {
@@ -8,6 +9,8 @@ const speakers = () => {
     <MainLayout>
         <SpeakerHero />
         <HeroSubSection />
+        <PastSpeakers />
+        <EventPlayback />
     </MainLayout>
   )
 }

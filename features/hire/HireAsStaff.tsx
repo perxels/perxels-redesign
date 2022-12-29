@@ -23,15 +23,15 @@ export const HireAsStaff = () => {
       <MainContainer bg="none">
         <SimpleGrid
           columns={[1, 1, 1, 2]}
-          spacing={['2rem', '2rem', '2rem', '3.125rem']}
+          spacing={['3rem', '3rem', '3rem', '3.125rem']}
           py="5rem"
-          px="1rem"
+          px={["0", "0", "0", "1rem"]}
         >
           <Flex
             h="full"
             w="full"
             flexDir="column"
-            alignItems={['center', 'center', 'center', 'flex-start']}
+            alignItems={['flex-start']}
             justifyContent="center"
           >
             <BgHeader bg="brand.yellow.500" color="brand.purple.500">
