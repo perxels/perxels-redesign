@@ -175,10 +175,6 @@ export const CaseStudy = () => {
             </Box>
           )}
 
-          <Box>
-            <ContactStudent />
-          </Box>
-
           <Center gap="1rem" mt="3rem">
             {studentData?.prevLink && (
               <Button as={Link} href={studentData?.prevLink} variant="link" color="brand.gray.700">

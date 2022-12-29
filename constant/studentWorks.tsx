@@ -96,14 +96,6 @@ export const studentWorkDetails: WorkDetails = {
       link: 'https://www.linkedin.com/in/mosopeaderibigbe/',
       name: 'Mosope Aderibigbe',
     },
-    twitter: {
-      link: 'https://twitter.com/mo_ssope',
-      name: '@mo_ssope',
-    },
-    behance: {
-      link: 'https://www.behance.net/mosopeaderibigbe',
-      name: 'behance.net/mosopeaderibigbe',
-    },
     heroImg: '/assets/images/class-work/mosope/heroImage.png',
     workCover: {
       w1: '/assets/images/class-work/mosope/work-cover-1.jpg',
