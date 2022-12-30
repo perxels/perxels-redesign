@@ -86,8 +86,7 @@ export const PastSpeakers = () => {
       {
         breakpoint: 600,
         settings: {
-          vertical: true,
-          slidesToShow: 3,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -106,24 +105,24 @@ export const PastSpeakers = () => {
         <Box 
             pos="absolute"
             w="full"
-            top="-3rem"
+            top={["-8rem", "-8rem", "-8rem", "-6rem"]}
             left="0"
             h="150px"
             bg="brand.white"
             zIndex="1"
-            roundedBottomRight="7%"
-            roundedBottomLeft="7%"
+            roundedBottomRight={["25%", "25%", "25%", "25%"]}
+            roundedBottomLeft={["25%", "25%", "25%", "25%"]}
         />
         <Box 
             pos="absolute"
             w="full"
-            bottom="-8rem"
+            bottom={["-8rem", "-8rem", "-8rem", "-8rem"]}
             left="0"
             h="150px"
             bg="brand.white"
             zIndex="1"
-            roundedTopRight="7%"
-            roundedTopLeft="7%"
+            roundedTopRight={["25%", "25%", "25%", "25%"]}
+            roundedTopLeft={["25%", "25%", "25%", "25%"]}
         />
         <Slider {...settings}>
           {sliderData.map(({ id, img, name, title }) => (
