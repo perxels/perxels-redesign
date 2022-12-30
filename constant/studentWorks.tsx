@@ -69,7 +69,7 @@ export const StudentWorksData: StudentWorksProps[] = [
   {
     id: 5,
     imgUrl: './assets/images/sudent-work/omame.jpg',
-    link: '/student-work/omame',
+    link: '/student-works/omame',
   },
   {
     id: 6,
