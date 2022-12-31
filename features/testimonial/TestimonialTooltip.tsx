@@ -118,6 +118,7 @@ const TestimonialTooltip = () => {
         <Image
           src="/assets/icons/locationPoint.svg"
           alt="testimonial image"
+        
         />
       </Box>
     </Box>

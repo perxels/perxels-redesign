@@ -95,13 +95,7 @@ export const TestimonyHero = () => {
         >
         <TestimonialTooltip/>
         </Box>
-        <Box
-        pos={'absolute'}
-        bottom={ ['22%','20%' ,'37%']}
-        left={['28%','40%','53%']}
-        >
-        <TestimonialTooltip/>
-        </Box>
+      
         <Box
         pos={'absolute'}
         bottom={ ['23%','20%' ,'37%']}

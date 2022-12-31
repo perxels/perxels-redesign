@@ -24,14 +24,15 @@ const Header = ({ isDark = false }) => {
       <MainContainer bg="none">
         <Flex alignItems="center" justifyContent="space-between" py="1.25rem">
           <Flex alignItems="center" gap="6.875rem">
+            <Link href="/">
             <Logo color={isDark ? '#FDE85C' : '#34296B'} />
-
+            </Link>
             <Flex
               display={['none', 'none', 'none', 'flex']}
               alignItems="center"
               gap="4.375rem"
             >
-              <Link href="#">
+              <Link href="/testimonials">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -40,7 +41,7 @@ const Header = ({ isDark = false }) => {
                   Testimonies
                 </Text>
               </Link>
-              <Link href="#">
+              <Link href="/student-works">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -49,7 +50,7 @@ const Header = ({ isDark = false }) => {
                   Student Works
                 </Text>
               </Link>
-              <Link href="#">
+              <Link href="/events">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -58,7 +59,7 @@ const Header = ({ isDark = false }) => {
                   Events
                 </Text>
               </Link>
-              <Link href="#">
+              <Link href="/hire">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -70,14 +71,17 @@ const Header = ({ isDark = false }) => {
             </Flex>
           </Flex>
 
+          <Link href="/class-plans">
           <Button
             h="3.125rem"
             variant={isDark ? 'solid-white' : 'solid'}
             display={['none', 'none', 'none', 'flex']}
             px="2.25rem"
           >
+          
             View Class Plans
           </Button>
+          </Link>
 
           <Icon
             as={!showDropdown ? RiMenu3Line : IoCloseSharp}
