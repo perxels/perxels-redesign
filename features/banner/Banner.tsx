@@ -5,7 +5,7 @@ import { AiOutlineCalendar } from 'react-icons/ai'
 import { IoLocationOutline } from 'react-icons/io5'
 import { bannerContent } from '../../constant'
 import { MainContainer } from '../../layouts'
-
+import Link from 'next/link'
 export const Banner = () => {
   return (
     <MainContainer bg="#E3719C">
@@ -85,6 +85,7 @@ export const Banner = () => {
           </Flex>
 
           <Box>
+              <Link href="/events">
             <Button
               variant={'link'}
               // height="3.4375rem"
@@ -97,6 +98,7 @@ export const Banner = () => {
             >
               Register Here
             </Button>
+            </Link>
           </Box>
         </Flex>
       </Box>

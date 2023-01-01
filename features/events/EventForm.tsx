@@ -22,10 +22,10 @@ export const EventForm = () => {
   return (
     <VStack
       as="form"
-      spacing="7"
+      spacing={{ base: "1.625rem", md: "1.809375rem"}}
       backgroundColor={'#F6F7FD'}
-      py={{ base: 4, md: 14 }}
-      px={{ base: 2, md: 10 }}
+      py={{ base: "1.5625em", md: "3.441875rem" }}
+      px={{ base: "1.61375rem", md: "2.691875rem" }}
     >
       <EventInput id="name" type="text" placeholder="Full Name*" />
       <EventInput id="email" type="email" placeholder="Email Address*" />

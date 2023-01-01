@@ -12,7 +12,7 @@ export const TestimonyHero = () => {
         display={'flex'}
         justifyContent={'center'}
         h={['auto', 'auto', '100vh']}
-        p={['0 1.25rem', '0 0']}
+        p={['0 0rem', '0 0']}
         pb={['8rem', '0', '0']}
         lineHeight={['0.7', 'auto', 'auto']}
         position="relative"
@@ -95,13 +95,7 @@ export const TestimonyHero = () => {
         >
         <TestimonialTooltip/>
         </Box>
-        <Box
-        pos={'absolute'}
-        bottom={ ['22%','20%' ,'37%']}
-        left={['28%','40%','53%']}
-        >
-        <TestimonialTooltip/>
-        </Box>
+      
         <Box
         pos={'absolute'}
         bottom={ ['23%','20%' ,'37%']}

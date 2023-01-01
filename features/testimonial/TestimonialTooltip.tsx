@@ -6,13 +6,26 @@ import {
   Image,
   Text,
   useMediaQuery,
-  SlideFade
+  SlideFade,
+  keyframes
 } from '@chakra-ui/react'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 
+const pulsate = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+`
+
 const TestimonialTooltip = () => {
   const [active, setActive] = useState<boolean>(false)
-
+  const pulseAnimation = `${pulsate} 1s ease-in-out infinite`
   const showTooltip = () => {
     setActive(true)
   }
@@ -114,10 +127,13 @@ const TestimonialTooltip = () => {
         </SlideFade>
       )}
 
-      <Box boxSize={[ "1rem","1.875rem","1.875rem"]}>
+      <Box boxSize={[ "1rem","1.875rem","1.875rem"]}
+      animation={pulseAnimation}
+      >
         <Image
           src="/assets/icons/locationPoint.svg"
           alt="testimonial image"
+        
         />
       </Box>
     </Box>
