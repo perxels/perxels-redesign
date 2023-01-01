@@ -12,7 +12,7 @@ export const TestimonyHero = () => {
         display={'flex'}
         justifyContent={'center'}
         h={['auto', 'auto', '100vh']}
-        p={['0 1.25rem', '0 0']}
+        p={['0 0rem', '0 0']}
         pb={['8rem', '0', '0']}
         lineHeight={['0.7', 'auto', 'auto']}
         position="relative"
