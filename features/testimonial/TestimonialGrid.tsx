@@ -48,6 +48,10 @@ export const TestimonialGrid = ({
           : [0, 9]
     }
 
+    if (!isLargerThan800) {
+      slicedIndes.current = [0, testimonialContent.length]
+    }
+
     return testimonialContent?.slice(
       slicedIndes.current[0],
       slicedIndes.current[1],
