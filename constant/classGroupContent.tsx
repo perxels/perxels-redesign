@@ -64,7 +64,7 @@ export const classGroupDetails = [
     {
         title: "Basic Class",
         id: 'basic-class',
-        classDur: "9 Weeks.",
+        classDur: "7 Weeks.",
         classTime: "2-3 times a week.",
         classType: "Live Virtual Training.",
         installments: ["70% On Admission,", "30% after one month."],
