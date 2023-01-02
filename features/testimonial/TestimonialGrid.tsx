@@ -42,10 +42,10 @@ export const TestimonialGrid = ({
     if (isLargerThan800 && isTestimonial) {
       slicedIndes.current =
         lastTestimonialIndex !== 0
-          ? [lastTestimonialIndex, lastTestimonialIndex + 9]
+          ? [lastTestimonialIndex, lastTestimonialIndex + 8]
           : lastTestimonialIndex === testimonialContent.length
           ? [lastTestimonialIndex, testimonialContent.length]
-          : [0, 9]
+          : [0, 8]
     }
 
     if (!isLargerThan800) {
@@ -98,11 +98,14 @@ export const TestimonialGrid = ({
             cursor="pointer"
             transition="all 0.2s ease-in-out"
             as="button"
-            disabled={
-              slicedIndes.current[0] === 0
-            }
+            disabled={slicedIndes.current[0] === 0}
             onClick={() => {
-              setLastTestimonialIndex(prev => prev - 1)
+              setLastTestimonialIndex((prev) => {
+                if (isTestimonial) {
+                  return prev - 8 <= 0 ? 0 : prev - 8
+                }
+                return prev - 4 <= 0 ? 0 : prev - 4
+              })
             }}
           >
             <Icon
@@ -123,7 +126,7 @@ export const TestimonialGrid = ({
             h="3.125rem"
             borderWidth="1px"
             borderColor={
-              slicedIndes.current[1] === testimonialContent.length
+              slicedIndes.current[1] >= testimonialContent.length
                 ? 'brand.gray.10'
                 : 'brand.purple.500'
             }
@@ -131,18 +134,25 @@ export const TestimonialGrid = ({
             cursor="pointer"
             transition="all 0.2s ease-in-out"
             as="button"
-            disabled={
-              slicedIndes.current[1] === testimonialContent.length
-            }
+            disabled={slicedIndes.current[1] >= testimonialContent.length}
             onClick={() => {
-              setLastTestimonialIndex(prev => prev + 1)
+              setLastTestimonialIndex((prev) => {
+                if (isTestimonial) {
+                  return prev + 8 >= testimonialContent.length
+                    ? testimonialContent.length - 1
+                    : prev + 8
+                }
+                return prev + 4 >= testimonialContent.length
+                  ? testimonialContent.length - 1
+                  : prev + 4
+              })
             }}
           >
             <Icon
               as={FiArrowRight}
               fontSize="1.5rem"
               color={
-                slicedIndes.current[1] === testimonialContent.length
+                slicedIndes.current[1] >= testimonialContent.length
                   ? 'brand.gray.10'
                   : 'brand.purple.500'
               }
