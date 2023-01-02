@@ -12,10 +12,10 @@ const international = () => {
         <InternationalHero />
         <HeroSubSection />
         <MarqueeComp />
+        <Testimonial />
         <ClassPlan />
         <Expectation />
-        <OurClassGroup />
-        <Testimonial />
+        <OurClassGroup title="other class groups" />
     </MainLayout>
   )
 }

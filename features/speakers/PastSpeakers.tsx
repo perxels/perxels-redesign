@@ -39,7 +39,7 @@ const sliderData: SliderDataProps[] = [
   },
   {
     id: 5,
-    img: '/assets/images/speakers/abbas.png',
+    img: '/assets/images/speakers/abbas.jpg',
     name: 'Abbas Rianat',
     title: 'Product Designer, Plaqad',
   },
@@ -110,19 +110,19 @@ export const PastSpeakers = () => {
           h="150px"
           bg="brand.white"
           zIndex="1"
-          roundedBottomRight={['25%', '25%', '25%', '25%']}
-          roundedBottomLeft={['25%', '25%', '25%', '25%']}
+          roundedBottomRight={['5%', '5%', '5%', '15%']}
+          roundedBottomLeft={['5%', '5%', '5%', '15%']}
         />
         <Box
           pos="absolute"
           w="full"
-          bottom={['-8rem', '-8rem', '-8rem', '-8rem']}
+          bottom={['-8rem', '-8rem', '-8rem', '-12rem']}
           left="0"
           h="150px"
           bg="brand.white"
           zIndex="1"
-          roundedTopRight={['25%', '25%', '25%', '25%']}
-          roundedTopLeft={['25%', '25%', '25%', '25%']}
+          roundedTopRight={['5%', '5%', '5%', '15%']}
+          roundedTopLeft={['5%', '5%', '5%', '15%']}
         />
         <Slider {...settings}>
           {sliderData.map(({ id, img, name, title }) => (

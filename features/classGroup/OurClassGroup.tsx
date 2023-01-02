@@ -5,12 +5,12 @@ import { ClassGroupContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import { ClassCard } from './ClassCard'
 
-export const OurClassGroup = () => {
+export const OurClassGroup = ({ title }: { title?: string }) => {
   return (
     <Box mt={["3.75rem", "3.75rem", "7.5rem"]}>
       <MainContainer>
         <SectionHeader
-          subTitle="Our CLass Groups"
+          subTitle={title || "Our CLass Groups"}
           title="Here At Perxels,"
           paragraph="Our class groups are designed to accommodate your current level in design and unique learning process"
         />

@@ -1,11 +1,22 @@
 import React from 'react'
-import { Box, SimpleGrid, Image, Grid, Center, Button } from '@chakra-ui/react'
+import {
+  Box,
+  SimpleGrid,
+  Image,
+  Grid,
+  Center,
+  Button,
+  Link,
+  Icon,
+} from '@chakra-ui/react'
 import { MainContainer } from '../../layouts'
 import { SectionHeader } from '../../components'
 import { eventPlayBack } from '../../constant/eventPlaybeck'
+import { BsFillPlayCircleFill } from 'react-icons/bs'
+import { EventCard } from './EventCard'
 export const EventPlayback = () => {
   return (
-    <Box my={"3rem"}>
+    <Box my={'3rem'}>
       <MainContainer>
         <Box display="flex" justifyContent="center" alignItems="center">
           <Box w={{ base: '100%', md: '50%' }}>
@@ -27,31 +38,13 @@ export const EventPlayback = () => {
               md: 'repeat(3, 1fr)',
               lg: 'repeat(3, 1fr)',
             }}
-            gap={[4, 6,  6]}
+            gap={[4, 6, 6]}
           >
-            {eventPlayBack.map(({ imageSrc }) => (
-              <Box
-                key={imageSrc}
-                w={{ base: '20rem', md: '100%', lg: '100%' }}
-                h="100%"
-              >
-                <Image src={imageSrc} alt="event" />
-              </Box>
+            {eventPlayBack.map(({ imageSrc, link }) => (
+              <EventCard key={imageSrc} imageSrc={imageSrc} link={link} />
             ))}
           </Grid>
         </Box>
-
-        {/* <Center>
-          <Button
-            bg="transparent"
-            border="1px solid #34296B"
-            color="brand.purple.500"
-            fontSize={'1.560625rem'}
-            p={'1.5rem 3rem'}
-          >
-            Load More
-          </Button>
-        </Center> */}
       </MainContainer>
     </Box>
   )

@@ -16,7 +16,7 @@ export const SpeakerHero = () => {
 
             <Img
               src="/assets/images/speakers/speaker-top.png"
-              w="6rem"
+              w="3rem"
               h="auto"
               alt="pattern"
               pos="absolute"
