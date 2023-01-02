@@ -10,7 +10,7 @@ export const HeroAnimation = () => {
           width={226}
           height={370}
           alt="hero"
-          src="/assets/images/hero/2.png"
+          src="/assets/images/hero/2-hero.png"
         />
       </Box>
       <Box pos="relative">
@@ -40,7 +40,7 @@ export const HeroAnimation = () => {
           mx="auto"
           maxW="auto"
           alt="hero"
-          src="/assets/images/hero/1.png"
+          src="/assets/images/hero/1-hero.png"
         />
 
         <Box
@@ -66,7 +66,7 @@ export const HeroAnimation = () => {
           width={226}
           height={370}
           alt="hero"
-          src="/assets/images/hero/3.png"
+          src="/assets/images/hero/3-hero.png"
         />
       </Box>
     </SimpleGrid>
