@@ -6,7 +6,7 @@ const testimonials = () => {
   return (
    <MainLayout>
         <TestimonyHero />
-        <TestimonyGridContainer/>
+        <TestimonyGridContainer />
    </MainLayout>
   )
 }

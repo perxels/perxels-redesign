@@ -174,7 +174,18 @@ const Footer = () => {
               Pages
             </Text>
 
-            <Link w="full">
+            <Link w="full" href='/'>
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+                Home
+              </Text>
+            </Link>
+            <Link w="full" href='/testimonials'>
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -185,7 +196,7 @@ const Footer = () => {
                 Testimonies
               </Text>
             </Link>
-            <Link w="full">
+            <Link w="full" href='/class-plans'>
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -196,7 +207,7 @@ const Footer = () => {
                 Enroll now
               </Text>
             </Link>
-            <Link w="full">
+            <Link w="full" href='/class-plans'>
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}

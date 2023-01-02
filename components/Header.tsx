@@ -59,13 +59,13 @@ const Header = ({ isDark = false }) => {
                   Events
                 </Text>
               </Link>
-              <Link href="/hire">
+              <Link href="/partners">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
                   fontSize="xl"
                 >
-                  Hire
+                  Be a Partner
                 </Text>
               </Link>
             </Flex>

@@ -21,7 +21,14 @@ const StudentCaseStudy = ({ imgUrl, link }: CaseStudyProps) => {
     >
       <Img rounded="6px" w="full" h="auto" src={imgUrl} alt="student" />
       {isHover && (
-        <Center pos="absolute" top="0" left="0" w="full" h="full" bg="brand.overlay.300">
+        <Center
+          pos="absolute"
+          top="0"
+          left="0"
+          w="full"
+          h="full"
+          bg="brand.overlay.300"
+        >
           <Icon as={AiOutlineLink} fontSize="2rem" color="brand.white" />
           <Text fontSize="2xl" color="brand.white">
             View Case Study

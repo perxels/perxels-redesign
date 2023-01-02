@@ -102,50 +102,56 @@ export const PastSpeakers = () => {
       </MainContainer>
 
       <Box pos="relative" overflow="hidden">
-        <Box 
-            pos="absolute"
-            w="full"
-            top={["-8rem", "-8rem", "-8rem", "-6rem"]}
-            left="0"
-            h="150px"
-            bg="brand.white"
-            zIndex="1"
-            roundedBottomRight={["25%", "25%", "25%", "25%"]}
-            roundedBottomLeft={["25%", "25%", "25%", "25%"]}
+        <Box
+          pos="absolute"
+          w="full"
+          top={['-8rem', '-8rem', '-8rem', '-6rem']}
+          left="0"
+          h="150px"
+          bg="brand.white"
+          zIndex="1"
+          roundedBottomRight={['25%', '25%', '25%', '25%']}
+          roundedBottomLeft={['25%', '25%', '25%', '25%']}
         />
-        <Box 
-            pos="absolute"
-            w="full"
-            bottom={["-8rem", "-8rem", "-8rem", "-8rem"]}
-            left="0"
-            h="150px"
-            bg="brand.white"
-            zIndex="1"
-            roundedTopRight={["25%", "25%", "25%", "25%"]}
-            roundedTopLeft={["25%", "25%", "25%", "25%"]}
+        <Box
+          pos="absolute"
+          w="full"
+          bottom={['-8rem', '-8rem', '-8rem', '-8rem']}
+          left="0"
+          h="150px"
+          bg="brand.white"
+          zIndex="1"
+          roundedTopRight={['25%', '25%', '25%', '25%']}
+          roundedTopLeft={['25%', '25%', '25%', '25%']}
         />
         <Slider {...settings}>
           {sliderData.map(({ id, img, name, title }) => (
-            <Box
-              key={id}
-              pos="relative"
-              px="1rem"
-            >
-                <Box overflowX="hidden">
-                    <Img 
-                        src={img}
-                        alt={name}
-                        w="full"
-                        h="auto"
-                    />
+            <Box key={id} pos="relative" px="1rem">
+              <Box overflowX="hidden">
+                <Img src={img} alt={name} w="full" h="auto" />
 
-                    <Center pos="absolute" w="full" bottom="0">
-                        <Center justifyContent="flex-start" flexDir="column" py="2rem" bg="brand.yellow.500" pos="absolute" h="14rem" rounded="50%" left="46.7%" transform="translateX(-50%)" w="95%">
-                            <Heading fontSize="4xl" textAlign="center">{name}</Heading>
-                            <Text maxW="352px" px="auto" textAlign="center">{title}</Text>
-                        </Center>
-                    </Center>
-                </Box>
+                <Center pos="absolute" w="full" bottom={["0.5rem", "0.5rem", "0.5rem", "0"]}>
+                  <Center
+                    justifyContent="flex-start"
+                    flexDir="column"
+                    py={['1rem', '1rem', '1rem', '2rem']}
+                    bg="brand.yellow.500"
+                    pos="absolute"
+                    h="14rem"
+                    rounded={['20%', '20%', '20%', '50%']}
+                    left="46.7%"
+                    transform="translateX(-50%)"
+                    w="95%"
+                  >
+                    <Heading fontSize="4xl" textAlign="center">
+                      {name}
+                    </Heading>
+                    <Text maxW="352px" px="1rem" textAlign="center">
+                      {title}
+                    </Text>
+                  </Center>
+                </Center>
+              </Box>
             </Box>
           ))}
         </Slider>

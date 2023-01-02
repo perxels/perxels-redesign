@@ -36,16 +36,6 @@ export const InternationalHero = () => {
             <Button h="3rem" mt="1.25rem">
               Get Started
             </Button>
-
-            <Img
-              src="/assets/images/international/flag.svg"
-              alt="flag"
-              pos="absolute"
-              right={["4rem", "4rem", "4rem", "9rem"]}
-              top={["2.5rem", "2.5rem", "2.5rem", "12rem"]}
-              w="3.625rem"
-              h="auto"
-            />
           </Center>
 
           <Img

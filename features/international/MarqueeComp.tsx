@@ -47,7 +47,7 @@ export const MarqueeComp = () => {
   return (
     <Box pb="5rem">
       <MainContainer>
-        <Marquee>
+        <Marquee gradientWidth={25}>
           {marqueeData.map((item) => (
             <Img 
               key={item.id}

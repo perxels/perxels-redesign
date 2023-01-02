@@ -48,42 +48,42 @@ export interface WorkDetails {
 export const StudentWorksData: StudentWorksProps[] = [
   {
     id: 1,
-    imgUrl: './assets/images/sudent-work/daniju.jpg',
+    imgUrl: './assets/images/sudent-work/daniju.png',
     link: '/student-works/daniju',
   },
   {
     id: 2,
-    imgUrl: './assets/images/sudent-work/mosope.jpg',
+    imgUrl: './assets/images/sudent-work/mosope.png',
     link: '/student-works/mosope',
   },
   {
     id: 3,
-    imgUrl: './assets/images/sudent-work/rebecca.jpg',
+    imgUrl: './assets/images/sudent-work/rebecca.png',
     link: '/student-works/rebecca',
   },
   {
     id: 4,
-    imgUrl: './assets/images/sudent-work/favour.jpg',
+    imgUrl: './assets/images/sudent-work/favour.png',
     link: '/student-works/favour',
   },
   {
     id: 5,
-    imgUrl: './assets/images/sudent-work/omame.jpg',
+    imgUrl: './assets/images/sudent-work/omame.png',
     link: '/student-works/omame',
   },
   {
     id: 6,
-    imgUrl: './assets/images/sudent-work/tolu.jpg',
+    imgUrl: './assets/images/sudent-work/tolu.png',
     link: '/student-works/tolu',
   },
   {
     id: 7,
-    imgUrl: './assets/images/sudent-work/abimbola.jpg',
+    imgUrl: './assets/images/sudent-work/abimbola.png',
     link: '/student-works/abimbola',
   },
   {
     id: 8,
-    imgUrl: './assets/images/sudent-work/zainab.jpg',
+    imgUrl: './assets/images/sudent-work/zainab.png',
     link: '/student-works/zainab',
   },
 ]
@@ -135,6 +135,8 @@ export const studentWorkDetails: WorkDetails = {
             <li>Secondly, I worked on an information Architecture which is needed to guide me on how to achieve the sketch.</li>
             <li>Then, a sketch was created and moving to the low fidelity, and this brings us to the high fidelity of the design.</li>
         </ul>`,
+    results:
+      `Working on this project was challenging and interesting. I'm glad everything came out well and my tutor was really proud of it. The full design consist of my information architecture, moodboards, sketches, wireframes and responsive design, I designed about 12 screens for this project in total!`,
     nextLink: '/student-works/mosope',
   },
   rebecca: {
@@ -252,8 +254,7 @@ export const studentWorkDetails: WorkDetails = {
       <br /> <br />
       The app includes many features, including vaccine appointment reminders, a vaccine tracker that assists parents in keeping track of and reminding them of necessary vaccinations for the development of their infants, and Doc-Chat which enables users to chat with a qualified and certified doctor on the app.
       `,
-    challenge:
-      `
+    challenge: `
         Many people lost their lives as a result of the COVID 19 pandemic, this unfortunate incident served as a reminder of how essential our health is and how easily disregarded it can be. I had to design a UI/UX solution to the following challenges: <br /> <br />
         <ol style="margin-left: 1rem;">
           <li>There are several illnesses apart from COVID, that require immunizations and frequent reminders since they are easy to overlook.</li>
@@ -261,8 +262,7 @@ export const studentWorkDetails: WorkDetails = {
           <li>Humans are naturally mobile and have a tendency to move to new locations, which creates the problem of disjointed medical data which are hard to keep track of.</li>
         </ol>
       `,
-    approach:
-      `
+    approach: `
       People often have a negative perception of the medical world since it is typically associated with illness, diseases, and negative stuff. I mean, who is ever excited to visit the hospital.<br /> <br />
       Here is how I approached the project while keeping this in mind.<br /> <br />
 
@@ -274,8 +274,7 @@ export const studentWorkDetails: WorkDetails = {
         <li>I ensured that the user interface and visuals were appealing and encouraging to use.</li>
       </ol>
       `,
-    results:
-      `
+    results: `
         <ol style="margin-left: 1rem;">
           <li>I designed a visually pleasing User Interface of mobile app and website</li>
           <li>I designed a well-structured User Experience of mobile app and website.</li>

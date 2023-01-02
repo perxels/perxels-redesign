@@ -11,7 +11,7 @@ export const TestimonyGridContainer = () => {
 
   return (
     <Box p={['2rem 1.625rem', '2rem 1.1rem', '2rem 6.25rem']}>
-      <TestimonialGrid testimonialContent={testimonialContentSecond} />
+      <TestimonialGrid testimonialContent={testimonialContentSecond} isTestimonial />
       <Box display={['block', 'block', 'block', 'block']}>
         <TestimonyVideo />
         <TestimonialSlider />
