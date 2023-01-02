@@ -117,7 +117,7 @@ export const studentWorkDetails: WorkDetails = {
     projectName: 'Charity website',
     name: 'Daniju Abdullateef',
     linkedin: {
-      link: '#',
+      link: 'https://www.linkedin.com/in/abdullateef-daniju',
       name: 'abdullateef-daniju',
     },
     heroImg: '/assets/images/class-work/daniju/heroImage.png',
@@ -167,7 +167,7 @@ export const studentWorkDetails: WorkDetails = {
     projectName: 'Blood Donation Application',
     name: 'Favour Aderemi',
     linkedin: {
-      link: '#',
+      link: 'https://www.linkedin.com/in/favouraderemi/',
       name: 'Favour Aderemi',
     },
     heroImg: '/assets/images/class-work/favour/heroImage.png',
@@ -240,7 +240,7 @@ export const studentWorkDetails: WorkDetails = {
     projectName: 'vaccine App AND WEBSITE',
     name: 'Abimbola Alaka',
     linkedin: {
-      link: '#',
+      link: 'https://www.linkedin.com/in/alakabimbola/',
       name: 'Abimbola Alaka',
     },
     heroImg: '/assets/images/class-work/abimbola/heroImage.png',
@@ -290,7 +290,7 @@ export const studentWorkDetails: WorkDetails = {
     projectName: 'Savings Application',
     name: 'Bakare Zainab',
     linkedin: {
-      link: '#',
+      link: 'https://www.linkedin.com/in/zainab-bakare-784404236/',
       name: 'Bakare Zainab',
     },
     heroImg: '/assets/images/class-work/zainab/heroImage.png',
