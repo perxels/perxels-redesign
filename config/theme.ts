@@ -74,6 +74,7 @@ export const theme = extendTheme({
     "8xl": "3.75rem",
     "9xl": "4.375rem",
     "1xxl": "5.168rem",
+    "2xxl": "4rem",
   },
   components: {
     Button,
