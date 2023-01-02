@@ -10,6 +10,9 @@ const HeaderDropdown = ({
   return (
     <Center w="full" h="calc(100vh - 4rem)" bg="brand.white">
       <Flex alignItems="center" gap="4.375rem" flexDir="column">
+        <Link onClick={() => setShowDropdown(false)} href="/">
+          <Text fontSize="xl">Home</Text>
+        </Link>
         <Link onClick={() => setShowDropdown(false)} href="/testimonials">
           <Text fontSize="xl">Testimonies</Text>
         </Link>
