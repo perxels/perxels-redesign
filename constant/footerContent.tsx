@@ -35,23 +35,23 @@ export const links = [
         links: [
             {
                 name: 'Testimonies',
-                url: '#',
+                url: '/testimonials',
             },
             {
                 name: 'Student Works',
-                url: '#',
+                url: '/student-works',
             },
             {
                 name: 'Events',
-                url: '#',
+                url: '/events',
             },
             {
                 name: 'Hire',
-                url: '#',
+                url: '/hire',
             },
             {
                 name: 'Be a Partner',
-                url: '#',
+                url: '/partners',
             }
         ],
     },
@@ -60,19 +60,19 @@ export const links = [
         links: [
             {
                 name: 'Basic Class',
-                url: '#',
+                url: '/class-plans#basic-class',
             },
             {
                 name: 'Advanced Class',
-                url: '#',
+                url: '/class-plans#advanced-class',
             },
             {
                 name: 'Premium Class',
-                url: '#',
+                url: '/class-plans#premium-class',
             },
             {
                 name: 'International',
-                url: '#',
+                url: '/international',
             },
             {
                 name: 'Community',

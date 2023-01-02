@@ -6,6 +6,7 @@ export const ClassCard = ({
   title,
   content,
   image,
+  link,
 }: ClassGroupContentProps) => {
   return (
     <Flex
@@ -23,7 +24,7 @@ export const ClassCard = ({
         <Text color="brand.white" fontSize={["xs", "sm", "md", "xl"]}>{content}</Text>
 
        
-        <Link as={NextLink}  href="/class-plans" _hover={{textDecoration: "none"}} >  
+        <Link as={NextLink}  href={link} _hover={{textDecoration: "none"}} >  
         <Button mt="2.5rem" w={{base:"170px", lg: "212px" }}   variant="solid-white" >
           View Details
           </Button>

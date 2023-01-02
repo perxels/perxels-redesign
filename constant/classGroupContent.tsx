@@ -2,10 +2,12 @@ export interface ClassGroupContentProps {
     title: string
     content: string
     image: string
+    link?: string
 }
 
 export interface ClassGroupDetailsProps {
     title: string
+    id: string
     classDur: string
     classTime: string
     classType: string
@@ -26,6 +28,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
             This class is for beginners just starting out in design 
             to learn the fundamentals of UIUX design.
         `,
+        link: '/class-plans#basic-class',
         image: '/assets/images/class-group/basic.jpg',
     },
     {
@@ -34,6 +37,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
             This class is for intermediate designers looking to expand 
             their UIUX design knowledge & skills.
         `,
+        link: '/class-plans#advanced-class',
         image: '/assets/images/class-group/advance.jpg',
     },
     {
@@ -42,6 +46,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
             This class is for anyone who want to learn everything in 
             UIUX design from basic to professional level.
         `,
+        link: '/class-plans#premium-class',
         image: '/assets/images/class-group/premium.jpg',
     },
     {
@@ -50,6 +55,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
             This class is for anyone who wants a special design training 
             to get International design roles.
         `,
+        link: '/international',
         image: '/assets/images/class-group/international.jpg',
     },
 ]
@@ -57,6 +63,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
 export const classGroupDetails = [
     {
         title: "Basic Class",
+        id: 'basic-class',
         classDur: "9 Weeks.",
         classTime: "2-3 times a week.",
         classType: "Live Virtual Training.",
@@ -77,6 +84,7 @@ export const classGroupDetails = [
     },
     {
         title: "Advanced Class",
+        id: 'advanced-class',
         classDur: "9 Weeks.",
         classTime: "2-3 times a week.",
         classType: "Live Virtual Training.",
@@ -97,6 +105,7 @@ export const classGroupDetails = [
     },
     {
         title: "Premium Class",
+        id: 'premium-class',
         classDur: "9 Weeks.",
         classTime: "2-3 times a week.",
         classType: "Live Virtual Training.",

@@ -10,9 +10,10 @@ export const ClassLists = () => {
       <MainContainer>
         <VStack spacing="3.75rem">
           {
-            classGroupDetails.map(({ title, classDur, classTime, classType, installments, tuition, courseOutline }) => (
+            classGroupDetails.map(({ id, title, classDur, classTime, classType, installments, tuition, courseOutline }) => (
               <ClassDetails 
-                key={title} 
+                key={id}
+                id={id} 
                 title={title}
                 classDur={classDur}
                 classTime={classTime}

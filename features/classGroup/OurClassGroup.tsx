@@ -16,9 +16,10 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
         />
 
         <SimpleGrid mb={["3.75rem", "3.75rem", "7rem"]} columns={[1, 1, 2]} spacing="1rem">
-          {ClassGroupContent.map(({ title, content, image }) => (
+          {ClassGroupContent.map(({ title, content, image, link }) => (
             <ClassCard
               key={title}
+              link={link}
               title={title}
               content={content}
               image={image}

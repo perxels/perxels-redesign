@@ -27,9 +27,10 @@ export const ClassDetails = ({
   installments,
   tuition,
   courseOutline,
+  id
 }: ClassGroupDetailsProps) => {
   return (
-    <SimpleGrid columns={[1, 1, 1, 12]}>
+    <SimpleGrid id={id} columns={[1, 1, 1, 12]}>
       <GridItem colSpan={[1, 1, 1, 4]}>
         <Box
           px={['0.75rem', '0.75rem', '0.75rem', '1.875rem']}
