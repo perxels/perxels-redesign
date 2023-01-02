@@ -45,7 +45,7 @@ export const OurWhy = () => {
         <Grid
           bg="brand.purple.500"
           templateColumns={['100%', '100%', '100%', '2rem 1fr']}
-          gap="1rem"
+          gap="2rem"
           px="1.5rem"
           py="1rem"
           pb={['1rem', '1rem', '1rem', '24rem']}
@@ -57,24 +57,25 @@ export const OurWhy = () => {
           >
             2
           </Heading>
-          <Text
-            color="brand.white"
-            py={['3.5rem', '3.5rem', '3.5rem', '0']}
-            pt="3.5rem"
-            maxW="500px"
-          >
-            We want to raise funds to equip 100,000 youth with digital skills
-            every year for the next 7 years (2023 - 2030); we want to help young
-            people across Africa get access to practical hands-on digital skill
-            training over the next 7 years.
-            <br /> <br />
-            We know big results come from a combination of many small actions,
-            so we are focused on the small actions today that will lead to the
-            big results we want tomorrow.
-            <br /> <br />
-            Your small contribution in an African youth today will lead to the
-            development of the Africa of our dreams tomorrow
-          </Text>
+          <Box>
+            <Text
+              color="brand.white"
+              py={['3.5rem', '3.5rem', '3.5rem', '3.5rem']}
+              maxW="500px"
+            >
+              We want to raise funds to equip 100,000 youth with digital skills
+              every year for the next 7 years (2023 - 2030); we want to help young
+              people across Africa get access to practical hands-on digital skill
+              training over the next 7 years.
+              <br /> <br />
+              We know big results come from a combination of many small actions,
+              so we are focused on the small actions today that will lead to the
+              big results we want tomorrow.
+              <br /> <br />
+              Your small contribution in an African youth today will lead to the
+              development of the Africa of our dreams tomorrow
+            </Text>
+          </Box>
         </Grid>
       </SimpleGrid>
 

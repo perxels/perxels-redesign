@@ -1,5 +1,5 @@
 import { AiFillInstagram } from 'react-icons/ai';
-import { FaFacebookF, FaLinkedin, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+import { FaFacebookF, FaLinkedin, FaTwitter, FaWhatsapp, FaYoutube } from 'react-icons/fa';
 interface FooterSocialLink {
     name: string;
     url: string;
@@ -9,24 +9,29 @@ interface FooterSocialLink {
 export const FooterSocialLinks: FooterSocialLink[] = [
     {
         name: 'Twitter',
-        url: 'https://www.twitter.com/',
+        url: 'https://twitter.com/perxels',
         icon: FaTwitter,
     },
     {
         name: 'Instagram',
-        url: 'https://www.instagram.com/',
+        url: 'https://www.instagram.com/perxels/',
         icon: AiFillInstagram,
     },
     {
         name: 'LinkedIn',
-        url: 'https://www.linkedin.com/',
+        url: 'https://www.linkedin.com/company/perxels/',
         icon: FaLinkedin,
     },
     {
         name: 'Facebook',
-        url: 'https://www.facebook.com/',
+        url: 'https://web.facebook.com/PerxelsNG',
         icon: FaFacebookF,
-    }
+    },
+    {
+        name: 'Youtube',
+        url: 'https://www.youtube.com/channel/UCmcEhILeheJi6s_nEqrIF_Q',
+        icon: FaYoutube,
+    },
 ];
 
 export const links = [
