@@ -3,6 +3,7 @@ import {
   ClassLists,
   Hero,
   LeaningTools,
+  StudentWorkWrapper,
 } from '../features/classGroup'
 import { Testimonial } from '../features/testimonial'
 import { MainLayout } from '../layouts'
@@ -12,6 +13,7 @@ const ClassPlans = () => {
     <MainLayout>
       <Hero />
       <ClassLists />
+      <StudentWorkWrapper />
       <LeaningTools />
       <Testimonial />
     </MainLayout>

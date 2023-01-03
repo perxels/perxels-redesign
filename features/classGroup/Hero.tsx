@@ -47,14 +47,16 @@ export const Hero = () => {
               <Heading
                 w="full"
                 fontSize={['lg', 'lg', 'xl']}
+                fontWeight="600"
                 textTransform="uppercase"
               >
-                Enroll Now
+                Enroll Page
               </Heading>
               <Heading
                 maxW="505px"
                 fontSize={['3rem', '3rem', '3.5rem']}
                 fontWeight="black"
+                lineHeight={1.15}
               >
                 Building Top Designers for the World.
               </Heading>
@@ -63,6 +65,7 @@ export const Hero = () => {
                 w="full"
                 fontSize={['lg', 'lg', 'xl']}
                 pt="1.5rem"
+                fontWeight="600"
                 textTransform="uppercase"
               >
                 TRAINED

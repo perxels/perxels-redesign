@@ -108,7 +108,7 @@ export const classGroupDetails = [
         id: 'premium-class',
         classDur: "9 Weeks.",
         classTime: "2-3 times a week.",
-        classType: "Live Virtual Training.",
+        classType: "ONLINE TRAINING OR PHYSICAL Training.",
         installments: ["70% On Admission,", "30% after one month."],
         tuition: "₦200,000",
         courseOutline: [
@@ -128,19 +128,19 @@ export const classGroupDetails = [
 
 export const StudentWorks:StudentWorkProps[]  = [
     {
-        imgUrl: '/assets/images/class-group/mini-student-work-1.png',
+        imgUrl: './assets/images/sudent-work/mosope.png',
         link: '/student-works/mosope',
     },
     {
-        imgUrl: '/assets/images/class-group/mini-student-work-2.jpg',
+        imgUrl: './assets/images/sudent-work/daniju.png',
         link: '/student-works/daniju',
     },
     {
-        imgUrl: '/assets/images/sudent-work/rebecca.jpg',
+        imgUrl: './assets/images/sudent-work/rebecca.png',
         link: '/student-works/rebecca',
     },
     {
-        imgUrl: '/assets/images/sudent-work/favour.jpg',
+        imgUrl: './assets/images/sudent-work/favour.png',
         link: '/student-works/favour',
     },
 ]
