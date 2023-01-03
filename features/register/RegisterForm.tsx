@@ -13,10 +13,42 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, {useState} from 'react'
 import { IoLogoTwitter, IoLogoWhatsapp } from 'react-icons/io'
 
 const RegisterForm = () => {
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbycNDLOQrShEZG9pCcetN11GjIBn1DHFt8c7yB0SwbrGrZlpcmDErOawCMns3OTZgK3ng/exec"
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    
+    const inputData = e.target as typeof e.target & {
+      fullname: { value: string }
+      email: { value: string }
+      phone: { value: string }
+      hearabout: { value: string }
+     about: { value: string }
+    }
+    const formData = new FormData()
+    formData.append('fullname', inputData.fullname.value as string)
+    formData.append('email', inputData.email.value as string)
+    formData.append('phone', inputData.phone.value as string)
+    formData.append('hearabout', inputData.hearabout.value as string)
+    formData.append('about', inputData.about.value as string)
+    //current date and time
+    formData.append('created_at', new Date().toLocaleString())
+    fetch(scriptUrl, {
+      method: 'POST',
+      body: formData,
+    }).then((response) => {
+      if (response.status === 201 || 200) {
+        alert('Your message has been sent successfully')
+      } else {
+        alert('Something went wrong, please try again')
+      }
+    })
+    }
+
+  
   return (
     <Box overflowY="auto" px={["1rem", "1rem", "3rem"]} py="2rem">
       <Heading fontSize="6xl" textAlign="center" color="brand.dark.100">
@@ -38,29 +70,34 @@ const RegisterForm = () => {
         mx="auto"
         w="full"
         as="form"
+        onSubmit={handleSubmit}
       >
         <Input
           h="3.5rem"
           placeholder="Full Name*"
           _placeholder={{ color: 'brand.dark.200' }}
+          name="fullname"
         />
         <Input
           h="3.5rem"
           type="tel"
           placeholder="Phone Number*"
           _placeholder={{ color: 'brand.dark.200' }}
+          name="phone"
         />
         <Input
           h="3.5rem"
           type="email"
           placeholder="Email Address*"
           _placeholder={{ color: 'brand.dark.200' }}
+          name="email"
         />
 
         <Select
           h="3.5rem"
           placeholder="Where did you hear about this scholarship"
           _placeholder={{ color: 'brand.dark.200' }}
+          name="hearabout"
         >
           <option value="option1">Option 1</option>
           <option value="option2">Option 2</option>
@@ -71,9 +108,10 @@ const RegisterForm = () => {
           h="5.5rem"
           _placeholder={{ color: 'brand.dark.200' }}
           placeholder="Say something short about yourself"
+          name="about"
         />
 
-        <Button h="3.688rem" w="full">
+        <Button h="3.688rem" w="full" type="submit">
           Register for Scholarship
         </Button>
 

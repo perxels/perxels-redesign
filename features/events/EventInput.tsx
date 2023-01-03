@@ -16,7 +16,8 @@ export const EventInput: React.FC<EventFormProps> = ({id, type, placeholder}) =>
     border="0.406872px solid #B4B4B4"
     type={type} placeholder={placeholder}
     _focus={{border: "none"}}
-    
+    fontSize="1rem"
+    name={id}
     />
     </FormControl>
   )

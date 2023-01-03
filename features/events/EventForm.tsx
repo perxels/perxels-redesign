@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useRef} from 'react'
 import {
   FormControl,
   FormLabel,
@@ -11,7 +11,8 @@ import {
   Box,
   Text,
   useClipboard,
-  HStack
+  HStack,
+
 } from '@chakra-ui/react'
 import { EventInput } from './'
 import { FaTwitter } from 'react-icons/fa'
@@ -19,14 +20,62 @@ import { BiCopy } from 'react-icons/bi'
 import {RiWhatsappFill} from 'react-icons/ri'
 export const EventForm = () => {
     const { hasCopied, onCopy } = useClipboard('https://perxels.com/events/dashboard-designs')
+    const formRef = useRef(null)
+    const [loading, setLoading] = useState(false)
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwT-2FTNzCeyQ1f9bZQgcRoTuepP0kHNVemyh5jmrP_H3z7p_EaDNNMAlcWrpdZJj4Cvw/exec"
+    const handleSubmit = (e: any) => {
+        console.log("working")
+        e.preventDefault()
+        setLoading(true)
+        const inputData = e.target as typeof e.target & {
+            name: { value: string };
+            email: { value: string };
+            phone: { value: string };
+            howyouknew: { value: string };
+            questions: { value: string };
+        }  
+        
+        const formData = new FormData
+        formData.append('name', inputData.name.value as string)
+        formData.append('email', inputData.email.value as string)
+        formData.append('phone', inputData.phone.value as string)
+        formData.append('howyouknew', inputData.howyouknew.value as string)
+        formData.append('questions', inputData.questions.value as string)
+        //current date and time
+        formData.append('date', new Date().toLocaleString())
+
+        // const data = Object.fromEntries(formData)
+        // console.log(data)
+        fetch(scriptUrl, { 
+          method: 'POST',
+         body:  formData,
+        }).then(
+            (response) => {
+              if(response.status === 201 || 200) {
+                setLoading(false)
+                alert("Your message has been sent successfully")
+              }else{
+                setLoading(false)
+                alert("Something went wrong, please try again")
+              }
+            }
+        )
+
+    }
+
+
   return (
+    <>
+   
     <VStack
       as="form"
-      spacing={{ base: "1.625rem", md: "1.809375rem"}}
+      spacing={{ base: "1.2rem", md: "1.209375rem"}}
       backgroundColor={'#F6F7FD'}
       py={{ base: "1.5625em", md: "3.441875rem" }}
       px={{ base: "1.61375rem", md: "2.691875rem" }}
+      onSubmit={handleSubmit}
     >
+      
       <EventInput id="name" type="text" placeholder="Full Name*" />
       <EventInput id="email" type="email" placeholder="Email Address*" />
       <EventInput id="phone" type="tel" placeholder="Phone Number*" />
@@ -37,9 +86,10 @@ export const EventForm = () => {
           border="0.406872px solid #B4B4B4"
           placeholder="How did you get to know about Us?"
           _placeholder={{ color: '#B4B4B4' }}
+          name="howyouknew"
         >
           <option value="Whatsapp">Whatsapp</option>
-          <option value="Instagram">Instagram</option>
+          <option value ="Instagram">Instagram</option>
           <option value="Facebook">Facebook</option>
           <option value="Twitter">Twitter</option>
           <option value="Friend">Friend</option>
@@ -52,14 +102,15 @@ export const EventForm = () => {
           outline="none"
           border="0.406872px solid #B4B4B4"
           placeholder="Questions for the Session"
+          name="questions"
         />
       </FormControl>
       <Box width="full">
-        <Button h="3.1875rem" w="full" fontSize={'lg'}>
+        <Button h="3.1875rem" w="full" type="submit" fontSize={'lg'}>
           Register for this Session
         </Button>
       </Box>
-
+     
       <Box
       w="full"
       >
@@ -119,6 +170,7 @@ export const EventForm = () => {
             </Text>
           </Button>
           <Button
+            
             backgroundColor={'transparent'}
             border="1px solid #121212"
             color={'#121212'}
@@ -136,5 +188,7 @@ export const EventForm = () => {
         </HStack>
       </Box>
     </VStack>
+   
+    </>
   )
 }
