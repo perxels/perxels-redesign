@@ -106,7 +106,7 @@ export const classGroupDetails = [
     {
         title: "Premium Class",
         id: 'premium-class',
-        classDur: "9 Weeks.",
+        classDur: "3 Months.",
         classTime: "2-3 times a week.",
         classType: "ONLINE TRAINING OR PHYSICAL Training.",
         installments: ["70% On Admission,", "30% after one month."],
