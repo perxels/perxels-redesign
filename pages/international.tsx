@@ -1,6 +1,6 @@
 import React from 'react'
 import { OurClassGroup } from '../features/classGroup'
-import { HeroSubSection } from '../features/home'
+// import { HeroSubSection } from '../features/home'
 import { ClassPlan, InternationalHero, MarqueeComp } from '../features/international'
 import { Expectation } from '../features/teens'
 import { Testimonial } from '../features/sponsorship'
@@ -10,12 +10,10 @@ const international = () => {
   return (
     <MainLayout>
         <InternationalHero />
-        <HeroSubSection />
         <MarqueeComp />
         <ClassPlan />
         <Expectation />
         <Testimonial />
-        <OurClassGroup title="other class groups" />
     </MainLayout>
   )
 }

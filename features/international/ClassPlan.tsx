@@ -17,17 +17,26 @@ export const ClassPlan = () => {
         classDur="9 Weeks."
         classTime="2-3 times a week."
         installments={["70% On Admission;", "30% after one month."]}
-        tuition="$1,000"
+        tuition="$500"
         courseOutline={[
-            "In-depth training to guide you from beginner to intermediate level in design",
-            "Introduction to UIUX Design; design principles and design thinking process.",
-            "Understanding the basic of interface design: typography, colours, layout, balance and alignment, whitespace and iconography.",
-            "Introduction to information architecture, visual design, interaction design, usability testing, wireframing and prototyping.",
-            "Work on real-life case-studies.",
-            "Build- up a standard portfolio.",
-            "Mock Interviews: Showcasing your skills.",
-            "Accredited Certificate issued at completion.",
-            "Exposure to internship and job opportunities"
+            "Exclusive design coaching to get international design roles",
+            "Personalized training to suit your unique needs",
+            "Understanding UI and UX design",
+            "Principle of UI design: typography, colors, layout, hierarchy, whitespace, icons, balance and alignment",
+            "Wireframes: creating standard low fidelity an high fidelity wireframes",
+            "Concept of drawing, sketching and mockups",
+            "UX design: why is it important to users and business",
+            "Design thinking and processes",
+            "Creating user personas, user flow and carrying out usability test",
+            "Creating maps: empathy map, customer journey map, experience map, storyboard, service blueprinting: customer actions, backstage actions and frontstage actions etc",
+            "Design systems: Style guide, pattern library, creating and maintaining design systems",
+            "Flows: User flows, data flows, information architecture, product feature flows",
+            "Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc",
+            "Work on case studies and projects that will build your problem solving skills",
+            "Direct mentorship with a Senior Product Designer",
+            "Learn how to collaborate with developers and product managers",
+            "Mock Interviews: showcasing your skills",
+            "Certificate of Completion",
         ]}
         classType="Live Virtual Training."
       />
