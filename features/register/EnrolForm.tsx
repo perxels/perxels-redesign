@@ -47,6 +47,7 @@ const EnrolForm = () => {
           h="3.5rem"
           placeholder="What class do you want to apply for?"
           _placeholder={{ color: 'brand.dark.200' }}
+          color="brand.dark.200"
         >
           <option value="Basic Program">Basic Program</option>
           <option value="Advanced Program">Advanced Program</option>
@@ -55,6 +56,9 @@ const EnrolForm = () => {
           </option>
           <option value="Premium (Physical) Program">
             Premium (Physical) Program
+          </option>
+          <option value="International Class">
+            International Class
           </option>
         </Select>
 
@@ -76,6 +80,7 @@ const EnrolForm = () => {
           h="3.5rem"
           placeholder="How did you get to know about Perxels?"
           _placeholder={{ color: 'brand.dark.200' }}
+          color="brand.dark.200"
         >
           <option value="Facebook">Facebook</option>
           <option value="Twitter">Twitter</option>
