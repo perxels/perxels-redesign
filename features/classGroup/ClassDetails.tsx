@@ -206,6 +206,8 @@ export const ClassDetails = ({
             py="1.5rem"
             fontSize="2xl"
             display={['block', 'block', 'block', 'none']}
+            as={Link}
+            href="/enrol"
           >
             Enroll For This Plan
           </Button>
