@@ -13,6 +13,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
+import Link from 'next/link'
 import React from 'react'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { ClassGroupDetailsProps } from '../../constant'
@@ -159,6 +160,8 @@ export const ClassDetails = ({
             py="1.5rem"
             fontSize="2xl"
             display={['none', 'none', 'none', 'block']}
+            as={Link}
+            href="/enrol"
           >
             Enroll For This Plan
           </Button>

@@ -5,7 +5,7 @@ import { StudentWorksData } from '../../constant/studentWorks'
 import { MainContainer } from '../../layouts'
 import StudentCaseStudy from './StudentCaseStudy'
 
-const StudentWorksWrapper = ({ isPrimary }: { isPrimary: boolean }) => {
+const StudentWorksWrapper = ({ isPrimary }: { isPrimary?: boolean }) => {
   return (
     <MainContainer bg={isPrimary ? 'brand.purple.500' : 'brand.dark.200'}>
       {isPrimary && (
