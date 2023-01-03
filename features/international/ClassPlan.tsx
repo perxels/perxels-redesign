@@ -14,7 +14,7 @@ export const ClassPlan = () => {
       <ClassDetails
         title="International"
         id="#"
-        classDur="9 Weeks."
+        classDur="3 MONTH."
         classTime="2-3 times a week."
         installments={["70% On Admission;", "30% after one month."]}
         tuition="$500"

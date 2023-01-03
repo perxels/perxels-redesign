@@ -13,7 +13,7 @@ import { MainContainer } from '../../layouts'
 
 export const InternationalHero = () => {
   return (
-    <Box>
+    <Box pb="4rem">
       <MainContainer>
         <SimpleGrid columns={[1, 1, 1, 2]} spacing="3rem" py="2rem">
           <Center flexDir="column" alignItems="flex-start" pos="relative">
@@ -60,7 +60,7 @@ export const InternationalHero = () => {
         w="full"
         h="auto"
       />
-      <MainContainer bg="brand.purple.500">
+      {/* <MainContainer bg="brand.purple.500">
         <Flex alignItems="center" justifyContent="space-between" py="1.875rem">
           <Box>
             <Heading
@@ -94,7 +94,7 @@ export const InternationalHero = () => {
             Enroll Now
           </Button>
         </Flex>
-      </MainContainer>
+      </MainContainer> */}
     </Box>
   )
 }
