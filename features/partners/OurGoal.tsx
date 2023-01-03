@@ -15,6 +15,33 @@ import React from 'react'
 import { MainContainer } from '../../layouts'
 
 export const OurGoal = () => {
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbzciVlSwFDhddIieTMxkNfEr-5J8e9gjgNlAMDde6DyfbBlv4H1o4zki1NhYyxUfoKs/exec"
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    const inputData = e.target as typeof e.target & {
+      fullname: { value: string }
+      email: { value: string }
+      amount: { value: string }
+      aboutdonor: { value: string }
+    }
+    const formData = new FormData()
+    formData.append('fullname', inputData.fullname.value as string)
+    formData.append('email', inputData.email.value as string)
+    formData.append('amount', inputData.amount.value as string)
+    formData.append('aboutdonor', inputData.aboutdonor.value as string)
+    //current date and time
+    formData.append('created_at', new Date().toLocaleString())
+    fetch(scriptUrl, {
+      method: 'POST',
+      body: formData,
+    }).then((response) => {
+      if (response.status === 201 || 200) {
+        alert('Your message has been sent successfully')
+      } else {
+        alert('Something went wrong, please try again')
+      }
+    })
+  }
   return (
     <MainContainer>
       <Grid templateColumns={["1fr", "1fr", "1fr", "1fr 528px"]} gap="3rem" pb="8rem">
@@ -73,12 +100,13 @@ export const OurGoal = () => {
         </GridItem>
 
         <GridItem>
-          <VStack as="form" spacing="1.5rem" bg="brand.gray.300" rounded="10px" py="3.125rem" px={["1rem", "1rem", "1rem", "2.5rem"]}>
+          <VStack as="form" spacing="1.5rem" bg="brand.gray.300" rounded="10px" py="3.125rem" px={["1rem", "1rem", "1rem", "2.5rem"]} onSubmit={handleSubmit}>
             <Input
               placeholder="Full Name*"
               bg="brand.white"
               h="3.5rem"
               required
+              name="fullname"
             />
             <Input
               placeholder="Email Address*"
@@ -86,14 +114,16 @@ export const OurGoal = () => {
               h="3.5rem"
               type="email"
               required
+              name="email"
             />
-            <Input placeholder="Amount to donate" bg="brand.white" h="3.5rem" />
+            <Input placeholder="Amount to donate" bg="brand.white" h="3.5rem" name="amount"/>
 
             <Textarea
               placeholder="Tell us a little about yourself"
               h="10.25rem"
               bg='brand.white'
               pt="1rem"
+              name="aboutdonor"
             />
 
           <Center w="full">

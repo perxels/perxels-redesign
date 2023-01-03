@@ -5,7 +5,7 @@ export const testimonialContentSecond: TestimonialCardProps[] = [
     {
       id: 1,
       imgUrl: '/assets/images/testimonial/new/test1.png',
-      name: 'Oyeyode Tunmise',
+      name: 'Oyeyode Muyiwa',
       title: 'UIUX Designer',
       content: `Well leaving Perxels made me so emotional. it was such a pleasant and enlightening experience at Perxels, from the staffs to the scheme of work everything was nice and i would recommend them anytime to any aspiring UX/UI designer.`,
     },
