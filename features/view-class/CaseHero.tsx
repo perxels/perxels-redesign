@@ -88,6 +88,7 @@ export const CaseHero = () => {
                     fontSize={{ base: '1.125rem', md: '1rem' }}
                     color="#E3E4E6"
                     display={['none', 'block']}
+                    textDecoration="underline"
                   >
                     {studentData?.linkedin?.name}
                   </Text>
@@ -152,6 +153,7 @@ export const CaseHero = () => {
                 top={'55%'}
                 transform={'translate(-70%, -10%)'}
                 display={{ base: 'none', md: 'block' }}
+                rounded="10px"
               />
             </Box>
             <Box

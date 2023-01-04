@@ -1,4 +1,4 @@
-import { Box, Center, Heading, Img, Text } from '@chakra-ui/react'
+import { Box, Center, Flex, Heading, Img, Text } from '@chakra-ui/react'
 import React from 'react'
 import Slider from 'react-slick'
 import { SectionHeader } from '../../components'
@@ -14,52 +14,51 @@ interface SliderDataProps {
 const sliderData: SliderDataProps[] = [
   {
     id: 1,
-    img: '/assets/images/speakers/sebiomo.png',
-    name: 'Sebiomo Anuoluwapo',
-    title: 'Design Lead, Voyance',
+    img: '/assets/images/speakers/speaker1.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
   {
     id: 2,
-    img: '/assets/images/speakers/donye.png',
-    name: 'Donye Collins',
-    title: 'Design Manager',
+    img: '/assets/images/speakers/speaker2.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
   {
     id: 3,
-    img: '/assets/images/speakers/bryan.png',
-    name: 'Bryan Benibo',
-    title:
-      'Product Designer and Instructor, TechCreek | Saas Marketing Designer ',
+    img: '/assets/images/speakers/speaker3.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
   {
     id: 4,
-    img: '/assets/images/speakers/felix.png',
-    name: 'Felix Ayoola',
-    title: 'Design and Art Director',
+    img: '/assets/images/speakers/speaker4.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
   {
     id: 5,
-    img: '/assets/images/speakers/abbas.jpg',
-    name: 'Abbas Rianat',
-    title: 'Product Designer, Plaqad',
+    img: '/assets/images/speakers/speaker5.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
   {
     id: 6,
-    img: '/assets/images/speakers/nike.png',
-    name: 'Nike Adesanoye',
-    title: 'Product Designer',
+    img: '/assets/images/speakers/speaker6.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
   {
     id: 7,
-    img: '/assets/images/speakers/chidinma.png',
-    name: 'Chidinma Ukaegbu',
-    title: 'Product Designer',
+    img: '/assets/images/speakers/speaker7.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
   {
     id: 8,
-    img: '/assets/images/speakers/debbie.png',
-    name: 'Deborah Dada',
-    title: 'Product Designer, Grupp',
+    img: '/assets/images/speakers/speaker8.jpg',
+    name: 'Ayomide Mobolaji',
+    title: 'Product Designer. Grupp',
   },
 ]
 
@@ -69,12 +68,20 @@ export const PastSpeakers = () => {
     arrows: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     cssEase: 'linear',
     responsive: [
+      {
+        breakpoint: 1460,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          initialSlide: 4,
+        },
+      },
       {
         breakpoint: 900,
         settings: {
@@ -93,8 +100,8 @@ export const PastSpeakers = () => {
     ],
   }
   return (
-    <Box>
-      <MainContainer>
+    <Box pb="4rem" pt="3rem" bg="brand.gray.300">
+      <MainContainer bg="none">
         <SectionHeader
           subTitle="Past Speakers"
           title="Meet the experts that have come to share their knowledge."
@@ -102,56 +109,16 @@ export const PastSpeakers = () => {
       </MainContainer>
 
       <Box pos="relative" overflow="hidden">
-        <Box
-          pos="absolute"
-          w="full"
-          top={['-8rem', '-8rem', '-8rem', '-6rem']}
-          left="0"
-          h="150px"
-          bg="brand.white"
-          zIndex="1"
-          roundedBottomRight={['5%', '5%', '5%', '15%']}
-          roundedBottomLeft={['5%', '5%', '5%', '15%']}
-        />
-        <Box
-          pos="absolute"
-          w="full"
-          bottom={['-8rem', '-8rem', '-8rem', '-12rem']}
-          left="0"
-          h="150px"
-          bg="brand.white"
-          zIndex="1"
-          roundedTopRight={['5%', '5%', '5%', '15%']}
-          roundedTopLeft={['5%', '5%', '5%', '15%']}
-        />
         <Slider {...settings}>
           {sliderData.map(({ id, img, name, title }) => (
-            <Box key={id} pos="relative" px="1rem">
-              <Box overflowX="hidden">
-                <Img src={img} alt={name} w="full" h="auto" />
+            <Box px="0.75rem" key={id} overflowX="hidden">
+              <Img rounded="5px" src={img} alt={name} w="full" h="auto" />
 
-                <Center pos="absolute" w="full" bottom={["0.5rem", "0.5rem", "0.5rem", "0"]}>
-                  <Center
-                    justifyContent="flex-start"
-                    flexDir="column"
-                    py={['1rem', '1rem', '1rem', '2rem']}
-                    bg="brand.yellow.500"
-                    pos="absolute"
-                    h="14rem"
-                    rounded={['20%', '20%', '20%', '50%']}
-                    left="46.7%"
-                    transform="translateX(-50%)"
-                    w="95%"
-                  >
-                    <Heading fontSize="4xl" textAlign="center">
-                      {name}
-                    </Heading>
-                    <Text maxW="352px" px="1rem" textAlign="center">
-                      {title}
-                    </Text>
-                  </Center>
-                </Center>
-              </Box>
+              <Flex gap="0.75rem" mt="1rem" alignItems="center">
+                <Heading fontSize="lg" color="brand.dark.200">{name}</Heading>
+                <Text fontSize="lg" color="brand.dark.200">|</Text>
+                <Text fontSize="lg" color="brand.dark.200">{title}</Text>
+              </Flex>
             </Box>
           ))}
         </Slider>

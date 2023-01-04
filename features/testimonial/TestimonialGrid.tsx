@@ -6,7 +6,7 @@ import {
   SimpleGrid,
   useMediaQuery,
 } from '@chakra-ui/react'
-import React, { useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { TestimonialCardProps } from '../../constant'
 
@@ -25,15 +25,19 @@ export const TestimonialGrid = ({
     ssr: true,
     fallback: false, // return false on the server, and re-evaluate on the client side
   })
+
+  const testimonialRef = useRef<HTMLDivElement>(null)
+
   const slicedIndes = useRef<number[]>([0, 3])
 
   const [lastTestimonialIndex, setLastTestimonialIndex] = React.useState(0)
+  const [isUpdated, setIsUpdated] = React.useState(false)
 
   const trimmedContent = useMemo(() => {
     if (isLargerThan800 && !isTestimonial) {
       slicedIndes.current =
         lastTestimonialIndex !== 0
-          ? [lastTestimonialIndex, lastTestimonialIndex + 4]
+          ? [lastTestimonialIndex, lastTestimonialIndex + 3]
           : lastTestimonialIndex === testimonialContent.length
           ? [lastTestimonialIndex, testimonialContent.length]
           : [0, 3]
@@ -58,6 +62,23 @@ export const TestimonialGrid = ({
     )
   }, [isLargerThan800, testimonialContent, isTestimonial, lastTestimonialIndex])
 
+  const scrollDown = () => {
+    window.scrollTo({
+      top: testimonialRef?.current?.offsetTop,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    if (isUpdated) {
+      scrollDown()
+    }
+    else {
+      setIsUpdated(true)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastTestimonialIndex])
+
   return (
     <Box>
       <SimpleGrid
@@ -65,6 +86,7 @@ export const TestimonialGrid = ({
         spacing="1.375rem"
         py="3.75rem"
         pb={['1.5rem', '3.75rem']}
+        ref={testimonialRef}
       >
         {trimmedContent?.map(({ name, title, content, imgUrl, id }) => (
           <TestimonialCard
@@ -104,7 +126,7 @@ export const TestimonialGrid = ({
                 if (isTestimonial) {
                   return prev - 8 <= 0 ? 0 : prev - 8
                 }
-                return prev - 4 <= 0 ? 0 : prev - 4
+                return prev - 3 <= 0 ? 0 : prev - 3
               })
             }}
           >
@@ -142,9 +164,9 @@ export const TestimonialGrid = ({
                     ? testimonialContent.length - 1
                     : prev + 8
                 }
-                return prev + 4 >= testimonialContent.length
+                return prev + 3 >= testimonialContent.length
                   ? testimonialContent.length - 1
-                  : prev + 4
+                  : prev + 3
               })
             }}
           >

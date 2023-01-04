@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Icon } from '@chakra-ui/react'
+import { Center, HStack, Icon } from '@chakra-ui/react'
 import React from 'react'
 
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
@@ -15,12 +15,6 @@ export const TestimonialSlider = () => {
   const { selectedTestimonial, selectedTestimonialIndex } = useAppSelector(
     (state) => state.testimonial,
   )
-
-  // create varaiable that checks if selectedTestimonialIndex is less than 1, set it to the last index in the testimonialSliderContent array
-  const prevTestimonialIndex =
-    selectedTestimonialIndex < 1
-      ? testimonialSliderContent.length - 1
-      : selectedTestimonialIndex - 1
       
   return (
     <Center mt="1.875rem">

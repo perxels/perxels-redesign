@@ -1,14 +1,14 @@
 import { Box, Heading, Img, SimpleGrid, Text } from '@chakra-ui/react'
-import Image from 'next/image'
+// import Image from 'next/image'
 import React from 'react'
 
 export const HeroAnimation = () => {
   return (
     <SimpleGrid mt="2.625rem" columns={[1, 1, 1, 3]} gap={["4rem", "4rem", "4rem", "2rem", "6rem"]}>
       <Box display={['none', 'none', 'none', 'block']}>
-        <Image
-          width={226}
-          height={370}
+        <Img
+          width="256px"
+          height="auto"
           alt="hero"
           src="/assets/images/hero/2-hero.png"
         />
@@ -62,9 +62,9 @@ export const HeroAnimation = () => {
         </Box>
       </Box>
       <Box ml="auto" display={['none', 'none', 'none', 'block']}>
-        <Image
-          width={226}
-          height={370}
+        <Img
+          width="226px"
+          height="auto"
           alt="hero"
           src="/assets/images/hero/3-hero.png"
         />
