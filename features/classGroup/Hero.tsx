@@ -24,25 +24,30 @@ export const Hero = () => {
             colSpan={[1, 1, 1, 5]}
             pt={['3rem', '3rem', '3rem', 0]}
           >
-            <Flex pos="relative" h="full" flexDir="column" justifyContent="center">
-              <Img 
-                src='/assets/icons/arrow_erica.svg'
+            <Flex
+              pos="relative"
+              h="full"
+              flexDir="column"
+              justifyContent="center"
+            >
+              <Img
+                src="/assets/icons/arrow_erica.svg"
                 width="157px"
                 height="auto"
                 pos="absolute"
                 right="2rem"
                 top="5rem"
-                display={["none", "none", "none", "block"]}
+                display={['none', 'none', 'none', 'block']}
               />
-              
-              <Img 
-                src='/assets/icons/arrow_mhiz.svg'
+
+              <Img
+                src="/assets/icons/arrow_mhiz.svg"
                 width="157px"
                 height="auto"
                 pos="absolute"
                 right="8rem"
                 top="19rem"
-                display={["none", "none", "none", "block"]}
+                display={['none', 'none', 'none', 'block']}
               />
               <Heading
                 w="full"
@@ -83,7 +88,12 @@ export const Hero = () => {
           </GridItem>
 
           <GridItem h="full" colSpan={[1, 1, 1, 7]}>
-            <Box roundedLeft="10px" overflow="hidden" mr={['0', '0', '0', '0', '-6rem', '0']} pos="relative">
+            <Box
+              roundedLeft="10px"
+              overflow="hidden"
+              mr={['0', '0', '0', '0', '-6rem', '0']}
+              pos="relative"
+            >
               <Center
                 w="full"
                 h="full"
@@ -109,24 +119,26 @@ export const Hero = () => {
                 </Center>
                 <Heading
                   textTransform="uppercase"
-                  fontSize={["1rem", "1.125rem"]}
+                  fontSize={['1rem', '1.125rem']}
                   color="brand.white"
-                  maxW={["125px", "145px"]}
+                  maxW={['125px', '145px']}
                   ml="0.7rem"
                 >
                   Our Students In Action
                 </Heading>
               </Center>
-              {/* <Img
-                src="./assets/images/class-group/hero-class-plan.jpg"
-                alt="hero-class-plan"
-                w="full"
-                h="auto"
-                rounded={['10px', '10px', '10px', 0]}
-                roundedLeft="10px"
-              /> */}
-              <video width="100%" height="auto" loop={true} autoPlay={true} controls={false} muted>
-                <source src="https://res.cloudinary.com/dhqvopvj4/video/upload/v1672846839/perxels/enrol_dgzjky.mp4" type="video/mp4" />
+              <video
+                width="100%"
+                height="auto"
+                loop={true}
+                autoPlay={true}
+                controls={false}
+                muted
+              >
+                <source
+                  src="https://res.cloudinary.com/dhqvopvj4/video/upload/v1672846839/perxels/enrol_dgzjky.mp4"
+                  type="video/mp4"
+                />
                 Your browser does not support the video tag.
               </video>
             </Box>
