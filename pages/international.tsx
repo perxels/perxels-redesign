@@ -1,5 +1,5 @@
 import React from 'react'
-import { OurClassGroup } from '../features/classGroup'
+import { OurClassGroup, StudentWorkWrapper } from '../features/classGroup'
 import { HeroSubSection } from '../features/home'
 import { ClassPlan, InternationalHero, MarqueeComp } from '../features/international'
 import { Expectation } from '../features/teens'
@@ -13,7 +13,8 @@ const international = () => {
         <HeroSubSection />
         <MarqueeComp />
         <ClassPlan />
-        <Expectation  title={"A glimpse into what you would be able to do at the end of the training."}/>
+        <StudentWorkWrapper />
+        {/* <Expectation  title={"A glimpse into what you would be able to do at the end of the training."}/> */}
         <Testimonial />
     </MainLayout>
   )
