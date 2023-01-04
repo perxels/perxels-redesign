@@ -81,7 +81,7 @@ export const links = [
             },
             {
                 name: 'Community',
-                url: '#',
+                url: 'https://chat.whatsapp.com/E6mQm7lHo412WAOOMP0Bwt',
             }
         ],
     },
@@ -93,8 +93,8 @@ export const links = [
                 url: 'mailto:perxels@gmail.com',
             },
             {
-                name: '+234 801 234 5678',
-                url: 'tel:+234 801 234 5678',
+                name: '+234 801 353 6966 80',
+                url: 'tel:+2348135369680',
             }
         ],
     }

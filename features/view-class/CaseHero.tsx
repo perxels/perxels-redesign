@@ -72,6 +72,7 @@ export const CaseHero = () => {
                 <HStack
                   spacing={'0.625rem'}
                   as="a"
+                  target="_blank"
                   href={studentData?.linkedin?.link}
                 >
                   <Center

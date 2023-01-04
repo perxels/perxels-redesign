@@ -140,7 +140,7 @@ const Footer = () => {
               Contact
             </Text>
 
-            <Link w="full">
+            <Link w="full" target="_blank" href="mailto: perxels@gmail.com">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -151,7 +151,7 @@ const Footer = () => {
                 perxels@gmail.com
               </Text>
             </Link>
-            <Link w="full">
+            <Link w="full" target="_blank" href='tel: +2348135369680'>
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -159,7 +159,7 @@ const Footer = () => {
                 color="brand.white"
                 _hover={{ color: 'brand.yellow.500' }}
               >
-                +234 801 234 5678
+                +234 801 353 6966 80
               </Text>
             </Link>
           </VStack>
