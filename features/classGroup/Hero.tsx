@@ -117,14 +117,18 @@ export const Hero = () => {
                   Our Students In Action
                 </Heading>
               </Center>
-              <Img
+              {/* <Img
                 src="./assets/images/class-group/hero-class-plan.jpg"
                 alt="hero-class-plan"
                 w="full"
                 h="auto"
                 rounded={['10px', '10px', '10px', 0]}
                 roundedLeft="10px"
-              />
+              /> */}
+              <video width="100%" height="auto" loop={true} autoPlay={true} controls={false} muted>
+                <source src="https://res.cloudinary.com/dhqvopvj4/video/upload/v1672846839/perxels/enrol_dgzjky.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </Box>
           </GridItem>
         </SimpleGrid>
