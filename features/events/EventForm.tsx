@@ -71,8 +71,9 @@ export const EventForm = () => {
       as="form"
       spacing={{ base: "1.2rem", md: "1.209375rem"}}
       backgroundColor={'#F6F7FD'}
-      py={{ base: "1.5625em", md: "3.441875rem" }}
-      px={{ base: "1.61375rem", md: "2.691875rem" }}
+      px={['1.5rem', '1.5rem', '1.5rem', '2.5rem']}
+      py={['1.5rem', '1.5rem', '1.5rem', '3.5rem']}
+      rounded="10px"
       onSubmit={handleSubmit}
     >
       
@@ -87,6 +88,7 @@ export const EventForm = () => {
           placeholder="How did you get to know about Us?"
           _placeholder={{ color: '#B4B4B4' }}
           name="howyouknew"
+          h="3.5rem"
         >
           <option value="Whatsapp">Whatsapp</option>
           <option value ="Instagram">Instagram</option>
