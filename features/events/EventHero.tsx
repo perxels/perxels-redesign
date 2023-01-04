@@ -25,17 +25,13 @@ export const EventHero = () => {
       >
       <Grid
         w="full"
-        // templateColumns={{
-        //   base: '1fr',
-        //   md: '1.5fr 1fr',
-        // }}
         templateColumns={[
           '1fr',
           '1fr',
           '1fr',
           '1.5fr 1fr',
         ]}
-        gap={16}
+        gap={12}
       >
         <Box>
           <Button

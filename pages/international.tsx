@@ -13,7 +13,7 @@ const international = () => {
         <HeroSubSection />
         <MarqueeComp />
         <ClassPlan />
-        <Expectation />
+        <Expectation  title={"A glimpse into what you would be able to do at the end of the training."}/>
         <Testimonial />
     </MainLayout>
   )

@@ -15,7 +15,7 @@ export const EventCard = ({ imageSrc, link }: EventCardProps) => {
       onMouseLeave={() => setIsHover(false)}
       href={link}
       key={imageSrc}
-      overflow="hidden"
+      target="_blank"
     >
       <Box
         w={{ base: '20rem', md: '100%', lg: '100%' }}

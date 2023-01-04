@@ -16,7 +16,7 @@ const Teens = () => {
       <AboutTeen />
       <CourseOutline />
       <AdmissionProcess />
-      <Expectation />
+      <Expectation  title="A glimpse into what the teens would be able to do at the end of the training"/>
       <Testimonial />
     </MainLayout>
   )
