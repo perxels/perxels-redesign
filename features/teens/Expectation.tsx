@@ -13,6 +13,10 @@ interface SliderDataProps {
   title: string
 }
 
+ interface ExpectationProps {
+  title: string
+ }
+
 const sliderData: SliderDataProps[] = [
   {
     id: 1,
@@ -40,7 +44,7 @@ const sliderData: SliderDataProps[] = [
   },
 ]
 
-export const Expectation = () => {
+export const Expectation  = ({title}: ExpectationProps) => {
   const settings = {
     dots: false,
     arrows: false,
@@ -83,7 +87,7 @@ export const Expectation = () => {
         <SectionHeader
           isWhite
           subTitle="What to expect"
-          title="A glimpse into what the teens would be able to do at the end of the training"
+          title= {title}
         />
 
         <Slider {...settings}>
@@ -94,7 +98,7 @@ export const Expectation = () => {
                 <Text mt="1.5rem" fontSize="xl" color="brand.gray.200">
                   {cat}
                 </Text>
-                <Text mt="0.5rem" fontSize="2xl" color="brand.dark.100">
+                <Text mt="0.5rem" fontSize="2xl" color="brand.dark.100" fontWeight={700}>
                   {title}
                 </Text>
               </Box>
