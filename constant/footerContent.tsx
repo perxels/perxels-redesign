@@ -93,7 +93,7 @@ export const links = [
                 url: 'mailto:perxels@gmail.com',
             },
             {
-                name: '+234 801 353 6966 80',
+                name: '+2348135369680',
                 url: 'tel:+2348135369680',
             }
         ],

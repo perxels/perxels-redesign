@@ -88,7 +88,7 @@ export const CaseHero = () => {
                   <Text
                     fontSize={{ base: '1.125rem', md: '1rem' }}
                     color="#E3E4E6"
-                    display={['none', 'block']}
+                    display={['block']}
                     textDecoration="underline"
                   >
                     {studentData?.linkedin?.name}

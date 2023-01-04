@@ -159,7 +159,7 @@ const Footer = () => {
                 color="brand.white"
                 _hover={{ color: 'brand.yellow.500' }}
               >
-                +234 801 353 6966 80
+                +2348135369680
               </Text>
             </Link>
           </VStack>
