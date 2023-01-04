@@ -114,10 +114,10 @@ export const PastSpeakers = () => {
             <Box px="0.75rem" key={id} overflowX="hidden">
               <Img rounded="5px" src={img} alt={name} w="full" h="auto" />
 
-              <Flex gap="0.75rem" mt="1rem" alignItems="center">
-                <Heading fontSize="lg" color="brand.dark.200">{name}</Heading>
-                <Text fontSize="lg" color="brand.dark.200">|</Text>
-                <Text fontSize="lg" color="brand.dark.200">{title}</Text>
+              <Flex gap="0.5rem" mt="1rem" alignItems="center">
+                <Heading fontSize="sm" color="brand.dark.200">{name}</Heading>
+                <Text fontSize="sm" color="brand.dark.200">|</Text>
+                <Text fontSize="sm" color="brand.dark.200">{title}</Text>
               </Flex>
             </Box>
           ))}
