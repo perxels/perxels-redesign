@@ -71,14 +71,14 @@ export const PastSpeakers = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
     cssEase: 'linear',
     responsive: [
       {
         breakpoint: 1460,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 4,
+          slidesToScroll: 1,
           initialSlide: 4,
         },
       },
@@ -86,7 +86,7 @@ export const PastSpeakers = () => {
         breakpoint: 900,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           initialSlide: 2,
         },
       },
