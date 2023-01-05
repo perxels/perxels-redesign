@@ -4,6 +4,7 @@ import Header from "./Header";
 import SectionHeader from "./SectionHeader";
 import BgHeader from "./BgHeader";
 import { ListWrapper } from "./List";
+import StoryIcon from "./StoryIcon";
 
 
-export { Logo, Footer, Header, SectionHeader, BgHeader, ListWrapper };
+export { Logo, Footer, Header, SectionHeader, BgHeader, ListWrapper, StoryIcon };

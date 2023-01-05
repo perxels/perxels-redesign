@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex, Heading, Img, Text } from '@chakra-ui/react'
 import { StoryCard } from './StoryCard'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import { MainContainer } from '../../layouts'
+import { StoryIcon } from '../../components'
 export const Story = () => {
+  const [switcher, setSwitcher] = useState<Number>(1)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSwitcher((prev) => (prev === 1 ? 2 : 1))
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <MainContainer bg="brand.purple.500">
+    <MainContainer
+      bg={switcher === 1 ? 'brand.purple.500' : 'brand.yellow.300'}
+    >
       <Flex
         direction={{ base: 'column', lg: 'row' }}
         justify="space-between"
@@ -13,33 +25,34 @@ export const Story = () => {
         w="100%"
         h="100%"
         py={['4.5rem', '3.4375rem']}
-        bg="brand.purple.500"
+        bg={switcher === 1 ? 'brand.purple.500' : 'brand.yellow.300'}
       >
         <Box>
-          <Img
-            w={['6.25rem']}
-            h={['6.25rem']}
-            src="/assets/images/story/mission.svg"
-            alt="Story Icon"
-          />
+          <StoryIcon pathColor={switcher === 2 ? '#fff' : '#34296B'} circleColor={switcher === 1 ? '#fff' : '#34296B'} />
 
           <Heading
             fontSize={['7xl', '7xl', '7xl']}
             fontWeight="black"
-            color="brand.white"
+            color={switcher === 1 ? 'brand.white' : 'brand.purple.500'}
             mt="1.5rem"
           >
-            Our Mission
+            {switcher === 1 ? 'Our Mission' : 'Our Vision'}
           </Heading>
 
           <Text
             fontSize={['xl', '2xl']}
-            color="brand.white"
+            color={switcher === 1 ? 'brand.white' : 'brand.purple.500'}
             mt="1.2rem"
             maxW={{ base: '100%', lg: '27.3125rem' }}
           >
-            Equipping designers with the core design skills and soft skills to
-            become proficient in solving problems with design.
+            {
+              switcher === 1 ? `
+                Equipping designers with the core design skills and soft skills to
+                become proficient in solving problems with design.
+              ` : `
+                To solve the world problems with great designs.
+              `
+            }
           </Text>
         </Box>
 
@@ -52,7 +65,11 @@ export const Story = () => {
           <Img
             w={['15rem', '20rem', '22rem', '31.875rem']}
             h={['15rem', '20rem', '22rem', '31.875rem']}
-            src="/assets/images/story/storyImage.png"
+            src={
+              switcher === 1
+                ? '/assets/images/story/storyImage.png'
+                : '/assets/images/story/storyImage2.png'
+            }
             alt="Story Image"
           />
           <Box
@@ -67,7 +84,7 @@ export const Story = () => {
               'translate(40%, -80%)',
             ]}
           >
-            <StoryCard />
+            <StoryCard switcher={switcher} />
           </Box>
         </Box>
       </Flex>

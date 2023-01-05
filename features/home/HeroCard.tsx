@@ -11,6 +11,7 @@ export const HeroCard = ({ title, content, image, color }: HeroDataProps) => {
       borderWidth="1px"
       borderColor={color}
       rounded="22px"
+      className='section-card'
     >
       <Center width="6.384rem" height="6.384rem" rounded="full" bg={color}>
         <Image src={image} width={42} height={42} alt={title} />
