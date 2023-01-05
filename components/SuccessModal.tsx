@@ -14,7 +14,7 @@ import {
   Image,
   useDisclosure,
 } from '@chakra-ui/react'
-
+import Link from 'next/link'
 interface SuccessModalProps {
   isOpen: boolean
   onClose: () => void
@@ -69,9 +69,11 @@ const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
               </Text>
             </Center>
             <Center>
+                <Link href="/">
               <Button
               mt={['1rem', '1rem', '1rem', '1.4375rem']}
               >Back to Home Page</Button>
+              </Link>
             </Center>
           </ModalBody>
         </ModalContent>
