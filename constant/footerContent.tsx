@@ -23,11 +23,6 @@ export const FooterSocialLinks: FooterSocialLink[] = [
         icon: FaLinkedin,
     },
     {
-        name: 'Facebook',
-        url: 'https://web.facebook.com/PerxelsNG',
-        icon: FaFacebookF,
-    },
-    {
         name: 'Youtube',
         url: 'https://www.youtube.com/channel/UCmcEhILeheJi6s_nEqrIF_Q',
         icon: FaYoutube,
