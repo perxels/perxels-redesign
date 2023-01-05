@@ -12,19 +12,24 @@ import {
   Text,
   useClipboard,
   HStack,
+  useDisclosure
 
 } from '@chakra-ui/react'
 import { EventInput } from './'
 import { FaTwitter } from 'react-icons/fa'
 import { BiCopy } from 'react-icons/bi'
 import {RiWhatsappFill} from 'react-icons/ri'
+import { SuccessModal } from '../../components'
+import { on } from 'stream'
+
 export const EventForm = () => {
     const { hasCopied, onCopy } = useClipboard('https://perxels.com/events/dashboard-designs')
     const formRef = useRef(null)
     const [loading, setLoading] = useState(false)
     const scriptUrl = "https://script.google.com/macros/s/AKfycbwT-2FTNzCeyQ1f9bZQgcRoTuepP0kHNVemyh5jmrP_H3z7p_EaDNNMAlcWrpdZJj4Cvw/exec"
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const handleSubmit = (e: any) => {
-        console.log("working")
+       
         e.preventDefault()
         setLoading(true)
         const inputData = e.target as typeof e.target & {
@@ -53,7 +58,8 @@ export const EventForm = () => {
             (response) => {
               if(response.status === 201 || 200) {
                 setLoading(false)
-                alert("Your message has been sent successfully")
+                console.log("working")
+                onOpen()
               }else{
                 setLoading(false)
                 alert("Something went wrong, please try again")
@@ -66,7 +72,7 @@ export const EventForm = () => {
 
   return (
     <>
-   
+       <SuccessModal isOpen={isOpen} onClose={onClose}/>
     <VStack
       as="form"
       spacing={{ base: "1.2rem", md: "1.209375rem"}}

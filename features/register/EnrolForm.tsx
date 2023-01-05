@@ -7,11 +7,15 @@ import {
   Text,
   Textarea,
   VStack,
+  useDisclosure
 } from '@chakra-ui/react'
 import React from 'react'
+import { SuccessModal } from '../../components'
 
 const EnrolForm = () => {
   const scriptUrl = "https://script.google.com/macros/s/AKfycbw9_DFBpsyrNp8_2AsnjKiLlXWxylVD0QtdbN7qDbk2IzLIlg5o2pxKibU-t25F-Jke9w/exec"
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   const handleSubmit = (e: any) => {
     e.preventDefault()
     const inputData = e.target as typeof e.target & {
@@ -40,8 +44,7 @@ const EnrolForm = () => {
     }).then(
         (response) => {
           if(response.status === 201 || 200) {
-          
-            alert("Your message has been sent successfully")
+            onOpen()
           }else{
        
             alert("Something went wrong, please try again")
@@ -50,6 +53,8 @@ const EnrolForm = () => {
     )
   }
   return (
+    <>
+    <SuccessModal isOpen={isOpen} onClose={onClose} />
     <Box overflowY="auto" px={['1rem', '1rem', '3rem']} py="2rem">
       <Heading fontSize="6xl" maxW="420px" textAlign="left" color="brand.dark.100">
         You’re one step ahead to achieve your goal
@@ -140,6 +145,7 @@ const EnrolForm = () => {
         </Button>
       </VStack>
     </Box>
+    </>
   )
 }
 
