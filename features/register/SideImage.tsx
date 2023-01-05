@@ -1,4 +1,4 @@
-import { Box, Flex, Img } from '@chakra-ui/react'
+import { Box, Flex, Img, Link } from '@chakra-ui/react'
 import React from 'react'
 import { Logo } from '../../components'
 
@@ -13,7 +13,7 @@ const SideImage = () => {
       position="relative"
       display={['none', 'none', 'none', 'flex']}
     >
-      <Box pos="absolute" top="3.125rem" left="6.25rem">
+      <Box as={Link} href="/" pos="absolute" top="3.125rem" left="6.25rem">
         <Logo color="#fff" />
       </Box>
       <Img
