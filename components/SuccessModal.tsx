@@ -18,8 +18,10 @@ import Link from 'next/link'
 interface SuccessModalProps {
   isOpen: boolean
   onClose: () => void
+  title: string,
+description: string,
 }
-const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
+const SuccessModal = ({ isOpen, onClose, title, description }: SuccessModalProps) => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}
@@ -41,7 +43,9 @@ const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
               fontWeight={'700'}
             />
             <Center>
-              <Box mb={['1rem', '1rem', '1rem', '1.4375rem']}>
+              <Box mb={['1rem', '1rem', '1rem', '1.4375rem']}
+              boxSize="9.8125rem"
+              >
                 <Image src="/assets/icons/success.png" alt="success" />
               </Box>
             </Center>
@@ -53,7 +57,7 @@ const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
                 fontSize={['1rem', '1.5rem', '2.135625rem', '2.135625rem']}
                 lineHeight={['1.5rem', '2.15rem', '2.603125rem', '2.500625rem']}
               >
-                Thank you for your submission!
+               {title}
               </Text>
             </Center>
             <Center>
@@ -65,7 +69,7 @@ const SuccessModal = ({ isOpen, onClose }: SuccessModalProps) => {
                 lineHeight={['1.5rem', '2.15rem', '2.603125rem', '2.15rem']}
                 mt={['1rem', '1rem', '1rem', '0.9375rem']}
               >
-                Our representative will call you within the next 24 hours.
+               {description}
               </Text>
             </Center>
             <Center>
