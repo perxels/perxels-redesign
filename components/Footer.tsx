@@ -136,7 +136,7 @@ const Footer = () => {
           </Heading>
 
           <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
-            <Button bg="brand.yellow.500" color="brand.purple.500" as={Link} to="/class-plans">
+            <Button bg="brand.yellow.500" color="brand.purple.500" as={Link} href="/class-plans">
               Get Started
             </Button>
           </Box>

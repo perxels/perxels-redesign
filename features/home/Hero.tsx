@@ -52,7 +52,7 @@ export const Hero = () => {
         </Text>
 
         <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
-          <Button as={Link} to="/class-plans">Start Here</Button>
+          <Button as={Link} href="/class-plans">Start Here</Button>
         </Box>
 
         <HeroAnimation />
