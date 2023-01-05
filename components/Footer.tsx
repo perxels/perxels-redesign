@@ -35,7 +35,14 @@ const Footer = () => {
             Want to transition into Design?
           </Text>
 
-          <Button as={Link} href="/class-plans" _hover={{ textDecor: "none", bg: "brand.yellow.500" }} variant="rounded-solid">Enroll Now</Button>
+          <Button
+            as={Link}
+            href="/class-plans"
+            _hover={{ textDecor: 'none', bg: 'brand.yellow.500' }}
+            variant="rounded-solid"
+          >
+            Enroll Now
+          </Button>
         </Flex>
 
         {/* links */}
@@ -110,17 +117,29 @@ const Footer = () => {
         </Grid>
 
         {/* mobile cta */}
-        <VStack display={['flex', 'flex', 'flex', 'none']} alignItems="flex-start" spacing="1.25rem">
+        <VStack
+          display={['flex', 'flex', 'flex', 'none']}
+          alignItems="flex-start"
+          spacing="1.25rem"
+        >
           <Heading
             textAlign="left"
             fontSize={['4xl', '5xl']}
             maxW="300px"
             color="brand.white"
           >
-            Equpping designers to {' '}
-            <Box as="span" color="brand.yellow.500">solve problems</Box>
-            {' '}with design.
+            Equpping designers to{' '}
+            <Box as="span" color="brand.yellow.500">
+            {' '}solve problems
+            </Box>{' '}
+            with design.
           </Heading>
+
+          <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
+            <Button bg="brand.yellow.500" color="brand.purple.500" as={Link} to="/class-plans">
+              Get Started
+            </Button>
+          </Box>
         </VStack>
 
         <SimpleGrid
@@ -151,7 +170,7 @@ const Footer = () => {
                 perxels@gmail.com
               </Text>
             </Link>
-            <Link w="full" target="_blank" href='tel: +2348135369680'>
+            <Link w="full" target="_blank" href="tel: +2348135369680">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -174,7 +193,7 @@ const Footer = () => {
               Pages
             </Text>
 
-            <Link w="full" href='/'>
+            <Link w="full" href="/">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -185,7 +204,7 @@ const Footer = () => {
                 Home
               </Text>
             </Link>
-            <Link w="full" href='/testimonials'>
+            <Link w="full" href="/testimonials">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -196,7 +215,7 @@ const Footer = () => {
                 Testimonies
               </Text>
             </Link>
-            <Link w="full" href='/class-plans'>
+            <Link w="full" href="/class-plans">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -207,7 +226,7 @@ const Footer = () => {
                 Enroll now
               </Text>
             </Link>
-            <Link w="full" href='/class-plans'>
+            <Link w="full" href="/class-plans">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
