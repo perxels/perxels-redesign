@@ -35,7 +35,7 @@ const Footer = () => {
             Want to transition into Design?
           </Text>
 
-          <Button variant="rounded-solid">Enroll Now</Button>
+          <Button as={Link} href="/class-plans" _hover={{ textDecor: "none", bg: "brand.yellow.500" }} variant="rounded-solid">Enroll Now</Button>
         </Flex>
 
         {/* links */}
