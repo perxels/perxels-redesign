@@ -6,7 +6,8 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
-import React from 'react'
+import gsap from 'gsap'
+import React, { useEffect } from 'react'
 import { MainContainer } from '../../layouts'
 
 interface FundingDataProps {
@@ -42,6 +43,24 @@ const FundingData: FundingDataProps[] = [
 ]
 
 export const Funding = () => {
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.funding', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: '.funding',
+          start: '-900 top',
+          end: 'bottom bottom',
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <MainContainer>
       <Grid
@@ -50,6 +69,7 @@ export const Funding = () => {
         templateColumns={['100%', '100%', '100%', '400px 1fr']}
         gap="4rem"
         pb={['8rem', '8rem', '8rem', '12rem']}
+        className="funding"
       >
         <GridItem>
           <Heading

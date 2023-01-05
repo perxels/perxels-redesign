@@ -6,11 +6,10 @@ const events = () => {
   return (
     <MainLayout>
       <EventHero />
-      <EventCommunity/>
-      <EventPlayback/>
-      <PastSpeakers/>
-      <EventTwitter/>
-    
+      <EventCommunity />
+      <EventPlayback />
+      <PastSpeakers />
+      <EventTwitter />
     </MainLayout>
   )
 }

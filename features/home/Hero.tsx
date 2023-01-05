@@ -1,6 +1,6 @@
 import { Box, Heading, Text } from '@chakra-ui/react'
 import gsap from 'gsap'
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { MainContainer } from '../../layouts'
 import { HeroAnimation } from './HeroAnimation'
 
@@ -10,7 +10,7 @@ export const Hero = () => {
   const descRef = useRef<HTMLParagraphElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }));
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let ctx = gsap.context(() => {
       tl.current
         .from(headingRef.current, { opacity: 0, y: 0, duration: 1, delay: 1 })

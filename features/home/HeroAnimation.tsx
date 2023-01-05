@@ -14,7 +14,7 @@ export const HeroAnimation = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setSwitcher((prev) => (prev === 1 ? 2 : prev === 2 ? 3 : 1))
-    }, 4000)
+    }, 3000)
     return () => clearInterval(interval)
   }, [])
 

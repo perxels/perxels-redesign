@@ -1,10 +1,24 @@
 import { Box, Center, Heading, Img, Text } from '@chakra-ui/react'
-import React from 'react'
+import gsap from 'gsap'
+import React, { useEffect, useRef } from 'react'
 import { MainContainer } from '../../layouts'
 
 const Hero = () => {
+  const mainRef = useRef<HTMLDivElement>(null)
+  const tl = useRef<any>(gsap.timeline({ paused: true }));
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      tl.current
+        .from(".student-hero-heading", { opacity: 0, y: 100, duration: 0.5, delay: 0.5 })
+        .from(".student-hero-subHeading", { opacity: 0, y: 100, duration: 1 })
+        .play()
+    }, mainRef)
+
+    return () => ctx.revert()
+  }, [])
   return (
-    <Box h="calc(100vh - 3rem)" bg="brand.dark.200">
+    <Box ref={mainRef} h="calc(100vh - 3rem)" bg="brand.dark.200">
       <Box
         w="full"
         h="full"
@@ -107,10 +121,10 @@ const Hero = () => {
               src="./assets/images/sudent-work/student-pattern-5.png"
               alt="pattern"
             />
-            <Heading textAlign="center" fontSize={["7xl", "9xl"]} color="brand.yellow.500">
+            <Heading className="student-hero-heading" textAlign="center" fontSize={["7xl", "9xl"]} color="brand.yellow.500">
               Our Students’ Portfolio
             </Heading>
-            <Text textAlign="center" fontSize={["xl", "2xl", "4xl"]} color="brand.white">
+            <Text className='student-hero-subHeading' textAlign="center" fontSize={["xl", "2xl", "4xl"]} color="brand.white">
               Results of our{' '}
               <Box as={'span'} fontWeight="700">
                 {' '}

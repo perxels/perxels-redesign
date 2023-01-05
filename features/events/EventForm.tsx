@@ -75,6 +75,7 @@ export const EventForm = () => {
       py={['1.5rem', '1.5rem', '1.5rem', '3.5rem']}
       rounded="10px"
       onSubmit={handleSubmit}
+      className="speaker-form"
     >
       
       <EventInput id="name" type="text" placeholder="Full Name*" />

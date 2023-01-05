@@ -19,6 +19,7 @@ export const ClassCard = ({
       overflow="hidden"
       px="2rem"
       py="2.75rem"
+      className="class-group-card"
     >
         <Heading color="brand.white" fontSize={["3xl", "4xl", "4xl", "6xl"]}>{title}</Heading>
         <Text color="brand.white" fontSize={["xs", "sm", "md", "xl"]}>{content}</Text>

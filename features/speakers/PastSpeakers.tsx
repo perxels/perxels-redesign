@@ -99,6 +99,7 @@ export const PastSpeakers = () => {
       },
     ],
   }
+  
   return (
     <Box pb="4rem" pt="3rem" bg="brand.gray.300">
       <MainContainer bg="none">

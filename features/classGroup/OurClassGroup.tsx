@@ -1,13 +1,38 @@
 import { Box, SimpleGrid } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SectionHeader } from '../../components'
 import { ClassGroupContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import { ClassCard } from './ClassCard'
 
+import gsap from 'gsap'
+
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
 export const OurClassGroup = ({ title }: { title?: string }) => {
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.class-group-card', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: ".class-group-wrapper",
+          start: "-900 top",
+          end: "bottom bottom",
+        },
+        stagger: 1,
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <Box mt={["3.75rem", "3.75rem", "7.5rem"]}>
+    <Box mt={["3.75rem", "3.75rem", "7.5rem"]} className="class-group-wrapper">
       <MainContainer>
         <SectionHeader
           subTitle={title || "Our CLass Groups"}

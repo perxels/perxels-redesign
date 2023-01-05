@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   Box,
   Flex,
@@ -6,22 +6,41 @@ import {
   Text,
   Image,
   Button,
-  useColorModeValue,
   Grid,
 } from '@chakra-ui/react'
 import { bannerContent } from '../../constant'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
-import { IoLocationOutline } from 'react-icons/io5'
 import { EventForm } from './'
 import { MainContainer } from '../../layouts'
-import { BsBoxArrowDownLeft } from 'react-icons/bs'
+
+import gsap from 'gsap'
+
 export const EventHero = () => {
+  const mainRef = useRef<HTMLDivElement>(null)
+  const tl = useRef<any>(gsap.timeline({ paused: true }));
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      tl.current
+        .from(".ama-title", { opacity: 0, y: 100, duration: 0.5, delay: 0.5 })
+        .from(".ama-main-title", { opacity: 0, y: 100, duration: 1 })
+        .from(".ama-other-content", { opacity: 0, y: 100, duration: 1 })
+        .from(".speaker-section", { opacity: 0, y: 100, duration: 1 })
+        .from(".speaker-form", { opacity: 0, y: 100, duration: 1 })
+        .from(".about-speaker", { opacity: 0, y: 100, duration: 1 })
+        .play()
+    }, mainRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <MainContainer bg={`url(./assets/images/heroBg.png) center/cover no-repeat`}>
       <Box
         py="2rem"
         w="full"
+        ref={mainRef}
       >
       <Grid
         w="full"
@@ -52,11 +71,12 @@ export const EventHero = () => {
             color="brand.dark.100"
             lineHeight={'110%'}
             mb={{ base: 4, md: 4 }}
+            className="ama-main-title"
           >
             {bannerContent.mainTitle} <br />
             {bannerContent.subTitle}
           </Heading>
-          <Flex columnGap={{ base: '0.5rem', lg: '1.3rem' }} mt={'1rem'}>
+          <Flex className='ama-other-content' columnGap={{ base: '0.5rem', lg: '1.3rem' }} mt={'1rem'}>
             <Box
               color={'brand.gray.400'}
               display={'flex'}
@@ -117,7 +137,7 @@ export const EventHero = () => {
           </Flex>
 
           {/* speaker card */}
-          <Box mt={{ base: 4, md: 16 }} mb={{ base: 3.5, md: 10 }}>
+          <Box className='speaker-section' mt={{ base: 4, md: 16 }} mb={{ base: 3.5, md: 10 }}>
             <Text
               fontSize={{ base: '0.9rem', lg: '1.25rem' }}
               fontWeight={'bold'}
@@ -154,7 +174,7 @@ export const EventHero = () => {
           </Box>
 
           {/* event description */}
-          <Box>
+          <Box className='about-speaker'>
             <Text
               fontSize={{ base: '0.9rem', lg: '1.25rem' }}
               fontWeight={'bold'}

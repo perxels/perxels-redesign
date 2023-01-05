@@ -1,21 +1,41 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   Text,
-  Flex,
-  Image,
   Heading,
-  VStack,
-  HStack,
-  Center,
   Button,
 } from '@chakra-ui/react'
 import { AiOutlineRightCircle } from 'react-icons/ai'
 import { MainContainer } from '../../layouts'
+
+import gsap from 'gsap'
+
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
 export const EventCommunity = () => {
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.event-comm', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: ".event-comm",
+          start: "-900 top",
+          end: "bottom bottom",
+        }
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <MainContainer>
-      <Box>
+      <Box className='event-comm'>
         <Box
           bg={{
             base: `linear-gradient(360deg, #000000 23.68%, rgba(0, 0, 0, 0) 106.41%),url(assets/images/events/communitymobile.png) center/cover no-repeat`,

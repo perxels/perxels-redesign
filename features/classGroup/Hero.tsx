@@ -10,13 +10,37 @@ import {
   SimpleGrid,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import gsap from 'gsap'
+import React, { useEffect, useRef } from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { MainContainer } from '../../layouts'
 
 export const Hero = () => {
+  const mainRef = useRef<HTMLDivElement>(null)
+  const tl = useRef<any>(gsap.timeline({ paused: true }))
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      tl.current
+        .from('.arrow-erica', { opacity: 0, y: 100, duration: 0.5, delay: 0.5 })
+        .from('.arrow-mhiz', { opacity: 0, y: 100, duration: 1 })
+        .from('.class-plan-title', { opacity: 0, y: 100, duration: 0.5 })
+        .from('.class-plan-heading', { opacity: 0, y: 100, duration: 0.5 })
+        .from('.class-plan-trained', { opacity: 0, y: 100, duration: 1 })
+        .from('.class-plan-thousand', { opacity: 0, y: 100, duration: 1 })
+        .from('.class-plan-video', { opacity: 0, y: 100, duration: 1 })
+        .play()
+    }, mainRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <Box w="full" bg={`url(./assets/images/heroBg.png) center/cover no-repeat`}>
+    <Box
+      ref={mainRef}
+      w="full"
+      bg={`url(./assets/images/heroBg.png) center/cover no-repeat`}
+    >
       <MainContainer bg="none">
         <SimpleGrid py="2.5rem" columns={[1, 1, 1, 12]} spacing="2.5rem">
           <GridItem
@@ -38,6 +62,7 @@ export const Hero = () => {
                 right="2rem"
                 top="5rem"
                 display={['none', 'none', 'none', 'block']}
+                className="arrow-erica"
               />
 
               <Img
@@ -48,12 +73,15 @@ export const Hero = () => {
                 right="8rem"
                 top="19rem"
                 display={['none', 'none', 'none', 'block']}
+                className="arrow-mhiz"
+                zIndex="4"
               />
               <Heading
                 w="full"
                 fontSize={['lg', 'lg', 'xl']}
                 fontWeight="600"
                 textTransform="uppercase"
+                className="class-plan-title"
               >
                 Enroll Page
               </Heading>
@@ -62,6 +90,7 @@ export const Hero = () => {
                 fontSize={['3rem', '3rem', '3.5rem']}
                 fontWeight="black"
                 lineHeight={1.15}
+                className="class-plan-heading"
               >
                 Building Top Designers for the World.
               </Heading>
@@ -72,6 +101,7 @@ export const Hero = () => {
                 pt="1.5rem"
                 fontWeight="600"
                 textTransform="uppercase"
+                className="class-plan-trained"
               >
                 TRAINED
               </Heading>
@@ -81,6 +111,7 @@ export const Hero = () => {
                 lineHeight={1.2}
                 color="brand.purple.300"
                 fontWeight="black"
+                className="class-plan-thousand"
               >
                 3000+
               </Heading>
@@ -93,40 +124,8 @@ export const Hero = () => {
               overflow="hidden"
               mr={['0', '0', '0', '0', '-6rem', '0']}
               pos="relative"
+              className='class-plan-video'
             >
-              <Center
-                w="full"
-                h="full"
-                rounded={['10px', '10px', '10px', 0]}
-                roundedLeft="8px"
-                pos="absolute"
-                top="0"
-                left="0"
-                bg="brand.overlay.200"
-                cursor="pointer"
-              >
-                <Center
-                  w={['2.5rem', '2.5rem', '2.5rem', '3.25rem']}
-                  h={['2.5rem', '2.5rem', '2.5rem', '3.25rem']}
-                  rounded="full"
-                  bg="brand.white"
-                >
-                  <Icon
-                    as={BsFillPlayFill}
-                    fontSize="1.5rem"
-                    color="brand.purple.500"
-                  />
-                </Center>
-                <Heading
-                  textTransform="uppercase"
-                  fontSize={['1rem', '1.125rem']}
-                  color="brand.white"
-                  maxW={['125px', '145px']}
-                  ml="0.7rem"
-                >
-                  Our Students In Action
-                </Heading>
-              </Center>
               <video
                 width="100%"
                 height="auto"

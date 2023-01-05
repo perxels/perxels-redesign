@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   SimpleGrid,
@@ -12,11 +12,36 @@ import {
 import { MainContainer } from '../../layouts'
 import { SectionHeader } from '../../components'
 import { eventPlayBack } from '../../constant/eventPlaybeck'
-import { BsFillPlayCircleFill } from 'react-icons/bs'
 import { EventCard } from './EventCard'
+
+import gsap from 'gsap'
+
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
+
 export const EventPlayback = () => {
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.eventPlayback', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: ".eventPlayback",
+          start: "-600 top",
+          end: "bottom bottom",
+        }
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <Box my={'3rem'}>
+    <Box className='eventPlayback' my={'3rem'}>
       <MainContainer>
         <Box display="flex" justifyContent="center" alignItems="center">
           <Box w={{ base: '100%', md: '50%' }}>
