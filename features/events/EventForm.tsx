@@ -72,7 +72,7 @@ export const EventForm = () => {
 
   return (
     <>
-       <SuccessModal isOpen={isOpen} onClose={onClose}/>
+       <SuccessModal isOpen={isOpen} onClose={onClose} title="Your registration has been received." description='You will receive an email with the meeting link shortly.'/>
     <VStack
       as="form"
       spacing={{ base: "1.2rem", md: "1.209375rem"}}
@@ -96,6 +96,7 @@ export const EventForm = () => {
           _placeholder={{ color: '#B4B4B4' }}
           name="howyouknew"
           h="3.5rem"
+          isRequired
         >
           <option value="Whatsapp">Whatsapp</option>
           <option value ="Instagram">Instagram</option>

@@ -54,7 +54,7 @@ const EnrolForm = () => {
   }
   return (
     <>
-    <SuccessModal isOpen={isOpen} onClose={onClose} />
+    <SuccessModal isOpen={isOpen} onClose={onClose} title="Thank you for your submission!" description='Our representative will call you within the next 24 hours.' />
     <Box overflowY="auto" px={['1rem', '1rem', '3rem']} py="2rem">
       <Heading fontSize="6xl" maxW="420px" textAlign="left" color="brand.dark.100">
         You’re one step ahead to achieve your goal
@@ -74,6 +74,7 @@ const EnrolForm = () => {
           placeholder="Name*"
           _placeholder={{ color: 'brand.dark.200' }}
           name="name"
+          isRequired 
         />
         <Input
           h="3.5rem"
@@ -81,6 +82,7 @@ const EnrolForm = () => {
           placeholder="Phone Number*"
           _placeholder={{ color: 'brand.dark.200' }}
           name="phone"
+          isRequired
         />
         <Input
           h="3.5rem"
@@ -88,6 +90,7 @@ const EnrolForm = () => {
           placeholder="Email Address*"
           _placeholder={{ color: 'brand.dark.200' }}
           name="email"
+          isRequired
         />
 
         <Select
@@ -96,6 +99,7 @@ const EnrolForm = () => {
           _placeholder={{ color: 'brand.dark.200' }}
           color="brand.dark.200"
           name="class"
+          isRequired
         >
           <option value="Basic Program">Basic Program</option>
           <option value="Advanced Program">Advanced Program</option>
@@ -116,6 +120,7 @@ const EnrolForm = () => {
           placeholder="Where are you located? E.g Lagos, Nigeria"
           _placeholder={{ color: 'brand.dark.200' }}
           name = "location"
+          isRequired
         />
 
         <Input
@@ -124,6 +129,7 @@ const EnrolForm = () => {
           placeholder="What do you currently do? (Eg Graphics Designer, Banker etc)"
           _placeholder={{ color: 'brand.dark.200' }}
           name="occupation"
+          isRequired
         />
 
         <Select
@@ -132,6 +138,7 @@ const EnrolForm = () => {
           _placeholder={{ color: 'brand.dark.200' }}
           color="brand.dark.200"
           name="howdidyouknow"
+          isRequired
         >
           <option value="Facebook">Facebook</option>
           <option value="Twitter">Twitter</option>
