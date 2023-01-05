@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, Link, Text } from '@chakra-ui/react'
 import gsap from 'gsap'
 import React, { useEffect, useRef } from 'react'
 import { MainContainer } from '../../layouts'
@@ -44,12 +44,16 @@ export const Hero = () => {
 
         <Text
           textAlign={['left', 'left', 'left', 'center']}
-          mt="21px"
+          mt="0.5rem"
           fontSize="2xl"
           ref={descRef}
         >
           Equipping designers to solve problems with design.
         </Text>
+
+        <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
+          <Button as={Link} to="/class-plans">Start Here</Button>
+        </Box>
 
         <HeroAnimation />
       </MainContainer>
