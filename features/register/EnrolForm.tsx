@@ -17,11 +17,7 @@ const EnrolForm = () => {
   const scriptUrl = "https://script.google.com/macros/s/AKfycbw9_DFBpsyrNp8_2AsnjKiLlXWxylVD0QtdbN7qDbk2IzLIlg5o2pxKibU-t25F-Jke9w/exec"
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
-
-  
-
-  
- 
+   
   return (
     <>
     <SuccessModal isOpen={isOpen} onClose={onClose} title="Thank you for your submission!" description='Our representative will call you within the next 24 hours.' />
