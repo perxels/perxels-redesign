@@ -36,12 +36,14 @@ const SuccessModal = ({ isOpen, onClose, title, description }: SuccessModalProps
             padding={['1.5rem', '1.5rem', '1.5rem', '2.6875rem 2.3125rem']}
           
           >
+            <Link href="/">
             <ModalCloseButton
               backgroundColor={'#121212'}
               rounded={'50%'}
               color={'#fff'}
               fontWeight={'700'}
             />
+            </Link>
             <Center>
               <Box mb={['1rem', '1rem', '1rem', '1.4375rem']}
               boxSize="9.8125rem"

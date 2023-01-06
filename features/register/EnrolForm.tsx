@@ -17,13 +17,13 @@ const EnrolForm = () => {
   const scriptUrl = "https://script.google.com/macros/s/AKfycbw9_DFBpsyrNp8_2AsnjKiLlXWxylVD0QtdbN7qDbk2IzLIlg5o2pxKibU-t25F-Jke9w/exec"
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
-   
+  const [loading, setLoading] = useState(false)
   return (
     <>
     <SuccessModal isOpen={isOpen} onClose={onClose} title="Thank you for your submission!" description='Our representative will call you within the next 24 hours.' />
     <Box className='enrol-form' overflowY="auto" px={['1rem', '1rem', '3rem']} py="2rem">
       <Heading fontSize="6xl" maxW="420px" textAlign="left" color="brand.dark.100">
-        You’re one step ahead to achieve your goal
+        You’re one step ahead to achieving your goal
       </Heading>
 
       <Formik
@@ -47,6 +47,7 @@ const EnrolForm = () => {
       })}
       
       onSubmit={(values, action)=>{
+        setLoading(true)
       
         console.log(values)
 
@@ -245,7 +246,9 @@ const EnrolForm = () => {
         ) : null}
 
         <Button h="3.688rem" w="full" type='submit'>
-          Submit
+          {
+            loading ? "Loading....." : 'Submit'
+          }
         </Button>
       </VStack>
       )
