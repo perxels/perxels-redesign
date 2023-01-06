@@ -23,7 +23,9 @@ export const OurWhy = () => {
   }, [])
 
   return (
-    <Box className='our-why'>
+    <Box className='our-why'
+    // mb={['10rem', '10rem', '1rem', '-10%']}
+    >
       <MainContainer noMobilePadding>
         <Heading className='our-why-title' fontSize="7xl" color="brand.dark.200">
           Our Why?
@@ -100,12 +102,13 @@ export const OurWhy = () => {
         </SimpleGrid>
 
         <Box
-          mt={['2rem', '2rem', '2rem', '0']}
+          mt={['0rem', '2rem', '2rem', '0']}
           pos={['static', 'static', 'static', 'relative']}
           h={['200px', '200px', '200px', '445px']}
           w="full"
           top="-24rem"
           left="0"
+          mb={['5rem', '5rem', '0', '0']}
         >
           <Img
             objectFit="cover"
