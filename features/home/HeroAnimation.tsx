@@ -68,6 +68,7 @@ export const HeroAnimation = () => {
       columns={[1, 1, 1, 3]}
       gap={['4rem', '4rem', '4rem', '2rem', '6rem']}
       className="hero-animation"
+      opacity={0}
     >
       <Box display={['none', 'none', 'none', 'block']}>
         <Img width="226px" height="auto" alt="hero" src={leftImage} />

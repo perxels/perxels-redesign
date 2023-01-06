@@ -8,14 +8,16 @@ export const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const descRef = useRef<HTMLParagraphElement>(null)
+  const buttonWrapper = useRef<HTMLDivElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }));
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       tl.current
-        .from(headingRef.current, { opacity: 0, y: 0, duration: 1, delay: 1 })
-        .from(descRef.current, { opacity: 0, y: 200, duration: 1 }, '-=0.5')
-        .from(".hero-animation", { opacity: 0, y: 300, duration: 1 }, '-=0.5')
+        .to(headingRef.current, { opacity: 1, duration: 1, delay: 1 })
+        .to(descRef.current, { opacity: 1, duration: 1 }, '-=0.5')
+        .to(buttonWrapper.current, { opacity: 1, duration: 1 }, '-=0.5')
+        .to(".hero-animation", { opacity: 1, y: 0, duration: 1 }, '-=0.5')
         .play()
     }, heroRef)
 
@@ -38,6 +40,7 @@ export const Hero = () => {
           pt="3.375rem"
           ref={headingRef}
           lineHeight={1.2}
+          opacity={0}
         >
           Learn, Live, Love UIUX Design
         </Heading>
@@ -47,11 +50,12 @@ export const Hero = () => {
           mt="0.5rem"
           fontSize="2xl"
           ref={descRef}
+          opacity={0}
         >
           Equipping designers to solve problems with design.
         </Text>
 
-        <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
+        <Box ref={buttonWrapper} opacity={0} mt="1.5rem" display={['block', 'block', 'block', 'none']}>
           <Button as={Link} href="/class-plans">Start Here</Button>
         </Box>
 
