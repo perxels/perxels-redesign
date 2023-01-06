@@ -90,13 +90,15 @@ export const EventForm = () => {
         <FormControl id="how">
           <Select
             backgroundColor={'#FCFCFC'}
-            outline="none"
             border="0.406872px solid #B4B4B4"
             placeholder="How did you get to know about Us?"
             _placeholder={{ color: '#B4B4B4' }}
             name="howyouknew"
             h="3.5rem"
             isRequired
+            _focusVisible={{
+              outline: 'none',
+            }}
           >
             <option value="Whatsapp">Whatsapp</option>
             <option value="Instagram">Instagram</option>
@@ -113,6 +115,9 @@ export const EventForm = () => {
             border="0.406872px solid #B4B4B4"
             placeholder="Questions for the Session"
             name="questions"
+            _focusVisible={{
+              outline: 'none',
+            }}
           />
         </FormControl>
         <Box width="full">

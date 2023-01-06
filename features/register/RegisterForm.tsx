@@ -77,6 +77,9 @@ const RegisterForm = () => {
           placeholder="Full Name*"
           _placeholder={{ color: 'brand.dark.200' }}
           name="fullname"
+          _focusVisible={{
+            outline: 'none',
+          }}
         />
         <Input
           h="3.5rem"
@@ -84,6 +87,9 @@ const RegisterForm = () => {
           placeholder="Phone Number*"
           _placeholder={{ color: 'brand.dark.200' }}
           name="phone"
+          _focusVisible={{
+            outline: 'none',
+          }}
         />
         <Input
           h="3.5rem"
@@ -91,6 +97,9 @@ const RegisterForm = () => {
           placeholder="Email Address*"
           _placeholder={{ color: 'brand.dark.200' }}
           name="email"
+          _focusVisible={{
+            outline: 'none',
+          }}
         />
 
         <Select
@@ -98,6 +107,9 @@ const RegisterForm = () => {
           placeholder="Where did you hear about this scholarship"
           _placeholder={{ color: 'brand.dark.200' }}
           name="hearabout"
+          _focusVisible={{
+            outline: 'none',
+          }}
         >
           <option value="option1">Option 1</option>
           <option value="option2">Option 2</option>
@@ -109,6 +121,9 @@ const RegisterForm = () => {
           _placeholder={{ color: 'brand.dark.200' }}
           placeholder="Say something short about yourself"
           name="about"
+          _focusVisible={{
+            outline: 'none',
+          }}
         />
 
         <Button h="3.688rem" w="full" type="submit">
