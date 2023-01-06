@@ -24,7 +24,7 @@ export const OurWhy = () => {
 
   return (
     <Box className='our-why'
-    // mb={['10rem', '10rem', '1rem', '-10%']}
+    mb={['10rem', '10rem', '1rem', '-17%']}
     >
       <MainContainer noMobilePadding>
         <Heading className='our-why-title' fontSize="7xl" color="brand.dark.200">
