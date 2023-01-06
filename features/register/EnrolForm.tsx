@@ -55,7 +55,7 @@ const EnrolForm = () => {
   return (
     <>
     <SuccessModal isOpen={isOpen} onClose={onClose} title="Thank you for your submission!" description='Our representative will call you within the next 24 hours.' />
-    <Box overflowY="auto" px={['1rem', '1rem', '3rem']} py="2rem">
+    <Box className='enrol-form' overflowY="auto" px={['1rem', '1rem', '3rem']} py="2rem">
       <Heading fontSize="6xl" maxW="420px" textAlign="left" color="brand.dark.100">
         You’re one step ahead to achieve your goal
       </Heading>

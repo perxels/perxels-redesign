@@ -99,7 +99,7 @@ const Footer = () => {
 
               <VStack mt="1.5rem" spacing="1.25rem">
                 {links.map(({ name, url }) => (
-                  <Link w="full" key={name} href={url}>
+                  <Link target={name === "Community" ? "_blank" : "_self"} w="full" key={name} href={url}>
                     <Text
                       w="full"
                       textAlign="left"

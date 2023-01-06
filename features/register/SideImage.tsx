@@ -1,5 +1,5 @@
 import { Box, Flex, Img, Link } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Logo } from '../../components'
 
 const SideImage = () => {
@@ -22,6 +22,7 @@ const SideImage = () => {
         w="100%"
         maxW="500px"
         mx="auto"
+        className='enrol-hero'
       />
     </Flex>
   )
