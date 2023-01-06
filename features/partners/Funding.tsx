@@ -20,7 +20,7 @@ const FundingData: FundingDataProps[] = [
   {
     title: 'Product Design',
     description:
-      'Intensive training on user interface user experience design using figma',
+      'Intensive training on user interface, user experience, and design using Figma.',
     image: '/assets/images/partners/product.svg',
   },
   {
