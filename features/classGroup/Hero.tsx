@@ -17,11 +17,10 @@ import { MainContainer } from '../../layouts'
 
 export const Hero = () => {
   const mainRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const videoRef = useRef<HTMLImageElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }))
 
   useEffect(() => {
-    videoRef.current?.play()
     let ctx = gsap.context(() => {
       tl.current
         .from('.arrow-erica', { opacity: 0, y: 100, duration: 0.5, delay: 0.5 })
@@ -129,14 +128,11 @@ export const Hero = () => {
               pos="relative"
               className='class-plan-video'
             >
-              <video
+              <Img 
                 ref={videoRef}
                 width="100%"
                 height="auto"
-                loop={true}
-                controls={false}
-                muted
-                src="https://res.cloudinary.com/dhqvopvj4/video/upload/v1672846839/perxels/enrol_dgzjky.mp4"
+                src="https://res.cloudinary.com/dhqvopvj4/image/upload/v1673023991/perxels/enrol_jabfce.gif"
               />
             </Box>
           </GridItem>
