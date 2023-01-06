@@ -56,8 +56,6 @@ export const MobileTestimonialSlider = () => {
     ],
   }
 
-  console.log("selectedTestimonial", selectedTestimonial)
-
   return (
     <Box>
       <Slider {...settings}>

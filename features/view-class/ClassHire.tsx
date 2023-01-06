@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Heading, Text, Button, Flex } from '@chakra-ui/react'
 import { AiOutlineRightCircle } from 'react-icons/ai'
+import Link from 'next/link'
 
 export const ClassHire = () => {
   return (
@@ -26,7 +27,7 @@ export const ClassHire = () => {
             Want to learn this design skills too?
           </Heading>
         </Box>
-        <Box>
+        <Box as={Link} href="/class-plans">
           <Button
             color="brand.white"
             bgColor="brand.dark.200"

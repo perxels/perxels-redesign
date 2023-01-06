@@ -4,6 +4,7 @@ import { MainContainer } from '../../layouts'
 import TestimonialTooltip from '../testimonial/TestimonialTooltip'
 
 import gsap from 'gsap'
+import Link from 'next/link'
 
 export const TestimonyHero = () => {
   const mainRef = useRef<HTMLDivElement>(null)
@@ -79,7 +80,7 @@ export const TestimonyHero = () => {
               Want to create your own story with Perxels?
             </Text>
             <Center className='testimonial-button'>
-              <Button>Enroll Now</Button>
+              <Button as={Link} href="/class-plans">Enroll Now</Button>
             </Center>
             <Box
               display={['block', 'none', 'none']}

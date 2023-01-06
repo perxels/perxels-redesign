@@ -8,6 +8,7 @@ import {
   VStack,
   HStack,
   Center,
+  Img,
 } from '@chakra-ui/react'
 import { FaBehance, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import { MainContainer } from '../../layouts'
@@ -32,7 +33,7 @@ export const CaseHero = () => {
         noMobilePadding
         bg={`url(/assets/images/sudent-work/studentHeroBg.svg) center/cover no-repeat`}
       >
-        <Box pos="relative" py={["0", "0", "0", "4rem"]}>
+        <Box pos="relative" py={['0', '0', '0', '4rem']}>
           <Flex
             flexDirection={{ base: 'column-reverse', md: 'row' }}
             justifyContent="space-between"
@@ -41,7 +42,7 @@ export const CaseHero = () => {
             <Box
               pl={['1.25rem', 0]}
               transform={['translate(0, -50%)', 'translate(0, 0)']}
-              pos={["absolute", "absolute", "absolute", "static"]}
+              pos={['absolute', 'absolute', 'absolute', 'static']}
               bottom="0"
             >
               <Heading
@@ -162,17 +163,26 @@ export const CaseHero = () => {
               w={{ base: 'full', lg: '50%' }}
               bg={{
                 base: `linear-gradient(360deg, #000000 23.68%, rgba(0, 0, 0, 0) 106.41%), url(${studentData?.heroImg}) center/cover no-repeat`,
-                lg: `url(${studentData?.heroImg}) center/cover no-repeat`,
+                lg: `none`,
               }}
               boxShadow={{
                 base: 'none',
                 md: '-7px -9px 0px 0px rgba(253,232,92,1)',
+                lg: 'none',
               }}
             >
               <Box
+                display={['block', 'block', 'block', 'none']}
                 boxSize={{ base: '100%', md: '100%' }}
                 borderRadius="10px"
               ></Box>
+
+              <Img
+                display={['none', 'none', 'none', 'block']}
+                src={studentData?.heroImg}
+                alt="student work"
+                objectFit="cover"
+              />
             </Box>
           </Flex>
           <Box>

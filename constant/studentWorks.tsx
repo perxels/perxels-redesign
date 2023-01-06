@@ -96,7 +96,7 @@ export const studentWorkDetails: WorkDetails = {
       link: 'https://www.linkedin.com/in/mosopeaderibigbe/',
       name: 'Mosope Aderibigbe',
     },
-    heroImg: '/assets/images/class-work/mosope/heroImage.png',
+    heroImg: '/assets/images/class-work/mosope/heroImagenew.png',
     workCover: {
       w1: '/assets/images/class-work/mosope/work-cover-1.jpg',
       w2: '/assets/images/class-work/mosope/work-cover-2.jpg',
