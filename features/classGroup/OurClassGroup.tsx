@@ -38,6 +38,7 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
           subTitle={title || "Our CLass Groups"}
           title="Here At Perxels,"
           paragraph="Our class groups are designed to accommodate your current level of design and unique learning process."
+          
         />
 
         <SimpleGrid mb={["3.75rem", "3.75rem", "7rem"]} columns={[1, 1, 2]} spacing="1rem">
