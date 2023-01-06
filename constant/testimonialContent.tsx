@@ -102,7 +102,7 @@ export const testimonialContent: TestimonialCardProps[] = [
     imgUrl: '/assets/images/testimonial/new/test8.png',
     name: 'Collins Efre',
     title: 'UIUX Designer',
-    content: `My experience at perxels was really educational, as I developed extensive skills on UI/UX design and was programmed for real life experiences. It's the perfect start for a tech newbie in design.`,
+    content: `My experience at Perxels was really educational, as I developed extensive skills on UI/UX design and was programmed for real life experiences. It's the perfect start for a tech newbie in design.`,
   },
   {
     id: 9,

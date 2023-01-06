@@ -56,7 +56,7 @@ export const testimonialContentSecond: TestimonialCardProps[] = [
       imgUrl: '/assets/images/testimonial/new/test8.png',
       name: 'Collins Efre',
       title: 'UIUX Designer',
-      content: `My experience at perxels was really educational, as I developed extensive skills on UI/UX design and was programmed for real life experiences. It's the perfect start for a tech newbie in design.`,
+      content: `My experience at Perxels was really educational, as I developed extensive skills on UI/UX design and was programmed for real life experiences. It's the perfect start for a tech newbie in design.`,
     },
     {
       id: 9,
@@ -70,7 +70,7 @@ export const testimonialContentSecond: TestimonialCardProps[] = [
       imgUrl: '/assets/images/testimonial/new/test10.png',
       name: 'Tolu Oluyole',
       title: 'Freelance UI UX Designer',
-      content: `My experience at Perxels was satisfactory. The weekly tasks and projects help me to improve my design skills, i also learned how to manage my time effectively and i'm able to scale up my design to industry standard. Enrolling for Perxels design school is the best career decision i have made.`,
+      content: `My experience at Perxels was satisfactory. The weekly tasks and projects help me to improve my design skills, I also learned how to manage my time effectively and i'm able to scale up my design to industry standard. Enrolling for Perxels design school is the best career decision i have made.`,
     },
     {
       id: 11,
@@ -84,7 +84,7 @@ export const testimonialContentSecond: TestimonialCardProps[] = [
       imgUrl: '/assets/images/testimonial/new/test12.png',
       name: 'kehinde Adeyeye-Olufemi',
       title: 'UIUX Designer',
-      content: `My experience at perxel  was surely a learning experience. The confidence and motivation it gave me, I couldn't get anywhere else. Most importantly, it is the place where I recognized my uniqueness and individuality.`,
+      content: `My experience at Perxel  was surely a learning experience. The confidence and motivation it gave me, I couldn't get anywhere else. Most importantly, it is the place where I recognized my uniqueness and individuality.`,
     },
     {
       id: 13,

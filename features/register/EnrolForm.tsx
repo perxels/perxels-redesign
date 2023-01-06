@@ -247,10 +247,15 @@ const EnrolForm = () => {
           </Text>
         ) : null}
 
+<<<<<<< HEAD
         <Button h="3.688rem" w="full" type='submit'
         isLoading = {formik.isSubmitting}
         >
          Submit
+=======
+        <Button isLoading={loading} h="3.688rem" w="full" type='submit'>
+          Submit
+>>>>>>> fcf73ae (edited testimonial])
         </Button>
       </VStack>
       )
