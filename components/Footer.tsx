@@ -128,7 +128,7 @@ const Footer = () => {
             maxW="300px"
             color="brand.white"
           >
-            Equpping designers to{' '}
+            Equipping designers to{' '}
             <Box as="span" color="brand.yellow.500">
             {' '}solve problems
             </Box>{' '}
