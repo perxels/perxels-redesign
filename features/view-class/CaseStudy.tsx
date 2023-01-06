@@ -12,8 +12,6 @@ import {
   Icon,
   Link,
 } from '@chakra-ui/react'
-import { workDetails } from '../../constant'
-import { ContactStudent } from './'
 import { MainContainer } from '../../layouts'
 import { useRouter } from 'next/router'
 import { studentWorkDetails } from '../../constant/studentWorks'

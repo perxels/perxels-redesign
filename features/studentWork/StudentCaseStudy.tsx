@@ -18,6 +18,7 @@ const StudentCaseStudy = ({ imgUrl, link }: CaseStudyProps) => {
       onMouseLeave={() => setIsHover(false)}
       pos="relative"
       rounded="6px"
+      className='students-card'
     >
       <Img rounded="6px" w="full" h="auto" src={imgUrl} alt="student" />
       {isHover && (
