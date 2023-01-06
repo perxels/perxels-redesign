@@ -89,7 +89,11 @@ const EnrolForm = () => {
         w="full"
         alignItems="flex-start"
         as="form"
-        onSubmit={formik.handleSubmit}
+        
+        onSubmit={(event) => {
+          event.preventDefault()
+          formik.handleSubmit()
+        }}
       >
         <Input
           h="3.5rem"
