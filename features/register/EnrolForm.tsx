@@ -7,7 +7,8 @@ import {
   Text,
   Textarea,
   VStack,
-  useDisclosure
+  useDisclosure,
+ 
 } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import { SuccessModal } from '../../components'
@@ -70,6 +71,7 @@ const EnrolForm = () => {
       }).then(
           (response) => {
             if(response.status === 201 || 200) {
+              action.resetForm()
               onOpen()
             }else{
               alert("Something went wrong, please try again")
@@ -77,7 +79,7 @@ const EnrolForm = () => {
           }
       )
         
-        action.resetForm()
+       
 
       }}
       >
@@ -245,10 +247,10 @@ const EnrolForm = () => {
           </Text>
         ) : null}
 
-        <Button h="3.688rem" w="full" type='submit'>
-          {
-            loading ? "Loading....." : 'Submit'
-          }
+        <Button h="3.688rem" w="full" type='submit'
+        isLoading = {formik.isSubmitting}
+        >
+         Submit
         </Button>
       </VStack>
       )
