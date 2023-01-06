@@ -2,10 +2,13 @@ import React from 'react'
 import { SectionHeader } from '../../components'
 import { MainContainer } from '../../layouts'
 import { ClassDetails } from '../classGroup/ClassDetails'
-
+import {Box} from '@chakra-ui/react'
 export const ClassPlan = () => {
   return (
     <MainContainer>
+      <Box 
+      id="pricing"
+      />
       <SectionHeader
         title="It’s everything you’ll ever need."
         subTitle="Class Plan"

@@ -9,6 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React from 'react'
+import Link from 'next/link'
 import { MainContainer } from '../../layouts'
 
 export const InternationalHero = () => {
@@ -41,9 +42,11 @@ export const InternationalHero = () => {
               scale in international companies
             </Text>
 
+            <Link href="#pricing" passHref>
             <Button h="3rem" mt="1.25rem">
               Get Started
             </Button>
+            </Link>
           </Center>
 
           <Img
