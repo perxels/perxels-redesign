@@ -181,12 +181,12 @@ export const MobileTestimonialSlider = () => {
               videoRef.current?.pause()
             }}
             pos="absolute"
-            top="12rem"
+            top="13rem"
             right="1rem"
-            w="3rem"
-            h="3rem"
+            w="2rem"
+            h="2rem"
             px="1.5rem"
-            bg="red.500"
+            bg="brand.purple.500"
             rounded="8px"
           >
             <Icon as={IoIosClose} fontSize="2rem" color="brand.white" />
