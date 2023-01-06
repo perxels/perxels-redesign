@@ -1,18 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { TestimonialCardProps, testimonialContent, testimonialSliderContent } from '../../constant'
 
 interface TestimonialState {
-    selectedTestimonial: {
-        id: number
-        name: string
-        title: string
-        content: string
-    } | null,
-    selectedTestimonialIndex: number
+    selectedTestimonial: TestimonialCardProps,
+    selectedTestimonialIndex: number,
+    testimonials: TestimonialCardProps[]
 }
 
 const initialState: TestimonialState = {
-    selectedTestimonial: null,
-    selectedTestimonialIndex: 1
+    selectedTestimonial: testimonialSliderContent[0],
+    selectedTestimonialIndex: 1,
+    testimonials: testimonialSliderContent
 }
 
 export const testimonialSlice = createSlice({
@@ -24,10 +22,13 @@ export const testimonialSlice = createSlice({
         },
         setSelectedTestimonialIndex: (state, action) => {
             state.selectedTestimonialIndex = action.payload
+        },
+        setTestimonials: (state, action) => {
+            state.testimonials = action.payload
         }
     }
 })
 
-export const { setSelectedTestimonial, setSelectedTestimonialIndex } = testimonialSlice.actions
+export const { setSelectedTestimonial, setSelectedTestimonialIndex, setTestimonials } = testimonialSlice.actions
 
 export default testimonialSlice.reducer

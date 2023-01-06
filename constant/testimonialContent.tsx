@@ -5,33 +5,45 @@ export interface TestimonialCardProps {
     imgUrl: string
     smallImgUrl?: string
     id: number
+    video?: string
 }
 
 export const testimonialSliderContent: TestimonialCardProps[] = [
   {
     id: 1,
-    name: 'Folake',
-    title: 'Product Designer, Huzz Tecnologies',
-    imgUrl: '/assets/images/testimonyThumb-1.png',
+    name: 'Erica',
+    title: 'Product Designer, Huzz Technologies',
+    imgUrl: '/assets/images/testimonial/video/erica-large.jpg',
+    smallImgUrl: '/assets/images/testimonial/video/erica-small.png',
+    content: '“I landed a job as a product designer with a company in the US.”',
+    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935451/Erica_Amos_Perxels_Alumni_ko0hvm.mp4'
   },
   {
     id: 2,
-    name: 'Sharon',
-    title: 'Product Designer, Huzz Tecnologies',
-    imgUrl: '/assets/images/testimonyThumb-2.jpg',
-    smallImgUrl: '/assets/images/class-group/sharon_sm.jpg',
+    name: 'Joe',
+    title: 'Product Designer, Huzz Technologies',
+    imgUrl: '/assets/images/testimonial/video/joe-large.jpg',
+    smallImgUrl: '/assets/images/testimonial/video/joe-small.png',
+    content: '“I landed a job as a product designer with a company in the US.”',
+    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935443/Joseph_Nwaeze_Perxels_Alumni_f9cpq9.mp4'
   },
   {
     id: 3,
-    name: 'Olayemi',
+    name: 'Mosope',
     title: 'Product Designer, Huzz Tecnologies',
-    imgUrl: '/assets/images/testimonyThumb-3.png',
+    imgUrl: '/assets/images/testimonial/video/mosope-large.jpg',
+    smallImgUrl: '/assets/images/testimonial/video/mosope-small.png',
+    content: '“I landed a job as a product designer with a company in the US.”',
+    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935451/Mosope_Aderibigbe_Perxels_Alumni_slkfhr.mp4',
   },
   {
     id: 4,
-    name: 'Testimony 4',
+    name: 'Rebecca',
     title: 'Product Designer, Huzz Tecnologies',
-    imgUrl: '/assets/images/testimonyThumb-3.png',
+    imgUrl: '/assets/images/testimonial/video/rebecca-large.jpg',
+    smallImgUrl: '/assets/images/testimonial/video/rebecca-small.png',
+    content: '“I landed a job as a product designer with a company in the US.”',
+    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935462/Rebecca_Adeyoju_Perxels_Alumni_bkeimq.mp4',
   },
 ]
 

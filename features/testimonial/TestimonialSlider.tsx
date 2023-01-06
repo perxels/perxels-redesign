@@ -12,7 +12,7 @@ import { TestimonialSliderCard } from './TestimonialSliderCard'
 
 export const TestimonialSlider = () => {
   const dispatch = useAppDispatch()
-  const { selectedTestimonial, selectedTestimonialIndex } = useAppSelector(
+  const { testimonials } = useAppSelector(
     (state) => state.testimonial,
   )
       
@@ -21,47 +21,10 @@ export const TestimonialSlider = () => {
       <HStack
         justifyContent="space-between"
         w="full"
-        maxW="932px"
+        maxW="800px"
         h={['auto', 'auto', '171px']}
         spacing="1rem"
       >
-        <Center w="3.125rem" h="full">
-          <Center
-            w="3.125rem"
-            h="3.125rem"
-            borderWidth="1px"
-            borderColor={
-              selectedTestimonialIndex === 1
-                ? 'brand.gray.10'
-                : 'brand.purple.500'
-            }
-            rounded="full"
-            cursor="pointer"
-            transition="all 0.2s ease-in-out"
-            as="button"
-            disabled={selectedTestimonialIndex === 1}
-            onClick={() => {
-              dispatch(
-                setSelectedTestimonial(
-                  testimonialSliderContent[selectedTestimonialIndex - 1],
-                ),
-              )
-              dispatch(
-                setSelectedTestimonialIndex(selectedTestimonialIndex - 1),
-              )
-            }}
-          >
-            <Icon
-              as={FiArrowLeft}
-              fontSize="1.5rem"
-              color={
-                selectedTestimonialIndex === 1
-                  ? 'brand.gray.10'
-                  : 'brand.purple.500'
-              }
-            />
-          </Center>
-        </Center>
         <HStack
           justifyContent="space-between"
           spacing="1.25rem"
@@ -70,42 +33,45 @@ export const TestimonialSlider = () => {
           h="full"
         >
           <TestimonialSliderCard
-            title={testimonialSliderContent[selectedTestimonialIndex - 1]?.title}
-            name={testimonialSliderContent[selectedTestimonialIndex - 1]?.name}
+            title={testimonials[1]?.title}
+            name={testimonials[1]?.name}
             imgUrl={
-              testimonialSliderContent[selectedTestimonialIndex - 1]?.imgUrl
+              testimonials[1]?.imgUrl
             }
-            id={testimonialSliderContent[selectedTestimonialIndex - 1]?.id}
+            id={testimonials[1]?.id}
             smallImgUrl={
-              testimonialSliderContent[selectedTestimonialIndex - 1]?.smallImgUrl
+              testimonials[1]?.smallImgUrl
             }
+            video={testimonials[1]?.video}
+            index={1}
           />
           <TestimonialSliderCard
-            title={testimonialSliderContent[selectedTestimonialIndex]?.title}
-            name={testimonialSliderContent[selectedTestimonialIndex]?.name}
-            imgUrl={testimonialSliderContent[selectedTestimonialIndex]?.imgUrl}
-            id={testimonialSliderContent[selectedTestimonialIndex]?.id}
+            title={testimonials[2]?.title}
+            name={testimonials[2]?.name}
+            imgUrl={testimonials[2]?.imgUrl}
+            id={testimonials[2]?.id}
             active={true}
             smallImgUrl={
-              testimonialSliderContent[selectedTestimonialIndex]?.smallImgUrl
+              testimonials[2]?.smallImgUrl
             }
+            video={testimonials[2]?.video}
+            index={2}
           />
           <TestimonialSliderCard
-            title={testimonialSliderContent[selectedTestimonialIndex + 1]?.title}
-            name={testimonialSliderContent[selectedTestimonialIndex + 1]?.name}
+            title={testimonials[3]?.title}
+            name={testimonials[3]?.name}
             imgUrl={
-              testimonialSliderContent[selectedTestimonialIndex + 1]?.imgUrl
+              testimonials[3]?.imgUrl
             }
-            id={testimonialSliderContent[selectedTestimonialIndex + 1]?.id}
+            id={testimonials[3]?.id}
             smallImgUrl={
-              testimonialSliderContent[selectedTestimonialIndex + 1]?.smallImgUrl
+              testimonials[3]?.smallImgUrl
             }
-            active={
-              selectedTestimonialIndex === testimonialSliderContent.length - 1
-            }
+            video={testimonials[3]?.video}
+            index={3}
           />
         </HStack>
-        <Center w="3.125rem" h="full">
+        {/* <Center w="3.125rem" h="full">
           <Center
             w="3.125rem"
             h="3.125rem"
@@ -146,7 +112,7 @@ export const TestimonialSlider = () => {
               }
             />
           </Center>
-        </Center>
+        </Center> */}
       </HStack>
     </Center>
   )
