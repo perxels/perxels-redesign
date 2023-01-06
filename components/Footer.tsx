@@ -116,7 +116,7 @@ const Footer = () => {
           ))}
         </Grid>
 
-        {/* mobile cta */}
+        {/* mobile cta. */}
         <VStack
           display={['flex', 'flex', 'flex', 'none']}
           alignItems="flex-start"
