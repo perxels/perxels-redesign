@@ -15,7 +15,7 @@ export const Story = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setSwitcher((prev) => (prev === 1 ? 2 : 1))
-    }, 3000)
+    }, 6000)
     return () => clearInterval(interval)
   }, [])
 
