@@ -82,193 +82,195 @@ const EnrolForm = () => {
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
 
-            //continue form submission
-            fetch(scriptUrl, {
-              method: 'POST',
-              body: formData,
-            }).then((response) => {
-              if (response.status === 201 || 200) {
-                action.resetForm()
-                onOpen()
-              } else {
-                alert('Something went wrong, please try again')
-              }
-            })
-          }}
+       //continue form submission
+       fetch(scriptUrl, { 
+        method: 'POST',
+       body:  formData,
+      }).then(
+          (response) => {
+            if(response.status === 201 || 200) {
+              action.resetForm()
+              onOpen()
+            }else{
+              alert("Something went wrong, please try again")
+            }
+          }
+      )
+        
+       
+
+      }}
+      >
+     {
+      formik => (
+        <VStack
+        spacing="1.5rem"
+        mt="2rem"
+        maxW="440px"
+        w="full"
+        alignItems="flex-start"
+        as="form"
+        
+        onSubmit={(event) => {
+          event.preventDefault()
+          formik.handleSubmit()
+        }}
+      >
+        <Input
+          h="3.5rem"
+          placeholder="Name*"
+          _placeholder={{ color: 'brand.dark.200' }}
+          name="name"
+          border = "1px solid #000"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          borderColor={
+            formik.touched.name && formik.errors.name ? 'red.500' : 'brand.dark.200'
+          }
+          outline="none"
+        />
+        {formik.touched.name && formik.errors.name ? (
+          <Text color="red.500" fontSize="sm">
+            {formik.errors.name}
+          </Text>
+        ) : null}
+  
+        <Input
+          h="3.5rem"
+          type="tel"
+          placeholder="Phone Number*"
+          _placeholder={{ color: 'brand.dark.200' }}
+          name="phone"
+          value={formik.values.phone}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          borderColor={
+            formik.touched.phone && formik.errors.phone ? 'red.500' : 'brand.dark.200'
+          }
+          outline="none"
+        />
+        {formik.touched.phone && formik.errors.phone ? (
+          <Text color="red.500" fontSize="sm">
+            {formik.errors.phone}
+          </Text>
+        ) : null}
+
+        <Input
+          h="3.5rem"
+          type="email"
+          placeholder="Email Address*"
+          _placeholder={{ color: 'brand.dark.200' }}
+          name="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          borderColor={
+            formik.touched.email && formik.errors.email ? 'red.500' : 'brand.dark.200'
+          }
+          outline="none"
+        />
+        {formik.touched.email && formik.errors.email ? (
+          <Text color="red.500" fontSize="sm">
+            {formik.errors.email}
+          </Text>
+        ) : null}
+
+        <Select
+          h="3.5rem"
+          placeholder="What class do you want to apply for?"
+          _placeholder={{ color: 'brand.dark.200' }}
+          color="brand.dark.200"
+          name="class"
+          value={formik.values.class}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          borderColor={
+            formik.touched.class && formik.errors.class ? 'red.500' : 'brand.dark.200'
+          }
+          outline="none"
         >
-          {(formik) => (
-            <VStack
-              spacing="1.5rem"
-              mt="2rem"
-              maxW="440px"
-              w="full"
-              alignItems="flex-start"
-              as="form"
-              onSubmit={(event) => {
-                event.preventDefault()
-                formik.handleSubmit()
-              }}
-            >
-              <Input
-                h="3.5rem"
-                placeholder="Name*"
-                _placeholder={{ color: 'brand.dark.200' }}
-                name="name"
-                border="1px solid #000"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.name && formik.errors.name
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-              />
-              {formik.touched.name && formik.errors.name ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.name}
-                </Text>
-              ) : null}
+          <option value="Basic Program">Basic Program</option>
+          <option value="Advanced Program">Advanced Program</option>
+          <option value="Premium (Virtual) Program">
+            Premium (Virtual) Program
+          </option>
+          <option value="Premium (Physical) Program">
+            Premium (Physical) Program
+          </option>
+          <option value="International Class">
+            International Class
+          </option>
+        </Select>
+        {formik.touched.class && formik.errors.class ? (
+          <Text color="red.500" fontSize="sm">
+            {formik.errors.class}
+            </Text>
+        ) : null}
 
-              <Input
-                h="3.5rem"
-                type="tel"
-                placeholder="Phone Number*"
-                _placeholder={{ color: 'brand.dark.200' }}
-                name="phone"
-                value={formik.values.phone}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.phone && formik.errors.phone
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-              />
-              {formik.touched.phone && formik.errors.phone ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.phone}
-                </Text>
-              ) : null}
-
-              <Input
-                h="3.5rem"
-                type="email"
-                placeholder="Email Address*"
-                _placeholder={{ color: 'brand.dark.200' }}
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.email && formik.errors.email
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.email}
-                </Text>
-              ) : null}
-
-              <Select
-                h="3.5rem"
-                placeholder="What class do you want to apply for?"
-                _placeholder={{ color: 'brand.dark.200' }}
-                color="brand.dark.200"
-                name="class"
-                value={formik.values.class}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.class && formik.errors.class
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-              >
-                <option value="Basic Program">Basic Program</option>
-                <option value="Advanced Program">Advanced Program</option>
-                <option value="Premium (Virtual) Program">
-                  Premium (Virtual) Program
-                </option>
-                <option value="Premium (Physical) Program">
-                  Premium (Physical) Program
-                </option>
-                <option value="International Class">International Class</option>
-              </Select>
-              {formik.touched.class && formik.errors.class ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.class}
-                </Text>
-              ) : null}
-
-              <Input
-                h="3.5rem"
-                type="text"
-                placeholder="Where are you located? E.g Lagos, Nigeria"
-                _placeholder={{ color: 'brand.dark.200' }}
-                name="location"
-                value={formik.values.location}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.location && formik.errors.location
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-              />
-              {formik.touched.location && formik.errors.location ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.location}
-                </Text>
-              ) : null}
-              <Input
-                h="3.5rem"
-                type="text"
-                placeholder="What do you currently do? (Eg Graphics Designer, Banker etc)"
-                _placeholder={{ color: 'brand.dark.200' }}
-                name="occupation"
-                value={formik.values.occupation}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.occupation && formik.errors.occupation
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-              />
-              {formik.touched.occupation && formik.errors.occupation ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.occupation}
-                </Text>
-              ) : null}
-              <Select
-                h="3.5rem"
-                placeholder="How did you get to know about Perxels?"
-                _placeholder={{ color: 'brand.dark.200' }}
-                color="brand.dark.200"
-                name="howdidyouknow"
-                value={formik.values.howdidyouknow}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.howdidyouknow && formik.errors.howdidyouknow
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-              >
-                <option value="Facebook">Facebook</option>
-                <option value="Twitter">Twitter</option>
-                <option value="LinkedIn">LinkedIn</option>
-                <option value="Instagram">Instagram</option>
-                <option value="WhatsApp">WhatsApp</option>
-              </Select>
-              {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.howdidyouknow}
-                </Text>
-              ) : null}
+        <Input
+          h="3.5rem"
+          type="text"
+          placeholder="Where are you located? E.g Lagos, Nigeria"
+          _placeholder={{ color: 'brand.dark.200' }}
+          name = "location"
+          value={formik.values.location}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          borderColor={
+            formik.touched.location && formik.errors.location ? 'red.500' : 'brand.dark.200'
+          }
+          outline="none"
+        />
+        {formik.touched.location && formik.errors.location ? (
+          <Text color="red.500" fontSize="sm">
+            {formik.errors.location}
+          </Text>
+        ) : null} 
+        <Input
+          h="3.5rem"
+          type="text"
+          placeholder="What do you currently do? (Eg Graphics Designer, Banker etc)"
+          _placeholder={{ color: 'brand.dark.200' }}
+          name="occupation"
+          value={formik.values.occupation}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          borderColor={
+            formik.touched.occupation && formik.errors.occupation ? 'red.500' : 'brand.dark.200'
+          }
+          outline="none"
+        />
+        {formik.touched.occupation && formik.errors.occupation ? (
+          <Text color="red.500" fontSize="sm">
+            {formik.errors.occupation}
+          </Text>
+        ) : null}
+        <Select
+          h="3.5rem"
+          placeholder="How did you get to know about Perxels?"
+          _placeholder={{ color: 'brand.dark.200' }}
+          color="brand.dark.200"
+          name="howdidyouknow"
+          value={formik.values.howdidyouknow}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          borderColor={
+            formik.touched.howdidyouknow && formik.errors.howdidyouknow ? 'red.500' : 'brand.dark.200'
+          }
+          outline="none"
+        >
+          <option value="Facebook">Facebook</option>
+          <option value="Twitter">Twitter</option>
+          <option value="LinkedIn">LinkedIn</option>
+          <option value="Instagram">Instagram</option>
+          <option value="WhatsApp">WhatsApp</option>
+        </Select>
+        {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
+          <Text color="red.500" fontSize="sm">
+            {formik.errors.howdidyouknow}
+          </Text>
+        ) : null}
 
               <Button
                 h="3.688rem"
