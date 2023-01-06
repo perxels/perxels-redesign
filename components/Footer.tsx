@@ -212,7 +212,7 @@ const Footer = () => {
                 color="brand.white"
                 _hover={{ color: 'brand.yellow.500' }}
               >
-                Testimonies
+                Testimonials
               </Text>
             </Link>
             <Link w="full" href="/class-plans">

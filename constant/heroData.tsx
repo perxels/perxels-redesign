@@ -16,7 +16,7 @@ export const heroData: HeroDataProps[] = [
   {
     title: 'Internship placement.',
     content:
-      'At the end of the training you would be placed into an internship program where you get to use your design skills in a product team**',
+      'At the end of the training you would be placed into an internship program where you get to use your design skills in a product team.',
     image: '/assets/icons/dekstop.svg',
     color: 'brand.yellow.100',
   },

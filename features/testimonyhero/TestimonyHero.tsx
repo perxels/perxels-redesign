@@ -52,7 +52,7 @@ export const TestimonyHero = () => {
               w={['100%', '70%']}
               className="testimonial-title"
             >
-              Hear what our Alumni’s have to say about learning at Perxels
+              Here&apos;s what our Alumni’s have to say about learning at Perxels
             </Heading>
             <Text
               textAlign={['left', 'center', 'center']}

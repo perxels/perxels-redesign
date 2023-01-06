@@ -38,7 +38,7 @@ const Header = ({ isDark = false }) => {
                   _hover={{ color: 'brand.yellow.500' }}
                   fontSize="xl"
                 >
-                  Testimonies
+                  Testimonials
                 </Text>
               </Link>
               <Link href="/student-works">
@@ -47,7 +47,7 @@ const Header = ({ isDark = false }) => {
                   _hover={{ color: 'brand.yellow.500' }}
                   fontSize="xl"
                 >
-                  Student Works
+                  Student Projects
                 </Text>
               </Link>
               <Link href="/events">

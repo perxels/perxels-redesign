@@ -34,11 +34,11 @@ export const links = [
         title: 'Services',
         links: [
             {
-                name: 'Testimonies',
+                name: 'Testimonials',
                 url: '/testimonials',
             },
             {
-                name: 'Student Works',
+                name: 'Student Projects',
                 url: '/student-works',
             },
             {

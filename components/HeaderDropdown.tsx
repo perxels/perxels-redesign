@@ -14,10 +14,10 @@ const HeaderDropdown = ({
           <Text fontSize="xl">Home</Text>
         </Link>
         <Link onClick={() => setShowDropdown(false)} href="/testimonials">
-          <Text fontSize="xl">Testimonies</Text>
+          <Text fontSize="xl">Testimonials</Text>
         </Link>
         <Link onClick={() => setShowDropdown(false)} href="/student-works">
-          <Text fontSize="xl">Student Works</Text>
+          <Text fontSize="xl">Student Projects</Text>
         </Link>
         <Link onClick={() => setShowDropdown(false)} href="/events">
           <Text fontSize="xl">Events</Text>
