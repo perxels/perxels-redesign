@@ -10,14 +10,14 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export const Story = () => {
-  const [switcher, setSwitcher] = useState<Number>(1)
+  const [switcher, ] = useState<Number>(1)
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSwitcher((prev) => (prev === 1 ? 2 : 1))
-    }, 6000)
-    return () => clearInterval(interval)
-  }, [])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setSwitcher((prev) => (prev === 1 ? 2 : 1))
+  //   }, 6000)
+  //   return () => clearInterval(interval)
+  // }, [])
 
   useEffect(() => {
     let ctx = gsap.context(() => {
