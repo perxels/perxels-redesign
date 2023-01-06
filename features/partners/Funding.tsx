@@ -95,7 +95,7 @@ export const Funding = () => {
                 <GridItem>
                   <Heading
                     fontSize="2xl"
-                    h="51px"
+                    // h="51px"
                     maxW="152px"
                     color="brand.dark.200"
                   >

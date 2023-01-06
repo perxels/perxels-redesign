@@ -18,6 +18,7 @@ export const EventInput: React.FC<EventFormProps> = ({id, type, placeholder}) =>
     _focus={{border: "none"}}
     name={id}
     h="3.5rem"
+    isRequired
     />
     </FormControl>
   )
