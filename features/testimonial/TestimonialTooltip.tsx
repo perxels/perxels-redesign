@@ -36,14 +36,14 @@ const TestimonialTooltip = () => {
 
   return (
     <Box
-      onMouseEnter={showTooltip}
-      onMouseLeave={hideTooltip}
-      display={['flex', 'flex', 'flex']}
-      flexDirection="column"
-      alignItems="center"
+      // onMouseEnter={showTooltip}
+      // onMouseLeave={hideTooltip}
+      // display={['flex', 'flex', 'flex']}
+      // flexDirection="column"
+      // alignItems="center"
       
     >
-      {active && (
+      {/* {active && (
         <SlideFade in={active} offsetY="20px" 
         
         >
@@ -125,7 +125,7 @@ const TestimonialTooltip = () => {
           </Box>
         </Box>
         </SlideFade>
-      )}
+      )} */}
 
       <Box boxSize={[ "1rem","1.875rem","1.875rem"]}
       animation={pulseAnimation}
