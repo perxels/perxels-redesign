@@ -1,14 +1,22 @@
 import { Box, Center, Icon, Image, Link } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BsFillPlayCircleFill } from 'react-icons/bs'
 
 interface EventCardProps {
     imageSrc: string
     link?: string
+    index?: number
 }
 
-export const EventCard = ({ imageSrc, link }: EventCardProps) => {
+export const EventCard = ({ imageSrc, link, index }: EventCardProps) => {
   const [isHover, setIsHover] = React.useState(false)
+  
+  useEffect(() => {
+    if(index === 0) {
+      setIsHover(true)
+    }
+  }, [index])
+
   return (
     <Link
       onMouseEnter={() => setIsHover(true)}

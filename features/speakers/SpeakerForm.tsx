@@ -49,6 +49,7 @@ export const SpeakerForm = () => {
       py={['1.5rem', '1.5rem', '1.5rem', '3.5rem']}
       rounded="10px"
       onSubmit={handleSubmit}
+      className="speaker-form"
     >
       <VStack spacing="1.75rem">
         <Input

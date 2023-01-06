@@ -17,19 +17,22 @@ import { MainContainer } from '../../layouts'
 
 export const Hero = () => {
   const mainRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }))
 
   useEffect(() => {
+    videoRef.current?.play()
     let ctx = gsap.context(() => {
       tl.current
         .from('.arrow-erica', { opacity: 0, y: 100, duration: 0.5, delay: 0.5 })
-        .from('.arrow-mhiz', { opacity: 0, y: 100, duration: 1 })
         .from('.class-plan-title', { opacity: 0, y: 100, duration: 0.5 })
         .from('.class-plan-heading', { opacity: 0, y: 100, duration: 0.5 })
         .from('.class-plan-trained', { opacity: 0, y: 100, duration: 1 })
         .from('.class-plan-thousand', { opacity: 0, y: 100, duration: 1 })
-        .from('.class-plan-video', { opacity: 0, y: 100, duration: 1 })
+        .from('.arrow-mhiz', { opacity: 0, y: 100, duration: 1 })
         .play()
+
+      gsap.from('.class-plan-video', { opacity: 0, scale: 0, duration: 1, delay: 1 })
     }, mainRef)
 
     return () => ctx.revert()
@@ -71,7 +74,7 @@ export const Hero = () => {
                 height="auto"
                 pos="absolute"
                 right="8rem"
-                top="19rem"
+                top="21rem"
                 display={['none', 'none', 'none', 'block']}
                 className="arrow-mhiz"
                 zIndex="4"
@@ -127,19 +130,14 @@ export const Hero = () => {
               className='class-plan-video'
             >
               <video
+                ref={videoRef}
                 width="100%"
                 height="auto"
                 loop={true}
-                autoPlay={true}
                 controls={false}
                 muted
-              >
-                <source
-                  src="https://res.cloudinary.com/dhqvopvj4/video/upload/v1672846839/perxels/enrol_dgzjky.mp4"
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
+                src="https://res.cloudinary.com/dhqvopvj4/video/upload/v1672846839/perxels/enrol_dgzjky.mp4"
+              />
             </Box>
           </GridItem>
         </SimpleGrid>

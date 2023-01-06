@@ -3,9 +3,22 @@ import React from 'react'
 import { BsFillPlayFill } from 'react-icons/bs'
 import Slider from 'react-slick'
 
+import { setSelectedTestimonial } from '../../state/features/TestimonialSlice'
+
 import { testimonialSliderContent } from '../../constant'
+import { useAppDispatch, useAppSelector } from '../../state/store'
 
 export const MobileTestimonialSlider = () => {
+  const dispatch = useAppDispatch()
+
+  const videoRef = React.useRef<HTMLVideoElement>(null)
+
+  const { selectedTestimonial } = useAppSelector(
+    (state) => state.testimonial,
+  )
+
+  const [isVideoOpen, setIsVideoOpen] = React.useState(false)
+
   const settings = {
     dots: true,
     arrows: false,
@@ -43,10 +56,12 @@ export const MobileTestimonialSlider = () => {
     ],
   }
 
+  console.log("selectedTestimonial", selectedTestimonial)
+
   return (
     <Box>
       <Slider {...settings}>
-        {testimonialSliderContent.map(({ id, name, title, imgUrl }) => (
+        {testimonialSliderContent.map(({ id, name, title, imgUrl, smallImgUrl, video }) => (
           <Box key={id}>
             <Box
                 key={id}
@@ -55,11 +70,16 @@ export const MobileTestimonialSlider = () => {
                 overflow="hidden"
                 rounded="10px"
                 pos="relative"
+                onClick={() => {
+                  dispatch(setSelectedTestimonial({ id, name, title, imgUrl, smallImgUrl, video }))
+                  setIsVideoOpen(true)
+                  videoRef.current?.play()
+                }}
             >
                 <Img
                 w="full"
                 h="full"
-                src={imgUrl}
+                src={smallImgUrl}
                 alt="Testimonial Video"
                 display={['none', 'none', 'block', 'block']}
                 />
@@ -67,7 +87,7 @@ export const MobileTestimonialSlider = () => {
                 w="full"
                 h="full"
                 objectFit={'cover'}
-                src={imgUrl}
+                src={smallImgUrl}
                 alt="Testimonial Video"
                 display={['block', 'block', 'none', 'none']}
                 />
@@ -122,6 +142,19 @@ export const MobileTestimonialSlider = () => {
           </Box>
         ))}
       </Slider>
+
+      {
+        isVideoOpen && (
+          <Center onClick={() => {
+            setIsVideoOpen(false)
+            videoRef.current?.pause()
+          }} px="1rem" pos="fixed" top="0" left="0" w="100vw" h="100vh" bg="rgba(0, 0, 0, .4)">
+            <Box w="full" rounded="8px" overflow="hidden">
+              <video autoPlay={true} controls={true} ref={videoRef} src={selectedTestimonial.video} />
+            </Box>
+          </Center>
+        )
+      }
     </Box>
   )
 }

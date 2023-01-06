@@ -31,7 +31,7 @@ export const EventPlayback = () => {
         delay: 1,
         scrollTrigger: {
           trigger: ".eventPlayback",
-          start: "-600 top",
+          start: "-900 top",
           end: "bottom bottom",
         }
       })
@@ -65,8 +65,8 @@ export const EventPlayback = () => {
             }}
             gap={[4, 6, 6]}
           >
-            {eventPlayBack.map(({ imageSrc, link }) => (
-              <EventCard key={imageSrc} imageSrc={imageSrc} link={link} />
+            {eventPlayBack.map(({ imageSrc, link }, index) => (
+              <EventCard key={imageSrc} index={index} imageSrc={imageSrc} link={link} />
             ))}
           </Grid>
         </Box>
