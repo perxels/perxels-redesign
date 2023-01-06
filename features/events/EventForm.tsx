@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react'
 import {
   FormControl,
-  FormLabel,
-  FormErrorMessage,
   Input,
   VStack,
   Select,
@@ -154,7 +152,7 @@ export const EventForm = () => {
                   border: '0 none',
                   boxShadow: 'none',
                 }}
-                value="https://perxels.com//events"
+                value="https://perxels.com/events"
                 color="#000000"
                 fontSize={'0.915625rem'}
                 type="disabled"
@@ -166,7 +164,7 @@ export const EventForm = () => {
           <HStack spacing={{ base: 4, lg: 4 }}>
             <Box w="full">
               <WhatsappShareButton
-                url={'https://perxels.com//events'}
+                url={'https://perxels.com/events'}
                 title={
                   'DASHBOARD DESIGN: THINGS YOU NEED TO KNOW ABOUT'
                 }
@@ -195,7 +193,7 @@ export const EventForm = () => {
             </Box>
             <Box w="full">
               <TwitterShareButton
-                url={'https://perxels.com//events'}
+                url={'https://perxels.com/events'}
                 title={'DASHBOARD DESIGN: THINGS YOU NEED TO KNOW ABOUT'}
                 style={{ width: '100%' }}
               >
