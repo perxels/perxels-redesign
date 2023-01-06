@@ -26,7 +26,9 @@ const HeaderDropdown = ({
           <Text fontSize="xl">Be a Partner</Text>
         </Link>
         {/* change button content */}
-        <Button onClick={() => setShowDropdown(false)}>View Class Plans</Button>
+        <Link onClick={() => setShowDropdown(false)} href="/class-plans">
+          <Button>View Class Plans</Button>
+        </Link>
       </Flex>
     </Center>
   )

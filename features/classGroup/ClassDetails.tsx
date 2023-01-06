@@ -112,7 +112,7 @@ export const ClassDetails = ({
                 textTransform="uppercase"
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
-                pr="5rem"
+                pr={["1rem", "5rem"]}
               >
                 {classType}
               </Heading>
