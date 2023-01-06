@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Box, Button, Text, Heading } from '@chakra-ui/react'
+import { Box, Button, Text, Heading, Link } from '@chakra-ui/react'
 import { MainContainer } from '../../layouts'
 import { AiOutlineRightCircle } from 'react-icons/ai'
 
@@ -75,6 +75,9 @@ export const EventTwitter = () => {
               mt={'1.25rem'}
               fontSize={{ base: '1.125rem', md: '1.125rem' }}
               p={{ base: '0.625rem 1.25rem', md: '1.25rem 1.3125em' }}
+              as={Link}
+              href="https://twitter.com/perxels"
+              target="_blank"
             >
               Follow Us on Twitter
               <Text ml="0.6875rem">
