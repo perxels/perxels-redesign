@@ -161,7 +161,7 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['none', 'none', 'none', 'block']}
             as={Link}
-            href="/enrol"
+            href="/signup"
           >
             Enroll For This Plan
           </Button>
@@ -207,7 +207,7 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['block', 'block', 'block', 'none']}
             as={Link}
-            href="/enrol"
+            href="/signup"
           >
             Enroll For This Plan
           </Button>

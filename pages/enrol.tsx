@@ -1,8 +1,23 @@
 import React from 'react'
-import { EnrolWrapper } from '../features/register/EnrolWrapper'
+import {
+  ClassLists,
+  Hero,
+  LeaningTools,
+  StudentWorkWrapper,
+} from '../features/classGroup'
+import { Testimonial } from '../features/testimonial'
+import { MainLayout } from '../layouts'
 
-const enrol = () => {
-  return <EnrolWrapper />
+const ClassPlans = () => {
+  return (
+    <MainLayout>
+      <Hero />
+      <ClassLists />
+      <StudentWorkWrapper />
+      <LeaningTools />
+      <Testimonial />
+    </MainLayout>
+  )
 }
 
-export default enrol
+export default ClassPlans

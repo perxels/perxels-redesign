@@ -12,17 +12,17 @@ const HeaderDropdown = ({ setShowDropdown }: { setShowDropdown: any }) => {
         <Link onClick={() => setShowDropdown(false)} href="/testimonials">
           <Text fontSize="xl">Testimonials</Text>
         </Link>
-        <Link onClick={() => setShowDropdown(false)} href="/student-works">
+        <Link onClick={() => setShowDropdown(false)} href="/studentprojects">
           <Text fontSize="xl">Student Projects</Text>
         </Link>
-        <Link onClick={() => setShowDropdown(false)} href="/events">
+        <Link onClick={() => setShowDropdown(false)} href="/event">
           <Text fontSize="xl">Events</Text>
         </Link>
         <Link onClick={() => setShowDropdown(false)} href="/partners">
           <Text fontSize="xl">Be a Partner</Text>
         </Link>
         {/* change button content */}
-        <Link onClick={() => setShowDropdown(false)} href="/class-plans">
+        <Link onClick={() => setShowDropdown(false)} href="/enrol">
           <Button>View Class Plans</Button>
         </Link>
       </Flex>

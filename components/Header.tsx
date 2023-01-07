@@ -41,7 +41,7 @@ const Header = ({ isDark = false }) => {
                   Testimonials
                 </Text>
               </Link>
-              <Link href="/student-works">
+              <Link href="/studentprojects">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -50,7 +50,7 @@ const Header = ({ isDark = false }) => {
                   Student Projects
                 </Text>
               </Link>
-              <Link href="/events">
+              <Link href="/event">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -71,7 +71,7 @@ const Header = ({ isDark = false }) => {
             </Flex>
           </Flex>
 
-          <Link href="/class-plans">
+          <Link href="/enrol">
             <Button
               h="3.125rem"
               variant={isDark ? 'solid-white' : 'solid'}

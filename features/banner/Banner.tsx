@@ -147,7 +147,7 @@ export const Banner = () => {
           </Flex>
 
           <Box mt={['1rem', '1rem', '0rem', '0rem']}>
-            <Link href="/events">
+            <Link href="/event">
               <Button
                 variant={'link'}
                 // height="3.4375rem"

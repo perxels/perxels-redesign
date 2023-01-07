@@ -23,7 +23,7 @@ export const ClassHire = () => {
             Want to learn this design skills too?
           </Heading>
         </Box>
-        <Box as={Link} href="/class-plans">
+        <Box as={Link} href="/enrol">
           <Button
             color="brand.white"
             bgColor="brand.dark.200"

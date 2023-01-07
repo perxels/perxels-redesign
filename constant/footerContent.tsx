@@ -45,11 +45,11 @@ export const links = [
       },
       {
         name: 'Student Projects',
-        url: '/student-works',
+        url: '/studentprojects',
       },
       {
         name: 'Events',
-        url: '/events',
+        url: '/event',
       },
       {
         name: 'Hire',
@@ -66,15 +66,15 @@ export const links = [
     links: [
       {
         name: 'Basic Class',
-        url: '/class-plans#basic-class',
+        url: '/enrol#basic-class',
       },
       {
         name: 'Advanced Class',
-        url: '/class-plans#advanced-class',
+        url: '/enrol#advanced-class',
       },
       {
         name: 'Premium Class',
-        url: '/class-plans#premium-class',
+        url: '/enrol#premium-class',
       },
       {
         name: 'International',

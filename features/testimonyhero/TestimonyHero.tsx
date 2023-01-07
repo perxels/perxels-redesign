@@ -87,7 +87,7 @@ export const TestimonyHero = () => {
               Want to create your own story with Perxels?
             </Text>
             <Center className="testimonial-button">
-              <Button as={Link} href="/class-plans">
+              <Button as={Link} href="/enrol">
                 Enroll Now
               </Button>
             </Center>

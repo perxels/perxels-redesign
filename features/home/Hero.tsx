@@ -65,7 +65,7 @@ export const Hero = () => {
           mt="1.5rem"
           display={['block', 'block', 'block', 'none']}
         >
-          <Button onClick={() => router.push("/class-plans")}>
+          <Button onClick={() => router.push("/enrol")}>
             Start Here
           </Button>
         </Box>
