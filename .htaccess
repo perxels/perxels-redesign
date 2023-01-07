@@ -1,7 +1,7 @@
 # direct all requests to the root to the index.html file
+Options -MultiViews
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.html [L]
+RewriteRule ^ index.html [QSA,L]
 
 AddType application/javascript; charset=utf-8 .mjs
