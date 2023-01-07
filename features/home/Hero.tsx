@@ -1,9 +1,9 @@
-import { Box, Button, Heading, Link, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, Text, Link } from '@chakra-ui/react'
 import gsap from 'gsap'
 import React, { useEffect, useRef } from 'react'
 import { MainContainer } from '../../layouts'
 import { HeroAnimation } from './HeroAnimation'
-
+// import Link from 'next/link'
 export const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -55,14 +55,15 @@ export const Hero = () => {
           Equipping designers to solve problems with design.
         </Text>
 
+        
         <Box
           ref={buttonWrapper}
           opacity={0}
           mt="1.5rem"
           display={['block', 'block', 'block', 'none']}
         >
-          <Button as={Link} href="/class-plans">
-            Start Here
+         <Button as={Link} href="/class-plans">
+               Start Here
           </Button>
         </Box>
 

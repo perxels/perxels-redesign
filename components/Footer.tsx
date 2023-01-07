@@ -18,6 +18,7 @@ import { FooterSocialLinks, links } from '../constant'
 import { MainContainer } from '../layouts'
 import Logo from './Logo'
 
+
 const Footer = () => {
   return (
     <MainContainer bg="brand.dark.200">
@@ -39,7 +40,8 @@ const Footer = () => {
             as={Link}
             href="/class-plans"
             _hover={{ textDecor: 'none', bg: 'brand.yellow.500' }}
-            variant="rounded-solid"
+            bg="brand.white"
+            color="brand.purple.500"
           >
             Enroll Now
           </Button>
@@ -142,6 +144,7 @@ const Footer = () => {
           </Heading>
 
           <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
+           
             <Button
               bg="brand.yellow.500"
               color="brand.purple.500"
@@ -150,6 +153,7 @@ const Footer = () => {
             >
               Get Started
             </Button>
+           
           </Box>
         </VStack>
 
