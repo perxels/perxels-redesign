@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next build && next export",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.js",
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
     "format:fix": "prettier --write --ignore-path .gitignore ."
@@ -25,6 +25,7 @@
     "framer-motion": "^6",
     "gsap": "^3.11.4",
     "next": "13.0.2",
+    "next-optimized-images": "^2.6.2",
     "next-share": "^0.19.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
