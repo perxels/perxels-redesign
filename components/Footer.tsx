@@ -17,9 +17,11 @@ import React from 'react'
 import { FooterSocialLinks, links } from '../constant'
 import { MainContainer } from '../layouts'
 import Logo from './Logo'
+import { useRouter } from 'next/router'
 
 
 const Footer = () => {
+  const router = useRouter()
   return (
     <MainContainer bg="brand.dark.200">
       <Box py="1.875rem">
@@ -38,7 +40,7 @@ const Footer = () => {
 
           <Button
             as={Link}
-            href="/class-plans"
+            href="/enrol"
             _hover={{ textDecor: 'none', bg: 'brand.yellow.500' }}
             bg="brand.white"
             color="brand.purple.500"
@@ -148,8 +150,7 @@ const Footer = () => {
             <Button
               bg="brand.yellow.500"
               color="brand.purple.500"
-              as={Link}
-              href="/class-plans"
+              onClick={() => router.push("/enrol")}
             >
               Get Started
             </Button>
@@ -230,7 +231,7 @@ const Footer = () => {
                 Testimonials
               </Text>
             </Link>
-            <Link w="full" href="/class-plans">
+            <Link w="full" href="/enrol">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -241,7 +242,7 @@ const Footer = () => {
                 Enroll now
               </Text>
             </Link>
-            <Link w="full" href="/class-plans">
+            <Link w="full" href="/enrol">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}

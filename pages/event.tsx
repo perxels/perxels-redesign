@@ -5,7 +5,7 @@ import {
   EventHero,
   EventPlayback,
   EventTwitter,
-} from '../features/events/'
+} from '../features/events'
 import { PastSpeakers } from '../features/speakers'
 const events = () => {
   return (

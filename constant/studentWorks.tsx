@@ -49,42 +49,42 @@ export const StudentWorksData: StudentWorksProps[] = [
   {
     id: 1,
     imgUrl: './assets/images/sudent-work/daniju.png',
-    link: '/student-works/daniju',
+    link: '/casestudy/daniju',
   },
   {
     id: 2,
     imgUrl: './assets/images/sudent-work/mosope.png',
-    link: '/student-works/mosope',
+    link: '/casestudy/mosope',
   },
   {
     id: 3,
     imgUrl: './assets/images/sudent-work/rebecca.png',
-    link: '/student-works/rebecca',
+    link: '/casestudy/rebecca',
   },
   {
     id: 4,
     imgUrl: './assets/images/sudent-work/favour.png',
-    link: '/student-works/favour',
+    link: '/casestudy/favour',
   },
   {
     id: 5,
     imgUrl: './assets/images/sudent-work/omame.png',
-    link: '/student-works/omame',
+    link: '/casestudy/omame',
   },
   {
     id: 6,
     imgUrl: './assets/images/sudent-work/tolu.png',
-    link: '/student-works/tolu',
+    link: '/casestudy/tolu',
   },
   {
     id: 7,
     imgUrl: './assets/images/sudent-work/abimbola.png',
-    link: '/student-works/abimbola',
+    link: '/casestudy/abimbola',
   },
   {
     id: 8,
     imgUrl: './assets/images/sudent-work/zainab.png',
-    link: '/student-works/zainab',
+    link: '/casestudy/zainab',
   },
 ]
 
@@ -110,8 +110,8 @@ export const studentWorkDetails: WorkDetails = {
       'I started out with carrying out a research and Analysing the results, then I created a Brand Identity for the product and the Low-Fi Designs. After all that was done, I designed the High Fidelity mockups and carried out a Usability Testing.',
     results:
       'It was quite amazing working on this project right from researching to  designing. From this project i learned that all design decision should have the users in mind and offer them a great user experience. I also learned the importance of user research in designs as it helps in identify the pain points of my users.',
-    prevLink: '/student-works/daniju',
-    nextLink: '/student-works/rebecca',
+    prevLink: '/casestudy/daniju',
+    nextLink: '/casestudy/rebecca',
   },
   daniju: {
     projectName: 'Charity website',
@@ -136,7 +136,7 @@ export const studentWorkDetails: WorkDetails = {
             <li>Then, a sketch was created and moving to the low fidelity, and this brings us to the high fidelity of the design.</li>
         </ul>`,
     results: `Working on this project was challenging and interesting. I'm glad everything came out well and my tutor was really proud of it. The full design consist of my information architecture, moodboards, sketches, wireframes and responsive design, I designed about 12 screens for this project in total!`,
-    nextLink: '/student-works/mosope',
+    nextLink: '/casestudy/mosope',
   },
   rebecca: {
     projectName: 'Logistics LANDING PAGE',
@@ -159,8 +159,8 @@ export const studentWorkDetails: WorkDetails = {
       'The five design phases were used to approach this problem. User research and user interviews were used to make discoveries, There were clearly defined target audiences for the design. The product was designed with clarity.',
     results:
       'A landing page that allows users to check delivery prices before booking. Provision of a tracking ID to track their product and delivery of goods in the same condition they were sent in.',
-    prevLink: '/student-works/mosope',
-    nextLink: '/student-works/favour',
+    prevLink: '/casestudy/mosope',
+    nextLink: '/casestudy/favour',
   },
   favour: {
     projectName: 'Blood Donation Application',
@@ -184,8 +184,8 @@ export const studentWorkDetails: WorkDetails = {
       'To get the best possible experience for the users, I conducted user interviews, drew out the information architecture and user flows. High attention was paid to the data collected at the interview stage, it served as a guild in the design process.',
     results:
       'In order to make sure the design/prototype was solving the users’ needs, I conducted a usability testing with more than 3 potential users and they loved the experience. I also worked on the issues that the users talked about as regards their experience.',
-    prevLink: '/student-works/rebecca',
-    nextLink: '/student-works/omame',
+    prevLink: '/casestudy/rebecca',
+    nextLink: '/casestudy/omame',
   },
   tolu: {
     projectName: 'Savings Application',
@@ -208,8 +208,8 @@ export const studentWorkDetails: WorkDetails = {
       'I created research questions, this research revealed the pain points of my users. I brainstormed possible solutions which led to designing several features to tackle the challenges faced by undergraduates when it comes to saving.',
     results:
       'It was quite amazing working on this project right from researching to  designing. From this project i learned that all design decision should have the users in mind and offer them a great user experience. I also learned the importance of user research in designs as it helps in identify the pain points of my users.',
-    prevLink: '/student-works/omame',
-    nextLink: '/student-works/abimbola',
+    prevLink: '/casestudy/omame',
+    nextLink: '/casestudy/abimbola',
   },
   omame: {
     projectName: 'Savings Application',
@@ -232,8 +232,8 @@ export const studentWorkDetails: WorkDetails = {
       'To understand the challenges Undergraduates face while saving, I used three research methods: Competitive analysis, Qualitative research, Quantitative research.',
     results:
       'Coinbox is an application with which Undergraduates can save money consistently all through the duration of their degree and cash out on the day of their graduation. This money would be used as support fund or even capital for students who want to start their personal business.',
-    prevLink: '/student-works/favour',
-    nextLink: '/student-works/tolu',
+    prevLink: '/casestudy/favour',
+    nextLink: '/casestudy/tolu',
   },
   abimbola: {
     projectName: 'vaccine App AND WEBSITE',
@@ -282,8 +282,8 @@ export const studentWorkDetails: WorkDetails = {
           <li>UX sketches and wireframe.</li>
         </ol>
       `,
-    prevLink: '/student-works/tolu',
-    nextLink: '/student-works/zainab',
+    prevLink: '/casestudy/tolu',
+    nextLink: '/casestudy/zainab',
   },
   zainab: {
     projectName: 'Savings Application',
@@ -306,6 +306,6 @@ export const studentWorkDetails: WorkDetails = {
       'I did research on how students behavior towards money and why they don’t save most times. I was about to deduce a lot, part of which is lack of knowledge on savings, and lack of discipline with money.',
     results:
       'I designed an app which helps them save for a long period time without withdrawal till graduation day or at least 2 years after saving, There’s also a platform that educates on how to save on my app.',
-    prevLink: '/student-works/zainab',
+    prevLink: '/casestudy/zainab',
   },
 }

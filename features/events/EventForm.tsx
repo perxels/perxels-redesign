@@ -22,7 +22,7 @@ import { TwitterShareButton, WhatsappShareButton } from 'next-share'
 
 export const EventForm = () => {
   const { hasCopied, onCopy } = useClipboard(
-    'https://perxels.com/events/dashboard-designs',
+    'https://perxels.com/event',
   )
   const formRef = useRef(null)
   const [loading, setLoading] = useState(false)
@@ -157,7 +157,7 @@ export const EventForm = () => {
                   border: '0 none',
                   boxShadow: 'none',
                 }}
-                value="https://perxels.com/events"
+                value="https://perxels.com/event"
                 color="#000000"
                 fontSize={'0.915625rem'}
                 type="disabled"
@@ -169,7 +169,7 @@ export const EventForm = () => {
           <HStack spacing={{ base: 4, lg: 4 }}>
             <Box w="full">
               <WhatsappShareButton
-                url={'https://perxels.com/events'}
+                url={'https://perxels.comevent'}
                 title={'DASHBOARD DESIGN: THINGS YOU NEED TO KNOW ABOUT'}
                 separator=":: "
                 style={{ width: '100%' }}
@@ -196,7 +196,7 @@ export const EventForm = () => {
             </Box>
             <Box w="full">
               <TwitterShareButton
-                url={'https://perxels.com/events'}
+                url={'https://perxels.comevent'}
                 title={'DASHBOARD DESIGN: THINGS YOU NEED TO KNOW ABOUT'}
                 style={{ width: '100%' }}
               >

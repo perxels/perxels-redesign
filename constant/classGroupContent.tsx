@@ -28,7 +28,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
             This class is for beginners just starting out in design 
             to learn the fundamentals of UIUX design.
         `,
-    link: '/class-plans#basic-class',
+    link: '/enrol#basic-class',
     image: '/assets/images/class-group/basic.jpg',
   },
   {
@@ -37,7 +37,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
             This class is for intermediate designers looking to expand 
             their UIUX design knowledge & skills.
         `,
-    link: '/class-plans#advanced-class',
+    link: '/enrol#advanced-class',
     image: '/assets/images/class-group/advance.jpg',
   },
   {
@@ -46,7 +46,7 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
             This class is for anyone who want to learn everything in 
             UIUX design from basic to professional level.
         `,
-    link: '/class-plans#premium-class',
+    link: '/enrol#premium-class',
     image: '/assets/images/class-group/premium.jpg',
   },
   {
@@ -128,18 +128,18 @@ export const classGroupDetails = [
 export const StudentWorks: StudentWorkProps[] = [
   {
     imgUrl: './assets/images/sudent-work/mosope.png',
-    link: '/student-works/mosope',
+    link: '/casestudy/mosope',
   },
   {
     imgUrl: './assets/images/sudent-work/daniju.png',
-    link: '/student-works/daniju',
+    link: '/casestudy/daniju',
   },
   {
     imgUrl: './assets/images/sudent-work/rebecca.png',
-    link: '/student-works/rebecca',
+    link: '/casestudy/rebecca',
   },
   {
     imgUrl: './assets/images/sudent-work/favour.png',
-    link: '/student-works/favour',
+    link: '/casestudy/favour',
   },
 ]
