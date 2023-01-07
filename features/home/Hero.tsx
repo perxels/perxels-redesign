@@ -62,9 +62,11 @@ export const Hero = () => {
           mt="1.5rem"
           display={['block', 'block', 'block', 'none']}
         >
-         <Button as={Link} href="/class-plans">
+          <Link href="/class-plans" >
+         <Button>
                Start Here
           </Button>
+          </Link>
         </Box>
 
         <HeroAnimation />
