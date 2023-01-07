@@ -1,5 +1,6 @@
 import { Box, Button, Heading, Text, Link } from '@chakra-ui/react'
 import gsap from 'gsap'
+import { useRouter } from 'next/router'
 import React, { useEffect, useRef } from 'react'
 import { MainContainer } from '../../layouts'
 import { HeroAnimation } from './HeroAnimation'
@@ -10,6 +11,8 @@ export const Hero = () => {
   const descRef = useRef<HTMLParagraphElement>(null)
   const buttonWrapper = useRef<HTMLDivElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }))
+
+  const router = useRouter()
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -62,11 +65,9 @@ export const Hero = () => {
           mt="1.5rem"
           display={['block', 'block', 'block', 'none']}
         >
-          <Link href="/class-plans" >
-         <Button>
-               Start Here
+          <Button onClick={() => router.push("/class-plans")}>
+            Start Here
           </Button>
-          </Link>
         </Box>
 
         <HeroAnimation />
