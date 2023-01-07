@@ -13,8 +13,8 @@ export const LeaningTools = () => {
           paragraph="We are proud to see our students getting design jobs, impacting product teams with their skills and being paid well for their value."
           isArrow
           arrowTopPos="3rem"
-          arrowRightBottomPos='1rem'
-          arrowRightPos='3rem'
+          arrowRightBottomPos="1rem"
+          arrowRightPos="3rem"
         />
 
         <SimpleGrid columns={[1, 1, 2, 3]} spacing="2.5rem">

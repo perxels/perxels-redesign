@@ -25,8 +25,7 @@ export const ListWrapper = ({
           display="grid"
           gridTemplateColumns="1.25rem 1fr"
         >
-          <Box w="1.25rem" h="1.25rem" bg={bg} rounded="3px" />{' '}
-          {list}
+          <Box w="1.25rem" h="1.25rem" bg={bg} rounded="3px" /> {list}
         </ListItem>
       ))}
     </List>

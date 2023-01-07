@@ -19,7 +19,13 @@ export const EnrolWrapper = () => {
 
   return (
     <SimpleGrid ref={mainRef} columns={[1, 1, 1, 2]} h="100vh">
-      <Box as={Link} href="/" px="1rem" py="1rem" display={['block', 'block', 'block', 'none']}>
+      <Box
+        as={Link}
+        href="/"
+        px="1rem"
+        py="1rem"
+        display={['block', 'block', 'block', 'none']}
+      >
         <Logo />
       </Box>
       <SideImage />

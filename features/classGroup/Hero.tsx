@@ -31,7 +31,12 @@ export const Hero = () => {
         .from('.arrow-mhiz', { opacity: 0, y: 100, duration: 1 })
         .play()
 
-      gsap.from('.class-plan-video', { opacity: 0, scale: 0, duration: 1, delay: 1 })
+      gsap.from('.class-plan-video', {
+        opacity: 0,
+        scale: 0,
+        duration: 1,
+        delay: 1,
+      })
     }, mainRef)
 
     return () => ctx.revert()
@@ -126,9 +131,9 @@ export const Hero = () => {
               overflow="hidden"
               mr={['0', '0', '0', '0', '-6rem', '0']}
               pos="relative"
-              className='class-plan-video'
+              className="class-plan-video"
             >
-              <Img 
+              <Img
                 ref={videoRef}
                 width="100%"
                 height="auto"

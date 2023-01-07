@@ -1,1 +1,1 @@
-export * from "./RegisterWrapper";
+export * from './RegisterWrapper'

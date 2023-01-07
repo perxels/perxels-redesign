@@ -14,7 +14,7 @@ import { AiOutlineRightCircle } from 'react-icons/ai'
 export const MarketHero = () => {
   return (
     <Box
-      h={["45vh", "45vh", "45vh", "calc(100vh - 300px)"]}
+      h={['45vh', '45vh', '45vh', 'calc(100vh - 300px)']}
       backgroundColor="brand.yellow.300"
       backgroundImage={"url('/assets/images/market-place/marketplaceBg.png')"}
       w="full"
@@ -113,7 +113,7 @@ export const MarketHero = () => {
             w="full"
             h="auto"
             maxW="477px"
-            pos={["absolute", "absolute", "absolute", "static"]}
+            pos={['absolute', 'absolute', 'absolute', 'static']}
             bottom="0"
           />
 

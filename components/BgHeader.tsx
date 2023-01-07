@@ -2,11 +2,15 @@ import { Box } from '@chakra-ui/react'
 import React from 'react'
 
 interface MainContainerProps extends React.PropsWithChildren {
-    bg?: string,
-    color?: string,
+  bg?: string
+  color?: string
 }
 
-const BgHeader = ({ bg="brand.purple.500", color="brand.white", children }: MainContainerProps) => {
+const BgHeader = ({
+  bg = 'brand.purple.500',
+  color = 'brand.white',
+  children,
+}: MainContainerProps) => {
   return (
     <Box>
       <Box

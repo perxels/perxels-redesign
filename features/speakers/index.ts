@@ -1,2 +1,2 @@
-export * from "./SpeakerHero"
-export * from "./PastSpeakers"
+export * from './SpeakerHero'
+export * from './PastSpeakers'

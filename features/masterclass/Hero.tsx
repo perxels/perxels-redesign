@@ -1,6 +1,6 @@
 import React from 'react'
 import { MainContainer } from '../../layouts'
-import { Box, Center, Heading, Icon, Image, Text } from '@chakra-ui/react'
+import { Box, Heading, Img, Text } from '@chakra-ui/react'
 
 export const Hero = () => {
   return (
@@ -43,21 +43,21 @@ export const Hero = () => {
             </Text>
 
             <Box boxSize={['full', '36rem', '36.0625rem']} mt="4.0625rem">
-              <Image
+              <Img
                 src="/assets/images/masterclass/heroImageCenter.png"
                 alt="Hero"
               />
             </Box>
           </Box>
           <Box display={['none', 'none', 'block', 'block']}>
-            <Image
+            <Img
               src="/assets/images/masterclass/arrowLeft.svg"
               alt="Hero"
               pos="absolute"
               top={['0%', '15%', '25%']}
               left={['13%']}
             />
-            <Image
+            <Img
               src="/assets/images/masterclass/arrowRight.svg"
               alt="Hero"
               pos="absolute"
@@ -65,41 +65,41 @@ export const Hero = () => {
               right={['20%']}
             />
 
-            <Image
+            <Img
               src="/assets/images/masterclass/heroImageLeftTop.png"
               pos="absolute"
               alt="Hero"
               top={['0%', '15%', '15%']}
             />
-            <Image
+            <Img
               src="/assets/images/masterclass/heroImageLeftBottom.png"
               pos="absolute"
               alt="Hero"
               top={['0%', '50%', '50%']}
               left={['7%']}
             />
-            <Image
+            <Img
               src="/assets/images/masterclass/heroImageRightTop.png"
               pos="absolute"
               alt="Hero"
               top={['0%', '20%', '20%']}
               right={['7%']}
             />
-            <Image
+            <Img
               src="/assets/images/masterclass/heroImageRightBottom.png"
               pos="absolute"
               alt="Hero"
               top={['0%', '50%', '55%']}
               right={['6%']}
             />
-            <Image
+            <Img
               src="/assets/images/masterclass/stripeLeft.svg"
               alt="Hero"
               pos="absolute"
               top={['0%', '50%', '60%']}
               left={['20%']}
             />
-            <Image
+            <Img
               src="/assets/images/masterclass/stripeRight.svg"
               alt="Hero"
               pos="absolute"

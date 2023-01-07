@@ -1,2 +1,2 @@
-export * from "./MainContainer";
-export * from "./MainLayout";
+export * from './MainContainer'
+export * from './MainLayout'

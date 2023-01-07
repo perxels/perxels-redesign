@@ -135,8 +135,7 @@ export const studentWorkDetails: WorkDetails = {
             <li>Secondly, I worked on an information Architecture which is needed to guide me on how to achieve the sketch.</li>
             <li>Then, a sketch was created and moving to the low fidelity, and this brings us to the high fidelity of the design.</li>
         </ul>`,
-    results:
-      `Working on this project was challenging and interesting. I'm glad everything came out well and my tutor was really proud of it. The full design consist of my information architecture, moodboards, sketches, wireframes and responsive design, I designed about 12 screens for this project in total!`,
+    results: `Working on this project was challenging and interesting. I'm glad everything came out well and my tutor was really proud of it. The full design consist of my information architecture, moodboards, sketches, wireframes and responsive design, I designed about 12 screens for this project in total!`,
     nextLink: '/student-works/mosope',
   },
   rebecca: {

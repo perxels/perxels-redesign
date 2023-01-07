@@ -5,7 +5,13 @@ import { MarketPlaceContent } from '../../constant'
 
 const MarketCard = ({ id, title, imgUrl, link, price }: MarketPlaceContent) => {
   return (
-    <Box overflow="hidden" w="full" rounded="10px" borderWidth="1px" borderColor="">
+    <Box
+      overflow="hidden"
+      w="full"
+      rounded="10px"
+      borderWidth="1px"
+      borderColor=""
+    >
       <Img src={imgUrl} />
 
       <Center w="full" p="1.25rem" bg="brand.white">

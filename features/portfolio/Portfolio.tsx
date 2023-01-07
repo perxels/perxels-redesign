@@ -15,9 +15,13 @@ export const Portfolio = () => {
         maxW={['240px', 'full']}
       />
 
-      <SimpleGrid mb={["3.75rem", "3.75rem", "6.25rem"]} columns={[2, 2, 2, 4]} spacing={["0.5rem", "0.5rem", "0"]}>
+      <SimpleGrid
+        mb={['3.75rem', '3.75rem', '6.25rem']}
+        columns={[2, 2, 2, 4]}
+        spacing={['0.5rem', '0.5rem', '0']}
+      >
         {portfolioContent.map(({ id, title, name, image }) => (
-          <PortfolioCard 
+          <PortfolioCard
             key={id}
             title={title}
             name={name}

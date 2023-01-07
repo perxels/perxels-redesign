@@ -99,7 +99,12 @@ const Footer = () => {
 
               <VStack mt="1.5rem" spacing="1.25rem">
                 {links.map(({ name, url }) => (
-                  <Link target={name === "Community" ? "_blank" : "_self"} w="full" key={name} href={url}>
+                  <Link
+                    target={name === 'Community' ? '_blank' : '_self'}
+                    w="full"
+                    key={name}
+                    href={url}
+                  >
                     <Text
                       w="full"
                       textAlign="left"
@@ -130,13 +135,19 @@ const Footer = () => {
           >
             Equipping designers to{' '}
             <Box as="span" color="brand.yellow.500">
-            {' '}solve problems
+              {' '}
+              solve problems
             </Box>{' '}
             with design.
           </Heading>
 
           <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
-            <Button bg="brand.yellow.500" color="brand.purple.500" as={Link} href="/class-plans">
+            <Button
+              bg="brand.yellow.500"
+              color="brand.purple.500"
+              as={Link}
+              href="/class-plans"
+            >
               Get Started
             </Button>
           </Box>

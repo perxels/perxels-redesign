@@ -1,5 +1,10 @@
 import React from 'react'
-import { ClassPlan, Instructions, SponsorHero, Testimonial } from '../features/sponsorship'
+import {
+  ClassPlan,
+  Instructions,
+  SponsorHero,
+  Testimonial,
+} from '../features/sponsorship'
 import { MainLayout } from '../layouts'
 
 const sponsorship = () => {

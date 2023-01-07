@@ -9,10 +9,17 @@ interface ValuesProps {
 
 const Values = ({ icon, title, description }: ValuesProps) => {
   return (
-    <Box w="full" py={["1.5rem", "1.5rem", "3.125rem"]} pt={["1.5rem", "1.5rem", "2.5rem"]} px={["1rem", "1rem", "2.125rem"]}>
+    <Box
+      w="full"
+      py={['1.5rem', '1.5rem', '3.125rem']}
+      pt={['1.5rem', '1.5rem', '2.5rem']}
+      px={['1rem', '1rem', '2.125rem']}
+    >
       <Img ml="-1rem" src={icon} w="5rem" h="5rem" alt="Like icon" />
 
-      <Heading color="brand.dark.200" mb="1.4rem" fontSize="4xl">{title}</Heading>
+      <Heading color="brand.dark.200" mb="1.4rem" fontSize="4xl">
+        {title}
+      </Heading>
       <Text fontSize="lg" color="brand.gray.500">
         {description}
       </Text>

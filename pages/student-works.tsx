@@ -7,8 +7,8 @@ import { MainLayout } from '../layouts'
 const StudentWorks = () => {
   return (
     <MainLayout isDark={true}>
-        <Hero />
-        <StudentWorksWrapper />
+      <Hero />
+      <StudentWorksWrapper />
     </MainLayout>
   )
 }

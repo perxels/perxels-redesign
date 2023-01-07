@@ -4,7 +4,6 @@ import {
   Flex,
   Heading,
   Text,
-  Image,
   SimpleGrid,
   Img,
   Center,
@@ -108,7 +107,7 @@ export const CaseStudy = () => {
             </Box>
           </SimpleGrid>
           <Box rounded="0.75rem" overflow="hidden">
-            <Image
+            <Img
               src={studentData?.workCover?.w2}
               alt={studentData?.projectName}
               w="full"
@@ -155,7 +154,7 @@ export const CaseStudy = () => {
             )}
           </SimpleGrid>
           <Box rounded="0.75rem" overflow="hidden">
-            <Image
+            <Img
               src={studentData?.workCover?.w3}
               alt={studentData?.projectName}
               w="full"
@@ -164,7 +163,7 @@ export const CaseStudy = () => {
           </Box>
           {studentData?.workCover?.w4 && (
             <Box mt="2rem" rounded="0.75rem" overflow="hidden">
-              <Image
+              <Img
                 src={studentData?.workCover?.w4}
                 alt={studentData?.projectName}
                 w="full"
@@ -175,19 +174,41 @@ export const CaseStudy = () => {
 
           <Center gap="1rem" mt="3rem">
             {studentData?.prevLink && (
-              <Button as={Link} href={studentData?.prevLink} variant="link" color="brand.gray.700">
-                <Text display={['none', 'none', 'none', 'block']}>Go to previous project{' '}</Text>
-                <Icon ml="1rem" as={BsArrowLeftSquare} fontSize="7xl" mr="1rem" />
+              <Button
+                as={Link}
+                href={studentData?.prevLink}
+                variant="link"
+                color="brand.gray.700"
+              >
+                <Text display={['none', 'none', 'none', 'block']}>
+                  Go to previous project{' '}
+                </Text>
+                <Icon
+                  ml="1rem"
+                  as={BsArrowLeftSquare}
+                  fontSize="7xl"
+                  mr="1rem"
+                />
               </Button>
             )}
-            {
-              studentData?.nextLink && (
-                <Button as={Link} href={studentData?.nextLink} variant="link" color="brand.white">
-                  <Icon mr="1rem" as={BsArrowRightSquare} fontSize="7xl" ml="1rem" />
-                  <Text display={['none', 'none', 'none', 'block']}>Go to next project{' '}</Text>
-                </Button>
-              )
-            }
+            {studentData?.nextLink && (
+              <Button
+                as={Link}
+                href={studentData?.nextLink}
+                variant="link"
+                color="brand.white"
+              >
+                <Icon
+                  mr="1rem"
+                  as={BsArrowRightSquare}
+                  fontSize="7xl"
+                  ml="1rem"
+                />
+                <Text display={['none', 'none', 'none', 'block']}>
+                  Go to next project{' '}
+                </Text>
+              </Button>
+            )}
           </Center>
         </Box>
       </MainContainer>

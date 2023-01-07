@@ -5,13 +5,18 @@ import { MainContainer } from '../../layouts'
 
 const Hero = () => {
   const mainRef = useRef<HTMLDivElement>(null)
-  const tl = useRef<any>(gsap.timeline({ paused: true }));
+  const tl = useRef<any>(gsap.timeline({ paused: true }))
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       tl.current
-        .from(".student-hero-heading", { opacity: 0, y: 100, duration: 0.5, delay: 0.5 })
-        .from(".student-hero-subHeading", { opacity: 0, y: 100, duration: 1 })
+        .from('.student-hero-heading', {
+          opacity: 0,
+          y: 100,
+          duration: 0.5,
+          delay: 0.5,
+        })
+        .from('.student-hero-subHeading', { opacity: 0, y: 100, duration: 1 })
         .play()
     }, mainRef)
 
@@ -29,7 +34,7 @@ const Hero = () => {
             <Box
               pos="absolute"
               top="2rem"
-              left={["90%", "90%", "90%", "40%"]}
+              left={['90%', '90%', '90%', '40%']}
               w="2rem"
               h="2rem"
               rounded="full"
@@ -37,8 +42,8 @@ const Hero = () => {
             />
             <Box
               pos="absolute"
-              bottom={["8rem", "8rem", "8rem", "12rem"]}
-              left={["10%", "10%", "20%", "0%"]}
+              bottom={['8rem', '8rem', '8rem', '12rem']}
+              left={['10%', '10%', '20%', '0%']}
               w="2.5rem"
               h="2.5rem"
               rounded="full"
@@ -58,7 +63,7 @@ const Hero = () => {
               h="auto"
               pos="absolute"
               left="50%"
-              bottom={["3rem", "3rem", "3rem", "5rem"]}
+              bottom={['3rem', '3rem', '3rem', '5rem']}
               transform={{ base: 'translateX(-50%)', md: 'translateX(-50%)' }}
               src="./assets/images/sudent-work/arrow-down.svg"
               alt="pattern"
@@ -69,7 +74,7 @@ const Hero = () => {
               pos="absolute"
               right="0.3rem"
               bottom="18rem"
-              display={["none", "none", "none", "block"]}
+              display={['none', 'none', 'none', 'block']}
               src="./assets/images/sudent-work/pattern-bottom-right.svg"
               alt="pattern"
             />
@@ -88,7 +93,7 @@ const Hero = () => {
               pos="absolute"
               right="16rem"
               top="3rem"
-              display={["none", "none", "none", "block"]}
+              display={['none', 'none', 'none', 'block']}
               src="./assets/images/sudent-work/student-pattern-3.png"
               alt="pattern"
             />
@@ -98,7 +103,7 @@ const Hero = () => {
               pos="absolute"
               right="0"
               top="6rem"
-              display={["none", "none", "none", "block"]}
+              display={['none', 'none', 'none', 'block']}
               src="./assets/images/sudent-work/student-pattern-4.png"
               alt="pattern"
             />
@@ -106,8 +111,8 @@ const Hero = () => {
               w="5.25rem"
               h="5.25rem"
               pos="absolute"
-              left={["60%", "60%", "60%", "8rem"]}
-              bottom={["8rem", "8rem", "8rem", "6rem"]}
+              left={['60%', '60%', '60%', '8rem']}
+              bottom={['8rem', '8rem', '8rem', '6rem']}
               src="./assets/images/sudent-work/student-pattern-2.png"
               alt="pattern"
             />
@@ -117,14 +122,24 @@ const Hero = () => {
               pos="absolute"
               right="8rem"
               bottom="10rem"
-              display={["none", "none", "none", "block"]}
+              display={['none', 'none', 'none', 'block']}
               src="./assets/images/sudent-work/student-pattern-5.png"
               alt="pattern"
             />
-            <Heading className="student-hero-heading" textAlign="center" fontSize={["7xl", "9xl"]} color="brand.yellow.500">
+            <Heading
+              className="student-hero-heading"
+              textAlign="center"
+              fontSize={['7xl', '9xl']}
+              color="brand.yellow.500"
+            >
               Our Students’ Portfolio
             </Heading>
-            <Text className='student-hero-subHeading' textAlign="center" fontSize={["xl", "2xl", "4xl"]} color="brand.white">
+            <Text
+              className="student-hero-subHeading"
+              textAlign="center"
+              fontSize={['xl', '2xl', '4xl']}
+              color="brand.white"
+            >
               Results of our{' '}
               <Box as={'span'} fontWeight="700">
                 {' '}

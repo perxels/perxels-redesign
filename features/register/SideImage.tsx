@@ -22,7 +22,7 @@ const SideImage = () => {
         w="100%"
         maxW="500px"
         mx="auto"
-        className='enrol-hero'
+        className="enrol-hero"
       />
     </Flex>
   )

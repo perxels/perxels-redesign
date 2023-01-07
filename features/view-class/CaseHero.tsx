@@ -3,7 +3,6 @@ import {
   Box,
   Text,
   Flex,
-  Image,
   Heading,
   VStack,
   HStack,
@@ -148,7 +147,7 @@ export const CaseHero = () => {
               </Flex>
             </Box>
             <Box>
-              <Image
+              <Img
                 src="/assets/images/class-work/arrow.svg"
                 alt="arrow"
                 position={'absolute'}
@@ -187,7 +186,7 @@ export const CaseHero = () => {
           </Flex>
           <Box>
             <Center mt="2rem">
-              <Image
+              <Img
                 src="/assets/images/class-work/bottomArrow.png"
                 alt="arrow"
               />

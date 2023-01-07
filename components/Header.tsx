@@ -25,7 +25,7 @@ const Header = ({ isDark = false }) => {
         <Flex alignItems="center" justifyContent="space-between" py="1.25rem">
           <Flex alignItems="center" gap="6.875rem">
             <Link href="/">
-            <Logo color={isDark ? '#FDE85C' : '#34296B'} />
+              <Logo color={isDark ? '#FDE85C' : '#34296B'} />
             </Link>
             <Flex
               display={['none', 'none', 'none', 'flex']}
@@ -72,15 +72,14 @@ const Header = ({ isDark = false }) => {
           </Flex>
 
           <Link href="/class-plans">
-          <Button
-            h="3.125rem"
-            variant={isDark ? 'solid-white' : 'solid'}
-            display={['none', 'none', 'none', 'flex']}
-            px="2.25rem"
-          >
-          
-            View Class Plans
-          </Button>
+            <Button
+              h="3.125rem"
+              variant={isDark ? 'solid-white' : 'solid'}
+              display={['none', 'none', 'none', 'flex']}
+              px="2.25rem"
+            >
+              View Class Plans
+            </Button>
           </Link>
 
           <Icon

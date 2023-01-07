@@ -3,52 +3,50 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Center,
   Box,
   Text,
   Button,
-  Image,
-  useDisclosure,
+  Img,
 } from '@chakra-ui/react'
 import Link from 'next/link'
 interface SuccessModalProps {
   isOpen: boolean
   onClose: () => void
-  title: string,
-description: string,
+  title: string
+  description: string
 }
-const SuccessModal = ({ isOpen, onClose, title, description }: SuccessModalProps) => {
+const SuccessModal = ({
+  isOpen,
+  onClose,
+  title,
+  description,
+}: SuccessModalProps) => {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}
-      size={['xs', 'xs', 'xs', 'xl']}
-      >
+      <Modal isOpen={isOpen} onClose={onClose} size={['xs', 'xs', 'xs', 'xl']}>
         <ModalOverlay />
 
-        <ModalContent
-         
-        >
+        <ModalContent>
           <ModalBody
             padding={['1.5rem', '1.5rem', '1.5rem', '2.6875rem 2.3125rem']}
-          
           >
             <Link href="/">
-            <ModalCloseButton
-              backgroundColor={'#121212'}
-              rounded={'50%'}
-              color={'#fff'}
-              fontWeight={'700'}
-            />
+              <ModalCloseButton
+                backgroundColor={'#121212'}
+                rounded={'50%'}
+                color={'#fff'}
+                fontWeight={'700'}
+              />
             </Link>
             <Center>
-              <Box mb={['1rem', '1rem', '1rem', '1.4375rem']}
-              boxSize="9.8125rem"
+              <Box
+                mb={['1rem', '1rem', '1rem', '1.4375rem']}
+                boxSize="9.8125rem"
               >
-                <Image src="/assets/icons/success.png" alt="success" />
+                <Img src="/assets/icons/success.png" alt="success" />
               </Box>
             </Center>
             <Center>
@@ -59,7 +57,7 @@ const SuccessModal = ({ isOpen, onClose, title, description }: SuccessModalProps
                 fontSize={['1rem', '1.5rem', '2.135625rem', '2.135625rem']}
                 lineHeight={['1.5rem', '2.15rem', '2.603125rem', '2.500625rem']}
               >
-               {title}
+                {title}
               </Text>
             </Center>
             <Center>
@@ -71,14 +69,14 @@ const SuccessModal = ({ isOpen, onClose, title, description }: SuccessModalProps
                 lineHeight={['1.5rem', '2.15rem', '2.603125rem', '2.15rem']}
                 mt={['1rem', '1rem', '1rem', '0.9375rem']}
               >
-               {description}
+                {description}
               </Text>
             </Center>
             <Center>
-                <Link href="/">
-              <Button
-              mt={['1rem', '1rem', '1rem', '1.4375rem']}
-              >Back to Home Page</Button>
+              <Link href="/">
+                <Button mt={['1rem', '1rem', '1rem', '1.4375rem']}>
+                  Back to Home Page
+                </Button>
               </Link>
             </Center>
           </ModalBody>

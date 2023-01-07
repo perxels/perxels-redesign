@@ -19,9 +19,7 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
-
 export const EventPlayback = () => {
-
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.from('.eventPlayback', {
@@ -30,10 +28,10 @@ export const EventPlayback = () => {
         duration: 1,
         delay: 1,
         scrollTrigger: {
-          trigger: ".eventPlayback",
-          start: "-900 top",
-          end: "bottom bottom",
-        }
+          trigger: '.eventPlayback',
+          start: '-900 top',
+          end: 'bottom bottom',
+        },
       })
     })
 
@@ -41,7 +39,7 @@ export const EventPlayback = () => {
   }, [])
 
   return (
-    <Box className='eventPlayback' my={'3rem'}>
+    <Box className="eventPlayback" my={'3rem'}>
       <MainContainer>
         <Box display="flex" justifyContent="center" alignItems="center">
           <Box w={{ base: '100%', md: '50%' }}>
@@ -66,7 +64,12 @@ export const EventPlayback = () => {
             gap={[4, 6, 6]}
           >
             {eventPlayBack.map(({ imageSrc, link }, index) => (
-              <EventCard key={imageSrc} index={index} imageSrc={imageSrc} link={link} />
+              <EventCard
+                key={imageSrc}
+                index={index}
+                imageSrc={imageSrc}
+                link={link}
+              />
             ))}
           </Grid>
         </Box>

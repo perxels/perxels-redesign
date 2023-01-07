@@ -23,11 +23,16 @@ export const OurWhy = () => {
   }, [])
 
   return (
-    <Box className='our-why'
-    mb={['10rem', '10rem', '1rem', '-17%']}
+    <Box
+      className="our-why"
+      // mb={['10rem', '10rem', '1rem', '-10%']}
     >
       <MainContainer noMobilePadding>
-        <Heading className='our-why-title' fontSize="7xl" color="brand.dark.200">
+        <Heading
+          className="our-why-title"
+          fontSize="7xl"
+          color="brand.dark.200"
+        >
           Our Why?
         </Heading>
 

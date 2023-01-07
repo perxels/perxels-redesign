@@ -9,7 +9,7 @@ export const Hero = () => {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const descRef = useRef<HTMLParagraphElement>(null)
   const buttonWrapper = useRef<HTMLDivElement>(null)
-  const tl = useRef<any>(gsap.timeline({ paused: true }));
+  const tl = useRef<any>(gsap.timeline({ paused: true }))
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -17,7 +17,7 @@ export const Hero = () => {
         .to(headingRef.current, { opacity: 1, duration: 1, delay: 1 })
         .to(descRef.current, { opacity: 1, duration: 1 }, '-=0.5')
         .to(buttonWrapper.current, { opacity: 1, duration: 1 }, '-=0.5')
-        .to(".hero-animation", { opacity: 1, y: 0, duration: 1 }, '-=0.5')
+        .to('.hero-animation', { opacity: 1, y: 0, duration: 1 }, '-=0.5')
         .play()
     }, heroRef)
 
@@ -55,8 +55,15 @@ export const Hero = () => {
           Equipping designers to solve problems with design.
         </Text>
 
-        <Box ref={buttonWrapper} opacity={0} mt="1.5rem" display={['block', 'block', 'block', 'none']}>
-          <Button as={Link} href="/class-plans">Start Here</Button>
+        <Box
+          ref={buttonWrapper}
+          opacity={0}
+          mt="1.5rem"
+          display={['block', 'block', 'block', 'none']}
+        >
+          <Button as={Link} href="/class-plans">
+            Start Here
+          </Button>
         </Box>
 
         <HeroAnimation />

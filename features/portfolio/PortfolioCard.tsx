@@ -20,26 +20,47 @@ export const PortfolioCard = ({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       w="full"
-      h={["285.61px", "285.61px", "394px"]}
+      h={['285.61px', '285.61px', '394px']}
       bg={`url(${image}) center/cover no-repeat`}
-      filter={[`grayscale('0')`, `grayscale('0')`, `grayscale('0')`, `grayscale(${isHover ? '0' : '100%'})`]}
+      filter={[
+        `grayscale('0')`,
+        `grayscale('0')`,
+        `grayscale('0')`,
+        `grayscale(${isHover ? '0' : '100%'})`,
+      ]}
     >
       {isHover || isLargerThan800 ? (
-        <Box w="full" h={["100px", "79px", "109px"]} px={["0.875rem", "0.875rem", "1.25rem"]} py="1.875rem" pos="relative">
+        <Box
+          w="full"
+          h={['100px', '79px', '109px']}
+          px={['0.875rem', '0.875rem', '1.25rem']}
+          py="1.875rem"
+          pos="relative"
+        >
           <Box
             h="full"
             w="full"
             pos="absolute"
             top="0"
             left="0"
-            zIndex={["0", "0", "0", "-1"]}
+            zIndex={['0', '0', '0', '-1']}
             bg="linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
                     transform: matrix(1, 0, 0, -1, 0, 0)"
           />
-          <Heading pos="relative" zIndex="1" fontSize={["md", "md", "md", "2xl"]} color="brand.white">
+          <Heading
+            pos="relative"
+            zIndex="1"
+            fontSize={['md', 'md', 'md', '2xl']}
+            color="brand.white"
+          >
             {name}
           </Heading>
-          <Text pos="relative" zIndex="1" fontSize={["0.55rem", "0.55rem", "0.6rem", "sm"]} color="brand.white">
+          <Text
+            pos="relative"
+            zIndex="1"
+            fontSize={['0.55rem', '0.55rem', '0.6rem', 'sm']}
+            color="brand.white"
+          >
             {title}
           </Text>
         </Box>

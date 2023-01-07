@@ -24,16 +24,16 @@ export const testimonySlice = createSlice({
     setTestimonies: (state, action: PayloadAction<TestimonialCardProps[]>) => {
       state.testimonies = action.payload
     },
-    setSelectedTestimony: (state, action: PayloadAction<TestimonialCardProps>) => {
+    setSelectedTestimony: (
+      state,
+      action: PayloadAction<TestimonialCardProps>,
+    ) => {
       state.selectedTestimony = action.payload
-    }
+    },
   },
 })
 
-export const {
-    setActiveIndex,
-    setTestimonies,
-    setSelectedTestimony
-} = testimonySlice.actions
+export const { setActiveIndex, setTestimonies, setSelectedTestimony } =
+  testimonySlice.actions
 
 export default testimonySlice.reducer

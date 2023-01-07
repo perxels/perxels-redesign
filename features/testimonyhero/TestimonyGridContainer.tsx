@@ -1,18 +1,18 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Box } from '@chakra-ui/react'
 import { TestimonialGrid } from '../testimonial'
 import { TestimonyVideo } from '../testimonial/TestimonyVideo'
 import { TestimonialSlider } from '../testimonial/TestimonialSlider'
 import { SectionHeader } from '../../components'
-import { testimonialContentSecond} from '../../constant'
+import { testimonialContentSecond } from '../../constant'
 import { MobileTestimonialSlider } from './MobileTestimonialSlider'
 export const TestimonyGridContainer = () => {
-  
- 
-
   return (
     <Box p={['2rem 1.625rem', '2rem 1.1rem', '2rem 6.25rem']}>
-      <TestimonialGrid testimonialContent={testimonialContentSecond} isTestimonial />
+      <TestimonialGrid
+        testimonialContent={testimonialContentSecond}
+        isTestimonial
+      />
       <Box display={['none', 'none', 'none', 'block']}>
         <TestimonyVideo />
         <TestimonialSlider />

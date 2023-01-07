@@ -5,11 +5,7 @@ import Link from 'next/link'
 
 export const ClassHire = () => {
   return (
-    <Box
-      px={{ base: 4, md: 32 }}
-      py={{ base: 20, md: 32 }}
-      bgColor={'#FDE85C'}
-    >
+    <Box px={{ base: 4, md: 32 }} py={{ base: 20, md: 32 }} bgColor={'#FDE85C'}>
       <Flex
         alignItems={{ base: 'flex-start', md: 'center' }}
         flexDirection={{ base: 'column', md: 'row' }}

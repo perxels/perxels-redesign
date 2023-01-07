@@ -1,2 +1,2 @@
-export * from "./MarketHero";
-export * from "./MarketGridWrapper";
+export * from './MarketHero'
+export * from './MarketGridWrapper'

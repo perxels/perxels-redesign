@@ -25,7 +25,7 @@ export const HireAsStaff = () => {
           columns={[1, 1, 1, 2]}
           spacing={['3rem', '3rem', '3rem', '3.125rem']}
           py="5rem"
-          px={["0", "0", "0", "1rem"]}
+          px={['0', '0', '0', '1rem']}
         >
           <Flex
             h="full"

@@ -8,9 +8,9 @@ interface MainLayoutProps extends PropsWithChildren {
 export const MainLayout = ({ children, isDark }: MainLayoutProps) => {
   return (
     <Fragment>
-        <Header isDark={isDark} />
-        {children}
-        <Footer />
+      <Header isDark={isDark} />
+      {children}
+      <Footer />
     </Fragment>
   )
 }

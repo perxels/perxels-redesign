@@ -15,9 +15,9 @@ const StudentWorksWrapper = ({ isPrimary }: { isPrimary?: boolean }) => {
         duration: 1,
         delay: 1,
         scrollTrigger: {
-          trigger: ".class-groups",
-          start: "-700 top",
-          end: "bottom bottom",
+          trigger: '.class-groups',
+          start: '-700 top',
+          end: 'bottom bottom',
         },
         stagger: 1,
       })

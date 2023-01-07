@@ -39,8 +39,8 @@ const SectionHeader = ({
             pos="absolute"
             width="12rem"
             height="auto"
-            top={arrowTopPos || "0"}
-            left={arrowLeftPos || "0"}
+            top={arrowTopPos || '0'}
+            left={arrowLeftPos || '0'}
             display={['none', 'none', 'none', 'block']}
           />
 
@@ -49,8 +49,8 @@ const SectionHeader = ({
             pos="absolute"
             width="12rem"
             height="auto"
-            top={arrowRightBottomPos || "-4rem"}
-            right={arrowRightPos || "10rem"}
+            top={arrowRightBottomPos || '-4rem'}
+            right={arrowRightPos || '10rem'}
             display={['none', 'none', 'none', 'block']}
           />
         </>
@@ -71,10 +71,16 @@ const SectionHeader = ({
         </Box>
       </Center>
       <Heading
-        color={isWhite ? 'brand.white' : headingColor ? headingColor : 'brand.purple.500'}
+        color={
+          isWhite
+            ? 'brand.white'
+            : headingColor
+            ? headingColor
+            : 'brand.purple.500'
+        }
         textAlign="center"
         fontSize={headingSize || ['2rem', '2rem', '7xl']}
-        maxW={maxW || "auto"}
+        maxW={maxW || 'auto'}
         m="0 auto"
         mb="1rem"
         mt="1.25rem"

@@ -9,11 +9,20 @@ export const ClassLists = () => {
     <Box py="3.75rem">
       <MainContainer>
         <VStack spacing="3.75rem">
-          {
-            classGroupDetails.map(({ id, title, classDur, classTime, classType, installments, tuition, courseOutline }) => (
-              <ClassDetails 
+          {classGroupDetails.map(
+            ({
+              id,
+              title,
+              classDur,
+              classTime,
+              classType,
+              installments,
+              tuition,
+              courseOutline,
+            }) => (
+              <ClassDetails
                 key={id}
-                id={id} 
+                id={id}
                 title={title}
                 classDur={classDur}
                 classTime={classTime}
@@ -22,8 +31,8 @@ export const ClassLists = () => {
                 courseOutline={courseOutline}
                 classType={classType}
               />
-            ))
-          }
+            ),
+          )}
         </VStack>
       </MainContainer>
     </Box>

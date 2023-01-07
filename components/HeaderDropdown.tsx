@@ -2,11 +2,7 @@ import { Box, Button, Center, Flex, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
 
-const HeaderDropdown = ({
-  setShowDropdown,
-}: {
-  setShowDropdown: any
-}) => {
+const HeaderDropdown = ({ setShowDropdown }: { setShowDropdown: any }) => {
   return (
     <Center w="full" h="calc(100vh - 4rem)" bg="brand.white">
       <Flex alignItems="center" gap="4.375rem" flexDir="column">

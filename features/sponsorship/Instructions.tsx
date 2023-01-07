@@ -32,8 +32,14 @@ export const Instructions = () => {
             headingSize={['1.75rem', '1.75rem', '1.75rem', '7xl']}
           />
 
-          <SimpleGrid mt={["3rem", "3rem", "3rem", "6rem"]} mb="1rem" alignItems="center" columns={[1, 1, 1, 2]} gap={["0.5rem", "0.5rem", "0.5rem", "4rem"]}>
-            <GridItem pos={["static", "static", "static", "relative"]}>
+          <SimpleGrid
+            mt={['3rem', '3rem', '3rem', '6rem']}
+            mb="1rem"
+            alignItems="center"
+            columns={[1, 1, 1, 2]}
+            gap={['0.5rem', '0.5rem', '0.5rem', '4rem']}
+          >
+            <GridItem pos={['static', 'static', 'static', 'relative']}>
               <Img
                 src="./assets/images/sponsorship/instruction.png"
                 alt="Instructions"
@@ -41,8 +47,8 @@ export const Instructions = () => {
                 maxW="950px"
                 h="auto"
                 display={['none', 'none', 'none', 'block']}
-                pos={["static", "static", "static", "absolute"]}
-                left={["auto", "auto", "auto", "-20rem"]}
+                pos={['static', 'static', 'static', 'absolute']}
+                left={['auto', 'auto', 'auto', '-20rem']}
                 top="50%"
                 transform="translateY(-45%)"
               />
@@ -74,7 +80,7 @@ export const Instructions = () => {
                           {title}
                         </Heading>
                         <Text
-                          maxW={["full", "full", "full", "230px"]}
+                          maxW={['full', 'full', 'full', '230px']}
                           color="brand.white"
                           fontSize={['lg']}
                           mt="1rem"

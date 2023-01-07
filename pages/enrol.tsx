@@ -2,9 +2,7 @@ import React from 'react'
 import { EnrolWrapper } from '../features/register/EnrolWrapper'
 
 const enrol = () => {
-  return (
-    <EnrolWrapper />
-  )
+  return <EnrolWrapper />
 }
 
 export default enrol

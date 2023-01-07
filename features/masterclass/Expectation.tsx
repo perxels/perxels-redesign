@@ -3,7 +3,6 @@ import { MainContainer } from '../../layouts'
 import {
   Box,
   Center,
-  Image,
   Text,
   SimpleGrid,
   Heading,
@@ -12,10 +11,11 @@ import {
   ListItem,
   Grid,
   Button,
+  Img,
 } from '@chakra-ui/react'
 import { SectionHeader } from '../../components'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
-import {TfiArrowCircleRight} from 'react-icons/tfi'
+import { TfiArrowCircleRight } from 'react-icons/tfi'
 import { BasicExpectation } from '../../constant/masterclass'
 export const Expectation = () => {
   return (
@@ -38,9 +38,7 @@ export const Expectation = () => {
         </Box>
       </Box>
 
-      <Box
-      p={{ base: '0rem', md: '1.5rem', lg: '1.5rem' }}
-      >
+      <Box p={{ base: '0rem', md: '1.5rem', lg: '1.5rem' }}>
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 2 }}
           spacing={10}
@@ -93,25 +91,24 @@ export const Expectation = () => {
               access to 25% discount of Perxels paid training
             </Text>
 
-            <Box
-            mt="1.875rem"
-            display={"flex"}
-            columnGap="0.1rem"
-            >
+            <Box mt="1.875rem" display={'flex'} columnGap="0.1rem">
               <Button>Join Basic Class</Button>
 
-              <Button color="brand.purple.500" background={'transparent'} border="none">
-              Download Project
-                    <Text ml="0.709375rem">
-                        <TfiArrowCircleRight />
-                    </Text>
-            
+              <Button
+                color="brand.purple.500"
+                background={'transparent'}
+                border="none"
+              >
+                Download Project
+                <Text ml="0.709375rem">
+                  <TfiArrowCircleRight />
+                </Text>
               </Button>
             </Box>
           </Box>
           <Box>
             <Box>
-              <Image
+              <Img
                 src="assets/images/masterclass/basicImage.png"
                 alt="basic"
               />

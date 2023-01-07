@@ -66,17 +66,16 @@ export const TestimonialGrid = ({
     window.scrollTo({
       top: testimonialRef?.current?.offsetTop,
       behavior: 'smooth',
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (isUpdated) {
       scrollDown()
-    }
-    else {
+    } else {
       setIsUpdated(true)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastTestimonialIndex])
 
   return (

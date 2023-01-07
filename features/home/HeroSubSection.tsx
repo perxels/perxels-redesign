@@ -22,8 +22,8 @@ export const HeroSubSection = ({
         duration: 1,
         delay: 1,
         scrollTrigger: {
-          trigger: ".section-grid",
-        }
+          trigger: '.section-grid',
+        },
       })
     })
 

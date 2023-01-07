@@ -24,7 +24,7 @@ export const Button: ComponentStyleConfig = {
     lg: {
       fontSize: '2xl',
       height: '73px',
-    }
+    },
   },
   variants: {
     link: {
@@ -86,7 +86,7 @@ export const Button: ComponentStyleConfig = {
         bg: 'brand.yellow.700',
       },
     },
-    'outline': {
+    outline: {
       bg: 'transparent',
       color: 'brand.purple.500',
       borderColor: 'brand.purple.500',
@@ -94,7 +94,7 @@ export const Button: ComponentStyleConfig = {
       _hover: {
         bg: 'brand.purple.500',
         color: 'brand.white',
-      }
+      },
     },
     'rounded-solid-yellow-with-outline': {
       bg: 'brand.yellow.700',
@@ -120,7 +120,7 @@ export const Button: ComponentStyleConfig = {
         borderRadius: '30px',
         borderWidth: '1px',
         borderColor: '#F3F3F3',
-      }
+      },
     },
     subtle: (props) => {
       return {

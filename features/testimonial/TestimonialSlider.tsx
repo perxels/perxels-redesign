@@ -12,10 +12,8 @@ import { TestimonialSliderCard } from './TestimonialSliderCard'
 
 export const TestimonialSlider = () => {
   const dispatch = useAppDispatch()
-  const { testimonials } = useAppSelector(
-    (state) => state.testimonial,
-  )
-      
+  const { testimonials } = useAppSelector((state) => state.testimonial)
+
   return (
     <Center mt="1.875rem">
       <HStack
@@ -35,13 +33,9 @@ export const TestimonialSlider = () => {
           <TestimonialSliderCard
             title={testimonials[1]?.title}
             name={testimonials[1]?.name}
-            imgUrl={
-              testimonials[1]?.imgUrl
-            }
+            imgUrl={testimonials[1]?.imgUrl}
             id={testimonials[1]?.id}
-            smallImgUrl={
-              testimonials[1]?.smallImgUrl
-            }
+            smallImgUrl={testimonials[1]?.smallImgUrl}
             video={testimonials[1]?.video}
             index={1}
           />
@@ -51,22 +45,16 @@ export const TestimonialSlider = () => {
             imgUrl={testimonials[2]?.imgUrl}
             id={testimonials[2]?.id}
             active={true}
-            smallImgUrl={
-              testimonials[2]?.smallImgUrl
-            }
+            smallImgUrl={testimonials[2]?.smallImgUrl}
             video={testimonials[2]?.video}
             index={2}
           />
           <TestimonialSliderCard
             title={testimonials[3]?.title}
             name={testimonials[3]?.name}
-            imgUrl={
-              testimonials[3]?.imgUrl
-            }
+            imgUrl={testimonials[3]?.imgUrl}
             id={testimonials[3]?.id}
-            smallImgUrl={
-              testimonials[3]?.smallImgUrl
-            }
+            smallImgUrl={testimonials[3]?.smallImgUrl}
             video={testimonials[3]?.video}
             index={3}
           />

@@ -6,56 +6,56 @@ import { MainContainer } from '../../layouts'
 
 export const AdmissionProcess = () => {
   return (
-    <Box py={["3rem", "3rem", "3rem", "6.75rem"]}>
-        <MainContainer>
+    <Box py={['3rem', '3rem', '3rem', '6.75rem']}>
+      <MainContainer>
         <SectionHeader
-            title="Get started in four easy steps"
-            subTitle="Our Admission Process"
+          title="Get started in four easy steps"
+          subTitle="Our Admission Process"
         />
 
         <SimpleGrid columns={[1, 1, 2, 4]} spacing="1.875rem">
-            {process.map(({ id, step, icon, desc }) => (
+          {process.map(({ id, step, icon, desc }) => (
             <Center
-                bg="brand.gray.900"
-                rounded="5px"
-                pt="3.5rem"
-                pb="1.75rem"
-                px="1.3rem"
-                key={id}
-                flexDir="column"
+              bg="brand.gray.900"
+              rounded="5px"
+              pt="3.5rem"
+              pb="1.75rem"
+              px="1.3rem"
+              key={id}
+              flexDir="column"
             >
-                <Img src={icon} alt={step} w="3rem" h="3rem" mb="2.5rem" />
+              <Img src={icon} alt={step} w="3rem" h="3rem" mb="2.5rem" />
 
-                <Center>
+              <Center>
                 <Box
-                    bg={
+                  bg={
                     id === 1 || id === 3 ? 'brand.pink.700' : 'brand.purple.500'
-                    }
-                    color="brand.white"
-                    fontSize="md"
-                    px="0.875rem"
-                    py="5px"
-                    as="span"
-                    rounded="64px"
-                    fontWeight={600}
-                    textTransform="capitalize"
+                  }
+                  color="brand.white"
+                  fontSize="md"
+                  px="0.875rem"
+                  py="5px"
+                  as="span"
+                  rounded="64px"
+                  fontWeight={600}
+                  textTransform="capitalize"
                 >
-                    {step}
+                  {step}
                 </Box>
-                </Center>
+              </Center>
 
-                <Text
+              <Text
                 textAlign="center"
                 color="brand.dark.200"
                 fontSize="lg"
                 mt="1.125rem"
-                >
+              >
                 {desc}
-                </Text>
+              </Text>
             </Center>
-            ))}
+          ))}
         </SimpleGrid>
-        </MainContainer>
+      </MainContainer>
     </Box>
   )
 }

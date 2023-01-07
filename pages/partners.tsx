@@ -7,11 +7,11 @@ import { MainLayout } from '../layouts'
 const partners = () => {
   return (
     <MainLayout>
-        <PartnersHero />
-        <OurWhy />
-        <Funding />
-        <OurGoal />
-        <Portfolio />
+      <PartnersHero />
+      <OurWhy />
+      <Funding />
+      <OurGoal />
+      <Portfolio />
     </MainLayout>
   )
 }

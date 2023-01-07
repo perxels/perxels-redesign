@@ -86,11 +86,7 @@ export const Intermediate = () => {
                 access to 25% discount of Perxels paid training
               </Text>
 
-              <HStack
-                mt="1.875rem"
-                gap={['1rem', '0']}
-                spacing={['0', '2rem']}
-              >
+              <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']}>
                 <Button
                   bg="brand.yellow.500"
                   color="brand.purple.500"

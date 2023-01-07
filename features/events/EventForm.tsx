@@ -170,9 +170,7 @@ export const EventForm = () => {
             <Box w="full">
               <WhatsappShareButton
                 url={'https://perxels.com/events'}
-                title={
-                  'DASHBOARD DESIGN: THINGS YOU NEED TO KNOW ABOUT'
-                }
+                title={'DASHBOARD DESIGN: THINGS YOU NEED TO KNOW ABOUT'}
                 separator=":: "
                 style={{ width: '100%' }}
               >

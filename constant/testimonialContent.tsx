@@ -1,11 +1,11 @@
 export interface TestimonialCardProps {
-    name: string
-    title: string
-    content?: string
-    imgUrl: string
-    smallImgUrl?: string
-    id: number
-    video?: string
+  name: string
+  title: string
+  content?: string
+  imgUrl: string
+  smallImgUrl?: string
+  id: number
+  video?: string
 }
 
 export const testimonialSliderContent: TestimonialCardProps[] = [
@@ -16,7 +16,8 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
     imgUrl: '/assets/images/testimonial/video/erica-large.jpg',
     smallImgUrl: '/assets/images/testimonial/video/erica-small.png',
     content: '“I had an amazing experience at Perxels Design School.”',
-    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935451/Erica_Amos_Perxels_Alumni_ko0hvm.mp4'
+    video:
+      'https://res.cloudinary.com/perxels/video/upload/v1672935451/Erica_Amos_Perxels_Alumni_ko0hvm.mp4',
   },
   {
     id: 2,
@@ -25,7 +26,8 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
     imgUrl: '/assets/images/testimonial/video/joe-large.jpg',
     smallImgUrl: '/assets/images/testimonial/video/joe-small.png',
     content: '“I had an amazing experience at Perxels Design School.”',
-    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935443/Joseph_Nwaeze_Perxels_Alumni_f9cpq9.mp4'
+    video:
+      'https://res.cloudinary.com/perxels/video/upload/v1672935443/Joseph_Nwaeze_Perxels_Alumni_f9cpq9.mp4',
   },
   {
     id: 3,
@@ -34,7 +36,8 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
     imgUrl: '/assets/images/testimonial/video/mosope-large.jpg',
     smallImgUrl: '/assets/images/testimonial/video/mosope-small.png',
     content: '“I had an amazing experience at Perxels Design School.”',
-    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935451/Mosope_Aderibigbe_Perxels_Alumni_slkfhr.mp4',
+    video:
+      'https://res.cloudinary.com/perxels/video/upload/v1672935451/Mosope_Aderibigbe_Perxels_Alumni_slkfhr.mp4',
   },
   {
     id: 4,
@@ -43,7 +46,8 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
     imgUrl: '/assets/images/testimonial/video/rebecca-large.jpg',
     smallImgUrl: '/assets/images/testimonial/video/rebecca-small.png',
     content: '“I had an amazing experience at Perxels Design School.”',
-    video: 'https://res.cloudinary.com/perxels/video/upload/v1672935462/Rebecca_Adeyoju_Perxels_Alumni_bkeimq.mp4',
+    video:
+      'https://res.cloudinary.com/perxels/video/upload/v1672935462/Rebecca_Adeyoju_Perxels_Alumni_bkeimq.mp4',
   },
 ]
 
@@ -112,4 +116,3 @@ export const testimonialContent: TestimonialCardProps[] = [
     content: `Perxels helped me build a strong confidence in design skills, I learnt the most efficient and effective design process, soft skills and an eye for good designs.`,
   },
 ]
-

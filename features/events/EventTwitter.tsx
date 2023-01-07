@@ -28,7 +28,7 @@ export const EventTwitter = () => {
   }, [])
 
   return (
-    <Box className='event-twitter'>
+    <Box className="event-twitter">
       <MainContainer>
         <Box
           bg={{

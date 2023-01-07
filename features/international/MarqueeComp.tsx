@@ -1,6 +1,6 @@
-import { Box, Img } from '@chakra-ui/react';
+import { Box, Img } from '@chakra-ui/react'
 import React from 'react'
-import Marquee from "react-fast-marquee";
+import Marquee from 'react-fast-marquee'
 import { MainContainer } from '../../layouts'
 
 interface MarqueeDataProps {
@@ -49,13 +49,7 @@ export const MarqueeComp = () => {
       <MainContainer>
         <Marquee gradientWidth={25}>
           {marqueeData.map((item) => (
-            <Img 
-              key={item.id}
-              src={item.img}
-              alt="flag"
-              h="3.75rem"
-              w="auto"
-            />
+            <Img key={item.id} src={item.img} alt="flag" h="3.75rem" w="auto" />
           ))}
         </Marquee>
       </MainContainer>

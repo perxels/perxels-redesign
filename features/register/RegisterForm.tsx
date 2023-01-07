@@ -13,20 +13,21 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { IoLogoTwitter, IoLogoWhatsapp } from 'react-icons/io'
 
 const RegisterForm = () => {
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbycNDLOQrShEZG9pCcetN11GjIBn1DHFt8c7yB0SwbrGrZlpcmDErOawCMns3OTZgK3ng/exec"
+  const scriptUrl =
+    'https://script.google.com/macros/s/AKfycbycNDLOQrShEZG9pCcetN11GjIBn1DHFt8c7yB0SwbrGrZlpcmDErOawCMns3OTZgK3ng/exec'
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    
+
     const inputData = e.target as typeof e.target & {
       fullname: { value: string }
       email: { value: string }
       phone: { value: string }
       hearabout: { value: string }
-     about: { value: string }
+      about: { value: string }
     }
     const formData = new FormData()
     formData.append('fullname', inputData.fullname.value as string)
@@ -46,11 +47,10 @@ const RegisterForm = () => {
         alert('Something went wrong, please try again')
       }
     })
-    }
+  }
 
-  
   return (
-    <Box overflowY="auto" px={["1rem", "1rem", "3rem"]} py="2rem">
+    <Box overflowY="auto" px={['1rem', '1rem', '3rem']} py="2rem">
       <Heading fontSize="6xl" textAlign="center" color="brand.dark.100">
         Register now to Claim this Offer
       </Heading>
@@ -163,9 +163,7 @@ const RegisterForm = () => {
             <Button
               w="100%"
               h="3.5rem"
-              leftIcon={
-                <Icon as={IoLogoWhatsapp} fontSize="3xl" />
-              }
+              leftIcon={<Icon as={IoLogoWhatsapp} fontSize="3xl" />}
               variant="outline"
             >
               Share
@@ -173,9 +171,7 @@ const RegisterForm = () => {
             <Button
               w="full"
               h="3.5rem"
-              leftIcon={
-                <Icon as={IoLogoTwitter} fontSize="3xl" />
-              }
+              leftIcon={<Icon as={IoLogoTwitter} fontSize="3xl" />}
               variant="outline"
             >
               Share

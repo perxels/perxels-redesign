@@ -8,10 +8,10 @@ import { MainLayout } from '../layouts'
 const speakers = () => {
   return (
     <MainLayout>
-        <SpeakerHero />
-        <HeroSubSection data={speakerHeroData} />
-        <PastSpeakers />
-        <EventPlayback />
+      <SpeakerHero />
+      <HeroSubSection data={speakerHeroData} />
+      <PastSpeakers />
+      <EventPlayback />
     </MainLayout>
   )
 }

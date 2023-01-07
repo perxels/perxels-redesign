@@ -15,7 +15,7 @@ export const Testimonial = () => {
         subTitle="Testimonials"
         title="Hear what they say about us."
       />
-      <Box display={["none", "none", "none", "block"]}>
+      <Box display={['none', 'none', 'none', 'block']}>
         <TestimonyVideo />
         <TestimonialSlider />
       </Box>

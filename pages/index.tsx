@@ -10,9 +10,9 @@ export default function Home() {
   return (
     <MainLayout>
       {/* <Banner/> */}
-      <Hero /> 
+      <Hero />
       <HeroSubSection />
-      <Story/>
+      <Story />
       <OurClassGroup />
       <Portfolio />
       <Testimonial />

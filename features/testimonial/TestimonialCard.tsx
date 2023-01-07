@@ -1,5 +1,4 @@
-import { Box, Flex, Text, VStack } from '@chakra-ui/react'
-import Image from 'next/image'
+import { Box, Flex, Img, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { TestimonialCardProps } from '../../constant'
 
@@ -19,10 +18,20 @@ export const TestimonialCard = ({
       rounded="11.4px"
     >
       <Flex gap="0.5rem" alignItems="center">
-        <Image src={imgUrl} alt={name} width={78} height={78} />
+        <Img src={imgUrl} alt={name} width="78px" height="78px" />
         <VStack spacing="0.25rem">
-          <Text w="full" textAlign="left" fontSize="lg" fontWeight="bold" color="brand.dark.200">{name}</Text>
-          <Text w="full" textAlign="left" fontSize="xs" color="brand.dark.200">{title}</Text>
+          <Text
+            w="full"
+            textAlign="left"
+            fontSize="lg"
+            fontWeight="bold"
+            color="brand.dark.200"
+          >
+            {name}
+          </Text>
+          <Text w="full" textAlign="left" fontSize="xs" color="brand.dark.200">
+            {title}
+          </Text>
         </VStack>
       </Flex>
 

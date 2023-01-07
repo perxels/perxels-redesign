@@ -5,7 +5,7 @@ import {
   Flex,
   Heading,
   Text,
-  Image,
+  Img,
 } from '@chakra-ui/react'
 import React from 'react'
 
@@ -54,13 +54,13 @@ export const HireHero = () => {
         </Flex>
         <Center w="full" mt="2rem" pos="relative">
           {/* left images */}
-          <Image
+          <Img
             w="39rem"
             h="auto"
             src="/assets/images/hire/screen.png"
             alt="Hire Hero"
           />
-          <Image
+          <Img
             display={['none', 'none', 'none', 'none', 'block']}
             pos="absolute"
             top="-7rem"
@@ -70,7 +70,7 @@ export const HireHero = () => {
             src="/assets/images/hire/innovation.png"
             alt="Hire Hero"
           />
-          <Image
+          <Img
             display={['none', 'none', 'none', 'none', 'block']}
             pos="absolute"
             top="6rem"
@@ -80,7 +80,7 @@ export const HireHero = () => {
             src="/assets/images/hire/revenue.png"
             alt="Hire Hero"
           />
-          <Image
+          <Img
             display={['none', 'none', 'none', 'none', 'block']}
             pos="absolute"
             top="14rem"
@@ -92,7 +92,7 @@ export const HireHero = () => {
           />
 
           {/* right images */}
-          <Image
+          <Img
             display={['none', 'none', 'none', 'none', 'block']}
             pos="absolute"
             top="-7rem"
@@ -102,7 +102,7 @@ export const HireHero = () => {
             src="/assets/images/hire/execution.png"
             alt="Hire Hero"
           />
-          <Image
+          <Img
             display={['none', 'none', 'none', 'none', 'block']}
             pos="absolute"
             top="6rem"
@@ -112,7 +112,7 @@ export const HireHero = () => {
             src="/assets/images/hire/ux.png"
             alt="Hire Hero"
           />
-          <Image
+          <Img
             display={['none', 'none', 'none', 'none', 'block']}
             pos="absolute"
             top="14rem"

@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  Box,
-  Text,
-  Heading,
-  Button,
-} from '@chakra-ui/react'
+import { Box, Text, Heading, Button } from '@chakra-ui/react'
 import { AiOutlineRightCircle } from 'react-icons/ai'
 import { MainContainer } from '../../layouts'
 
@@ -14,7 +9,6 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export const EventCommunity = () => {
-
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.from('.event-comm', {
@@ -23,10 +17,10 @@ export const EventCommunity = () => {
         duration: 1,
         delay: 1,
         scrollTrigger: {
-          trigger: ".event-comm",
-          start: "-900 top",
-          end: "bottom bottom",
-        }
+          trigger: '.event-comm',
+          start: '-900 top',
+          end: 'bottom bottom',
+        },
       })
     })
 
@@ -35,7 +29,7 @@ export const EventCommunity = () => {
 
   return (
     <MainContainer>
-      <Box className='event-comm'>
+      <Box className="event-comm">
         <Box
           bg={{
             base: `linear-gradient(360deg, #000000 23.68%, rgba(0, 0, 0, 0) 106.41%),url(assets/images/events/communitymobile.png) center/cover no-repeat`,

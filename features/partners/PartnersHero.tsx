@@ -10,7 +10,12 @@ export const PartnersHero = () => {
   useEffect(() => {
     let ctx = gsap.context(() => {
       tl.current
-        .from('.partner-title', { opacity: 0, y: 100, duration: 0.5, delay: 0.5 })
+        .from('.partner-title', {
+          opacity: 0,
+          y: 100,
+          duration: 0.5,
+          delay: 0.5,
+        })
         .from('.partner-desc', { opacity: 0, y: 100, duration: 1 })
         .from('.partner-img', { opacity: 0, y: 100, duration: 1 })
         .play()
@@ -36,7 +41,7 @@ export const PartnersHero = () => {
               fontSize={['6xl', '6xl', '6xl', '2xxl']}
               pr={['2rem', '2rem', '2rem', '0']}
               lineHeight="1.1"
-              className='partner-title'
+              className="partner-title"
             >
               Equipping African Youths with digital skills
             </Heading>
@@ -45,7 +50,7 @@ export const PartnersHero = () => {
               maxW="470px"
               fontSize={['md', 'md', 'md', 'xl']}
               mt="1.5rem"
-              className='partner-desc'
+              className="partner-desc"
             >
               We are enabling the empowerment of young people in Africa with
               digital skills that would make them more valuable to themselves,
@@ -59,7 +64,7 @@ export const PartnersHero = () => {
             w="full"
             h="auto"
             alt="Partners Hero"
-            className='partner-img'
+            className="partner-img"
           />
         </GridItem>
       </Grid>

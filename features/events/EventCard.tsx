@@ -1,18 +1,18 @@
-import { Box, Center, Icon, Image, Link } from '@chakra-ui/react'
+import { Box, Center, Icon, Img, Link } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { BsFillPlayCircleFill } from 'react-icons/bs'
 
 interface EventCardProps {
-    imageSrc: string
-    link?: string
-    index?: number
+  imageSrc: string
+  link?: string
+  index?: number
 }
 
 export const EventCard = ({ imageSrc, link, index }: EventCardProps) => {
   const [isHover, setIsHover] = React.useState(false)
-  
+
   useEffect(() => {
-    if(index === 0) {
+    if (index === 0) {
       setIsHover(true)
     }
   }, [index])
@@ -30,7 +30,7 @@ export const EventCard = ({ imageSrc, link, index }: EventCardProps) => {
         h="100%"
         position="relative"
       >
-        <Image src={imageSrc} alt="event" />
+        <Img src={imageSrc} alt="event" />
 
         {isHover && (
           <Center

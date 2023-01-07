@@ -1,7 +1,10 @@
 import { Box, Flex, Heading, Img, Text } from '@chakra-ui/react'
 import React from 'react'
 import { TestimonialCardProps } from '../../constant'
-import { setSelectedTestimonial, setTestimonials } from '../../state/features/TestimonialSlice'
+import {
+  setSelectedTestimonial,
+  setTestimonials,
+} from '../../state/features/TestimonialSlice'
 import { useAppDispatch, useAppSelector } from '../../state/store'
 
 interface TestimonialSliderCardProps extends TestimonialCardProps {
@@ -29,8 +32,10 @@ export const TestimonialSliderCard = ({
     const prevSelectedTestimonial = selectedTestimonial
     let fullTestimoials = [...testimonials]
 
-    dispatch(setSelectedTestimonial({id, name, title, imgUrl, smallImgUrl, video}))
-    fullTestimoials[0] = {id, name, title, imgUrl, smallImgUrl, video}
+    dispatch(
+      setSelectedTestimonial({ id, name, title, imgUrl, smallImgUrl, video }),
+    )
+    fullTestimoials[0] = { id, name, title, imgUrl, smallImgUrl, video }
     fullTestimoials[index] = prevSelectedTestimonial
 
     dispatch(setTestimonials(fullTestimoials))

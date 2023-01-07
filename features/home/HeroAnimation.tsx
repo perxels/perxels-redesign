@@ -3,8 +3,8 @@ import { Box, Heading, Img, SimpleGrid, Text } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 type animationContentType = {
-  name: string,
-  desc: string,
+  name: string
+  desc: string
   color: string
 }
 

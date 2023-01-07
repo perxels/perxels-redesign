@@ -13,9 +13,9 @@ interface SliderDataProps {
   title: string
 }
 
- interface ExpectationProps {
+interface ExpectationProps {
   title: string
- }
+}
 
 const sliderData: SliderDataProps[] = [
   {
@@ -44,7 +44,7 @@ const sliderData: SliderDataProps[] = [
   },
 ]
 
-export const Expectation  = ({title}: ExpectationProps) => {
+export const Expectation = ({ title }: ExpectationProps) => {
   const settings = {
     dots: false,
     arrows: false,
@@ -54,25 +54,25 @@ export const Expectation  = ({title}: ExpectationProps) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    cssEase: "linear",
+    cssEase: 'linear',
     responsive: [
       {
         breakpoint: 900,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 600,
         settings: {
           vertical: true,
           slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   }
 
   return (
@@ -84,21 +84,26 @@ export const Expectation  = ({title}: ExpectationProps) => {
       py="6.75rem"
     >
       <MainContainer bg="none">
-        <SectionHeader
-          isWhite
-          subTitle="What to expect"
-          title= {title}
-        />
+        <SectionHeader isWhite subTitle="What to expect" title={title} />
 
         <Slider {...settings}>
           {sliderData.map(({ id, img, cat, title }) => (
-            <Box px={["0", "0", "0", "1rem"]} py={["0.5rem", "0.5rem", "0.5rem", "0"]} key={id}>
+            <Box
+              px={['0', '0', '0', '1rem']}
+              py={['0.5rem', '0.5rem', '0.5rem', '0']}
+              key={id}
+            >
               <Box w="full" p="1.1rem" rounded="1rem" bg="brand.white">
                 <Img src={img} alt={title} w="full" h="auto" rounded="1rem" />
                 <Text mt="1.5rem" fontSize="xl" color="brand.gray.200">
                   {cat}
                 </Text>
-                <Text mt="0.5rem" fontSize="2xl" color="brand.dark.100" fontWeight={700}>
+                <Text
+                  mt="0.5rem"
+                  fontSize="2xl"
+                  color="brand.dark.100"
+                  fontWeight={700}
+                >
                   {title}
                 </Text>
               </Box>
@@ -112,7 +117,12 @@ export const Expectation  = ({title}: ExpectationProps) => {
             h="4.5rem"
             bg="brand.white"
             color="brand.purple.500"
-            _hover={{ bg: 'brand.yellow.500', color: 'brand.purple.500', roundedBottomRight: "0", roundedTopLeft: "0" }}
+            _hover={{
+              bg: 'brand.yellow.500',
+              color: 'brand.purple.500',
+              roundedBottomRight: '0',
+              roundedTopLeft: '0',
+            }}
           >
             Apply Now
           </Button>

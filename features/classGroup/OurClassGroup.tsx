@@ -11,7 +11,6 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export const OurClassGroup = ({ title }: { title?: string }) => {
-
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.from('.class-group-card', {
@@ -20,9 +19,9 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
         duration: 1,
         delay: 1,
         scrollTrigger: {
-          trigger: ".class-group-wrapper",
-          start: "-900 top",
-          end: "bottom bottom",
+          trigger: '.class-group-wrapper',
+          start: '-900 top',
+          end: 'bottom bottom',
         },
         stagger: 1,
       })
@@ -32,16 +31,19 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
   }, [])
 
   return (
-    <Box mt={["3.75rem", "3.75rem", "7.5rem"]} className="class-group-wrapper">
+    <Box mt={['3.75rem', '3.75rem', '7.5rem']} className="class-group-wrapper">
       <MainContainer>
         <SectionHeader
-          subTitle={title || "Our CLass Groups"}
+          subTitle={title || 'Our CLass Groups'}
           title="Here At Perxels,"
           paragraph="Our class groups are designed to accommodate your current level of design and unique learning process."
-          
         />
 
-        <SimpleGrid mb={["3.75rem", "3.75rem", "7rem"]} columns={[1, 1, 2]} spacing="1rem">
+        <SimpleGrid
+          mb={['3.75rem', '3.75rem', '7rem']}
+          columns={[1, 1, 2]}
+          spacing="1rem"
+        >
           {ClassGroupContent.map(({ title, content, image, link }) => (
             <ClassCard
               key={title}

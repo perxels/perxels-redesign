@@ -10,7 +10,7 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 export const Story = () => {
-  const [switcher, ] = useState<Number>(1)
+  const [switcher] = useState<Number>(1)
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -27,10 +27,10 @@ export const Story = () => {
         duration: 1,
         delay: 1,
         scrollTrigger: {
-          trigger: ".story-section",
-          start: "-900 top",
-          end: "bottom bottom",
-        }
+          trigger: '.story-section',
+          start: '-900 top',
+          end: 'bottom bottom',
+        },
       })
     })
 
@@ -38,7 +38,7 @@ export const Story = () => {
   }, [])
 
   return (
-    <Box className='story-section'>
+    <Box className="story-section">
       <MainContainer
         bg={switcher === 1 ? 'brand.purple.500' : 'brand.yellow.300'}
       >
@@ -52,7 +52,10 @@ export const Story = () => {
           bg={switcher === 1 ? 'brand.purple.500' : 'brand.yellow.300'}
         >
           <Box>
-            <StoryIcon pathColor={switcher === 2 ? '#fff' : '#34296B'} circleColor={switcher === 1 ? '#fff' : '#34296B'} />
+            <StoryIcon
+              pathColor={switcher === 2 ? '#fff' : '#34296B'}
+              circleColor={switcher === 1 ? '#fff' : '#34296B'}
+            />
 
             <Heading
               fontSize={['7xl', '7xl', '7xl']}
@@ -69,14 +72,14 @@ export const Story = () => {
               mt="1.2rem"
               maxW={{ base: '100%', lg: '27.3125rem' }}
             >
-              {
-                switcher === 1 ? `
+              {switcher === 1
+                ? `
                   Equipping designers with the core design skills and soft skills to
                   become proficient in solving problems with design.
-                ` : `
-                  To solve the world problems with great designs.
                 `
-              }
+                : `
+                  To solve the world problems with great designs.
+                `}
             </Text>
           </Box>
 

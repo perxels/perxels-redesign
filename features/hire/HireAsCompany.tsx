@@ -25,7 +25,7 @@ export const HireAsCompany = () => {
           columns={[1, 1, 1, 2]}
           spacing={['3rem', '3rem', '3rem', '3.125rem']}
           py={['3rem', '3rem', '5rem']}
-          px={["0", "0", "0", "1rem"]}
+          px={['0', '0', '0', '1rem']}
         >
           <Img
             src="./assets/images/hire/hireCard1.jpg"

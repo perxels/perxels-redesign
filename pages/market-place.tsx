@@ -5,10 +5,10 @@ import { MainContainer, MainLayout } from '../layouts'
 const MarketPlace = () => {
   return (
     <MainLayout>
-        <MainContainer>
-            <MarketHero />
-            <MarketGridWrapper />
-        </MainContainer>
+      <MainContainer>
+        <MarketHero />
+        <MarketGridWrapper />
+      </MainContainer>
     </MainLayout>
   )
 }

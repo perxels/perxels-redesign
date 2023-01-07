@@ -2,7 +2,13 @@ import { Box, Center, HStack, Icon, Img, Link, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { AiOutlineLink } from 'react-icons/ai'
 
-const StudentWorkCard = ({ imgUrl, link }: { imgUrl: string; link: string; }) => {
+const StudentWorkCard = ({
+  imgUrl,
+  link,
+}: {
+  imgUrl: string
+  link: string
+}) => {
   const [isHover, setIsHover] = useState(false)
   return (
     <Box

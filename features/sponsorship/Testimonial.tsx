@@ -7,13 +7,13 @@ import { TestimonialGrid } from '../testimonial'
 export const Testimonial = () => {
   return (
     <MainContainer>
-        <Box my="3.625rem">
-            <SectionHeader
-                subTitle="Testimonials"
-                title="Our Students are getting jobs 100%"
-            />
-            <TestimonialGrid testimonialContent={testimonialContent} />
-        </Box>
+      <Box my="3.625rem">
+        <SectionHeader
+          subTitle="Testimonials"
+          title="Our Students are getting jobs 100%"
+        />
+        <TestimonialGrid testimonialContent={testimonialContent} />
+      </Box>
     </MainContainer>
   )
 }

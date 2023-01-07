@@ -99,7 +99,7 @@ export const PastSpeakers = () => {
       },
     ],
   }
-  
+
   return (
     <Box pb="4rem" pt="3rem" bg="brand.gray.300">
       <MainContainer bg="none">
@@ -116,9 +116,15 @@ export const PastSpeakers = () => {
               <Img rounded="5px" src={img} alt={name} w="full" h="auto" />
 
               <Flex gap="0.5rem" mt="1rem" alignItems="center">
-                <Heading fontSize="sm" color="brand.dark.200">{name}</Heading>
-                <Text fontSize="sm" color="brand.dark.200">|</Text>
-                <Text fontSize="sm" color="brand.dark.200">{title}</Text>
+                <Heading fontSize="sm" color="brand.dark.200">
+                  {name}
+                </Heading>
+                <Text fontSize="sm" color="brand.dark.200">
+                  |
+                </Text>
+                <Text fontSize="sm" color="brand.dark.200">
+                  {title}
+                </Text>
               </Flex>
             </Box>
           ))}

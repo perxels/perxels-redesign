@@ -20,22 +20,31 @@ export const SpeakerHero = () => {
         .from('.pattern5', { opacity: 0, duration: 0.75 })
         .play()
 
-      gsap.from('.speaker-form', { opacity: 0, scale: 0, duration: 1, delay: 0.75 })
+      gsap.from('.speaker-form', {
+        opacity: 0,
+        scale: 0,
+        duration: 1,
+        delay: 0.75,
+      })
     }, mainRef)
 
     return () => ctx.revert()
   }, [])
   return (
     <Box
-      backgroundImage={["", "url('/assets/images/speakers/hero.svg')"]}
+      backgroundImage={['', "url('/assets/images/speakers/hero.svg')"]}
       backgroundRepeat="no-repeat"
       backgroundSize={'cover'}
       ref={mainRef}
     >
       <MainContainer bg="none">
         <SimpleGrid columns={[1, 1, 1, 2]} gap="2rem" py="4rem">
-          <VStack pt={["2rem", "2rem", "2rem", "0"]} pb={["4rem", "4rem", "4rem", "0"]} justifyContent="center" position="relative">
-
+          <VStack
+            pt={['2rem', '2rem', '2rem', '0']}
+            pb={['4rem', '4rem', '4rem', '0']}
+            justifyContent="center"
+            position="relative"
+          >
             <Img
               src="/assets/images/speakers/speaker-top.png"
               w="3rem"
@@ -44,7 +53,7 @@ export const SpeakerHero = () => {
               pos="absolute"
               top="-2rem"
               left="-2rem"
-              className='speaker-top'
+              className="speaker-top"
             />
 
             <Img
@@ -55,18 +64,18 @@ export const SpeakerHero = () => {
               pos="absolute"
               top="-2rem"
               left="16rem"
-              className='blue-pattern'
+              className="blue-pattern"
             />
 
             <Img
               src="/assets/images/speakers/pattern5.svg"
-              w={["2rem", "2rem", "2rem", "3rem"]}
+              w={['2rem', '2rem', '2rem', '3rem']}
               h="auto"
               alt="pattern"
               pos="absolute"
-              bottom={["1rem", "1rem", "1rem", "3rem"]}
+              bottom={['1rem', '1rem', '1rem', '3rem']}
               left="0"
-              className='pattern5'
+              className="pattern5"
             />
 
             <Img
@@ -75,18 +84,28 @@ export const SpeakerHero = () => {
               h="auto"
               alt="pattern"
               pos="absolute"
-              bottom={["-1rem", "-1rem", "-1rem", "-2rem"]}
+              bottom={['-1rem', '-1rem', '-1rem', '-2rem']}
               left="12rem"
-              className='speaker-bottom'
+              className="speaker-bottom"
             />
 
-            <Heading className='speaker-heading' as="h1" fontSize={["6xl", "6xl", "7xl", "8xl"]} pr={["2rem", "2rem", "2rem", "0"]} color="brand.dark.200">
+            <Heading
+              className="speaker-heading"
+              as="h1"
+              fontSize={['6xl', '6xl', '7xl', '8xl']}
+              pr={['2rem', '2rem', '2rem', '0']}
+              color="brand.dark.200"
+            >
               Thank you for accepting to speak at our{' '}
               <Box as="span" color="brand.pink.700">
                 AMA Session
               </Box>
             </Heading>
-            <Text className='speaker-desc' fontSize={["xl", "xl", "xl", "3xl"]} color="brand.dark.200">
+            <Text
+              className="speaker-desc"
+              fontSize={['xl', 'xl', 'xl', '3xl']}
+              color="brand.dark.200"
+            >
               You have the knowledge and the expertise, we have the platform.
               Join us up-skill the next generation of tech talents..
             </Text>
@@ -97,8 +116,8 @@ export const SpeakerHero = () => {
       </MainContainer>
       <Img
         src="/assets/images/speakers/bottomPattern.png"
-        w={["auto", "auto", "auto", "full"]}
-        h={["3rem", "3rem", "3rem", "auto"]}
+        w={['auto', 'auto', 'auto', 'full']}
+        h={['3rem', '3rem', '3rem', 'auto']}
         alt="bottom pattern"
         objectFit="cover"
       />
