@@ -56,9 +56,9 @@ export const portfolioContent: PortfolioContentProps[] = [
   },
   {
     id: 9,
-    name: 'Oladayo Oyindamola',
+    name: 'Awosise Favor',
     image: './assets/images/portfolio/testimony9.jpg',
-    title: 'FBIS technologies',
+    title: 'APEX NETWORK',
   },
   {
     id: 10,
