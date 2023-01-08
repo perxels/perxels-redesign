@@ -63,7 +63,7 @@ export const portfolioContent: PortfolioContentProps[] = [
   {
     id: 10,
     name: 'Clavers Chabi',
-    image: './assets/images/portfolio/testimony10.jpg',
+    image: './assets/images/portfolio/testimony10.jpeg',
     title: 'UI/UX All Web Service',
   },
   {
