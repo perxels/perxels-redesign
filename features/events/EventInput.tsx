@@ -8,21 +8,26 @@ import {
   Textarea,
   Button,
 } from '@chakra-ui/react'
+import {Field, useField} from 'formik'
 
 interface EventFormProps {
   id: string
   type: string
   placeholder: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  value: string
 }
 
 export const EventInput: React.FC<EventFormProps> = ({
   id,
   type,
   placeholder,
+  onChange,
 }) => {
   return (
     <FormControl id={id}>
-      <Input
+      <Field
+        as={Input}
         backgroundColor={'#FCFCFC'}
         border="0.406872px solid #B4B4B4"
         type={type}
@@ -34,6 +39,7 @@ export const EventInput: React.FC<EventFormProps> = ({
         _focusVisible={{
           outline: 'none',
         }}
+        onChange={onChange}
       />
     </FormControl>
   )

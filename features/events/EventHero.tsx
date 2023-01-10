@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Box, Flex, Heading, Text, Button, Grid, Img } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, Button, Grid, Img, List, OrderedList,ListItem } from '@chakra-ui/react'
 import { bannerContent } from '../../constant'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
@@ -58,7 +58,7 @@ export const EventHero = () => {
               mb={{ base: 4, md: 4 }}
               className="ama-main-title"
             >
-              {bannerContent.mainTitle} <br />
+              {/* {bannerContent.mainTitle} */}<br />
               {bannerContent.subTitle}
             </Heading>
             <Flex
@@ -184,6 +184,44 @@ export const EventHero = () => {
               >
                 {bannerContent.description}
               </Text>
+             <OrderedList>
+                <ListItem>
+                <Text
+                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                color="brand.dark.200"
+                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+              >
+                {bannerContent.content1}
+              </Text>
+                </ListItem>
+                <ListItem>
+              <Text
+                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                color="brand.dark.200"
+                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+              >
+                {bannerContent.content2}
+              </Text>
+                </ListItem>
+                <ListItem>
+              <Text
+                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                color="brand.dark.200"
+                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+              >
+                {bannerContent.content2}
+              </Text>
+                </ListItem>
+              <ListItem>
+              <Text
+                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                color="brand.dark.200"
+                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+              >
+                {bannerContent.content3}
+              </Text>
+                </ListItem>
+             </OrderedList>
             </Box>
           </Box>
           <Box>
