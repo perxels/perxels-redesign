@@ -8,13 +8,13 @@ import { MainContainer } from '../../layouts'
 import Link from 'next/link'
 export const Banner = () => {
   return (
-    <MainContainer bg="#E3719C">
+    <MainContainer bg="#34296B">
       <Box
         w="100%"
         py={['1rem', '1.5rem', '1.5rem']}
-        backgroundImage={"url('/assets/images/banner/bannerPattern.png')"}
+        backgroundImage={["url('/assets/images/banner/mobileBannerPattern2.png')","url('/assets/images/banner/bannerPattern2.png')"]}
         backgroundRepeat="no-repeat"
-        backgroundSize={'contain'}
+        backgroundSize={['contain', 'contain','contain']}
         display={['block', 'block', 'block', 'block']}
       >
         <Flex
@@ -28,7 +28,7 @@ export const Banner = () => {
             flexDirection={['column', 'column', 'row', 'row']}
           >
             <Box boxSize={['8.3125rem']}>
-              <Img src={bannerContent.bannerImage} alt="Banner" rounded={"0.6rem"} />
+              <Img src={bannerContent.bannerImage} alt="Banner" rounded={"100%"} />
             </Box>
 
             <Box
@@ -40,8 +40,8 @@ export const Banner = () => {
                 fontWeight="700"
                 color="brand.white"
               >
-                AMA SESSION: 
-                {/* {bannerContent.mainTitle} */} 
+                {/* AMA SESSION:  */}
+                {bannerContent.mainTitle} 
               </Heading>
               <Heading
                 fontSize={['1.40625rem', '1.4rem', '4xl', '4xl']}

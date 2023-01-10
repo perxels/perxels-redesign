@@ -297,7 +297,7 @@ const Footer = () => {
           mb="1.5rem"
           color="brand.white"
         >
-          © Perxels 2022, All Rights Reserved.
+          © Perxels 2023, All Rights Reserved.
         </Text>
       </Box>
     </MainContainer>

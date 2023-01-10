@@ -25,7 +25,7 @@ export const OurWhy = () => {
   return (
     <Box
       className="our-why"
-      // mb={['10rem', '10rem', '1rem', '-10%']}
+      mb={['10rem', '10rem', '1rem', '-5%']}
     >
       <MainContainer noMobilePadding>
         <Heading

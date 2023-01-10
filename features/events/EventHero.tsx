@@ -49,7 +49,8 @@ export const EventHero = () => {
               }}
               mb={{ base: 4, md: 7 }}
             >
-              <Text>AMA SESSION</Text>
+              {/* <Text>AMA SESSION</Text> */}
+              <Text>REVIEW SESSION</Text>
             </Button>
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}
@@ -58,7 +59,7 @@ export const EventHero = () => {
               mb={{ base: 4, md: 4 }}
               className="ama-main-title"
             >
-              {/* {bannerContent.mainTitle} */}<br />
+              {bannerContent.mainTitle}<br />
               {bannerContent.subTitle}
             </Heading>
             <Flex

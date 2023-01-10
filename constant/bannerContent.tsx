@@ -14,12 +14,12 @@ interface BannerContent {
   content2: string
   content3: string
   content4: string
-  
+
 }
 
 export const bannerContent: BannerContent = {
-  mainTitle: 'DASHBOARD DESIGN:',
-  subTitle: 'PERXELS PORTFOLIO REVIEW',
+  mainTitle: 'PORTFOLIO REVIEW SESSION:',
+  subTitle: 'GETTING READY FOR THE JOB MARKET',
   time: '11am  - 1PM WAT',
   date: '14th January, 2023.',
   location: 'GOOGLE MEET.',
