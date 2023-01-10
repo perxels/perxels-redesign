@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import { Box, Button, Flex, Heading, Img, Text, Spacer } from '@chakra-ui/react'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
@@ -6,10 +6,29 @@ import { IoLocationOutline } from 'react-icons/io5'
 import { bannerContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import Link from 'next/link'
+import gsap from 'gsap'
 export const Banner = () => {
+  let boxRef = useRef(null)
+  useEffect(() => {
+    let ctx = gsap.context(() =>{
+      gsap.from(boxRef.current, {
+        opacity: 0,
+        y: 200,
+        duration: 1,
+        delay: 1,
+      })
+    })
+    return () => ctx.revert()
+  }, [boxRef])
   return (
-    <MainContainer bg="#34296B">
+    <Box
+    ref={boxRef}
+    >
+    <MainContainer 
+     bg="#34296B"
+    >
       <Box
+      
         w="100%"
         py={['1rem', '1.5rem', '1.5rem']}
         backgroundImage={["url('/assets/images/banner/mobileBannerPattern2.png')","url('/assets/images/banner/bannerPattern2.png')"]}
@@ -166,5 +185,6 @@ export const Banner = () => {
         </Flex>
       </Box>
     </MainContainer>
+    </Box>
   )
 }
