@@ -59,8 +59,7 @@ export const EventHero = () => {
               mb={{ base: 4, md: 4 }}
               className="ama-main-title"
             >
-              {bannerContent.mainTitle}<br />
-              {bannerContent.subTitle}
+              {bannerContent.mainTitle}{" "}{bannerContent.subTitle}
             </Heading>
             <Flex
               className="ama-other-content"
@@ -139,7 +138,7 @@ export const EventHero = () => {
                 textTransform={'uppercase'}
                 mb={{ base: 2, md: 4 }}
               >
-                Speaker:
+                Host:
               </Text>
               <Flex alignItems={'center'} columnGap={'0.725625rem'}>
                 <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
