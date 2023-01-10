@@ -19,7 +19,7 @@ export const Banner = () => {
       })
     })
     return () => ctx.revert()
-  }, [boxRef])
+  }, [])
   return (
     <Box
     ref={boxRef}
