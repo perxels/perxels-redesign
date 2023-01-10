@@ -40,8 +40,8 @@ export const Banner = () => {
                 fontWeight="700"
                 color="brand.white"
               >
-                AMA SESSION: 
-                {/* {bannerContent.mainTitle} */} 
+                {/* AMA SESSION:  */}
+                {bannerContent.mainTitle} 
               </Heading>
               <Heading
                 fontSize={['1.40625rem', '1.4rem', '4xl', '4xl']}
