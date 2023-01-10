@@ -10,17 +10,26 @@ interface BannerContent {
   description: string
   speakerName: string
   speakerRole: string
+  content1: string
+  content2: string
+  content3: string
+  content4: string
+  
 }
 
 export const bannerContent: BannerContent = {
   mainTitle: 'DASHBOARD DESIGN:',
-  subTitle: 'THINGS YOU NEED TO KNOW ABOUT',
-  time: '7:00 PM',
-  date: '10TH SEPTEMBER, 2022.',
+  subTitle: 'PERXELS PORTFOLIO REVIEW',
+  time: '11am  - 1PM WAT',
+  date: '14th January, 2023.',
   location: 'GOOGLE MEET.',
   bannerImage: '/assets/images/banner/bannerImage.png',
   description:
-    'Dashboard design is a frequent request these days as businesses dream about a simple view that presents all information, shows trends and risky areas, and updates users on what happened — a view that will guide them into a bright financial future. Join us as Sebiomo gives us insights into dashboards design.',
-  speakerName: 'Sebiomo Anuoluwapo',
-  speakerRole: 'Design Lead, Voyance.',
+    'The objectives of the Portfolio Review Event is to:',
+  content1: "To assess, evaluate and review the design abilities and knowledge of  students through their portfolio.",
+  content2: "To provide the students with insights that will help them make necessary changes on their portfolios.",
+  content3: "To prepare the students for the labor market.",
+  content4: "To give the students  a sense of direction in order to enable them to take the right step in their careers.",
+  speakerName: 'Abiodun Fiwa',
+  speakerRole: 'Senior Product Designer',
 }

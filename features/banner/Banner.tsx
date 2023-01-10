@@ -28,7 +28,7 @@ export const Banner = () => {
             flexDirection={['column', 'column', 'row', 'row']}
           >
             <Box boxSize={['8.3125rem']}>
-              <Img src={bannerContent.bannerImage} alt="Banner" />
+              <Img src={bannerContent.bannerImage} alt="Banner" rounded={"0.6rem"} />
             </Box>
 
             <Box
@@ -40,7 +40,8 @@ export const Banner = () => {
                 fontWeight="700"
                 color="brand.white"
               >
-                {bannerContent.mainTitle}
+                AMA SESSION: 
+                {/* {bannerContent.mainTitle} */} 
               </Heading>
               <Heading
                 fontSize={['1.40625rem', '1.4rem', '4xl', '4xl']}
