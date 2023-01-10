@@ -215,7 +215,7 @@ export const EventForm = () => {
          <Box width="full">
            <Button h="3.1875rem" w="full" type="submit" fontSize={'lg'}
            isLoading={formik.isSubmitting}
-           disabled
+          
            >
              Register for this Session
            </Button>
