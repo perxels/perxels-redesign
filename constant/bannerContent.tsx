@@ -18,18 +18,18 @@ interface BannerContent {
 }
 
 export const bannerContent: BannerContent = {
-  mainTitle: 'PORTFOLIO REVIEW SESSION:',
-  subTitle: 'GETTING READY FOR THE JOB MARKET',
-  time: '11am  - 1PM WAT',
-  date: '14th January, 2023.',
+  mainTitle: 'DESIGNING FOR EMPATHY:',
+  subTitle: 'CREATING PRODUCTS THAT CONNECT WITH THE USERS',
+  time: '6PM  - 7PM WAT',
+  date: '22ND January, 2023.',
   location: 'GOOGLE MEET.',
-  bannerImage: '/assets/images/banner/bannerImage.png',
+  bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    'The objectives of the Portfolio Review Event is to:',
-  content1: "To assess, evaluate and review the design abilities and knowledge of  students through their portfolio.",
-  content2: "To provide the students with insights that will help them make necessary changes on their portfolios.",
-  content3: "To prepare the students for the labor market.",
-  content4: "To give the students  a sense of direction in order to enable them to take the right step in their careers.",
-  speakerName: 'Abiodun Fiwa',
-  speakerRole: 'Senior Product Designer',
+    "Empathy in design refers to the practice of designing products, services, and experiences that take into account the needs, feelings, and perspectives of users. This can involve using user research and user testing to understand the user's context and how they will interact with the product, as well as incorporating principles of universal design to ensure that the product is accessible and usable by people with a wide range of abilities and needs.",
+  content1: "One key aspect of empathy in design is the recognition that people have different backgrounds, cultures, and experiences, and that designers need to be mindful of this when creating products. This can involve considering issues of diversity, equity, and inclusion in the design process, as well as ensuring that the product is usable by people with disabilities.",
+  content2: "Overall, empathy in design is about creating products that are not only functional and effective, but that also take into account the needs, feelings, and perspectives of the people who will use them. By designing with empathy, designers can create products that are truly useful, usable, and desirable for all users.",
+  content3: "",
+  content4: "",
+  speakerName: 'Aise Idahor',
+  speakerRole: 'Creative director',
 }
