@@ -20,7 +20,7 @@ interface BannerContent {
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGNING FOR EMPATHY:',
   subTitle: 'CREATING PRODUCTS THAT CONNECT WITH THE USERS',
-  time: '6PM  - 7PM WAT',
+  time: '7PM - 8PM WAT',
   date: '22ND January, 2023.',
   location: 'GOOGLE MEET.',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',

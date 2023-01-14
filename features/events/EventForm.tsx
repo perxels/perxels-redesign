@@ -153,7 +153,7 @@ export const EventForm = () => {
            id="phone"
            type="tel"
            h="3.5rem"
-           placeholder="Email Address*"
+           placeholder="Phone Number*"
            backgroundColor={'#FCFCFC'}
            border="0.406872px solid #B4B4B4"
            _focusVisible={{
