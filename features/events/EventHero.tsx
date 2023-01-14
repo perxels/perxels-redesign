@@ -49,8 +49,8 @@ export const EventHero = () => {
               }}
               mb={{ base: 4, md: 7 }}
             >
-              <Text>DDS SESSION</Text>
-              {/* <Text>AMA SESSION</Text> */}
+              <Text>DESIGN DIGEST SESSION</Text>
+              {/* <Text>AMA SESSION</Text> */} 
               {/* <Text>REVIEW SESSION</Text> */}
             </Button>
             <Heading
