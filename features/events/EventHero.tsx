@@ -49,8 +49,9 @@ export const EventHero = () => {
               }}
               mb={{ base: 4, md: 7 }}
             >
-              {/* <Text>AMA SESSION</Text> */}
-              <Text>REVIEW SESSION</Text>
+              <Text>DESIGN DIGEST SESSION</Text>
+              {/* <Text>AMA SESSION</Text> */} 
+              {/* <Text>REVIEW SESSION</Text> */}
             </Button>
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}
@@ -138,7 +139,7 @@ export const EventHero = () => {
                 textTransform={'uppercase'}
                 mb={{ base: 2, md: 4 }}
               >
-                Host:
+                Speaker:
               </Text>
               <Flex alignItems={'center'} columnGap={'0.725625rem'}>
                 <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
@@ -184,8 +185,6 @@ export const EventHero = () => {
               >
                 {bannerContent.description}
               </Text>
-             <OrderedList>
-                <ListItem>
                 <Text
                 fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
                 color="brand.dark.200"
@@ -193,8 +192,7 @@ export const EventHero = () => {
               >
                 {bannerContent.content1}
               </Text>
-                </ListItem>
-                <ListItem>
+             
               <Text
                 fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
                 color="brand.dark.200"
@@ -202,26 +200,11 @@ export const EventHero = () => {
               >
                 {bannerContent.content2}
               </Text>
-                </ListItem>
-                <ListItem>
-              <Text
-                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                color="brand.dark.200"
-                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-              >
-                {bannerContent.content2}
-              </Text>
-                </ListItem>
-              <ListItem>
-              <Text
-                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                color="brand.dark.200"
-                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-              >
-                {bannerContent.content3}
-              </Text>
-                </ListItem>
-             </OrderedList>
+        
+             
+              
+             
+           
             </Box>
           </Box>
           <Box>
