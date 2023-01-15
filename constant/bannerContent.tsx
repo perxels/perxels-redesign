@@ -20,9 +20,9 @@ interface BannerContent {
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGNING FOR EMPATHY:',
   subTitle: 'CREATING PRODUCTS THAT CONNECT WITH THE USERS',
-  time: '7PM - 8PM WAT',
-  date: '22ND January, 2023.',
-  location: 'GOOGLE MEET.',
+  time: '7pm - 8pm WAT',
+  date: '22nd January, 2023.',
+  location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
     "Empathy in design refers to the practice of designing products, services, and experiences that take into account the needs, feelings, and perspectives of users. This can involve using user research and user testing to understand the user's context and how they will interact with the product, as well as incorporating principles of universal design to ensure that the product is accessible and usable by people with a wide range of abilities and needs.",
