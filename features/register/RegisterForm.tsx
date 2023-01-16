@@ -10,6 +10,7 @@ import {
   Select,
   SimpleGrid,
   Text,
+  Textarea,
   useClipboard,
   useDisclosure,
   VStack,
@@ -266,9 +267,8 @@ const RegisterForm = () => {
                 </Text>
               ) : null}
 
-              <Input
+              <Textarea
                 h="3.5rem"
-                type="text"
                 placeholder="Why shouid you be selected for this sponsorship (This will determine our selection?"
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="why"

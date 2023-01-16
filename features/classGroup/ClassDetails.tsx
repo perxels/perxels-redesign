@@ -182,7 +182,7 @@ export const ClassDetails = ({
             as={Link}
             href={isSponsor ? "/sponsorship/signup" : "/signup"}
           >
-            Enroll For This Plan
+            {isSponsor ? "Apply Now" : "Enroll For This Plan"}
           </Button>
         </Box>
       </GridItem>
@@ -228,7 +228,7 @@ export const ClassDetails = ({
             as={Link}
             href={isSponsor ? "/sponsorship/signup" : "/signup"}
           >
-            Enroll For This Plan
+            {isSponsor ? "Apply Now" : "Enroll For This Plan"}
           </Button>
         </Box>
       </GridItem>
