@@ -106,7 +106,7 @@ export const SponsorHero = () => {
             opacity={0}
           >
             Adeniyi Sonoiki is sponsoring <b>3 People</b> to learn UIUX Design on <b>Full
-            Scholarship.</b> This Scholarship is available for only <b>Basic Class.</b>
+            Scholarship.</b> This Scholarship is available for only <b>Basic Class. </b>
             Perxels will be giving another <b>10 Lucky People a 15% discount off
             the tution for any class.</b>
           </Text>
@@ -119,7 +119,7 @@ export const SponsorHero = () => {
             maxW="212px"
             mt="2rem"
             as={Link}
-            href="/sponsorship/signup"
+            href="/sponsorship#instructions"
           >
             Apply Now
           </Button>

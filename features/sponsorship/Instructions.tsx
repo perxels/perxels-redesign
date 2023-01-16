@@ -21,6 +21,7 @@ export const Instructions = () => {
       backgroundImage={"url('/assets/images/hire/bgPatternPurple.png')"}
       backgroundRepeat="repeat"
       backgroundSize={'cover'}
+      id='instructions'
     >
       <MainContainer bg="none">
         <Box py={['3rem', '3rem', '3rem', '4.875rem']}>
