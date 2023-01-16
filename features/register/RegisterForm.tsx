@@ -328,7 +328,7 @@ const RegisterForm = () => {
                 type="submit"
                 isLoading={formik.isSubmitting}
               >
-                Submit
+                Apply for Scholarship
               </Button>
             </VStack>
           )}
