@@ -87,6 +87,7 @@ export const SponsorHero = () => {
 
           <Heading
             fontSize={['6xl', '6xl', '6xl', '8xl']}
+            maxW={['350px', '350px', '350px', '550px']}
             fontWeight="700"
             mt="1.25rem"
             color="brand.dark.300"
