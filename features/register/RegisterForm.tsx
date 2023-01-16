@@ -30,7 +30,7 @@ const RegisterForm = () => {
   const { onCopy, value, setValue } = useClipboard("https://perxels.com/sponsorship");
 
   const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbycNDLOQrShEZG9pCcetN11GjIBn1DHFt8c7yB0SwbrGrZlpcmDErOawCMns3OTZgK3ng/exec'
+    'https://script.google.com/macros/s/AKfycbzElDzlPDTpufKIge395gGbj68amRNIOy_SPWqm69CZc0ydxc4bVj8nC0jqzVY9RzO9Fg/exec'
   const handleSubmit = (e: any) => {
     e.preventDefault()
 
