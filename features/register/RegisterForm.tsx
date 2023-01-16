@@ -3,12 +3,14 @@ import {
   Button,
   Flex,
   Heading,
+  HStack,
   Icon,
   Img,
   Input,
   Select,
   SimpleGrid,
   Text,
+  useClipboard,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react'
@@ -17,10 +19,15 @@ import * as Yup from 'yup'
 import React, { useState } from 'react'
 import { SuccessModal } from '../../components'
 import { IoCopyOutline, IoLogoTwitter, IoLogoWhatsapp } from 'react-icons/io5'
+import { FaTwitter } from 'react-icons/fa'
+import { TwitterShareButton, WhatsappShareButton } from 'next-share'
+import { RiWhatsappFill } from 'react-icons/ri'
 
 const RegisterForm = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState(false)
+
+  const { onCopy, value, setValue } = useClipboard("https://perxels.com/sponsorship");
 
   const scriptUrl =
     'https://script.google.com/macros/s/AKfycbycNDLOQrShEZG9pCcetN11GjIBn1DHFt8c7yB0SwbrGrZlpcmDErOawCMns3OTZgK3ng/exec'
@@ -339,33 +346,68 @@ const RegisterForm = () => {
             justifyContent="space-between"
             px="1.2rem"
           >
-            <Text fontSize="md" color="brand.dark.200">
-              https://perxels.com/sponsorship
-            </Text>
+            <Input 
+              fontSize="md"
+              value={value}
+              bg="none"
+              borderColor="none"
+              borderWidth="0"
+              _focusVisible={{
+                outline: 'none',
+              }}
+              color="brand.dark.200"
+            />
 
-            <Box cursor="pointer">
+            <Box onClick={onCopy} cursor="pointer">
               <Icon as={IoCopyOutline} fontSize="1.5rem" color="brand.purple.500" />
             </Box>
           </Flex>
 
           <SimpleGrid w="full" columns={2} gap="0.75rem">
-            <Button
-              w="100%"
-              h="3.5rem"
-              leftIcon={<Icon as={IoLogoWhatsapp} fontSize="3xl" />}
-              variant="outline"
-            >
-              Share
-            </Button>
-            <Button
-              w="full"
-              h="3.5rem"
-              leftIcon={<Icon as={IoLogoTwitter} fontSize="3xl" />}
-              variant="outline"
-            >
-              Share
-            </Button>
-          </SimpleGrid>
+             <Box w="full">
+               <WhatsappShareButton
+                 url={'https://perxels.com/sponsorship'}
+                 title={'Get Full Scholarship into Perxels'}
+                 separator=":: "
+                 style={{ width: '100%' }}
+               >
+                 <Button
+                   w="100%"
+                   h="3.5rem"
+                   leftIcon={<Icon as={IoLogoWhatsapp} fontSize="3xl" />}
+                   variant="outline"
+                 >
+                   <Text
+                     ml={{ base: '0.35rem', lg: '0.75rem' }}
+                     fontSize={{ base: '1rem', lg: '1rem' }}
+                   >
+                     Share
+                   </Text>
+                 </Button>
+               </WhatsappShareButton>
+             </Box>
+             <Box w="full">
+               <TwitterShareButton
+                 url={'https://perxels.com/sponsorship'}
+                 title={'Get Full Scholarship into Perxels'}
+                 style={{ width: '100%' }}
+               >
+                 <Button
+                   w="full"
+                   h="3.5rem"
+                   leftIcon={<Icon as={IoLogoTwitter} fontSize="3xl" />}
+                   variant="outline"
+                 >
+                   <Text
+                     ml={{ base: '0.35rem', lg: '0.75rem' }}
+                     fontSize={{ base: '1rem', lg: '1rem' }}
+                   >
+                     Tweet
+                   </Text>
+                 </Button>
+               </TwitterShareButton>
+             </Box>
+           </SimpleGrid>
         </VStack>
       </Box>
     </>

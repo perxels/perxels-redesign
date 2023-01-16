@@ -30,9 +30,11 @@ export const ClassDetails = ({
   courseOutline,
   id,
   isShow,
+  isSponsor
 }: ClassGroupDetailsProps) => {
+  console.log("isSponsor", isSponsor)
   return (
-    <SimpleGrid id={id} columns={[1, 1, 1, 1]}>
+    <SimpleGrid id={id} columns={[1, 1, 1, 12]}>
       <GridItem colSpan={[1, 1, 1, 4]}>
         <Box
           px={['0.75rem', '0.75rem', '0.75rem', '1.875rem']}
@@ -178,7 +180,7 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['none', 'none', 'none', 'inline-block']}
             as={Link}
-            href="/signup"
+            href={isSponsor ? "/sponsorship/signup" : "/signup"}
           >
             Enroll For This Plan
           </Button>
@@ -224,7 +226,7 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['inline-block', 'inline-block', 'inline-block', 'none']}
             as={Link}
-            href="/signup"
+            href={isSponsor ? "/sponsorship/signup" : "/signup"}
           >
             Enroll For This Plan
           </Button>

@@ -15,6 +15,7 @@ export interface ClassGroupDetailsProps {
   tuition: string
   courseOutline: string[]
   isShow?: boolean
+  isSponsor?: boolean
 }
 
 export interface StudentWorkProps {
