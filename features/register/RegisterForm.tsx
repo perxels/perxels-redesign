@@ -82,8 +82,10 @@ const RegisterForm = () => {
           textAlign="left"
           color="brand.dark.100"
         >
-          You’re one step ahead to achieving your goal
+          Become a Beneficiary
         </Heading>
+
+        <Text mt="1rem">Fill the form correctly</Text>
 
         <Formik
           initialValues={{
