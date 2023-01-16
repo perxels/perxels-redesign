@@ -1,5 +1,5 @@
 import React from 'react'
-import { RegisterWrapper } from '../features/register'
+import { RegisterWrapper } from '../../features/register'
 
 const Register = () => {
   return <RegisterWrapper />

@@ -14,6 +14,7 @@ export interface ClassGroupDetailsProps {
   installments: string[]
   tuition: string
   courseOutline: string[]
+  isShow?: boolean
 }
 
 export interface StudentWorkProps {

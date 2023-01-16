@@ -193,13 +193,16 @@ export const Banner = () => {
               <Link href="/event">
                 <Button
                   variant={'link'}
-                  // height="3.4375rem"
                   fontSize={'1rem'}
                   fontWeight={'700'}
-                  // width="16.0625rem"
                   color="brand.white"
                   p="0.79375rem 2.125rem"
                   border={'0.086969375rem solid'}
+                  _hover={{
+                    bg: 'brand.yellow.500',
+                    borderColor: 'brand.yellow.500',
+                    color: 'brand.purple.500',
+                  }}
                 >
                   Register Here
                 </Button>

@@ -4,7 +4,7 @@ import { classGroupDetails } from '../../constant'
 import { MainContainer } from '../../layouts'
 import { ClassDetails } from './ClassDetails'
 
-export const ClassLists = () => {
+export const ClassLists = ({ show = false } : { show?: boolean }) => {
   return (
     <Box py="3.75rem">
       <MainContainer>
@@ -30,6 +30,7 @@ export const ClassLists = () => {
                 tuition={tuition}
                 courseOutline={courseOutline}
                 classType={classType}
+                isShow={id !== 'basic-class'}
               />
             ),
           )}

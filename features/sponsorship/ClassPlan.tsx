@@ -10,7 +10,7 @@ export const ClassPlan = () => {
         subTitle="Class Plans"
         title="Choose from any of these Class Plans."
       />
-      <ClassLists />
+      <ClassLists show />
     </Box>
   )
 }

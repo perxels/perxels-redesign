@@ -29,9 +29,10 @@ export const ClassDetails = ({
   tuition,
   courseOutline,
   id,
+  isShow,
 }: ClassGroupDetailsProps) => {
   return (
-    <SimpleGrid id={id} columns={[1, 1, 1, 12]}>
+    <SimpleGrid id={id} columns={[1, 1, 1, 1]}>
       <GridItem colSpan={[1, 1, 1, 4]}>
         <Box
           px={['0.75rem', '0.75rem', '0.75rem', '1.875rem']}
@@ -60,12 +61,12 @@ export const ClassDetails = ({
           py="1.5rem"
           pb="2.3rem"
         >
-          <SimpleGrid
-            columns={[2, 2, 2, 1]}
-            spacing={['.75rem', '.75rem', '.75rem', '1.85rem']}
+          <Grid
+            templateColumns={['repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(2, 1fr)', '100%']}
+            gap={['.75rem']}
             w="full"
           >
-            <VStack spacing="5px" w="full">
+            <VStack spacing="5px">
               <Text
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
@@ -82,7 +83,7 @@ export const ClassDetails = ({
                 {classDur}
               </Heading>
             </VStack>
-            <VStack spacing="5px" w="full">
+            <VStack spacing="5px">
               <Text
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
@@ -99,7 +100,7 @@ export const ClassDetails = ({
                 {classTime}
               </Heading>
             </VStack>
-            <VStack spacing="5px" w="full">
+            <VStack spacing="5px">
               <Text
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
@@ -112,12 +113,12 @@ export const ClassDetails = ({
                 textTransform="uppercase"
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
-                pr={['1rem', '5rem']}
+                pr={['1rem', '1rem']}
               >
                 {classType}
               </Heading>
             </VStack>
-            <VStack spacing="5px" w="full">
+            <VStack spacing="5px">
               <Text
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
@@ -137,8 +138,24 @@ export const ClassDetails = ({
                 </Heading>
               ))}
             </VStack>
+            {isShow && (
+              <GridItem colSpan={[2, 2, 2, 1]}>
+                <Box
+                  as="span"
+                  rounded="100px"
+                  color="#000"
+                  maxW="250px"
+                  px="1.125rem"
+                  py="0.5rem"
+                  fontSize="sm"
+                  bg="brand.purple.100"
+                >
+                  15% discount available for this option
+                </Box>
+              </GridItem>
+            )}
             <GridItem colSpan={[2, 2, 2, 1]}>
-              <VStack spacing="5px" w="full">
+              <VStack spacing="5px">
                 <Text
                   w="full"
                   fontSize={['lg', 'lg', 'lg', '2xl']}
@@ -151,7 +168,7 @@ export const ClassDetails = ({
                 </Heading>
               </VStack>
             </GridItem>
-          </SimpleGrid>
+          </Grid>
 
           <Button
             mt="2.188rem"
@@ -159,7 +176,7 @@ export const ClassDetails = ({
             px="4.375rem"
             py="1.5rem"
             fontSize="2xl"
-            display={['none', 'none', 'none', 'block']}
+            display={['none', 'none', 'none', 'inline-block']}
             as={Link}
             href="/signup"
           >
@@ -198,20 +215,20 @@ export const ClassDetails = ({
           ))}
         </List>
 
-        <Center>
+        <Box>
           <Button
             mt="2.188rem"
             size="lg"
             px="4.375rem"
             py="1.5rem"
             fontSize="2xl"
-            display={['block', 'block', 'block', 'none']}
+            display={['inline-block', 'inline-block', 'inline-block', 'none']}
             as={Link}
             href="/signup"
           >
             Enroll For This Plan
           </Button>
-        </Center>
+        </Box>
       </GridItem>
     </SimpleGrid>
   )

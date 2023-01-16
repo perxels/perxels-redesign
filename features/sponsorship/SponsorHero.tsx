@@ -9,11 +9,35 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
-import React from 'react'
+import gsap from 'gsap'
+import React, { useEffect, useRef } from 'react'
 import { IoMdArrowForward } from 'react-icons/io'
 import { MainContainer } from '../../layouts'
 
 export const SponsorHero = () => {
+  const tl = useRef<any>(gsap.timeline({ paused: true }))
+  const heroRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      tl.current
+        .to('.subHeading', { opacity: 1, duration: 1, delay: 1 })
+        .to('.heading', { opacity: 1, duration: 1 }, '-=0.5')
+        .to('.desc', { opacity: 1, duration: 1 }, '-=0.5')
+        .to('.full-desc', { opacity: 1, y: 0, duration: 1 }, '-=0.5')
+        .to('.sponsor-cta', { opacity: 1, y: 0, duration: 1 }, '-=0.5')
+        .play()
+    }, heroRef)
+
+    gsap.to('.sponsor-image', {
+      opacity: 1,
+      ease: 'linear',
+      duration: 1.5,
+      delay: 1.5,
+    })
+
+    return () => ctx.revert()
+  }, [])
   return (
     <MainContainer>
       <SimpleGrid
@@ -22,15 +46,18 @@ export const SponsorHero = () => {
         gap="3rem"
         w="full"
         h={['auto', 'auto', 'auto', 'auto', '100vh']}
+        ref={heroRef}
       >
         <Flex flexDir="column" justifyContent="center" w="full" h="full">
           <HStack
             as="span"
             w="auto"
-            maxW={['260px', '300px', '300px', '362px']}
+            maxW={['300px', '300px', '350px', '400px']}
             bg="brand.purple.100"
             p="4px"
             rounded="1rem"
+            className="subHeading"
+            opacity={0}
           >
             <Box
               fontSize={['0.65rem', 'sm', 'sm', 'lg']}
@@ -41,7 +68,7 @@ export const SponsorHero = () => {
               px="10px"
               py="2px"
             >
-              We’re sponsoring!
+              There is an ongoing sponsorship!
             </Box>
             <HStack spacing="4px">
               <Box
@@ -51,7 +78,7 @@ export const SponsorHero = () => {
                 px="10px"
                 py="2px"
               >
-                Join our design class
+                Apply Below
               </Box>
               <Icon as={IoMdArrowForward} />
             </HStack>
@@ -62,8 +89,10 @@ export const SponsorHero = () => {
             fontWeight="700"
             mt="1.25rem"
             color="brand.dark.300"
+            className="desc"
+            opacity={0}
           >
-            Get 20% Off from October Cohort Tuition Fee.
+            Get Full Scholarship into Perxels
           </Heading>
 
           <Text
@@ -71,18 +100,33 @@ export const SponsorHero = () => {
             color="brand.dark.200"
             maxW="500px"
             mt="1.25rem"
+            className="full-desc"
+            opacity={0}
           >
-            100 undergraduates will receive 50% scholarship and 100
-            professionals will receive 25% scholarship. 100 undergraduates will
-            receive 50% scholarship.
+            Adeniyi Sonoiki is sponsoring <b>3 People</b> to learn UIUX Design on <b>Full
+            Scholarship.</b> This Scholarship is available for only <b>Basic Class.</b>
+            Perxels will be giving another <b>10 Lucky People a 15% discount off
+            the tution for any class.</b>
           </Text>
 
-          <Button h="3.125rem" px="3.875rem" maxW="212px" mt="2rem">
+          <Button
+            opacity={0}
+            className="sponsor-cta"
+            h="3.125rem"
+            px="3.875rem"
+            maxW="212px"
+            mt="2rem"
+          >
             Apply Now
           </Button>
         </Flex>
 
-        <Box pos="relative" mb={['2rem', '2rem', '2rem', '0']}>
+        <Box
+          className="sponsor-image"
+          opacity={0}
+          pos="relative"
+          mb={['2rem', '2rem', '2rem', '0']}
+        >
           <Img
             src="./assets/images/sponsorship/sponsorHero.png"
             alt="sponsor hero"
