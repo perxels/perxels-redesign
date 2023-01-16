@@ -10,6 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import gsap from 'gsap'
+import Link from 'next/link'
 import React, { useEffect, useRef } from 'react'
 import { IoMdArrowForward } from 'react-icons/io'
 import { MainContainer } from '../../layouts'
@@ -116,6 +117,8 @@ export const SponsorHero = () => {
             px="3.875rem"
             maxW="212px"
             mt="2rem"
+            as={Link}
+            href="/sponsorship/signup"
           >
             Apply Now
           </Button>
