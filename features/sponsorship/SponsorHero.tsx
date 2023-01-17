@@ -121,7 +121,7 @@ export const SponsorHero = () => {
             as={Link}
             href="/sponsorship#instructions"
           >
-            Apply Now
+            See details
           </Button>
         </Flex>
 

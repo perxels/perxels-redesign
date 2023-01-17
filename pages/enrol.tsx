@@ -12,7 +12,7 @@ const ClassPlans = () => {
   return (
     <MainLayout>
       <Hero />
-      <ClassLists />
+      <ClassLists/>
       <StudentWorkWrapper />
       <LeaningTools />
       <Testimonial />
