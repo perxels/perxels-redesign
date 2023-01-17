@@ -38,7 +38,7 @@ export const instructions: InstructionProps[] = [
     id: 5,
     title: 'Online Curriculum',
     description:
-      'A carefully designed curriculum to guide you through the required design  principles',
+      'A carefully designed curriculum to guide you through the required design  principles.',
     image: './assets/images/sponsorship/online-curriculum.svg',
   },
   {
