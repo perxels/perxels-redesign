@@ -38,7 +38,7 @@ export const instructions: InstructionProps[] = [
     id: 5,
     title: 'Online Curriculum',
     description:
-      '100 undergraduates will receive 50% scholarship. Applicants are responsible for the other 50%.',
+      'A carefully designed curriculum to guide you through the required design  principles',
     image: './assets/images/sponsorship/online-curriculum.svg',
   },
   {
