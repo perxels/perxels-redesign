@@ -36,7 +36,7 @@ export const ClassLists = ({
                 tuition={tuition}
                 courseOutline={courseOutline}
                 classType={classType}
-                isShow={id !== 'basic-class'}
+                isShow={id == 'basic-class'}
                 isSponsor={isSponsor}
               />
             ),
