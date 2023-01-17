@@ -17,8 +17,9 @@ import Link from 'next/link'
 import React from 'react'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { ClassGroupDetailsProps } from '../../constant'
-
+import { useRouter } from 'next/router'
 // added class details props
+
 
 export const ClassDetails = ({
   title,
@@ -33,6 +34,8 @@ export const ClassDetails = ({
   isSponsor
 }: ClassGroupDetailsProps) => {
   console.log("isSponsor", isSponsor)
+  const router = useRouter()
+  const sponsorship = router.query.sponsorship
   return (
     <SimpleGrid id={id} columns={[1, 1, 1, 12]}>
       <GridItem colSpan={[1, 1, 1, 4]}>
@@ -140,7 +143,9 @@ export const ClassDetails = ({
                 </Heading>
               ))}
             </VStack>
-            {isShow && (
+            
+
+            {isShow || isSponsor && (
               <GridItem colSpan={[2, 2, 2, 1]}>
                 <Box
                   as="span"
