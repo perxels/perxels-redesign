@@ -67,8 +67,8 @@ const RegisterForm = () => {
       <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title="Thank you for your submission!"
-        description="Our representative will call you within the next 24 hours."
+        title="Your Application Have Been Received"
+        description="You will get an email soon"
       />
       <Box
         className="enrol-form"
