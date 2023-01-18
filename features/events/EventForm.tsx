@@ -84,7 +84,7 @@ export const EventForm = () => {
             formData.append('name', values.name as string)
             formData.append('email', values.email as string)
             formData.append('phone', values.phone as string)
-            formData.append('howuouknew', values.howyouknew as string)
+            formData.append('howyouknew', values.howyouknew as string)
             formData.append('questions', values.questions as string)
             formData.append('date', new Date().toLocaleString())
 
