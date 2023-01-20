@@ -21,7 +21,7 @@ export const bannerContent: BannerContent = {
   mainTitle: 'DATA COLLECTION:',
   subTitle: 'AVOIDING COGNITIVE BIAS IN UX RESEARCH',
   time: '7pm - 8pm (WAT)',
-  date: '29nd January, 2023',
+  date: '29th January, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
