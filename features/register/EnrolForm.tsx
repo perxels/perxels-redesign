@@ -15,7 +15,7 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 const EnrolForm = () => {
   const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbw9_DFBpsyrNp8_2AsnjKiLlXWxylVD0QtdbN7qDbk2IzLIlg5o2pxKibU-t25F-Jke9w/exec'
+    'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
