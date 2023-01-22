@@ -18,18 +18,18 @@ interface BannerContent {
 }
 
 export const bannerContent: BannerContent = {
-  mainTitle: 'DESIGNING FOR EMPATHY:',
-  subTitle: 'CREATING PRODUCTS THAT CONNECT WITH THE USERS',
+  mainTitle: 'DATA COLLECTION:',
+  subTitle: 'AVOIDING COGNITIVE BIAS IN UX RESEARCH',
   time: '7pm - 8pm (WAT)',
-  date: '22nd January, 2023',
+  date: '29th January, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    "Empathy in design refers to the practice of designing products, services, and experiences that take into account the needs, feelings, and perspectives of users. This can involve using user research and user testing to understand the user's context and how they will interact with the product, as well as incorporating principles of universal design to ensure that the product is accessible and usable by people with a wide range of abilities and needs.",
-  content1: "One key aspect of empathy in design is the recognition that people have different backgrounds, cultures, and experiences, and that designers need to be mindful of this when creating products. This can involve considering issues of diversity, equity, and inclusion in the design process, as well as ensuring that the product is usable by people with disabilities.",
-  content2: "Overall, empathy in design is about creating products that are not only functional and effective, but that also take into account the needs, feelings, and perspectives of the people who will use them. By designing with empathy, designers can create products that are truly useful, usable, and desirable for all users.",
+    "Cognitive bias refers to the systematic patterns of deviation from norm or rationality in judgment, whereby inferences about other people and situations may be drawn in an illogical fashion. These biases are often a result of the brain's attempt to simplify information processing. Cognitive biases can lead to perceptual distortion, inaccurate judgment, illogical interpretation, or what is broadly called irrationality.",
+  content1: "In UX (user experience) research, it is important to try to avoid cognitive bias in order to gather accurate and valuable data. This can be challenging, as the researchers themselves may be subject to cognitive biases. However, there are steps that can be taken to mitigate the impact of cognitive bias in UX research, such as using structured methods and techniques, having a diverse research team, and regularly reviewing and reflecting on one's own biases.",
+  content2: "By attending this session, you will learn about the various types of cognitive bias and how they can affect UX research. You will also learn about strategies for avoiding cognitive bias and for ensuring that your UX research is as objective and accurate as possible.",
   content3: "",
   content4: "",
-  speakerName: 'Aise Idahor',
-  speakerRole: 'Creative director',
+  speakerName: 'Ruqayyah Yaro',
+  speakerRole: 'Product Designer, Bujeti',
 }
