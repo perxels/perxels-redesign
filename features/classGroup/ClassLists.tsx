@@ -25,6 +25,9 @@ export const ClassLists = ({
               installments,
               tuition,
               courseOutline,
+              isTab,
+              physicalTuition,
+              address,
             }) => (
               <ClassDetails
                 key={id}
@@ -38,6 +41,9 @@ export const ClassLists = ({
                 classType={classType}
                 isShow={id == 'basic-class'}
                 isSponsor={isSponsor}
+                isTab={isTab}
+                physicalTuition={physicalTuition}
+                address={address}
               />
             ),
           )}
