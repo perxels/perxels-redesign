@@ -84,7 +84,7 @@ export const ClassDetails = ({
         </Box>
 
         {isTab ? (
-          <Box px="1.875rem" py="1rem">
+          <Box px={["0.75rem","1.875rem"]} py="1rem">
             <HStack
               backgroundColor={'#F6F7FD'}
               w="full"
