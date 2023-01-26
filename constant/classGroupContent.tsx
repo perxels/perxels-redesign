@@ -19,6 +19,8 @@ export interface ClassGroupDetailsProps {
   isTab?: boolean
   physicalTuition?: string
   address?: string
+  installmentPhysical?: string[]
+  classTimePhysical?: string
 }
 
 export interface StudentWorkProps {
@@ -112,7 +114,7 @@ export const classGroupDetails = [
     id: 'premium-class',
     classDur: '3 Months.',
     classTime: '2-3 times a week.',
-    classType: 'ONLINE TRAINING OR PHYSICAL Training.',
+    classType: 'ONLINE TRAINING.',
     installments: ['70% On Admission,', '30% after one month.'],
     tuition: '₦200,000',
     physicalTuition: '₦210,000',
@@ -128,8 +130,10 @@ export const classGroupDetails = [
       'Job search support and guidance + job recommendation and placement when available**',
       '6 weeks internship placement after completing the training.',
     ],
-    address: '1, Ololade Asake street, Lekki Phase 1, Lagos.',
+    address: 'Lekki Phase 1, Lagos Nigeria',
     isTab: true,
+    installmentPhysical: ['60% On Admission,', '40% after one month.'],
+    classTimePhysical: '2 times a week.',
   },
 ]
 

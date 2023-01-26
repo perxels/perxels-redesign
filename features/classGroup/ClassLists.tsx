@@ -28,6 +28,8 @@ export const ClassLists = ({
               isTab,
               physicalTuition,
               address,
+              installmentPhysical,
+              classTimePhysical,
             }) => (
               <ClassDetails
                 key={id}
@@ -44,6 +46,8 @@ export const ClassLists = ({
                 isTab={isTab}
                 physicalTuition={physicalTuition}
                 address={address}
+                installmentPhysical={installmentPhysical}
+                classTimePhysical={classTimePhysical}
               />
             ),
           )}

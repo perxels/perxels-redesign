@@ -13,7 +13,8 @@ import {
   Text,
   VStack,
   HStack,
-  keyframes
+  keyframes,
+
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
@@ -22,7 +23,6 @@ import { ClassGroupDetailsProps } from '../../constant'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 // added class details props
-
 
 const glow = keyframes`
   
@@ -52,10 +52,11 @@ export const ClassDetails = ({
   isTab,
   physicalTuition,
   address,
+  installmentPhysical,
+  classTimePhysical
 }: ClassGroupDetailsProps) => {
   console.log('isSponsor', isSponsor)
   const router = useRouter()
-  const sponsorship = router.query.sponsorship
   const [tabState, setTabState] = useState('virtual')
   const glowAnimation = `${glow} 2s ease-in-out infinite`
   return (
@@ -84,7 +85,7 @@ export const ClassDetails = ({
         </Box>
 
         {isTab ? (
-          <Box px={["0.75rem","1.875rem"]} py="1rem">
+          <Box px={['0.75rem', '1.875rem']} py="1rem">
             <HStack
               backgroundColor={'#F6F7FD'}
               w="full"
@@ -108,6 +109,7 @@ export const ClassDetails = ({
                   color: '#F6F7FD',
                 }}
                 h="62px"
+                animation={tabState === 'physical' ? glowAnimation : 'none'}
               >
                 VIRTUAL CLASS
               </Button>
@@ -181,7 +183,7 @@ export const ClassDetails = ({
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
               >
-                {classTime}
+                {tabState === 'virtual' ?  classTime : classTimePhysical}
               </Heading>
             </VStack>
             <VStack spacing="5px">
@@ -210,17 +212,33 @@ export const ClassDetails = ({
               >
                 Installments:
               </Text>
-              {installments.map((installment) => (
-                <Heading
-                  key={installment}
-                  color="brand.dark.200"
-                  textTransform="uppercase"
-                  w="full"
-                  fontSize={['lg', 'lg', 'lg', '2xl']}
-                >
-                  {installment}
-                </Heading>
-              ))}
+             {
+              tabState === 'virtual' ? (
+                installments.map((installment) => (
+                  <Heading
+                    key={installment}
+                    color="brand.dark.200"
+                    textTransform="uppercase"
+                    w="full"
+                    fontSize={['lg', 'lg', 'lg', '2xl']}
+                  >
+                    {installment}
+                  </Heading>
+                ))
+              ):(
+                installmentPhysical?.map((installmentPhysical) => (
+                  <Heading
+                    key={installmentPhysical}
+                    color="brand.dark.200"
+                    textTransform="uppercase"
+                    w="full"
+                    fontSize={['lg', 'lg', 'lg', '2xl']}
+                  >
+                    {installmentPhysical}
+                  </Heading>
+                ))
+              )
+             }
             </VStack>
 
             {isShow ||
