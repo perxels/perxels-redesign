@@ -192,7 +192,7 @@ onSubmit={(event) => {
       outline= "none"
       padding= "0 1.2rem"
       name="class"
-    placeholder="Class Name"  
+    placeholder="Cohort Group (e.g 25p)"  
     value={formik.values.class}
     onChange={formik.handleChange}
                 onBlur={formik.handleBlur}

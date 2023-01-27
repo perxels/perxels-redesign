@@ -117,11 +117,11 @@ export const About = () => {
             fontWeight="400"
             lineHeight="1.4rem"
             pb="1.5rem"
+            fontWeight="700"
           >
-           Day One Date: Saturday,11th February, 2023, Time: 1:30pm - 4:30pm
-Day Two Date: Sunday, 12th February, 2023, Time: 7:00 pm - 9:00 pm (WAT).
+           Day One Date: Saturday, 11th February, 2023 Time: 1:30pm - 4:30pm <br/>
+Day Two Date: Sunday, 12th February, 2023, Time: 7:00 pm - 9:00 pm (WAT). <br/>
 Venue: Google Meet.
-
           </Text>
          
 
@@ -178,7 +178,7 @@ Venue: Google Meet.
                 textAlign={'center'}
                 lineHeight="1.8rem"
               >
-                1:30PM
+                1:30PM 
               </Heading>
               <Box
                 display={'flex'}
