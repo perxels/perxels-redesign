@@ -114,7 +114,6 @@ export const About = () => {
           <Text
             fontSize="1rem"
             color="#ebebeb;"
-            fontWeight="400"
             lineHeight="1.4rem"
             pb="1.5rem"
             fontWeight="700"
