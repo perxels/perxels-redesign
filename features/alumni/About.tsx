@@ -118,8 +118,24 @@ export const About = () => {
             pb="1.5rem"
             fontWeight="700"
           >
-           Day One Date: Saturday, 11th February, 2023 Time: 1:30pm - 4:30pm <br/>
-Day Two Date: Sunday, 12th February, 2023, Time: 7:00 pm - 9:00 pm (WAT). <br/>
+           Day One Date: Saturday, 11th February, 2023 Time: 1:30pm - 4:30pm(WAT)
+           </Text>
+           <Text
+            fontSize="1rem"
+            color="#ebebeb;"
+            lineHeight="1.4rem"
+            pb="1.5rem"
+            fontWeight="700"
+          >
+Day Two Date: Sunday, 12th February, 2023, Time: 7:00 pm - 9:00 pm (WAT). 
+</Text>
+<Text
+            fontSize="1rem"
+            color="#ebebeb;"
+            lineHeight="1.4rem"
+            pb="1.5rem"
+            fontWeight="700"
+          >
 Venue: Google Meet.
           </Text>
          
