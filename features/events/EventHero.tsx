@@ -60,7 +60,8 @@ export const EventHero = () => {
               mb={{ base: 4, md: 4 }}
               className="ama-main-title"
             >
-              {bannerContent.mainTitle}{" "}{bannerContent.subTitle}
+              {/* {bannerContent.mainTitle} */}
+              {" "}{bannerContent.subTitle}
             </Heading>
             <Flex
               className="ama-other-content"

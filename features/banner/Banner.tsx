@@ -87,7 +87,7 @@ export const Banner = () => {
                 </Heading>
                 <Heading
                   fontSize={['1.40625rem', '1.4rem', '4xl', '4xl']}
-                  maxW={["19rem","27.6875rem"]}
+                  maxW={["22rem","27.6875rem"]}
                   fontWeight="700"
                   color="brand.white"
                   lineHeight={'110%'}

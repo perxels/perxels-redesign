@@ -18,7 +18,7 @@ interface BannerContent {
 }
 
 export const bannerContent: BannerContent = {
-  mainTitle: '',
+  mainTitle: ' ',
   subTitle: 'INTRODUCING STAKEHOLDERS TO ACCESSIBILITY',
   time: '7pm - 8pm (WAT)',
   date: '5th February, 2023',
