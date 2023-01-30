@@ -18,18 +18,18 @@ interface BannerContent {
 }
 
 export const bannerContent: BannerContent = {
-  mainTitle: 'DATA COLLECTION:',
-  subTitle: 'AVOIDING COGNITIVE BIAS IN UX RESEARCH',
+  mainTitle: ' ',
+  subTitle: 'INTRODUCING STAKEHOLDERS TO ACCESSIBILITY',
   time: '7pm - 8pm (WAT)',
-  date: '29th January, 2023',
+  date: '5th February, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    "Cognitive bias refers to the systematic patterns of deviation from norm or rationality in judgment, whereby inferences about other people and situations may be drawn in an illogical fashion. These biases are often a result of the brain's attempt to simplify information processing. Cognitive biases can lead to perceptual distortion, inaccurate judgment, illogical interpretation, or what is broadly called irrationality.",
-  content1: "In UX (user experience) research, it is important to try to avoid cognitive bias in order to gather accurate and valuable data. This can be challenging, as the researchers themselves may be subject to cognitive biases. However, there are steps that can be taken to mitigate the impact of cognitive bias in UX research, such as using structured methods and techniques, having a diverse research team, and regularly reviewing and reflecting on one's own biases.",
-  content2: "By attending this session, you will learn about the various types of cognitive bias and how they can affect UX research. You will also learn about strategies for avoiding cognitive bias and for ensuring that your UX research is as objective and accurate as possible.",
-  content3: "",
+    "Are you interested in designing products that are usable and useful for a wide range of users?",
+  content1: "Introducing stakeholders to accessibility can help ensure that your product meets legal requirements, a better user experience, and has a competitive advantage. ",
+  content2: "In this session, we will explore the many benefits of accessibility and provide tips on how to effectively introduce stakeholders to the principles of inclusive design. ",
+  content3: "Don't miss this opportunity to learn how accessibility can help make your products more successful and improve your company's reputation!",
   content4: "",
-  speakerName: 'Ruqayyah Yaro',
-  speakerRole: 'Product Designer, Bujeti',
+  speakerName: 'Victoria Ottah',
+  speakerRole: 'Product Designer, ToriasDesign',
 }
