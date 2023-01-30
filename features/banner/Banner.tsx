@@ -56,7 +56,7 @@ export const Banner = () => {
           display={['block', 'block', 'block', 'block']}
         >
           <Flex
-            align={['flex-start', 'flex-start', 'center', 'center']}
+            alignItems={['flex-start', 'flex-start', 'center', 'center']}
             justify={'space-between'}
             columnGap={['1rem', '1rem', '1rem', '1rem']}
             flexDirection={['column', 'column', 'row', 'row']}
@@ -64,6 +64,7 @@ export const Banner = () => {
             <Flex
               columnGap={'6.5rem'}
               flexDirection={['column', 'column', 'row', 'row']}
+              alignItems={["flex-start", "flex-start", "center", "center"]}
             >
               <Box boxSize={['8.3125rem']}>
                 <Img
@@ -189,7 +190,10 @@ export const Banner = () => {
               </Box>
             </Flex>
 
-            <Box mt={['1rem', '1rem', '0rem', '0rem']}>
+            <Box 
+            mt={['1rem', '1rem', '0rem', '0rem']}
+            
+            >
               <Link href="/event">
                 <Button
                   variant={'link'}
