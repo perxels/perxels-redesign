@@ -201,6 +201,22 @@ export const EventHero = () => {
               >
                 {bannerContent.content2}
               </Text>
+
+                <Text
+                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                color="brand.dark.200"
+                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+              >
+                {bannerContent.content3}
+              </Text>
+              <Text
+                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                color="brand.dark.200"
+                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+              >
+                {bannerContent.content4}
+              </Text>
+        
         
              
               
