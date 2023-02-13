@@ -1,5 +1,3 @@
-import { m } from 'framer-motion'
-
 interface BannerContent {
   mainTitle: string
   subTitle: string
