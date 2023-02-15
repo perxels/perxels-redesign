@@ -14,8 +14,9 @@ import { SuccessModal } from '../../components'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 const EnrolForm = () => {
-  const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
+  // const scriptUrl =
+  //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbyl2IyffUE4-yClOGUiS5oLhkQ0xZrvxE5eeLDlCaG27QZTcESt7HIAxybOsj1vI0g5/exec"
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
