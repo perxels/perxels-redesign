@@ -17,17 +17,17 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: ' ',
-  subTitle: 'SHORTCUT TO DESIGNING BETTER WITH COLORS',
+  subTitle: 'COMMON THINGS TO FAST TRACK YOUR MOBILE DESIGN',
   time: '7pm - 8pm (WAT)',
-  date: '19th February, 2023',
+  date: '5th March, 2023',
   location: 'GOOGLE MEET',
-  bannerImage: '/assets/images/banner/bannerImage.jpeg',
+  bannerImage: '/assets/images/banner/bannerImage.png',
   description:
-    "Are you tired of struggling with color choices in your designs?",
-  content1: "In this session, you'll learn how to use color effectively to create beautiful and cohesive designs. ",
-  content2: "Our speaker will cover tips for choosing colors meaningfully, creating contrast with color, and testing your color choices. ",
-  content3: "You will learn about tools that can help you choose the right colors for your design.",
-  content4: "Don't miss this opportunity to take your design skills to the next level with better use of color!",
-  speakerName: 'Adeosun Abiola',
-  speakerRole: 'Product Designer, Compassnorth.',
+    "Do you want to speed up the design process without sacrificing quality?",
+  content1: "Are you tired of spending hours trying to perfect your mobile app's user interface? Look no further! ",
+  content2: "In this Session, our speaker will discuss the common things you can do to fast track your mobile UI design, from setting clear goals to using consistent design elements.",
+  content3: "Our speaker of the day will be sharing tips that will help you create apps that are visually appealing and easy to use. ",
+  content4: "So if you're ready to streamline your design process and create killer apps, join the session to grab value.",
+  speakerName: 'Femi John',
+  speakerRole: 'Product Design Lead, iRechargeNG',
 }
