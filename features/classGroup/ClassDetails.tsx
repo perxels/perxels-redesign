@@ -56,7 +56,6 @@ export const ClassDetails = ({
   classTimePhysical
 }: ClassGroupDetailsProps) => {
   console.log('isSponsor', isSponsor)
-  const router = useRouter()
   const [tabState, setTabState] = useState('virtual')
   const glowAnimation = `${glow} 2s ease-in-out infinite`
   return (
