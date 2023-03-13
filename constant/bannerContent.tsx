@@ -19,7 +19,7 @@ export const bannerContent: BannerContent = {
   mainTitle: ' ',
   subTitle: 'TACKLING IMPOSTER SYNDROME',
   time: '7pm - 8pm (WAT)',
-  date: '5th March, 2023',
+  date: 'March 19th, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
