@@ -68,7 +68,7 @@ import {
                 pos="absolute"
                 top={['-8px', '-8px', '-8px', '0']}
                 right="-2rem"
-                src="/assets/icons/class-icon.svg"
+                src="/assets/icons/class-icon-dark.svg"
               />
             </Heading>
           </Box>
@@ -220,9 +220,11 @@ import {
               px="4.375rem"
               py="1.5rem"
               fontSize="2xl"
-              display={['inline-block', 'inline-block', 'inline-block', 'none']}
               as={Link}
               href={'/signup'}
+              bg="brand.yellow.300"
+              color="brand.dark.200"
+              display={['inline-block', 'inline-block', 'inline-block', 'none']}
             >
               Enroll For This Plan
             </Button>

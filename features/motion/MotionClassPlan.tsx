@@ -7,6 +7,7 @@ export const MotionClassPlan = () => {
   return (
     <Box
     px="5%"
+    bg="brand.gray.900"
     >
         <SectionHeader
             title=""
