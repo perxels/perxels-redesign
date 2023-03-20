@@ -19,14 +19,17 @@ import { MainContainer } from '../layouts'
 import Logo from './Logo'
 import { useRouter } from 'next/router'
 
+interface FooterProps {
+  yellowFooterPill?: boolean
+}
 
-const Footer = () => {
+const Footer = ({yellowFooterPill}: FooterProps) => {
   const router = useRouter()
   return (
     <MainContainer bg="brand.dark.200">
       <Box py="1.875rem">
         <Flex
-          bg="brand.purple.500"
+          bg={yellowFooterPill ? "brand.yellow.300" : 'brand.purple.500'}
           px="3rem"
           py="1.5rem"
           borderRadius="10px"
@@ -34,7 +37,7 @@ const Footer = () => {
           justifyContent="space-between"
           display={['none', 'none', 'none', 'flex']}
         >
-          <Text fontSize="4xl" color="brand.white" fontWeight="bold">
+          <Text fontSize="4xl" color={yellowFooterPill ? "brand.dark.200" : "brand.white"} fontWeight="bold">
             Want to transition into Design?
           </Text>
 
@@ -42,8 +45,8 @@ const Footer = () => {
             as={Link}
             href="/enrol"
             _hover={{ textDecor: 'none', bg: 'brand.yellow.500' }}
-            bg="brand.white"
-            color="brand.purple.500"
+            bg={yellowFooterPill ? "brand.dark.200" : "brand.white"}
+            color={yellowFooterPill ? "brand.yellow.300" : "brand.purple.500"}
           >
             Enroll Now
           </Button>

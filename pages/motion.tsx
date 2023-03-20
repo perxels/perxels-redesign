@@ -1,5 +1,6 @@
 import React from 'react'
-import { AdmitMotion, Hero, MotionClassPlan, MotionTools, Process } from '../features/motion'
+import { Footer } from '../components'
+import { AdmitMotion, Hero, MotionClassPlan, MotionTools, Process, MotionProjects } from '../features/motion'
 
 const motion = () => {
   return (
@@ -8,7 +9,9 @@ const motion = () => {
         <Process/>
         <MotionClassPlan/>
         <MotionTools/>
+        <MotionProjects/>
         <AdmitMotion/>
+        <Footer yellowFooterPill/>
     </div>
   )
 }
