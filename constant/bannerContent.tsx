@@ -17,17 +17,17 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: ' ',
-  subTitle: 'TACKLING IMPOSTER SYNDROME',
+  subTitle: 'OPTIMIZING UX STAKEHOLDER ENGAGEMENT THROUGH COLLABORATIVE STRATEGIES.',
   time: '7pm - 8pm (WAT)',
-  date: 'March 19th, 2023',
+  date: 'April 2nd, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    "Imposter syndrome is a feeling of self-doubt and insecurity that can hold us back from achieving our goals and reaching our full potential. It can be especially prevalent in high-achieving individuals who are used to being successful.",
-  content1: "In this session, we will discuss strategies for tackling imposter syndrome and building confidence in ourselves. ",
-  content2: "By the end of it, you'll have the tools and techniques you need to overcome imposter syndrome and move forward with confidence.",
-  content3: "Whether you're a student, a professional, or anyone looking to boost their self-esteem, this session is for you.",
+    "The speaker will discuss practical strategies and best practices for effective collaboration with stakeholders that can help you improve your work as a UX designer. ",
+  content1: "By attending this session, you will gain valuable insights on how to engage stakeholders, get their buy-in and involvement in the design process, and build a strong collaborative relationship that can lead to better outcomes for your projects.",
+  content2: "",
+  content3: "",
   content4: "",
-  speakerName: 'Mary Agbo ',
-  speakerRole: ' Product Designer, Scello',
+  speakerName: 'Parklins Ifeanyichukwu',
+  speakerRole: 'Lead UX Designer, InMobi',
 }

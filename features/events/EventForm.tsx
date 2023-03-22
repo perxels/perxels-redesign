@@ -37,6 +37,7 @@ export const EventForm = () => {
       email: { value: string }
       phone: { value: string }
       howyouknew: { value: string }
+      perxelsStudent: {value: string}
       questions: { value: string }
     }
 
@@ -46,9 +47,9 @@ export const EventForm = () => {
     formData.append('phone', inputData.phone.value as string)
     formData.append('howyouknew', inputData.howyouknew.value as string)
     formData.append('questions', inputData.questions.value as string)
+    formData.append('perxelsStudent', inputData.perxelsStudents.value as string)
     //current date and time
     formData.append('date', new Date().toLocaleString())
-
     // const data = Object.fromEntries(formData)
     // console.log(data)
   
@@ -69,6 +70,7 @@ export const EventForm = () => {
           phone: '',
           howyouknew: '',
           questions: '',
+          perxelsStudent: ''
         }}
         validationSchema={Yup.object({
           name: Yup.string().required('Name is Required'),
@@ -76,6 +78,7 @@ export const EventForm = () => {
           phone: Yup.string().required('Phone Number is Required'),
           howyouknew: Yup.string().required('How you knew is Required'),
           questions: Yup.string().required('Questions is Required'),
+          perxelsStudent: Yup.string().required('Are you a Perxels Student? Kindly Answer'),
         })}
         onSubmit ={(values, action) => {
           console.log(values)
@@ -86,6 +89,7 @@ export const EventForm = () => {
             formData.append('phone', values.phone as string)
             formData.append('howyouknew', values.howyouknew as string)
             formData.append('questions', values.questions as string)
+            formData.append('perxelsStudent', values.perxelsStudent as string)
             formData.append('date', new Date().toLocaleString())
 
             fetch(scriptUrl, {
@@ -192,6 +196,30 @@ export const EventForm = () => {
              <option value="Others">Others</option>
            </Select>
          </FormControl>
+
+            <FormControl id="perxelsStudent">
+             <Select  
+                backgroundColor={'#FCFCFC'}
+                border="0.406872px solid #B4B4B4"
+                placeholder="Are you a Perxels Student?"
+                _placeholder={{ color: '#B4B4B4' }}
+                name="perxelsStudent"
+                h="3.5rem"
+                _focusVisible={{
+                  outline: 'none',
+                }}
+                value={formik.values.perxelsStudent}
+                onChange={formik.handleChange}
+                borderColor={
+                  formik.touched.perxelsStudent && formik.errors.perxelsStudent ? 'red.500' : '#B4B4B4'
+                }>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                </Select>
+
+            </FormControl>
+
+
          <FormControl id="questions">
            <Textarea
              backgroundColor={'#FCFCFC'}
