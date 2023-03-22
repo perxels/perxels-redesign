@@ -56,12 +56,20 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
     link: '/enrol#premium-class',
     image: '/assets/images/class-group/premium.jpg',
   },
+  // {
+  //   title: 'International',
+  //   content: `
+  //       This class is for individuals who desire special design training to get International Design roles.
+  //       `,
+  //   link: '/international',
+  //   image: '/assets/images/class-group/international.jpg',
+  // },
   {
-    title: 'International',
+    title: 'Private Class',
     content: `
-        This class is for individuals who desire special design training to get International Design roles.
+    One-on-one training and mentorship to build your design skills to solve problems and create delightful products.
         `,
-    link: '/international',
+    link: '/private',
     image: '/assets/images/class-group/international.jpg',
   },
 ]
