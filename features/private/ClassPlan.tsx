@@ -13,9 +13,9 @@ export const ClassPlan = () => {
       />
 
       <ClassDetails
-        title="Private"
+        title="Private Class"
         id="#"
-        classDur="9 Weeks."
+        classDur="3 Months."
         classTime="2 times a week."
         installments={['70% On Admission;', '30% after one month.']}
         tuition="₦250,000"
