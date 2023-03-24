@@ -142,7 +142,7 @@ export const EventHero = () => {
               >
                 Speaker:
               </Text>
-              <Flex alignItems={'center'} columnGap={'0.725625rem'}>
+              <Flex mb="2rem" alignItems={'center'} columnGap={'0.725625rem'}>
                 <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
                   <Img
                     borderRadius={'50%'}

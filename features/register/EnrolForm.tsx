@@ -209,6 +209,7 @@ const EnrolForm = () => {
                   Premium (Physical) Program
                 </option>
                 <option value="International Class">International Class</option>
+                <option value="Private Class">Private Class</option>
               </Select>
               {formik.touched.class && formik.errors.class ? (
                 <Text color="red.500" fontSize="sm">
