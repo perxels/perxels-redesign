@@ -3,11 +3,11 @@ import { Hero, Instruction, Task, Prizes, Submission } from '../features/designC
 const designChallenge = () => {
   return (
     <div>
-        <Hero/>
+        {/* <Hero/>
         <Instruction/>
         <Task/>
         <Prizes/>
-        <Submission/>
+        <Submission/> */}
     </div>
   )
 }
