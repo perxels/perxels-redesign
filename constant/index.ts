@@ -10,3 +10,5 @@ export * from './testimonialContentSecond'
 export * from  './alumniContent'
 export * from './motionProcessContent'
 export * from './motionClassPlanContent'
+export * from './challengeInstruction'
+
