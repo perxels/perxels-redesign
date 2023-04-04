@@ -1,51 +1,65 @@
 import React from 'react'
-import {Box, Heading, Text, Image, HStack} from '@chakra-ui/react'
+import { Box, Heading, Text, Image, HStack, Center } from '@chakra-ui/react'
 import { MainContainer } from '../../layouts'
 export const Hero = () => {
   return (
-    <Box
-    py="2.5rem"
-    >
-        <MainContainer>
+    <Box py="2.5rem" px={['0', '10%']} position={'relative'} id="Hero">
+      <Box display="flex" flexDirection="column" alignItems="center">
         <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
+          bg="rgba(227, 113, 156, 0.1)"
+          borderRadius={'30px'}
+          padding={'1rem 1.5625rem'}
+          display="flex"
+          columnGap={'1rem'}
         >
-            <Box
-            bg="rgba(227, 113, 156, 0.1)"
-            borderRadius={"30px"}
-            padding={"1rem 1.5625rem"}
-            display="flex"
-            columnGap={"1rem"}
-            >
-                
-                <Image src="assets/icons/pinkBadge.svg" alt=""/>
-                <Text
-                fontSize={"18px"}
-                fontWeight="700"
-                color="#E3719C"
-                >
-                Perxels Design Challenge 2.0
-                </Text>
-                
-            </Box>
+          <Image src="assets/icons/pinkBadge.svg" alt="" />
+          <Text
+            fontSize={['1rem', '1.125rem']}
+            fontWeight="700"
+            color="#E3719C"
+          >
+            Perxels Design Challenge 2.0
+          </Text>
+        </Box>
         <Heading
-        fontSize="80px"
-        lineHeight={"87.04px"}
-        textAlign="center"
-        w="80%"
+          fontSize={['2.5rem', '3rem', '3rem', '5rem']}
+          lineHeight={['2.72rem', '3.5rem', '3.5rem', '5.44rem']}
+          textAlign="center"
+          w={['full', '100%']}
+          px={["17px", "0"]}
+          mt="1.25rem"
         >
-Showcase your Design skill and win amazing prizes.</Heading>
+          Showcase your Design skill and win amazing prizes.
+        </Heading>
 
         <Box
-        maxW={["100%","626px"]}
-        mt="2.5rem"
+          maxW={['100%', '100%']}
+          mt="2.5rem"
+          zIndex="1"
+          bottom="0"
+          display={['none', 'block', 'block', 'block']}
         >
-            <Image src="/assets/images/designChallenge/heroImage.png" alt="heroImage" />
-        </Box> 
+          <Image
+            src="/assets/images/designChallenge/heroImage.png"
+            alt="heroImage"
+          />
         </Box>
-        </MainContainer>
+        <Box
+          maxW={['100%', '100%']}
+          mt="2.5rem"
+          zIndex="1"
+          bottom="0"
+          display={['block', 'none', 'none', 'none']}
+        >
+          <Image
+            src="/assets/images/designChallenge/heroImageMobile.png"
+            alt="heroImage"
+          />
+        </Box>
+      </Box>
+      <Box>
+        <Center width="70%"></Center>
+      </Box>
     </Box>
   )
 }

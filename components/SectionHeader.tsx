@@ -2,7 +2,7 @@ import { Box, Center, Heading, Img, Text } from '@chakra-ui/react'
 import React from 'react'
 
 interface SectionHeaderProps {
-  subTitle: string
+  subTitle?: string
   title: string
   paragraph?: string
   isWhite?: boolean

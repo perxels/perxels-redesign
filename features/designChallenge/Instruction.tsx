@@ -7,6 +7,7 @@ export const Instruction = () => {
   return (
     <Box
     py="6.25rem"
+    id="instructions"
     >
         <MainContainer>
         <Center>
@@ -16,11 +17,12 @@ export const Instruction = () => {
             padding={"1rem 1.5625rem"}
             display="flex"
             columnGap={"1rem"}
+            alignItems="center"
             >
                 
                 <Image src="assets/icons/badgeWhite.svg" alt=""/>
                 <Text
-                fontSize={"18px"}
+                fontSize={[".9081rem","1.125rem"]}
                 fontWeight="700"
                 color="#FFF"
                 >
@@ -30,8 +32,8 @@ export const Instruction = () => {
         </Center>
         <Heading
         textAlign="center"
-        fontSize="50px"
-        lineHeight={"60.9px"}
+        fontSize={["1.98rem","3.125rem"]}
+        lineHeight={["38.58px","60.9px"]}
         color="#000000"
         mt="20px"
         >
