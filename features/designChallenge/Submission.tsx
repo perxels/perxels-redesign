@@ -28,13 +28,14 @@ const lists: string[] = [
 export const Submission = () => {
   return (
     <Box
-      pt="15rem"
+      pt={["4rem","15rem"]}
       pb="3rem"
       bg="brand.purple.500"
       bgImage={"url('/assets/images/designChallenge/graphbg.svg')"}
       backgroundRepeat="repeat"
       backgroundSize={'cover'}
       position="relative"
+      id="submission"
     >
         <Box
         position="absolute"
@@ -45,11 +46,21 @@ export const Submission = () => {
         </Box>
       <MainContainer bg="none">
         <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem">
+          <Box position="relative">
           <Img
             display={['none', 'none', 'none', 'block']}
             rounded="8px"
             src="/assets/images/designChallenge/submissionImage.png"
           />
+          <Img 
+          position="absolute"
+          display={['none', 'none', 'none', 'block']}
+          top="0"
+          right={"0"}
+          transform= {"translateX(25%) translateY(-50%)"}
+          src="/assets/images/designChallenge/thumbs.svg" alt=""
+          />
+          </Box>
 
           <Center>
             <Box>
@@ -98,12 +109,26 @@ export const Submission = () => {
               </VStack>
             </Box>
           </Center>
-
+          
+          <Box
+          pos="relative"
+          >
           <Img
             display={['block', 'block', 'block', 'none']}
             rounded="8px"
             src="/assets/images/designChallenge/submissionImage.png"
           />
+          <Img 
+          position="absolute"
+          display={['block', 'block', 'block', 'none']}
+          top="0"
+          right={"0"}
+          transform= {"translateX(10%) translateY(-50%)"}
+          src="/assets/images/designChallenge/thumbs.svg" alt=""
+          />
+          </Box>
+
+         
         </SimpleGrid>
       </MainContainer>
     </Box>

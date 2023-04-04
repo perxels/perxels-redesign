@@ -3,7 +3,7 @@ import { Box, Text, Heading, Center, Image } from '@chakra-ui/react'
 
 export const Prizes = () => {
   return (
-    <Box py="6.25rem">
+    <Box py="6.25rem" id="prizes">
       <Box>
         <Center>
           <Box
@@ -12,127 +12,135 @@ export const Prizes = () => {
             padding={'1rem 1.5625rem'}
             display="flex"
             columnGap={'1rem'}
+            alignItems="center"
           >
             <Image src="/assets/icons/trophy.svg" alt="" />
-            <Text fontSize={'18px'} fontWeight="700" color="#FFF">
-              THE TASK
+            <Text fontSize={['.875rem','18px']} fontWeight="700" color="#FFF">
+              PRIZES
             </Text>
           </Box>
         </Center>
         <Heading
           textAlign="center"
-          fontSize="50px"
-          lineHeight={'60.9px'}
+          fontSize={["2.5rem","3.125rem"]}
+          lineHeight={['3.045rem','3.8062rem']}
           color="#000"
-          mt="20px"
+          mt={[".5rem","1.25rem"]}
         >
           Lots of amazing prizes to be won!
         </Heading>
 
-        <Box px="20%" mt="3.0625rem">
+        <Box px={["5%","20%"]} mt="3.0625rem">
           <Box
             position="relative"
             bgColor="#E3719C"
-            py="3.75rem"
+            py={["1.5rem","3.75rem"]}
             px="1.875rem"
             rounded=".9375rem"
             mb="1.875rem"
           >
-            <Box position="absolute" top="0" right="0" height="18.625rem">
+            <Box position="absolute" width={["6.25rem","auto"]} top="0" right="0" height={["7.625rem","18.625rem"]}>
               <Image
                 src="/assets/images/designChallenge/prizeBg.png"
                 alt="designChallenge"
               />
             </Box>
-            <Box>
+            <Box
+           
+            >
               <Image
+              boxSize={["2.4375rem", "5rem"]}
                 src="/assets/images/designChallenge/gold1.svg"
                 alt="designChallenge"
               />
             </Box>
             <Box>
               <Heading
-                fontSize="1.875rem"
+                fontSize={["1.125rem","1.875rem"]}
                 fontWeight="700"
-                lineHeight="2.2837rem"
+                lineHeight={["1.125rem","2.2837rem"]}
                 color="brand.white"
-                mt="4.625rem"
+                mt={["1.625rem","4.625rem"]}
               >
                 First Place - Winner 🎉
               </Heading>
               <Text
-                fontSize="1.875rem"
+                fontSize={[".9375rem","1.875rem"]}
                 fontWeight="500"
-                lineHeight="2.7844rem"
+                lineHeight={["1.3406rem","2.7844rem"]}
                 color="brand.white"
-                mt="1.25rem"
+                mt={["0.5rem","1.25rem"]}
               >
                 Gets 30, 000 Naira Cash Price! and a feature on Perxels
                 spotlight.
               </Text>
             </Box>
           </Box>
-          <Box display="flex" columnGap="1.875rem">
+          <Box display="flex" columnGap={[".75rem","1.875rem"]}>
             <Box
               border="1px solid #D2D2D2"
               rounded=".9375rem"
-              px="2.125rem"
-              py="2.5rem"
-              width={['100%', '50%']}
+              px={[".75rem","2.125rem"]}
+              py={["1.1875rem","2.5rem"]}
+              width={['50%', '50%']}
             >
-              <Box>
+              <Box
+            
+              >
                 <Image
+                  boxSize={["2.5531rem", "6.25rem"]}
                   src="/assets/images/designChallenge/gold2.svg"
                   alt="designChallenge"
                 />
               </Box>
               <Heading
-                fontSize="1.875rem"
+                fontSize={["1.25rem","1.875rem"]}
                 fontWeight="700"
                 lineHeight="2.6812rem"
                 color="#000"
-                mt="4.625rem"
+                mt={["1.375rem" ,"4.625rem"]}
+
               >
                 Second Place
               </Heading>
               <Text
-                fontSize="1.875rem"
+                fontSize={[".9375rem","1.875rem"]}
                 fontWeight="500"
-                lineHeight="2.7844rem"
+                lineHeight={["1.3925rem","2.7844rem"]}
                 color="#555555"
                 mt="1.25rem"
               >
-                Gets 30, 000 Naira Cash Price! and a feature on Perxels
-                spotlight.
+                Gets Perxels Swags and a feature on Perxels spotlight.
               </Text>
             </Box>
 
             <Box
               border="1px solid #D2D2D2"
               rounded=".9375rem"
-              px="2.125rem"
-              py="2.5rem"
-              width={['100%', '50%']}
+              px={[".75rem","2.125rem"]}
+              py={["1.1875rem","2.5rem"]}
+              width={['50%', '50%']}
             >
               <Box>
                 <Image
+                  boxSize={["2.5531rem", "6.25rem"]}
                   src="/assets/images/designChallenge/gold3.svg"
                   alt="designChallenge"
                 />
               </Box>
               <Heading
-                fontSize="1.875rem"
+                  fontSize={["1.25rem","1.875rem"]}
                 fontWeight="700"
                 lineHeight="2.6812rem"
                 color="#000"
-                mt="4.625rem"
+                mt={["1.375rem" ,"4.625rem"]}
               >
                 Third Place
               </Heading>
               <Text
-                fontSize="1.875rem"
-                fontWeight="500"
-                lineHeight="2.7844rem"
+                 fontSize={[".9375rem","1.875rem"]}
+                 fontWeight="500"
+                 lineHeight={["1.3925rem","2.7844rem"]}
                 color="#555555"
                 mt="1.25rem"
               >

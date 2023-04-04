@@ -5,7 +5,7 @@ export const InstructionBox = ({image, title, text}: ChallengeInstructionInterfa
   return (
     <Box
     padding="3.25rem 1.25rem 2.75rem 1.25rem"
-
+    boxShadow="0px 4px 14px rgba(24, 24, 24, 0.08)"
     >
         <Center
         background="brand.purple.500"
@@ -20,7 +20,7 @@ export const InstructionBox = ({image, title, text}: ChallengeInstructionInterfa
         <Heading
         fontSize="1.5625rem"
         fontWeight="700"
-        lineHeight="1.9031rem"
+        lineHeight={["1.3056rem","1.9031rem"]}
         color="brand.dark.200"
         mt="4.625rem"
         >
@@ -29,7 +29,7 @@ export const InstructionBox = ({image, title, text}: ChallengeInstructionInterfa
 
         <Text
         color="brand.gray.400"
-        fontSize="1.25rem"
+        fontSize={["1.0444rem","1.25rem"]}
         lineHeight="1.91rem"
         mt="1.9375rem"
         >

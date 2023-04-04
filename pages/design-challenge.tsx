@@ -1,13 +1,16 @@
 import React from 'react'
-import { Hero, Instruction, Task, Prizes, Submission } from '../features/designChallenge'
+import { Hero, Instruction, Task, Prizes, Submission, ChallengeForm, Testimonial, Header } from '../features/designChallenge'
 const designChallenge = () => {
   return (
     <div>
-        {/* <Hero/>
+        <Header/>
+        <Hero />
         <Instruction/>
         <Task/>
         <Prizes/>
-        <Submission/> */}
+        <Submission/>
+        <ChallengeForm/>
+        <Testimonial/>
     </div>
   )
 }
