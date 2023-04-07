@@ -264,7 +264,7 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
                 color="brand.white"
                 _hover={{ color: 'brand.yellow.500' }}
               >
-                International
+                International Class
               </Text>
             </Link>
           </VStack>
