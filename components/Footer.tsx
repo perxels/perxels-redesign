@@ -256,6 +256,17 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
                 Class Plans
               </Text>
             </Link>
+            <Link w="full" href="/international">
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+                International
+              </Text>
+            </Link>
           </VStack>
         </SimpleGrid>
 
