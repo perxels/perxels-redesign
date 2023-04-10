@@ -4,20 +4,20 @@ import { MainContainer } from '../../layouts'
 import gsap from 'gsap'
 export const MasterclassHero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    let ctx = gsap.context(() =>{
-     //fade in on start
-      gsap.to(heroRef.current, { 
-        opacity: 1,
-        duration: 3,
-        y: 0,
-        x: 0,
-        delay: 1,
-        ease: 'power4.out',
-      })
-    })
-    return () => ctx.revert()
-  }, [])
+  // useEffect(() => {
+  //   let ctx = gsap.context(() =>{
+  //    //fade in on start
+  //     gsap.to(heroRef.current, { 
+  //       opacity: 1,
+  //       duration: 3,
+  //       y: 0,
+  //       x: 0,
+  //       delay: 1,
+  //       ease: 'power4.out',
+  //     })
+  //   })
+  //   return () => ctx.revert()
+  // }, [])
   return (
     <Box
       bg="url('/assets/images/masterclass/masterclassHeroBg.png')"
