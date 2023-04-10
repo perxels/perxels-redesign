@@ -83,7 +83,7 @@ export const Intermediate = () => {
                 mt="1rem"
               >
                 Anyone who registers for this masterclass automatically have
-                access to 25% discount of Perxels paid training
+                access to 15% discount of Perxels paid training
               </Text>
 
               <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']}>
@@ -93,6 +93,8 @@ export const Intermediate = () => {
                   _hover={{ bg: 'brand.yellow.700' }}
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
+                  as={'a'}
+                  href="/masterclass/register"
                 >
                   Join Basic Class
                 </Button>
@@ -100,9 +102,11 @@ export const Intermediate = () => {
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
                   variant="link"
+                  as="a"
                   rightIcon={<BsArrowRightCircle />}
                   color="brand.yellow.500"
                   _hover={{ color: 'brand.yellow.700' }}
+                  href="/assets/files/PERXELS_MASTERCLASS.pdf"
                 >
                   Download Project
                 </Button>

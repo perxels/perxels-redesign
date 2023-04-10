@@ -57,7 +57,7 @@ export const Basic = () => {
                       color="brand.purple.500"
                     />
 
-                    <Text fontSize={['xl', 'xl', '2xl']}>{list}</Text>
+                    <Text fontSize={['xl', 'xl', '2xl']} color="brand.gray.500">{list}</Text>
                   </Grid>
                 ))}
               </VStack>
@@ -76,13 +76,15 @@ export const Basic = () => {
                 mt="1rem"
               >
                 Anyone who registers for this masterclass automatically have
-                access to 25% discount of Perxels paid training
+                access to 15% discount of Perxels paid training
               </Text>
 
               <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']}>
                 <Button
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
+                  as={'a'}
+                  href="/masterclass/register"
                 >
                   Join Basic Class
                 </Button>
@@ -91,6 +93,8 @@ export const Basic = () => {
                   h={['3.5rem', '3.5rem', '3.875rem']}
                   variant="link"
                   rightIcon={<BsArrowRightCircle />}
+                  as="a"
+                  href="/assets/files/PERXELS_MASTERCLASS(BEGINNER).pdf"
                 >
                   Download Project
                 </Button>

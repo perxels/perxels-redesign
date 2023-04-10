@@ -1,16 +1,32 @@
 import { Box, Center, Heading, Img, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import { MainContainer } from '../../layouts'
-
+import gsap from 'gsap'
 export const MasterclassHero = () => {
+  const heroRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    let ctx = gsap.context(() =>{
+     //fade in on start
+      gsap.to(heroRef.current, { 
+        opacity: 1,
+        duration: 3,
+        y: 0,
+        x: 0,
+        delay: 1,
+        ease: 'power4.out',
+      })
+    })
+    return () => ctx.revert()
+  }, [])
   return (
     <Box
       bg="url('/assets/images/masterclass/masterclassHeroBg.png')"
       bgRepeat="no-repeat"
       bgSize="cover"
+     
     >
       <MainContainer bg="none">
-        <Center flexDir="column" pt="4rem">
+        <Center  ref={heroRef} flexDir="column" pt="4rem" >
           <Heading
             maxW="810px"
             lineHeight="1.2"
@@ -27,8 +43,7 @@ export const MasterclassHero = () => {
             color="brand.dark.200"
             mt="1.125rem"
           >
-            A special design masterclass to teach you advanced design skills for
-            FREE.
+            A special design masterclass to teach you on how to start a career in UIUX Design
           </Text>
         </Center>
 
