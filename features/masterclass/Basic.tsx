@@ -11,10 +11,13 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BsArrowRightCircle, BsFillCheckCircleFill } from 'react-icons/bs'
 import { ListWrapper } from '../../components'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 const lists: string[] = [
   'Beginners and those transitioning into UIUX design.',
@@ -23,6 +26,21 @@ const lists: string[] = [
 ]
 
 export const Basic = () => {
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.basicGrid', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: '.basicGrid',
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
   return (
     <Box
       py="3rem"
@@ -32,7 +50,7 @@ export const Basic = () => {
       backgroundSize={'cover'}
     >
       <MainContainer bg="none">
-        <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem">
+        <SimpleGrid  className="basicGrid"  columns={[1, 1, 1, 2]} gap="2.5rem">
           <Center>
             <Box>
               <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.dark.200">
@@ -57,7 +75,7 @@ export const Basic = () => {
                       color="brand.purple.500"
                     />
 
-                    <Text fontSize={['xl', 'xl', '2xl']}>{list}</Text>
+                    <Text fontSize={['xl', 'xl', '2xl']} color="brand.gray.500">{list}</Text>
                   </Grid>
                 ))}
               </VStack>
@@ -76,13 +94,15 @@ export const Basic = () => {
                 mt="1rem"
               >
                 Anyone who registers for this masterclass automatically have
-                access to 25% discount of Perxels paid training
+                access to 15% discount of Perxels paid training
               </Text>
 
               <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']}>
                 <Button
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
+                  as={'a'}
+                  href="/masterclass/register"
                 >
                   Join Basic Class
                 </Button>
@@ -91,6 +111,8 @@ export const Basic = () => {
                   h={['3.5rem', '3.5rem', '3.875rem']}
                   variant="link"
                   rightIcon={<BsArrowRightCircle />}
+                  as="a"
+                  href="/assets/files/PERXELS_MASTERCLASS(BEGINNER).pdf"
                 >
                   Download Project
                 </Button>

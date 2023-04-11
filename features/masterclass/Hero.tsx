@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useLayoutEffect, useRef} from 'react'
 import { MainContainer } from '../../layouts'
 import { Box, Heading, Img, Text } from '@chakra-ui/react'
 
 export const Hero = () => {
+  
   return (
-    <Box position={'relative'} paddingBottom="3rem">
+    <Box position={'relative'} paddingBottom="3rem"   >
       <MainContainer>
         <Box position={'relative'}>
           <Box
@@ -30,6 +31,7 @@ export const Hero = () => {
               display={['block', 'block', 'none', 'none']}
             >
               Welcome to <br /> Perxels Free UIUX <br /> Design Masterclass
+              
             </Heading>
             <Text
               maxWidth={['100%', '100%', '100%', '34.75rem']}

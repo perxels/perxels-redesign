@@ -11,9 +11,12 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BsArrowRightCircle, BsFillCheckCircleFill } from 'react-icons/bs'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 const lists: string[] = [
   'Intermediate designers in the design industry looking to expand their knowledge and scale up their skill',
@@ -22,6 +25,21 @@ const lists: string[] = [
 ]
 
 export const Intermediate = () => {
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.intermediateGrid', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: '.intermediateGrid',
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
   return (
     <Box
       py="3rem"
@@ -31,7 +49,7 @@ export const Intermediate = () => {
       backgroundSize={'cover'}
     >
       <MainContainer bg="none">
-        <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem">
+        <SimpleGrid className="intermediateGrid" columns={[1, 1, 1, 2]} gap="2.5rem">
           <Img
             display={['none', 'none', 'none', 'block']}
             rounded="8px"
@@ -83,7 +101,7 @@ export const Intermediate = () => {
                 mt="1rem"
               >
                 Anyone who registers for this masterclass automatically have
-                access to 25% discount of Perxels paid training
+                access to 15% discount of Perxels paid training
               </Text>
 
               <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']}>
@@ -93,6 +111,8 @@ export const Intermediate = () => {
                   _hover={{ bg: 'brand.yellow.700' }}
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
+                  as={'a'}
+                  href="/masterclass/register"
                 >
                   Join Basic Class
                 </Button>
@@ -100,9 +120,11 @@ export const Intermediate = () => {
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
                   variant="link"
+                  as="a"
                   rightIcon={<BsArrowRightCircle />}
                   color="brand.yellow.500"
                   _hover={{ color: 'brand.yellow.700' }}
+                  href="/assets/files/PERXELS_MASTERCLASS.pdf"
                 >
                   Download Project
                 </Button>
