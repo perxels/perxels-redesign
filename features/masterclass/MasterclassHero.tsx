@@ -4,34 +4,57 @@ import { MainContainer } from '../../layouts'
 import gsap from 'gsap'
 export const MasterclassHero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
-  // useEffect(() => {
-  //   let ctx = gsap.context(() =>{
-  //    //fade in on start
-  //     gsap.to(heroRef.current, { 
-  //       opacity: 1,
-  //       duration: 3,
-  //       y: 0,
-  //       x: 0,
-  //       delay: 1,
-  //       ease: 'power4.out',
-  //     })
-  //   })
-  //   return () => ctx.revert()
-  // }, [])
+  const tl = useRef<any>(gsap.timeline({paused: true}))
+  useEffect(() => {
+    let ctx = gsap.context(() =>{
+      //fade in on start
+      tl.current
+      .to(heroRef.current, {
+          opacity: 1,
+          duration: 3,
+          y: 0,
+          x: 0,
+          delay: 1,
+      }).from(".heroText", {
+        duration: 0.85,
+        y: 150,
+        autoAlpha: 0,
+        ease: "power4.out",
+        stagger: 1.5,
+        opacity: 0,
+        immediateRender: true
+      }).from(".heroImg", {
+        duration: 0.75,
+        y: 200,
+        autoAlpha: 0,
+        ease: "elastic.out(1, 1)",
+        opacity:0,
+        stagger: {
+          each: 0.75,
+          amount: 0.5
+        },
+        immediateRender: true
+      },  "+=0.25").play()
+    })
+     return () => ctx.revert()
+  }, [])
   return (
     <Box
+      ref={heroRef}
       bg="url('/assets/images/masterclass/masterclassHeroBg.png')"
       bgRepeat="no-repeat"
       bgSize="cover"
-     
+      opacity={0}
     >
       <MainContainer bg="none">
-        <Center  ref={heroRef} flexDir="column" pt="4rem" >
+        <Center  flexDir="column" pt="4rem" >
           <Heading
             maxW="810px"
             lineHeight="1.2"
             fontSize={['2rem', '2.5rem', '2.5rem', '4.30rem']}
             textAlign="center"
+            className="heroText"
+        
           >
             Free UIUX Design Masterclass
           </Heading>
@@ -42,6 +65,7 @@ export const MasterclassHero = () => {
             fontSize="2xl"
             color="brand.dark.200"
             mt="1.125rem"
+            className="heroText"
           >
             A special design masterclass to teach you on how to start a career in UIUX Design
           </Text>
@@ -54,6 +78,7 @@ export const MasterclassHero = () => {
             w="full"
             h="auto"
             maxW="577px"
+            className="heroImg"
           />
 
           {/* positioned left top */}
@@ -67,6 +92,7 @@ export const MasterclassHero = () => {
             top="-10rem"
             left="0"
             display={['none', 'none', 'none', 'none', 'block']}
+            className="heroImg"
           />
 
           {/* positioned left bottom */}
@@ -79,6 +105,7 @@ export const MasterclassHero = () => {
             pos="absolute"
             top="10rem"
             left="4rem"
+            className="heroImg"
             display={['none', 'none', 'none', 'none', 'block']}
           />
 
@@ -93,6 +120,7 @@ export const MasterclassHero = () => {
             top="-10rem"
             right="0"
             display={['none', 'none', 'none', 'none', 'block']}
+            className="heroImg"
           />
 
           {/* positioned right bottom */}
@@ -106,6 +134,7 @@ export const MasterclassHero = () => {
             top="10rem"
             right="4rem"
             display={['none', 'none', 'none', 'none', 'block']}
+            className="heroImg"
           />
         </Center>
       </MainContainer>

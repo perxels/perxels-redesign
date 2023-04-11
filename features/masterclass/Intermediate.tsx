@@ -11,9 +11,12 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BsArrowRightCircle, BsFillCheckCircleFill } from 'react-icons/bs'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 const lists: string[] = [
   'Intermediate designers in the design industry looking to expand their knowledge and scale up their skill',
@@ -22,6 +25,21 @@ const lists: string[] = [
 ]
 
 export const Intermediate = () => {
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.intermediateGrid', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: '.intermediateGrid',
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
   return (
     <Box
       py="3rem"
@@ -31,7 +49,7 @@ export const Intermediate = () => {
       backgroundSize={'cover'}
     >
       <MainContainer bg="none">
-        <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem">
+        <SimpleGrid className="intermediateGrid" columns={[1, 1, 1, 2]} gap="2.5rem">
           <Img
             display={['none', 'none', 'none', 'block']}
             rounded="8px"
