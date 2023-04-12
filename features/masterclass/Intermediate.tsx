@@ -138,7 +138,7 @@ export const Intermediate = () => {
                   as={'a'}
                   href="/masterclass/register"
                 >
-                  Join Basic Class
+                  Join Intermediate Class
                 </Button>
                 <Button
                   px={['1.25rem', '1.5rem', '2.5rem']}
