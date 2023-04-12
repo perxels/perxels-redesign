@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Text,
   VStack,
+  Flex
 } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { BsArrowRightCircle, BsFillCheckCircleFill } from 'react-icons/bs'
@@ -56,6 +57,30 @@ export const Basic = () => {
               <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.dark.200">
                 Basic Class
               </Heading>
+              <Flex
+              bg="rgba(227, 113, 156, 0.3)"
+              rounded="6.25rem"
+              display="inline-flex"
+              padding=".4375rem .875rem"
+              columnGap="1.25rem"
+              mb="0.5rem"
+              >
+                <HStack
+                columnGap="5px"
+                alignItems="center"
+                >
+                  <Img src="/assets/icons/masterBasicCalender.svg" alt="" />
+                  <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
+                  22nd April 
+                  </Text>
+                </HStack>
+                <HStack>
+                  <Img src="/assets/icons/masterBasicClock.svg" alt="" />
+                  <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
+                  5pm - 6pm 
+                  </Text>
+                </HStack>
+              </Flex>
               <Text fontSize={['2xl', '2xl', '3xl']} color="brand.gray.500">
                 This class is for those with the following criteria:
               </Text>
@@ -93,8 +118,7 @@ export const Basic = () => {
                 color="brand.gray.500"
                 mt="1rem"
               >
-                Anyone who registers for this masterclass automatically have
-                access to 15% discount of Perxels paid training
+                You automatically get 15% discount off Perxels paid training on registering for the masterclass
               </Text>
 
               <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']}>

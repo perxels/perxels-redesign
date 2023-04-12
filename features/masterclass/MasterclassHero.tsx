@@ -14,9 +14,9 @@ export const MasterclassHero = () => {
           duration: 3,
           y: 0,
           x: 0,
-          delay: 1,
+          delay: 0.1,
       }).from(".heroText", {
-        duration: 0.85,
+        duration: 0.3,
         y: 150,
         autoAlpha: 0,
         ease: "power4.out",
@@ -24,7 +24,7 @@ export const MasterclassHero = () => {
         opacity: 0,
         immediateRender: true
       }).from(".heroImg", {
-        duration: 0.75,
+        duration: 0.5,
         y: 200,
         autoAlpha: 0,
         ease: "elastic.out(1, 1)",
@@ -67,7 +67,7 @@ export const MasterclassHero = () => {
             mt="1.125rem"
             className="heroText"
           >
-            A special design masterclass to teach you on how to start a career in UIUX Design
+             A  special design masterclass to help you transition into UIUX design
           </Text>
         </Center>
 

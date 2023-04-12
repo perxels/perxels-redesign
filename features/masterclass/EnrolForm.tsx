@@ -20,13 +20,16 @@ const EnrolForm = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
+  const [classVal, setClassValue] = useState<string> ("")
   return (
     <>
       <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title="Thank you for your submission!"
-        description="Our representative will call you within the next 24 hours."
+        title={`Thank you for your registering for the ${classVal} Masterclass!`}
+        description="Join our Class by clicking on the button."
+        buttonTitle="Join Class"
+        buttonHref={classVal === 'Basic' ? 'https://chat.whatsapp.com/IAM6UuymZGJ1HLS1KWGIDi' : 'https://chat.whatsapp.com/JfE40BZ14dP74MoqkIOrnX'}
       />
       <Box
         className="enrol-form"
@@ -40,7 +43,7 @@ const EnrolForm = () => {
           textAlign="left"
           color="brand.dark.100"
         >
-         Please kindly fill your information in boxes below
+        Please kindly input your information in the boxes below.
         </Heading>
 
         <Formik
@@ -70,9 +73,9 @@ const EnrolForm = () => {
           })}
           onSubmit={(values, action) => {
             setLoading(true)
-
+            setClassValue(values.class)
             console.log(values)
-
+          
             const formData = new FormData()
 
             formData.append('name', values.name as string)
@@ -113,6 +116,7 @@ const EnrolForm = () => {
                 formik.handleSubmit()
               }}
             >
+              
               <Input
                 h="3.5rem"
                 placeholder="Name*"
@@ -203,8 +207,8 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               >
-                <option value="Basic Program">Basic Program</option>
-                <option value="Advanced Program">Advanced Program</option>
+                <option value="Basic">Basic Program</option>
+                <option value="Intermediate">Intermediate Program</option>
               </Select>
               {formik.touched.class && formik.errors.class ? (
                 <Text color="red.500" fontSize="sm">
