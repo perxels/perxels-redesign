@@ -44,6 +44,7 @@ export const Intermediate = () => {
   return (
     <Box
       py="3rem"
+     
       bg="brand.purple.500"
       backgroundImage={"url('/assets/images/hire/bgPatternPurple.png')"}
       backgroundRepeat="repeat"
@@ -58,7 +59,9 @@ export const Intermediate = () => {
           />
 
           <Center>
-            <Box>
+            <Box
+           
+            >
               <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.white">
                 Intermediate Class
               </Heading>
@@ -128,7 +131,7 @@ export const Intermediate = () => {
                 You automatically get 15% discount off Perxels paid training on registering for the masterclass,
               </Text>
 
-              <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']}>
+              <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']} flexWrap="wrap" rowGap="2rem">
                 <Button
                   bg="brand.yellow.500"
                   color="brand.purple.500"
@@ -149,6 +152,7 @@ export const Intermediate = () => {
                   color="brand.yellow.500"
                   _hover={{ color: 'brand.yellow.700' }}
                   href="/assets/files/PERXELS_MASTERCLASS.pdf"
+                  
                 >
                   Download Project
                 </Button>

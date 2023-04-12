@@ -11,7 +11,7 @@ export const Portfolio = () => {
       <SectionHeader
         subTitle="Our Portfolio"
         title="Meet some of our Alumni"
-        paragraph="We are proud to see our students getting design jobs, impacting product teams with their skills and being paid well for their value."
+        paragraph="We are proud to see our students getting design jobs, impacting product teams with their skills and getting well paid for their value."
         maxW={['240px', 'full']}
       />
 
