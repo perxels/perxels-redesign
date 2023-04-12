@@ -82,7 +82,7 @@ export const Intermediate = () => {
                 <HStack>
                   <Img src="/assets/icons/masterInterClock.svg" alt="" />
                   <Text fontSize={['.9375rem']} color="brand.white" fontWeight="700">
-                  4pm - 5pm
+                  5pm - 6pm
                   </Text>
                 </HStack>
               </Flex>
