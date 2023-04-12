@@ -12,17 +12,23 @@ import {
   Img,
 } from '@chakra-ui/react'
 import Link from 'next/link'
+
+
 interface SuccessModalProps {
   isOpen: boolean
   onClose: () => void
   title: string
   description: string
+  buttonTitle?: "Back to Home Page" | string
+  buttonHref?:  "/" | any
 }
 const SuccessModal = ({
   isOpen,
   onClose,
   title,
   description,
+  buttonTitle,
+  buttonHref,
 }: SuccessModalProps) => {
   return (
     <>
@@ -73,9 +79,9 @@ const SuccessModal = ({
               </Text>
             </Center>
             <Center>
-              <Link href="/">
+              <Link href={buttonHref || "/"}>
                 <Button mt={['1rem', '1rem', '1rem', '1.4375rem']}>
-                  Back to Home Page
+                 {buttonTitle || "Back to home page"}
                 </Button>
               </Link>
             </Center>

@@ -13,7 +13,7 @@ export const WhatToExpect = () => {
           <SectionHeader
             title="Everything you need to know about this Masterclass."
             subTitle="what to expect"
-            paragraph="This is a <b>2 DAYS FREE</b> Masterclass."
+            paragraph="This is a <b>2 DAYS FREE VIRTUAL</b> Masterclass."
             maxW={['300px', '300px', '300px', 'full']}
             headingColor="brand.dark.200"
           />
