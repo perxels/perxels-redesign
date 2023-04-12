@@ -8,33 +8,40 @@ export const MasterclassHero = () => {
   useEffect(() => {
     let ctx = gsap.context(() =>{
       //fade in on start
-      tl.current
-      .to(heroRef.current, {
-          opacity: 1,
-          duration: 3,
-          y: 0,
-          x: 0,
-          delay: 0.1,
-      }).from(".heroText", {
-        duration: 0.3,
-        y: 150,
-        autoAlpha: 0,
-        ease: "power4.out",
-        stagger: 1.5,
-        opacity: 0,
-        immediateRender: true
-      }).from(".heroImg", {
-        duration: 0.5,
-        y: 200,
-        autoAlpha: 0,
-        ease: "elastic.out(1, 1)",
-        opacity:0,
-        stagger: {
-          each: 0.75,
-          amount: 0.5
-        },
-        immediateRender: true
-      },  "+=0.25").play()
+      gsap.to(heroRef.current, { 
+        opacity: 1,
+        duration: 3,
+        y: 0,
+        x: 0,
+        delay: 1,
+      })
+      // tl.current
+      // .to(heroRef.current, {
+      //     opacity: 1,
+      //     duration: 3,
+      //     y: 0,
+      //     x: 0,
+      //     delay: 0.1,
+      // }).from(".heroText", {
+      //   duration: 0.3,
+      //   y: 150,
+      //   autoAlpha: 0,
+      //   ease: "power4.out",
+      //   stagger: 1.5,
+      //   opacity: 0,
+      //   immediateRender: true
+      // }).from(".heroImg", {
+      //   duration: 0.5,
+      //   y: 200,
+      //   autoAlpha: 0,
+      //   ease: "elastic.out(1, 1)",
+      //   opacity:0,
+      //   stagger: {
+      //     each: 0.75,
+      //     amount: 0.5
+      //   },
+      //   immediateRender: true
+      // },  "+=0.25").play()
     })
      return () => ctx.revert()
   }, [])
