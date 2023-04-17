@@ -17,7 +17,7 @@ export const NewHero = () => {
       background={`url('/assets/images/motion/motionHeroShape.svg') #34296B`}
       padding="2% 10%"
       position="relative"
-      height={["90vh","100vh"]}
+      height={["100%","100vh"]}
     >
           <Box zIndex={2} as={Link} href="/" pos="absolute" top="3%" left="5%" >
         <Logo color="#fff" />
@@ -46,8 +46,8 @@ export const NewHero = () => {
           Perxels Motion School!
         </Heading>
       </Center>
-      <Box  height={["25rem","100%"]} position="relative" >
-        <Image src="https://res.cloudinary.com/deudl0ryy/image/upload/v1681659973/New_Perxels_Motion_3_1_nuoy5e.gif" alt="motionHeroImage" height={["25rem","100%"]} objectFit={["cover", "contain"]} width="100%" rounded="10px"/>
+      <Box marginTop={"-80px"} height={["25rem","100%"]} position="relative">
+        <Image src="https://res.cloudinary.com/deudl0ryy/image/upload/v1681659973/New_Perxels_Motion_3_1_nuoy5e.gif" alt="motionHeroImage" height={["25rem","100%"]} objectFit={["cover", "contain"]} width="100%" rounded="10px" transform={[`translate(0, 40%)`,`translate(0, 3%)`]}/>
       </Box>
     </Box>
   )
