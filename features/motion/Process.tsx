@@ -7,7 +7,9 @@ export const Process = () => {
   return (
     <Box
     px="5%"
-    py="6.25rem"
+    pt={["60%","60%","60%","30%"]}
+    pb="10%"
+    // py="6.25rem"
     bg="brand.gray.900"
     >
         <SectionHeader
