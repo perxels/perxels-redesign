@@ -1,7 +1,7 @@
 import React from 'react'
 import {Box, Text, Image} from '@chakra-ui/react'
-
-export const ProjectCard = () => {
+import {MotionProjectInterface} from '../../constant'
+export const ProjectCard = ({imageUrl, title}: MotionProjectInterface) => {
   return (
     <Box
     ml={["1rem", '1rem']}
@@ -9,9 +9,9 @@ export const ProjectCard = () => {
        <Box
        maxWidth="22.6875rem"
        >
-       <Image src="/assets/images/motion/project1.png" alt="projectImage" />
+       <Image src={imageUrl} alt="projectImage" />
        </Box>
-        <Text color="brand.dark.200" fontSize={["0.5rem","1rem"]} fontWeight="700" mt="1.125rem">CCIA &quot;A LIFE SHOULD BE LONG&quot;</Text>
+        <Text color="brand.white" fontSize={["0.5rem","1rem"]} fontWeight="700" mt="1.125rem">{title}</Text>
     </Box>
   )
 }

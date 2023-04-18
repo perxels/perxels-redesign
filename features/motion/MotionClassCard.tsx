@@ -54,13 +54,13 @@ import {
           <Box
             px={['0.75rem', '0.75rem', '0.75rem', '1.875rem']}
             py="1.5rem"
-            bg="brand.yellow.300"
+            bg="brand.dark.200"
             roundedTopLeft="8px"
           >
             <Heading
               as="span"
               fontSize={['2rem', '2rem', '2rem', '2.8rem']}
-              color="brand.dark.200"
+              color="brand.white"
               pos="relative"
             >
               {title}
@@ -68,7 +68,7 @@ import {
                 pos="absolute"
                 top={['-8px', '-8px', '-8px', '0']}
                 right="-2rem"
-                src="/assets/icons/class-icon-dark.svg"
+                src="/assets/icons/class-icon.svg"
               />
             </Heading>
           </Box>
@@ -206,7 +206,7 @@ import {
                 <ListIcon
                   as={BsFillCheckCircleFill}
                   fontSize={['1.5rem', '1.5rem', '1.5rem', '1.875rem']}
-                  color="brand.dark.200"
+                  color="#D2D2D2"
                 />
                 {outline}
               </Grid>

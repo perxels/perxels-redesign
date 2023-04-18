@@ -1,16 +1,17 @@
 import React from 'react'
 import { Footer } from '../components'
-import { AdmitMotion, Hero, MotionClassPlan, MotionTools, Process, MotionProjects } from '../features/motion'
+import { AdmitMotion, Hero, MotionClassPlan, MotionTools, Process, MotionProjects, NewHero } from '../features/motion'
 
 const motion = () => {
   return (
     <div>
-        <Hero/>
+        {/* <Hero/> */}
+        <NewHero/>
         <Process/>
         <MotionClassPlan/>
         <MotionTools/>
-        <MotionProjects/>
         <AdmitMotion/>
+        <MotionProjects/>
         <Footer yellowFooterPill/>
     </div>
   )
