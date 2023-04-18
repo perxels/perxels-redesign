@@ -17,17 +17,17 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: ' ',
-  subTitle: 'DISCOVERING THE MID GROUND BETWEEN UI, GRAPHICS AND MOTION DESIGN',
+  subTitle: 'EXPLORING OTHER DESIGN FIELDS : WEB3 AND WEB XR',
   time: '7pm - 8pm (WAT)',
-  date: 'April  16th, 2023',
+  date: 'May  7th, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    "In today's digital landscape, the lines between user interface (UI), graphic design, and motion design are becoming increasingly blurred. While each discipline has its own unique set of skills and techniques, there is often overlap in their application, and collaboration between these areas is becoming more and more essential to creating effective and engaging digital experiences. ",
-  content1: "This session will explore the mid ground between UI, graphics, and motion design, and will feature insights and strategies from experts in each discipline. Participants will gain a deeper understanding of the interplay between these areas, and will learn practical tips and techniques for enhancing collaboration and achieving better results.",
-  content2: "",
-  content3: "",
+    "Join us for an exciting session where we will delve into the world of Web3 and XR and explore the latest trends, technologies, and design principles in these emerging fields.",
+  content1: "This is a unique opportunity to expand your knowledge and skills as a designer and gain insights into how these new design fields are transforming the way we interact with digital contents. ",
+  content2: "Through engaging discussions and interactive activities, you will discover the potential of Web3 and XR to enhance user experiences, create immersive environments, and unlock new opportunities for creativity and innovation.",
+  content3: "Don't miss this chance to be at the forefront of the next wave of design.",
   content4: "",
-  speakerName: 'Ufot Ubon',
-  speakerRole: 'Product Designer & Illustrator',
+  speakerName: 'Ozenua John ',
+  speakerRole: 'Product Designer, Outliant',
 }
