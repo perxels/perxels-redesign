@@ -41,17 +41,17 @@ export const MotionAdmissionProcess: MotionAdmission[] = [
 export const MotionProcessContent: MotionProcessInterface[] = [
     {
         title: "Learning Model",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        description: "With experienced motion designers, you get to learn the knowledge, skills, and real-world experience of motion design.",
         image: "assets/images/motion/wave.gif"
     },
     {
         title: "Access Content & Materials",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        description: "Access to a wide range of resources would boost your learning and aid in preparing you for your career ahead",
         image: "assets/images/motion/book.gif"
     },
     {
         title: "Portfolio Building",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        description: "Get to have hands on case studies to showcase your creative personal projects to build a portfolio while learning motion design",
         image: "assets/images/motion/screen.gif"
     }
 ] 

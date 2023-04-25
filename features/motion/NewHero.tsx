@@ -15,14 +15,14 @@ export const NewHero = () => {
   return (
     <Box
       background={`url('/assets/images/motion/motionHeroShape.svg') #34296B`}
-      padding="2% 10%"
+      padding="2% 5%"
       position="relative"
       height={["100%","100vh"]}
     >
-          <Box zIndex={2} as={Link} href="/" pos="absolute" top="3%" left="5%" >
-        <Logo color="#fff" />
+          <Box zIndex={2} as={Link} href="/" pos="absolute" top="3%" left="5%" w="146px" h="40px" >
+        <Logo color="#fff"  />
       </Box>
-      <Center flexDir="column" pt={["4.9375rem","4.9375rem","4.9375rem","8.375rem"]} pb="3rem">
+      <Center flexDir="column" pt={["5.9375rem","5.9375rem","5.9375rem","8.375rem"]} pb={["2rem","6.25rem"]}>
         <Heading
           color="brand.white"
           textTransform="uppercase"
@@ -46,8 +46,8 @@ export const NewHero = () => {
           Perxels Motion School!
         </Heading>
       </Center>
-      <Box marginTop={"-80px"} height={["25rem","100%"]} position="relative">
-        <Image src="https://res.cloudinary.com/deudl0ryy/image/upload/v1681659973/New_Perxels_Motion_3_1_nuoy5e.gif" alt="motionHeroImage" height={["25rem","100%"]} objectFit={["cover", "contain"]} width="100%" rounded="10px" transform={[`translate(0, 40%)`,`translate(0, 3%)`]}/>
+      <Box marginTop={["-120px","-80px"]} height={["25rem","100%"]} position="relative" borderRadius="3%">
+        <Image src="https://res.cloudinary.com/deudl0ryy/image/upload/v1681659973/New_Perxels_Motion_3_1_nuoy5e.gif" alt="motionHeroImage" height={["25rem","100%"]} objectFit={["cover", "contain"]} width="100%" borderRadius="3%" transform={[`translate(0, 40%)`,`translate(0, 3%)`]}/>
       </Box>
     </Box>
   )

@@ -45,6 +45,7 @@ import {
     installments,
     tuition,
     courseOutline,
+    classType,
     id,
   }: MotionPlanInterface) => {
     const [tabState, setTabState] = useState('virtual')
@@ -123,6 +124,24 @@ import {
                   fontSize={['lg', 'lg', 'lg', '2xl']}
                 >
                   {classTime}
+                </Heading>
+              </VStack>
+
+              <VStack spacing="5px">
+                <Text
+                  w="full"
+                  fontSize={['lg', 'lg', 'lg', '2xl']}
+                  color="brand.gray.200"
+                >
+                  Class type:
+                </Text>
+                <Heading
+                  color="brand.dark.200"
+                  textTransform="uppercase"
+                  w="full"
+                  fontSize={['lg', 'lg', 'lg', '2xl']}
+                >
+                  {classType}
                 </Heading>
               </VStack>
               
