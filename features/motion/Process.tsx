@@ -13,7 +13,7 @@ export const Process = () => {
     bg="brand.gray.900"
     >
         <SectionHeader
-            title= "How will you learn?s"
+            title= "How will you learn?"
             subTitle="Our Teaching process"
             paragraph='Becoming a motion designer in the 21st Century will make you the best of the best'
             headingColor={"#121212"}
