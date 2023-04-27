@@ -9,7 +9,7 @@ export const MotionTools = () => {
         <SectionHeader
           title="Learn with the industry’s best tools"
           subTitle="Learning tools"
-          paragraph="We are proud to see our students getting design jobs, impacting product teams with their skills and being paid well for their value."
+          paragraph="Learn and master Industry standard tools and software needed to succeed in motion design career"
           isArrow
           arrowTopPos="3rem"
           arrowRightBottomPos="1rem"

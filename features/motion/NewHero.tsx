@@ -20,7 +20,8 @@ export const NewHero = () => {
       height={["100%","100vh"]}
     >
           <Box zIndex={2} as={Link} href="/" pos="absolute" top="3%" left="5%" w="146px" h="40px" >
-        <Logo color="#fff"  />
+          <Image src="/assets/icons/perxLogo.svg" width="100%" height="100%" />
+        {/* <Logo color="#fff" width="146px" height="40px"  /> */}
       </Box>
       <Center flexDir="column" pt={["5.9375rem","5.9375rem","5.9375rem","8.375rem"]} pb={["2rem","6.25rem"]}>
         <Heading
@@ -46,8 +47,8 @@ export const NewHero = () => {
           Perxels Motion School!
         </Heading>
       </Center>
-      <Box marginTop={["-120px","-80px"]} height={["25rem","100%"]} position="relative" rounded="3%">
-        <Image src="https://res.cloudinary.com/deudl0ryy/image/upload/v1681659973/New_Perxels_Motion_3_1_nuoy5e.gif" alt="motionHeroImage" height={["25rem","100%"]} objectFit={["cover", "contain"]} width="100%" borderRadius="3%" transform={[`translate(0, 40%)`,`translate(0, 3%)`]}/>
+      <Box marginTop={["-120px","-80px"]} height={["25rem","100%"]} position="relative" rounded="10px" overflow="hidden">
+        <Image src="https://res.cloudinary.com/deudl0ryy/image/upload/v1681659973/New_Perxels_Motion_3_1_nuoy5e.gif" alt="motionHeroImage" height={["25rem","100%"]} objectFit={["cover", "cover"]} width="100%" transform={[`translate(0, 40%)`,`translate(0, 3%)`]} rounded="10px"/>
       </Box>
     </Box>
   )

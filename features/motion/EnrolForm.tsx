@@ -26,8 +26,8 @@ const EnrolForm = () => {
       <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title={`Thank you for your registering for the Motion Class!`}
-        description="Join our Class by clicking on the button."
+        title={`Thank you for your submission!`}
+        description="Our representative will call you within the next 24 hours."
         buttonTitle="Go back Home"
       />
       <Box
