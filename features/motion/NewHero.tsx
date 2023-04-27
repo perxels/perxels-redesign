@@ -46,7 +46,7 @@ export const NewHero = () => {
           Perxels Motion School!
         </Heading>
       </Center>
-      <Box marginTop={["-120px","-80px"]} height={["25rem","100%"]} position="relative" borderRadius="3%">
+      <Box marginTop={["-120px","-80px"]} height={["25rem","100%"]} position="relative" rounded="3%">
         <Image src="https://res.cloudinary.com/deudl0ryy/image/upload/v1681659973/New_Perxels_Motion_3_1_nuoy5e.gif" alt="motionHeroImage" height={["25rem","100%"]} objectFit={["cover", "contain"]} width="100%" borderRadius="3%" transform={[`translate(0, 40%)`,`translate(0, 3%)`]}/>
       </Box>
     </Box>

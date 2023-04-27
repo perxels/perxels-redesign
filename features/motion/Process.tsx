@@ -7,7 +7,7 @@ export const Process = () => {
   return (
     <Box
     px="5%"
-    pt={["5%","5%","5%","5%"]}
+     pt={['60%', '60%', '60%', '40%']}
     pb="5%"
     // py="6.25rem"
     bg="brand.gray.900"

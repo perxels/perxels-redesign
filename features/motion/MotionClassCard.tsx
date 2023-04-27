@@ -193,7 +193,7 @@ import {
               fontSize="2xl"
               display={['none', 'none', 'none', 'inline-block']}
               as={Link}
-              href={'/signup'}
+              href={'/motion/register'}
               bg="brand.yellow.300"
               color="brand.dark.200"
             >
@@ -240,7 +240,7 @@ import {
               py="1.5rem"
               fontSize="2xl"
               as={Link}
-              href={'/signup'}
+              href={'/motion/register'}
               bg="brand.yellow.300"
               color="brand.dark.200"
               display={['inline-block', 'inline-block', 'inline-block', 'none']}

@@ -6,7 +6,7 @@ import { MainContainer } from '../../layouts'
 
 export const AdmitMotion = () => {
   return (
-    <Box bg="brand.gray.900" pb={['3rem', '3rem', '3rem', '6.75rem']} pt={['60%', '60%', '60%', '40%']}>
+    <Box bg="brand.gray.900" pb={['3rem', '3rem', '3rem', '6.75rem']}  pt={["5%","5%","5%","5%"]}>
       <MainContainer bg="brand.gray.900">
         <SectionHeader
           title="Get started in four easy steps"
