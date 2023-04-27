@@ -20,7 +20,7 @@ export const NewHero = () => {
       height={["100%","100vh"]}
     >
           <Box zIndex={2} as={Link} href="/" pos="absolute" top="3%" left="5%" w="146px" h="40px" >
-          <Image src="/assets/icons/perxLogo.svg" width="100%" height="100%" />
+          <Image src="/assets/icons/perxLogo.svg" width="100%" height="100%" alt="" />
         {/* <Logo color="#fff" width="146px" height="40px"  /> */}
       </Box>
       <Center flexDir="column" pt={["5.9375rem","5.9375rem","5.9375rem","8.375rem"]} pb={["2rem","6.25rem"]}>
