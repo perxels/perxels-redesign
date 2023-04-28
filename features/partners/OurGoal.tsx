@@ -184,7 +184,7 @@ export const OurGoal = () => {
                />
               
                <Input
-                 placeholder="Amount to donate"
+                 placeholder="How do you want to partner with us"
                  bg="brand.white"
                  h="3.5rem"
                  name="amount"

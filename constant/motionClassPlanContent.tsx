@@ -3,6 +3,7 @@ export interface MotionPlanInterface {
     id: string
     classDur: string
     classTime: string
+    classType: string
     installments: string[]
     tuition: string
     courseOutline: string[]
@@ -12,22 +13,23 @@ export const MotionPlan: MotionPlanInterface[] = [
     {
         title: 'Motion Class',
         id: 'motion-class',
-        classDur: '7 Weeks.',
-        classTime: '2-3 times a week.',
+        classDur: '8 Weeks.',
+        classTime: '2 times a week.',
+        classType: 'Live Virtual Training.',
         installments: [
             "70% On Admission;",
            "30% after one month."
         ],
-        tuition: '₦40,000',
+        tuition: '₦70,000',
         courseOutline: [
-            "For beginners to learn the fundamentals of design; focus is majorly on UI (User Interface) design.",
-            "What is UI design - difference between UI and UX design.",
-            "Practical principle of UI design: typography, colours, layout, hierarchy, whitespace, icons, balance and alignment.",
-            "Wireframes: creating standard low fidelity and high fidelity wireframes.",
-            "Concept of drawing, sketching and mockups.",
-            "Interpreting customer briefs and converting it to great designs.",
-            "Learn how to design landing pages, mobile apps and dashboard screens.",
-            "Work on real-life case studies and create a design portfolio.",
+            "Fundamental path into Motion design how to move from being a newbie into an intermediate/expert in the motion design.",
+            "What motion design entails and the impact in fintech brands, companies and other related industry that uses it for growth.",
+            "Deep dive into the tool used in creating motion design, Adobe Illustrator, After Effect, Adobe Media Encoder.",
+            "The process of creating an epic motion design from mind mapping, mood-boarding, storyboarding, style-frame design, Design board and animation.",
+            "Proper explanation of animation terms and its usage.",
+            "Creating UI animations for mobile and website.",
+            "What is explainer motion design and how it can be created",
+            "Work on real life motion design across different use case.",
             "Mock interviews: showcasing your skills.",
             "Certificate of Completion."
 

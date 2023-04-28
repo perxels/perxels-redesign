@@ -7,10 +7,10 @@ const motion = () => {
     <div>
         {/* <Hero/> */}
         <NewHero/>
-        <Process/>
+        <Process/>   
         <MotionClassPlan/>
-        <MotionTools/>
         <AdmitMotion/>
+        <MotionTools/>
         <MotionProjects/>
         <Footer yellowFooterPill/>
     </div>

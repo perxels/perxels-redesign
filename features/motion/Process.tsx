@@ -7,13 +7,13 @@ export const Process = () => {
   return (
     <Box
     px="5%"
-    pt={["60%","60%","60%","30%"]}
-    pb="10%"
+     pt={['60%', '60%', '60%', '40%']}
+    pb="5%"
     // py="6.25rem"
     bg="brand.gray.900"
     >
         <SectionHeader
-            title="How will you learn?"
+            title= "How will you learn?"
             subTitle="Our Teaching process"
             paragraph='Becoming a motion designer in the 21st Century will make you the best of the best'
             headingColor={"#121212"}
