@@ -112,18 +112,20 @@ export const OurGoal = () => {
 
         <GridItem>
           <Formik 
-          initialValues={{fullname: '', email: '', amount: '', aboutdonor: ''}}
+          initialValues={{fullname: '', email: '', howdoyoupartner: '', aboutdonor: '', phone: ''}}
           validationSchema={Yup.object({
             fullname: Yup.string().required('Required'),
             email: Yup.string().email('Invalid email address').required('Required'),
-            amount: Yup.string().required('Required'),
+            phone: Yup.string().required('Required'),
+            howdoyoupartner: Yup.string().required('Required'),
             aboutdonor: Yup.string().required('Required'),
           })}
           onSubmit={(values, action) => {
             const formData = new FormData()
             formData.append('fullname', values.fullname as string)
             formData.append('email', values.email as string)
-            formData.append('amount', values.amount as string)
+            formData.append('phone', values.phone as string)
+            formData.append('howdoyoupartner', values.howdoyoupartner as string)
             formData.append('aboutdonor', values.aboutdonor as string)
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
@@ -182,16 +184,32 @@ export const OurGoal = () => {
                     outline: 'none',
                   }}
                />
+
+                 <Input
+                 placeholder="Phone Number*"
+                 bg="brand.white"
+                 h="3.5rem"
+                 type="text"
+                
+                 name="phone"
+                  value = {formik.values.phone}
+                  onChange = {formik.handleChange}
+                  onBlur = {formik.handleBlur}
+                  borderColor = {formik.touched.phone && formik.errors.phone ? 'red.500' : '#B4B4B4'}
+                  _focusVisible={{
+                    outline: 'none',
+                  }}
+               />
               
                <Input
                  placeholder="How do you want to partner with us"
                  bg="brand.white"
                  h="3.5rem"
-                 name="amount"
-                  value = {formik.values.amount}
+                 name="howdoyoupartner"
+                  value = {formik.values.howdoyoupartner}
                   onChange = {formik.handleChange}
                   onBlur = {formik.handleBlur}
-                  borderColor = {formik.touched.amount && formik.errors.amount ? 'red.500' : '#B4B4B4'}
+                  borderColor = {formik.touched.howdoyoupartner && formik.errors.howdoyoupartner ? 'red.500' : '#B4B4B4'}
                   _focusVisible={{
                     outline: 'none',
                   }}
