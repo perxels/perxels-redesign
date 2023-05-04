@@ -18,32 +18,26 @@ import {
   export const ChallengeForm = () => {
     const [loading, setLoading] = useState(false)
     const scriptUrl =
-      'https://script.google.com/macros/s/AKfycbylt8yLHlrced9f7zSTWtno6R6gb87k9YljF8NS9qL6IBJ38roDy7uJtoM67i5v_ug7/exec'
+      'https://script.google.com/macros/s/AKfycbyTgCCNaNzXBPqBNP3HsSEfhYHNsx2BIwv8zkusfn6Ha9yjbb8mlU7GAJwVMNB8Qtd2/exec'
     const handleSubmit = (e: any) => {
       e.preventDefault()
       setLoading(true)
       const inputData = e.target as typeof e.target & {
         fullname: { value: string }
-        companyname: { value: string }
         projectdescription: { value: string }
         email: { value: string }
         phone: { value: string }
-        date: { value: string }
-        time: { value: string }
-        hiretype: { value: string }
+        twitterHandle: { value: string }
+        reason: { value: string }
+       
+        // hiretype: { value: string }
       }
       const formData = new FormData()
       formData.append('fullname', inputData.fullname.value as string)
-      formData.append('companyname', inputData.companyname.value as string)
-      formData.append(
-        'projectdescription',
-        inputData.projectdescription.value as string,
-      )
       formData.append('email', inputData.email.value as string)
       formData.append('phone', inputData.phone.value as string)
-      formData.append('date', inputData.date.value as string)
-      formData.append('time', inputData.time.value as string)
-      formData.append('hiringtype', inputData.hiretype.value as string)
+      formData.append('twitterHandle', inputData.twitterHandle.value as string)
+    
       //current date and time
       formData.append('created_at', new Date().toLocaleString())
   
@@ -96,6 +90,7 @@ import {
                     w="full"
                     h={['3rem', '3rem', '3rem', '5rem']}
                     name="fullname"
+                    required
                   />
                 </InputWrapper>
                 <InputWrapper label="PHONE NUMBER">
@@ -105,6 +100,7 @@ import {
                     w="full"
                     h={['3rem', '3rem', '3rem', '5rem']}
                     name="phone"
+                    required
                   />
                 </InputWrapper>
                 {/**/}
@@ -121,6 +117,7 @@ import {
                     w="full"
                     h={['3rem', '3rem', '3rem', '5rem']}
                     name="twitterHandle"
+                    required
                   />
                 </InputWrapper> 
                
@@ -131,6 +128,7 @@ import {
                     w="full"
                     h={['3rem', '3rem', '3rem', '5rem']}
                     name="email"
+                    required
                   />
                 </InputWrapper>
               </SimpleGrid>
@@ -143,6 +141,7 @@ import {
                     h="8.75rem"
                     py="1.5rem"
                     name="reason"
+                    required
                   />
                 </InputWrapper>
               </HStack>

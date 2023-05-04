@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Box, Flex, Text, Heading,Image } from '@chakra-ui/react'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 export const Testimonial = () => {
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+          gsap.from('.testiGrid', {
+            opacity: '0',
+            y: 200,
+            duration: 1,
+            delay: 1,
+            scrollTrigger: {
+              trigger: '.testiGrid',
+            },
+          })
+        })
+    
+        return () => ctx.revert()
+      }, [])
   return (
-    <Box>
+    <Box
+    pb="5rem"
+    className="testiGrid"
+    >
         <MainContainer>
         <Box>
             <Image src="assets/images/designChallenge/quotation.svg" alt="" />
+        
         </Box>
         <Flex
         justifyContent="space-between"
