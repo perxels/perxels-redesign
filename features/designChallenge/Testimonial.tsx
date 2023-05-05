@@ -85,7 +85,7 @@ export const Testimonial = () => {
                         fontSize={["1rem","1.5625rem"]}
                         lineHeight={["1.1rem","1.9031rem"]}
                         mb=".625rem"
-                        >Tobi Olayemi</Text>
+                        >MOSOPE ADERIBIGBE</Text>
                         <Text
                         color="#121212"
                         fontSize={[".8281rem","1.25rem"]}

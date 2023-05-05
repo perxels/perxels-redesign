@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
-import {Box, Center, Image, Text, Heading, Flex, Button} from '@chakra-ui/react'
+import {Box, Center, Image, Text, Heading, Flex, Button, Modal, ModalContent, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure} from '@chakra-ui/react'
 import {BiDownload} from 'react-icons/bi'
 import {MainContainer} from '../../layouts'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+import Link from 'next/link'
 gsap.registerPlugin(ScrollTrigger)
 
 export const Task = () => {
+    const {isOpen, onOpen, onClose} = useDisclosure()
     useEffect(() => {
         let ctx = gsap.context(() => {
           gsap.from('.taskGrid', {
@@ -74,6 +76,7 @@ export const Task = () => {
        px={["1.0625rem", "0"]}
        justifyContent="center"
         >
+            <Link href="/design-challenge/#join">
             <Button
             bgColor={"brand.yellow.500"}
             color={"brand.purple.500"}
@@ -84,6 +87,7 @@ export const Task = () => {
             >
                 Join the challenge
             </Button>
+            </Link>
             <Button
              bgColor={"transparent"}
              color={"brand.yellow.500"}
@@ -92,7 +96,7 @@ export const Task = () => {
              height={["2.75rem","57.9px"]}
             border="1.18156px solid #FDE85C"
             leftIcon={<BiDownload size="1.5rem"/>}
-
+            onClick={onOpen}
             >
                 Download PRD
             </Button>
@@ -118,6 +122,25 @@ export const Task = () => {
         >
             <Image src="/assets/images/designChallenge/taskBottomBorder.png" alt="" />
         </Box>
+        {/* text modal */}
+        <Modal isOpen={isOpen} onClose={onClose} size="lg">
+        <ModalOverlay />
+        <ModalContent>
+            <ModalHeader>PRD</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+            <Text>
+            Thank you for showing interest in the challenge, kindly fill the registration form.
+            An email containing the PRD will be sent to you shortly.
+            </Text>
+            </ModalBody>
+            <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+            </Button>
+            </ModalFooter>
+        </ModalContent>
+        </Modal>
     </Box>
   )
 }
