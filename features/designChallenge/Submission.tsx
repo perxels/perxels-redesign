@@ -20,7 +20,7 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const lists: string[] = [
-    'Submission starts 13th of may and ends 27th of May at 11:59PM.',
+    'Submission starts 13th of May and ends 27th of May at 11:59PM.',
     'Submit your design on Twitter on/before the deadline and tag Perxels',
     "Use the challenge hashtag #perxelsdesignchallenge ",
     "Engagements (ie likes, retweets) on any post will add to your points ",

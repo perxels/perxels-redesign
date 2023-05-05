@@ -88,7 +88,7 @@ export const Prizes = () => {
                 color="brand.white"
                 mt={["0.5rem","1.25rem"]}
               >
-                Gets 50,000 Naira Cash Price! and a feature on Perxels
+                Gets 50,000 Naira Cash cash Prize, and a feature on Perxels
                 spotlight.
               </Text>
             </Box>
