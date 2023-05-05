@@ -12,10 +12,10 @@ import {HeroBook, BookBanner} from '../features/book'
 const ClassPlans = () => {
   return (
     <MainLayout>
-      <BookBanner/>
+      {/* <BookBanner/> */}
       <Hero />
       <ClassLists/>
-      <HeroBook/>
+      {/* <HeroBook/> */}
       <StudentWorkWrapper />
       <LeaningTools />
       <Testimonial />
