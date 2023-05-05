@@ -16,7 +16,7 @@ export const ChallengeInstructionContent: ChallengeInstructionInterface[] = [
         id: 2,
         image: '/assets/icons/ruler.svg',
         title: 'Do Your Work',
-        text: "Proceed with the challenge and ensure to submit before the submission deadline."
+        text: "Proceed with the challenge and ensure to submit on twitter before the deadline."
     },
     {
         id: 3,

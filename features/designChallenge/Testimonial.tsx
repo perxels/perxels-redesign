@@ -1,12 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Box, Flex, Text, Heading,Image } from '@chakra-ui/react'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 export const Testimonial = () => {
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+          gsap.from('.testiGrid', {
+            opacity: '0',
+            y: 200,
+            duration: 1,
+            delay: 1,
+            scrollTrigger: {
+              trigger: '.testiGrid',
+            },
+          })
+        })
+    
+        return () => ctx.revert()
+      }, [])
   return (
-    <Box>
+    <Box
+    pb="5rem"
+    className="testiGrid"
+    >
         <MainContainer>
         <Box>
             <Image src="assets/images/designChallenge/quotation.svg" alt="" />
+        
         </Box>
         <Flex
         justifyContent="space-between"
@@ -29,7 +51,7 @@ export const Testimonial = () => {
             <Box
             position="relative"
             >
-                <Image src="assets/images/designChallenge/testimonyImage.png"
+                <Image src="/assets/images/designChallenge/testimonyImage.png"
                  w={['full', 'auto', '22rem', '31.875rem']}
                  h={['80%', '20rem', '22rem', '31.875rem']}
                 alt=""/>
@@ -40,7 +62,7 @@ export const Testimonial = () => {
                 transform= {["translate(0%,-40%)","translate(30%, -40%)"]}
                
                 >
-                    <Image boxSize={["6.5625rem","4.25rem"]} src="assets/images/designChallenge/testimonyMedal.svg" alt=""/>
+                    {/* <Image boxSize={["6.5625rem","4.25rem"]} src="/assets/images/designChallenge/testimonyMedal.svg" alt=" "/> */}
                 </Box>
 
                 <Box pos="absolute">
@@ -63,7 +85,7 @@ export const Testimonial = () => {
                         fontSize={["1rem","1.5625rem"]}
                         lineHeight={["1.1rem","1.9031rem"]}
                         mb=".625rem"
-                        >Tobi Olayemi</Text>
+                        >MOSOPE ADERIBIGBE</Text>
                         <Text
                         color="#121212"
                         fontSize={[".8281rem","1.25rem"]}

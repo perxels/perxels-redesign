@@ -1,10 +1,24 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import { Box, Heading, Text, Image, HStack, Center } from '@chakra-ui/react'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
 export const Hero = () => {
+  const heroRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    let ctx = gsap.context(() =>{
+      gsap.to(heroRef.current, { 
+        opacity: 1,
+        duration: 3,
+        y: 0,
+        x: 0,
+        delay: 1,
+      })
+    })
+    return () => ctx.revert()
+ }, [])
   return (
     <Box py="2.5rem" px={['0', '10%']} position={'relative'} id="Hero">
-      <Box display="flex" flexDirection="column" alignItems="center">
+      <Box  opacity={0} ref={heroRef} display="flex" flexDirection="column" alignItems="center">
         <Box
           bg="rgba(227, 113, 156, 0.1)"
           borderRadius={'30px'}

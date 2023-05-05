@@ -1,10 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Text, Heading, Center, Image } from '@chakra-ui/react'
-
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 export const Prizes = () => {
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.prizeGrid', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: '.prizeGrid',
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
   return (
     <Box py="6.25rem" id="prizes">
-      <Box>
+      <Box className="prizeGrid">
         <Center>
           <Box
             bg="#E3719C"
@@ -71,7 +88,7 @@ export const Prizes = () => {
                 color="brand.white"
                 mt={["0.5rem","1.25rem"]}
               >
-                Gets 30, 000 Naira Cash Price! and a feature on Perxels
+                Gets 50,000 Naira Cash Prize, and a feature on Perxels
                 spotlight.
               </Text>
             </Box>

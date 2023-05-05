@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;1,400&display=swap');
+
 
 @font-face {
   font-family: 'Proxima Nova';
@@ -28,8 +30,19 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Monument Extended";
+  src: url("/assets/fonts/MonumentExtended-Regular.otf") format("opentype");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Monument Extended";
+  src: url("/assets/fonts/MonumentExtended-Bold.otf") format("opentype");
+}
+
+
 * {
-  font-family: 'Proxima Nova', sans-serif;
+  font-family: 'Proxima Nova', 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;

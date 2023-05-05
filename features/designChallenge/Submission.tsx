@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Box,
     Button,
@@ -15,17 +15,34 @@ import {
   } from '@chakra-ui/react'
   import { BsArrowRightCircle, BsFillCheckCircleFill, BsFillPencilFill } from 'react-icons/bs'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 const lists: string[] = [
-    'Submission starts 20th of march and ends 3rd of April at 11:59.',
-    'Submit your designs for evaluation by the judges via the submission link..',
-    "Post your design on twitter before the deadline.",
-    "Use the following hashtag #perxels #productrevamp #jambwebsiteredesign #perxelsdesignchallenge #uiuxdesign.",
-    "Engagements (ie likes, retweets) on any post will add to the points given by the judges."
+    'Submission starts 13th of May and ends 27th of May at 11:59PM.',
+    'Submit your design on Twitter on/before the deadline and tag Perxels',
+    "Use the challenge hashtag #perxelsdesignchallenge ",
+    "Engagements (ie likes, retweets) on any post will add to your points ",
   ]
   
 
 export const Submission = () => {
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.submitGrid', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: '.submitGrid',
+        },
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
   return (
     <Box
       pt={["4rem","15rem"]}
@@ -39,13 +56,13 @@ export const Submission = () => {
     >
         <Box
         position="absolute"
-    top="0"
+        top="0"
         transform={"translateX(0%) translateY(-35.5%)"}
         >
             <Image src="/assets/images/designChallenge/submissionTopBorder.png" alt="" />
         </Box>
       <MainContainer bg="none">
-        <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem">
+        <SimpleGrid columns={[1, 1, 1, 2]} gap="2.5rem"  className="submitGrid">
           <Box position="relative">
           <Img
             display={['none', 'none', 'none', 'block']}

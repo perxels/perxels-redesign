@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Heading, Text, Image, HStack, Center, SimpleGrid } from '@chakra-ui/react'
 import {InstructionBox} from './InstructionBox'
 import {ChallengeInstructionContent, ChallengeInstructionInterface } from '../../constant'
 import { MainContainer } from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
 export const Instruction = () => {
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap.from('.instructionGrid', {
+        opacity: '0',
+        y: 200,
+        duration: 1,
+        delay: 1,
+        scrollTrigger: {
+          trigger: '.instructionGrid',
+        },
+      })
+    })
+    return () => ctx.revert()
+  }, [])
+
   return (
     <Box
     py="6.25rem"
@@ -40,7 +59,7 @@ export const Instruction = () => {
                 Go from Start-to-Finish in 3 simple steps
         </Heading>
 
-        <SimpleGrid columns={[1, 1, 1, 3]} spacing="2.5rem" mt="2.5rem">
+        <SimpleGrid columns={[1, 1, 1, 3]} spacing="2.5rem" mt="2.5rem" className="instructionGrid">
            {
                 ChallengeInstructionContent.map((item, index) => (
                     <InstructionBox key={item.id} image={item.image} title={item.title} text={item.text} />
