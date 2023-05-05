@@ -51,7 +51,7 @@ export const Testimonial = () => {
             <Box
             position="relative"
             >
-                <Image src="assets/images/designChallenge/testimonyImage.png"
+                <Image src="/assets/images/designChallenge/testimonyImage.png"
                  w={['full', 'auto', '22rem', '31.875rem']}
                  h={['80%', '20rem', '22rem', '31.875rem']}
                 alt=""/>
