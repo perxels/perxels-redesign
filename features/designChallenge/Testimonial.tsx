@@ -62,7 +62,7 @@ export const Testimonial = () => {
                 transform= {["translate(0%,-40%)","translate(30%, -40%)"]}
                
                 >
-                    {/* <Image boxSize={["6.5625rem","4.25rem"]} src="/assets/images/designChallenge/testimonyMedal.svg" alt=" "/> */}
+                    <Image boxSize={["6.5625rem","4.25rem"]} src="/assets/images/designChallenge/testimonyMedal.svg" alt=" "/>
                 </Box>
 
                 <Box pos="absolute">
