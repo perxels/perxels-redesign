@@ -17,17 +17,17 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: ' ',
-  subTitle: 'EXPLORING OTHER DESIGN FIELDS : WEB3 AND WEB XR',
+  subTitle: 'STRENGTHENING COLLABORATION BETWEEN DESIGNERS, DEVELOPERS, AND PRODUCT MANAGERS.',
   time: '7pm - 8pm (WAT)',
-  date: 'May  7th, 2023',
+  date: 'May  21st, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    "Join us for an exciting session where we will delve into the world of Web3 and XR and explore the latest trends, technologies, and design principles in these emerging fields.",
-  content1: "This is a unique opportunity to expand your knowledge and skills as a designer and gain insights into how these new design fields are transforming the way we interact with digital contents. ",
-  content2: "Through engaging discussions and interactive activities, you will discover the potential of Web3 and XR to enhance user experiences, create immersive environments, and unlock new opportunities for creativity and innovation.",
-  content3: "Don't miss this chance to be at the forefront of the next wave of design.",
+    "This will be an engaging panel session where product managers, developers and designers will explore strategies and best practices for improving collaboration between designers, developers, and product managers. ",
+  content1: "The speakers will discuss common challenges that arise during the product development process and share insights on how to build stronger, more effective partnerships across teams.",
+  content2: "This is a great opportunity to enhance your skills, connect with other professionals, and build a more collaborative and inclusive design culture. Don't miss out on this chance to take your design skills to the next level!",
+  content3: "",
   content4: "",
-  speakerName: 'Ozenua John ',
+  speakerName: ' Collins Akpaka ',
   speakerRole: 'Product Designer, Outliant',
 }

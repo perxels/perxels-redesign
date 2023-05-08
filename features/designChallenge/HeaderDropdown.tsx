@@ -9,9 +9,9 @@ const HeaderDropdown = ({ setShowDropdown }: { setShowDropdown: any }) => {
         <Link onClick={() => setShowDropdown(false)} href="/">
           <Text fontSize="xl">Home</Text>
         </Link>
-        <Link onClick={() => setShowDropdown(false)} href="/design-challenge">
+        {/* <Link onClick={() => setShowDropdown(false)} href="/design-challenge">
           <Text fontSize="xl">About</Text>
-        </Link>
+        </Link> */}
         <Link onClick={() => setShowDropdown(false)} href="/design-challenge/#instructions">
           <Text fontSize="xl">How It Works</Text>
         </Link>
