@@ -64,8 +64,10 @@ import { SuccessModal } from '../../components'
         <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title="Thank you for registering"
-        description="You will be sent the PRD shortly"
+        title="Thank you for registering for the Design Challenge"
+        description="Join the Design Challenge Whatsapp group by clicking the button"
+        buttonTitle="Join Challenge Group"
+        buttonHref="https://chat.whatsapp.com/FhQO4wyXEBoEjOXa74xw2B"
       />
         <MainContainer>
           <Box py="3.75rem">
@@ -86,6 +88,7 @@ import { SuccessModal } from '../../components'
               email: '',
               phone: '',
               twitterHandle: '',
+              location: '',
               reason: '',
             }}
             validationSchema={Yup.object({
@@ -93,6 +96,7 @@ import { SuccessModal } from '../../components'
               email: Yup.string().email('Invalid email address').required('Required'),
               phone: Yup.string().required('Required'),
               twitterHandle: Yup.string().required('Required'),
+              location: Yup.string().required('Required'),
               reason: Yup.string().required('Required'),
             })}
             onSubmit={(values, action) => {
@@ -101,6 +105,7 @@ import { SuccessModal } from '../../components'
               formData.append('email', values.email)
               formData.append('phone', values.phone)
               formData.append('twitterHandle', values.twitterHandle)
+              formData.append('location', values.location)
               formData.append('reason', values.reason)
               //current date and time
               formData.append('created_at', new Date().toLocaleString())
@@ -201,7 +206,26 @@ import { SuccessModal } from '../../components'
                   </InputWrapper>
                 </SimpleGrid>
                 {/* Description */}
-                <HStack w="full" spacing={['1rem', '1rem', '1rem', '2rem']}>
+                <SimpleGrid
+                  columns={[1, 1, 1, 2]}
+                  w="full"
+                  spacing={['1rem', '1rem', '1rem', '2rem']}
+                >
+                   <InputWrapper label="LOCATION">
+                    <Input
+                      type="text"
+                      placeholder="Enter Location"
+                      w="full"
+                      h={['3rem', '3rem', '3rem', '5rem']}
+                      name="location"
+                      value={formik.values.location}
+                       onChange = {formik.handleChange}
+                  onBlur = {formik.handleBlur}
+                  borderColor = {formik.touched.location && formik.errors.location ? 'red.500' : '#B4B4B4'}
+                      required
+                    />
+                  </InputWrapper>
+
                   <InputWrapper label="Reason for joining the challenge">
                     <Textarea
                       // placeholder="Tell Us a little about your Project..."
@@ -216,7 +240,7 @@ import { SuccessModal } from '../../components'
                   borderColor = {formik.touched.reason && formik.errors.reason ? 'red.500' : '#B4B4B4'}
                     />
                   </InputWrapper>
-                </HStack>
+                </SimpleGrid>
                 {/* contact */}
          
     

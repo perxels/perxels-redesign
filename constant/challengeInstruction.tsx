@@ -10,7 +10,7 @@ export const ChallengeInstructionContent: ChallengeInstructionInterface[] = [
         id: 1,
         image: '/assets/icons/laptopIcon.svg',
         title: 'Registration',
-        text: 'Register for the program via Perxels Design School website and fill the registration form.',
+        text: 'Register for the challenge via Perxels Design School website and fill the registration form.',
     },
     {
         id: 2,

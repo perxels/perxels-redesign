@@ -49,9 +49,9 @@ export const EventHero = () => {
               }}
               mb={{ base: 4, md: 7 }}
             >
-              <Text>DESIGN DIGEST SESSION</Text>
+              {/* <Text>DESIGN DIGEST SESSION</Text> */}
               {/* <Text>AMA SESSION</Text> */} 
-              {/* <Text>REVIEW SESSION</Text> */}
+              <Text>PANEL SESSION</Text>
             </Button>
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}
@@ -140,10 +140,86 @@ export const EventHero = () => {
                 textTransform={'uppercase'}
                 mb={{ base: 2, md: 4 }}
               >
-                Speaker:
+                {/* Speaker: */}
+                Panelists:
               </Text>
-              <Flex mb="2rem" alignItems={'center'} columnGap={'0.725625rem'}>
+              <Flex 
+              mb="3rem"
+              flexDir="column"
+              rowGap={"3rem"}
+              //  alignItems={'center'} 
+              alignItems="flex-start"
+              >
+                <Flex columnGap="0.7rem">
+              <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
+                  <Img
+                   src='/assets/images/banner/bannerImage2.jpeg'
+                    alt="speakerImg"
+                  />
+                </Box>
+                <Box>
+                  <Text
+                    fontSize={{ base: '1.10965rem', lg: '1.596875rem' }}
+                    fontWeight={'bold'}
+                    color={'brand.dark.100'}
+                  >
+                    Collins Akpaka
+                  </Text>
+                  <Text
+                    fontSize={{ base: '0.806875rem', lg: '1.25rem' }}
+                    color="#5F6368"
+                  >
+                    Lead Product Strategist, Kadet Wallet 
+                  </Text>
+                </Box>
+                </Flex>
+                <Flex columnGap="0.7rem">
                 <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
+                  <Img
+                   src='/assets/images/banner/bannerImage.png'
+                    alt="speakerImg"
+                  />
+                </Box>
+                <Box>
+                  <Text
+                    fontSize={{ base: '1.10965rem', lg: '1.596875rem' }}
+                    fontWeight={'bold'}
+                    color={'brand.dark.100'}
+                  >
+                    Kanyinsola Balogun 
+                  </Text>
+                  <Text
+                    fontSize={{ base: '0.806875rem', lg: '1.25rem' }}
+                    color="#5F6368"
+                  >
+                    Product Designer,  ApplyForMe 
+                  </Text>
+                </Box>
+              </Flex>
+              <Flex columnGap="0.7rem">
+                <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
+                  <Img
+                   src='/assets/images/banner/imageBanner.png'
+                    alt="speakerImg"
+                  />
+                </Box>
+                <Box>
+                  <Text
+                    fontSize={{ base: '1.10965rem', lg: '1.596875rem' }}
+                    fontWeight={'bold'}
+                    color={'brand.dark.100'}
+                  >
+                    Lawrence Bill
+                  </Text>
+                  <Text
+                    fontSize={{ base: '0.806875rem', lg: '1.25rem' }}
+                    color="#5F6368"
+                  >
+                    Frontend Developer, Nimbus Media Limited.
+                  </Text>
+                </Box>
+                </Flex>
+                {/* <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
                   <Img
                     borderRadius={'50%'}
                     src={bannerContent.bannerImage}
@@ -164,7 +240,7 @@ export const EventHero = () => {
                   >
                     {bannerContent.speakerRole}
                   </Text>
-                </Box>
+                </Box> */}
               </Flex>
             </Box>
 

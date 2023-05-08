@@ -134,7 +134,9 @@ export const Task = () => {
             An email containing the PRD will be sent to you shortly.
             </Text>
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter
+            justifyContent="flex-start"
+            >
             <Button colorScheme="blue" mr={3} onClick={onClose}>
                 Close
             </Button>

@@ -32,7 +32,7 @@ export const Header = ({ isDark = false }) => {
               alignItems="center"
               gap="4.375rem"
             >
-              <Link href="/design-challenge">
+              {/* <Link href="/design-challenge">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -40,7 +40,7 @@ export const Header = ({ isDark = false }) => {
                 >
                 About
                 </Text>
-              </Link>
+              </Link> */}
               <Link href="/design-challenge/#instructions">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
