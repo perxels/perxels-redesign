@@ -142,10 +142,11 @@ export const EventHero = () => {
               >
                 Speakers:
               </Text>
-              <Flex mb="3rem"
-              //  alignItems={'center'} 
+              <Flex 
+              mb="3rem"
               flexDir="column"
               rowGap={"3rem"}
+              //  alignItems={'center'} 
               alignItems="flex-start"
               >
                 <Flex columnGap="0.7rem">
