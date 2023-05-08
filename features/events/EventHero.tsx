@@ -49,9 +49,9 @@ export const EventHero = () => {
               }}
               mb={{ base: 4, md: 7 }}
             >
-              <Text>DESIGN DIGEST SESSION</Text>
+              {/* <Text>DESIGN DIGEST SESSION</Text> */}
               {/* <Text>AMA SESSION</Text> */} 
-              {/* <Text>REVIEW SESSION</Text> */}
+              <Text>PANEL SESSION</Text>
             </Button>
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}
@@ -140,7 +140,8 @@ export const EventHero = () => {
                 textTransform={'uppercase'}
                 mb={{ base: 2, md: 4 }}
               >
-                Speakers:
+                {/* Speaker: */}
+                Panelists:
               </Text>
               <Flex 
               mb="3rem"
