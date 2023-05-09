@@ -95,10 +95,9 @@ export const Task = () => {
              fontWeight="600"
              height={["2.75rem","57.9px"]}
             border="1.18156px solid #FDE85C"
-            leftIcon={<BiDownload size="1.5rem"/>}
             onClick={onOpen}
             >
-                Read Requirement
+                Read the guidelines
             </Button>
         </Flex>
         </Center>
