@@ -76,7 +76,7 @@ export const Task = () => {
        px={["1.0625rem", "0"]}
        justifyContent="center"
         >
-            <Link href="/design-challenge/#join">
+            <Link href="/challenge/#join">
             <Button
             bgColor={"brand.yellow.500"}
             color={"brand.purple.500"}
@@ -98,7 +98,7 @@ export const Task = () => {
             leftIcon={<BiDownload size="1.5rem"/>}
             onClick={onOpen}
             >
-                Download PRD
+                Read Requirement
             </Button>
         </Flex>
         </Center>

@@ -41,7 +41,7 @@ export const Header = ({ isDark = false }) => {
                 About
                 </Text>
               </Link> */}
-              <Link href="/design-challenge/#instructions">
+              <Link href="/challenge/#instructions">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -51,7 +51,7 @@ export const Header = ({ isDark = false }) => {
                  How It Works
                 </Text>
               </Link>
-              <Link href="/design-challenge/#prizes">
+              <Link href="/challenge/#prizes">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -61,7 +61,7 @@ export const Header = ({ isDark = false }) => {
                 </Text>
               </Link>
 
-              <Link href="/design-challenge/#submission">
+              <Link href="/challenge/#submission">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
@@ -73,7 +73,7 @@ export const Header = ({ isDark = false }) => {
             </Flex>
           </Flex>
 
-          <Link href="/design-challenge/#join">
+          <Link href="/challenge/#join">
             <Button
               h="3.125rem"
               variant={isDark ? 'solid-white' : 'solid'}
