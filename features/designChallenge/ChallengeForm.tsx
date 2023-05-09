@@ -64,9 +64,9 @@ import { SuccessModal } from '../../components'
         <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title="Thank you for registering for the Design Challenge"
-        description="Join the Design Challenge Whatsapp group by clicking the button"
-        buttonTitle="Join Challenge Group"
+        title="Thank you for registering for the Challenge"
+        description=""
+        buttonTitle="Download the PRD"
         buttonHref="https://chat.whatsapp.com/FhQO4wyXEBoEjOXa74xw2B"
       />
         <MainContainer>
