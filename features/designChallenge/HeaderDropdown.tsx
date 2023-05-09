@@ -9,20 +9,20 @@ const HeaderDropdown = ({ setShowDropdown }: { setShowDropdown: any }) => {
         <Link onClick={() => setShowDropdown(false)} href="/">
           <Text fontSize="xl">Home</Text>
         </Link>
-        {/* <Link onClick={() => setShowDropdown(false)} href="/design-challenge">
+        {/* <Link onClick={() => setShowDropdown(false)} href="/challenge">
           <Text fontSize="xl">About</Text>
         </Link> */}
-        <Link onClick={() => setShowDropdown(false)} href="/design-challenge/#instructions">
+        <Link onClick={() => setShowDropdown(false)} href="/challenge/#instructions">
           <Text fontSize="xl">How It Works</Text>
         </Link>
-        <Link onClick={() => setShowDropdown(false)} href="/design-challenge/#prizes">
+        <Link onClick={() => setShowDropdown(false)} href="/challenge/#prizes">
           <Text fontSize="xl">Prizes</Text>
         </Link>
-        <Link onClick={() => setShowDropdown(false)} href="/design-challenge/#submission">
+        <Link onClick={() => setShowDropdown(false)} href="/challenge/#submission">
           <Text fontSize="xl">Submission</Text>
         </Link>
         {/* change button content */}
-        <Link onClick={() => setShowDropdown(false)} href="/design-challenge/#join">
+        <Link onClick={() => setShowDropdown(false)} href="/challenge/#join">
           <Button>Join the Challenge</Button>
         </Link>
       </Flex>
