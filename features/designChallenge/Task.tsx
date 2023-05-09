@@ -98,7 +98,7 @@ export const Task = () => {
             leftIcon={<BiDownload size="1.5rem"/>}
             onClick={onOpen}
             >
-                Read Requirement
+                Read the guidelines
             </Button>
         </Flex>
         </Center>
