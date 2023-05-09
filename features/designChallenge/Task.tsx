@@ -88,6 +88,7 @@ export const Task = () => {
                 Join the challenge
             </Button>
             </Link>
+            <Link href="/challenge/#submission">
             <Button
              bgColor={"transparent"}
              color={"brand.yellow.500"}
@@ -95,10 +96,11 @@ export const Task = () => {
              fontWeight="600"
              height={["2.75rem","57.9px"]}
             border="1.18156px solid #FDE85C"
-            onClick={onOpen}
+           
             >
                 Read the guidelines
             </Button>
+            </Link>
         </Flex>
         </Center>
 
