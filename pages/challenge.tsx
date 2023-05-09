@@ -1,7 +1,7 @@
 import React from 'react'
 import { Hero, Instruction, Task, Prizes, Submission, ChallengeForm, Testimonial, Header } from '../features/designChallenge'
 import { Footer } from '../components'
-const designChallenge = () => {
+const challenge = () => {
   return (
     <div>
         <Header/>
@@ -17,4 +17,4 @@ const designChallenge = () => {
   )
 }
 
-export default designChallenge
+export default challenge

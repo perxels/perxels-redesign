@@ -92,7 +92,6 @@ export const Banner = () => {
                  <Box boxSize={['4.8125rem']}>
                 <Img
                 src='/assets/images/banner/imageBanner.png'
-
                   alt="Banner"
                   // rounded={'100%'}
                 />
