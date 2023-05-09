@@ -96,7 +96,6 @@ export const Task = () => {
              fontWeight="600"
              height={["2.75rem","57.9px"]}
             border="1.18156px solid #FDE85C"
-           
             >
                 Read the guidelines
             </Button>

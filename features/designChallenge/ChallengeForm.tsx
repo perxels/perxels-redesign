@@ -67,7 +67,7 @@ import { SuccessModal } from '../../components'
         title="Thank you for registering for the Challenge"
         description=""
         buttonTitle="Download the PRD"
-        buttonHref="https://chat.whatsapp.com/FhQO4wyXEBoEjOXa74xw2B"
+        buttonHref="/assets/files/PRD_OF_PERXELS_CHALLENGE.pdf"
       />
         <MainContainer>
           <Box py="3.75rem">
