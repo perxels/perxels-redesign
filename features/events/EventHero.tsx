@@ -192,7 +192,7 @@ export const EventHero = () => {
                     fontSize={{ base: '0.806875rem', lg: '1.25rem' }}
                     color="#5F6368"
                   >
-                    Product Designer,  ApplyForMe 
+                    Product Designer,  AxiaAfrica
                   </Text>
                 </Box>
               </Flex>
