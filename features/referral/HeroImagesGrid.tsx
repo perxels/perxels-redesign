@@ -3,8 +3,8 @@ import {Image, Box, SimpleGrid, Text} from '@chakra-ui/react'
 export const HeroImagesGrid = () => {
   return (
         <SimpleGrid
-            columns={{base: 1, md: 2, lg: 3}}
-            spacing={"1.0625rem"}
+            columns={{base: 3, md: 3, lg: 3}}
+            spacing={["0.8rem","1.0625rem"]}
             w="full"
             h="full"
             overflow="hidden"

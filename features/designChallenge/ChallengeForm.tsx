@@ -100,6 +100,7 @@ import { SuccessModal } from '../../components'
               reason: Yup.string().required('Required'),
             })}
             onSubmit={(values, action) => {
+              setLoading(true)
               const formData = new FormData()
               formData.append('fullname', values.fullname)
               formData.append('email', values.email)
@@ -113,6 +114,7 @@ import { SuccessModal } from '../../components'
                 method: 'POST',
                 body: formData,
               }).then((response) => {
+                
                 if (response.status === 201 || 200) {
                   setLoading(false)
                  onOpen()
@@ -253,7 +255,7 @@ import { SuccessModal } from '../../components'
                   w="full"
                   maxW="437px"
                   type="submit"
-                  isLoading={formik.isSubmitting}
+                  isLoading={ loading ? formik.isSubmitting : false}
                 >
                   Submit
                 </Button>

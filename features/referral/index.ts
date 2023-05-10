@@ -1,2 +1,6 @@
 export * from  './Hero'
 export * from './HeroImagesGrid'
+export * from './HowItWorks'
+export * from './RefClass'
+export * from './RefClassBox'
+export * from './ReferQuestions'
