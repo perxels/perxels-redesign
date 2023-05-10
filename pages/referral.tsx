@@ -1,9 +1,12 @@
 import React from 'react'
-import {Hero} from '../features/referral'
+import {Hero, HowItWorks, RefClass, ReferQuestions} from '../features/referral'
 const referral = () => {
   return (
     <div>
       <Hero />
+      <HowItWorks />
+      <RefClass/>
+      <ReferQuestions/>
     </div>
   )
 }
