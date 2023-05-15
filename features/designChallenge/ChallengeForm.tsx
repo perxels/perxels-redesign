@@ -64,7 +64,7 @@ import { SuccessModal } from '../../components'
         <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title="Thank you for registering for the Challenge"
+        title="An email that has the Challenge WhatsApp group link will be sent to you shortly."
         description=""
         buttonTitle="Download the PRD"
         buttonHref="/assets/files/PRD_OF_PERXELS_CHALLENGE.pdf"
