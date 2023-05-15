@@ -63,7 +63,7 @@ export const Task = () => {
         mt="20px"
         className="taskGrid"
         >
-           JAMB WEBSITE RE-DESIGN
+           JAMB HOMEPAGE RE-DESIGN
         </Heading>
 
         <Center
