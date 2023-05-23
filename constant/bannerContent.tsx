@@ -16,18 +16,18 @@ interface BannerContent {
 }
 
 export const bannerContent: BannerContent = {
-  mainTitle: ' ',
-  subTitle: 'STRENGTHENING COLLABORATION BETWEEN DESIGNERS, DEVELOPERS, AND PRODUCT MANAGERS.',
+  mainTitle: 'LIVE DESIGN SESSION: ',
+  subTitle: 'DATA REPRESENTATION ',
   time: '7pm - 8pm (WAT)',
-  date: 'May  21st, 2023',
+  date: 'Sunday, June 4th, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    "This will be an engaging panel session where product managers, developers and designers will explore strategies and best practices for improving collaboration between designers, developers, and product managers. ",
-  content1: "The speakers will discuss common challenges that arise during the product development process and share insights on how to build stronger, more effective partnerships across teams.",
-  content2: "This is a great opportunity to enhance your skills, connect with other professionals, and build a more collaborative and inclusive design culture. Don't miss out on this chance to take your design skills to the next level!",
+    "The facilitator will design a data dashboard for a healthcare organization that allows healthcare providers to monitor patient vital signs and health trends live alongside the audience. The dashboard will display the data in a visually appealing and easy-to-understand format, using charts, graphs, and other data visualizations.",
+  content1: "The data dashboard will include things like blood pressure, heart rate, temperature, and other relevant health metrics. The dashboard should also allow healthcare providers to filter and sort the data, by patient, date, and other relevant criteria.",
+  content2: "The facilitator will consider the visual design, layout, and user experience when creating the dashboard. At the end of the session, the audience will be able to create useful and user-friendly dashboards that represent visual data and be able to  set alerts for certain patient metrics or export data to a PDF or CSV file.",
   content3: "",
   content4: "",
-  speakerName: ' Collins Akpaka ',
-  speakerRole: 'Product Designer, Outliant',
+  speakerName: 'Dara Sobaloju ',
+  speakerRole: 'Product Designer, Treepz',
 }
