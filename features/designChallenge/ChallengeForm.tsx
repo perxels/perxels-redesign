@@ -9,7 +9,8 @@ import {
     Text,
     Textarea,
     VStack,
-    useDisclosure
+    useDisclosure,
+    Center
   } from '@chakra-ui/react'
   import React, { useState } from 'react'
   import { SectionHeader } from '../../components'
@@ -64,10 +65,10 @@ import { SuccessModal } from '../../components'
         <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title="Click on the button to download the PRD of the challenge."
-        description=""
-        buttonTitle="Download the PRD"
-        buttonHref="/assets/files/PRD_OF_PERXELS_CHALLENGE.pdf"
+        title="Registration is now closed"
+        description="The registration for this challenge closed on 23rd of May 2023"
+        buttonTitle="Back to Home Page"
+        buttonHref="/"
       />
         <MainContainer>
           <Box py="3.75rem">
@@ -77,11 +78,26 @@ import { SuccessModal } from '../../components'
         fontSize={['2rem', '2rem', '7xl']}
         maxW={'auto'}
         m="0 auto"
-        mb="3.75rem"
+        mb="1.75rem"
         mt="1.25rem"
       >
        Complete the form to Register.
       </Heading>
+        <Center
+        pb="1.75rem"
+        >
+       <Text
+             bg="#FFF2D0"
+             rounded="300px"
+             padding={["1rem 1.35rem","2.0625rem 3.75rem" ]}
+             display="inline-flex"
+            color="#FFBB0D"
+            fontWeight="700"
+            fontSize={["0.8rem","1.875rem"]}
+            >
+              Registration for this challenge is now closed
+            </Text>
+        </Center>
           <Formik
             initialValues={{ 
               fullname: '',
