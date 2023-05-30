@@ -61,19 +61,19 @@ export const Header = ({ isDark = false }) => {
                 </Text>
               </Link>
 
-              <Link href="/challenge/#submission">
+              <Link href="/challenge/#winners">
                 <Text
                   color={isDark ? 'brand.white' : 'brand.primary.500'}
                   _hover={{ color: 'brand.yellow.500' }}
                   fontSize="xl"
                 >
-                Submission
+                Winners
                 </Text>
               </Link>
             </Flex>
           </Flex>
 
-          <Link href="/challenge/#join">
+          {/* <Link href="/challenge/#join">
             <Button
               h="3.125rem"
               variant={isDark ? 'solid-white' : 'solid'}
@@ -82,7 +82,7 @@ export const Header = ({ isDark = false }) => {
             >
              Join the Challenge
             </Button>
-          </Link>
+          </Link> */}
 
           <Icon
             as={!showDropdown ? RiMenu3Line : IoCloseSharp}

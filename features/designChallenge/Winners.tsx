@@ -22,6 +22,7 @@ export const Winners = () => {
     <MainContainer bg="#FFFFFFF">
         <Box
         py="6.625rem"
+        id="winners"
         >
     <Flex
     bg="#34296B"
