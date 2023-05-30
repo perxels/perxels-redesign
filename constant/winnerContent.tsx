@@ -1,6 +1,8 @@
-export interface winnerProps {}
+export interface winnerProps {
+    winners: string[]
+}
 
-export const WinnerContent: winnerProps[] = [
+export const WinnerContent = [
     "adekunle christiana oreofe",
     "Adeniyi Oluwabukola Adedamola",
     "Akinwolere Valentine",
@@ -51,4 +53,5 @@ export const WinnerContent: winnerProps[] = [
     "Olumide Balogun",
     "Edor Emmanuel",
     "Victor Chaman"
-]  
+    ]
+

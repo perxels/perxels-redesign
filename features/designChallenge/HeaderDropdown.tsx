@@ -18,13 +18,13 @@ const HeaderDropdown = ({ setShowDropdown }: { setShowDropdown: any }) => {
         <Link onClick={() => setShowDropdown(false)} href="/challenge/#prizes">
           <Text fontSize="xl">Prizes</Text>
         </Link>
-        <Link onClick={() => setShowDropdown(false)} href="/challenge/#submission">
-          <Text fontSize="xl">Submission</Text>
+        <Link onClick={() => setShowDropdown(false)} href="/challenge/#winners">
+          <Text fontSize="xl">Winners</Text>
         </Link>
         {/* change button content */}
-        <Link onClick={() => setShowDropdown(false)} href="/challenge/#join">
+        {/* <Link onClick={() => setShowDropdown(false)} href="/challenge/#join">
           <Button>Join the Challenge</Button>
-        </Link>
+        </Link> */}
       </Flex>
     </Center>
   )
