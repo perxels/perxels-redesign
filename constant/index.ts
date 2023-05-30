@@ -12,4 +12,5 @@ export * from './motionProcessContent'
 export * from './motionClassPlanContent'
 export * from './challengeInstruction'
 export * from './motionProjects'
+export * from './winnerContent'
 

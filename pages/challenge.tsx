@@ -1,5 +1,5 @@
 import React from 'react'
-import { Hero, Instruction, Task, Prizes, Submission, ChallengeForm, Testimonial, Header } from '../features/designChallenge'
+import { Hero, Instruction, Task, Prizes, Submission, ChallengeForm, Testimonial, Header, Winners } from '../features/designChallenge'
 import { Footer } from '../components'
 const challenge = () => {
   return (
@@ -10,7 +10,8 @@ const challenge = () => {
         <Task/>
         <Prizes/>
         <Submission/>
-        <ChallengeForm/>
+        <Winners/>
+        {/* <ChallengeForm/> */}
         <Testimonial/>
         <Footer/>
     </div>
