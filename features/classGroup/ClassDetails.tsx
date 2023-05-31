@@ -243,7 +243,7 @@ export const ClassDetails = ({
             {isShow ||
               (isSponsor && (
                 <GridItem colSpan={[2, 2, 2, 1]}>
-                  <Box
+                  {/* <Box
                     as="span"
                     rounded="100px"
                     color="#000"
@@ -254,7 +254,7 @@ export const ClassDetails = ({
                     bg="brand.purple.100"
                   >
                     15% discount available for this option
-                  </Box>
+                  </Box> */}
                 </GridItem>
               ))}
             <GridItem colSpan={[2, 2, 2, 1]}>
