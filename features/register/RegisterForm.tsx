@@ -243,24 +243,24 @@ const RegisterForm = () => {
               >
                 <option
                   value="Basic Class to learn the FUNDAMENTALS of UIUX design in 7
-                  weeks (Full Scholarship for 3 people)"
+                  weeks"
                 >
                   Basic Class to learn the FUNDAMENTALS of UIUX design in 7
-                  weeks (Full Scholarship for 3 people)
+                  weeks 
                 </option>
                 <option
                   value="Advance Class to expand your DESIGN THINKING and PROBLEM
-                  SOLVING skills in 9 weeks (15% discount)"
+                  SOLVING skills in 9 weeks"
                 >
                   Advance Class to expand your DESIGN THINKING and PROBLEM
-                  SOLVING skills in 9 weeks (15% discount)
+                  SOLVING skills in 9 weeks 
                 </option>
                 <option
                   value="Premium Class for beginners to learn everything in UIUX design
-                  from basic to PROFESSIONAL level in 3 months (15% discount)"
+                  from basic to PROFESSIONAL level in 3 months"
                 >
                   Premium Class for beginners to learn everything in UIUX design
-                  from basic to PROFESSIONAL level in 3 months (15% discount)
+                  from basic to PROFESSIONAL level in 3 months 
                 </option>
               </Select>
               {formik.touched.class && formik.errors.class ? (

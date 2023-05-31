@@ -94,7 +94,7 @@ export const SponsorHero = () => {
             className="desc"
             opacity={0}
           >
-            Get Full Scholarship into Perxels
+          Get 25% Discount Off From June Tuition Fees
           </Heading>
 
           <Text
@@ -105,10 +105,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-            Adeniyi Sonoiki is sponsoring <b>3 People</b> to learn UIUX Design on <b>Full
-            Scholarship.</b> This Scholarship is available for only <b>Basic Class. </b>
-            Perxels will be giving another <b>10 Lucky People a 15% discount off
-            the tution for any class.</b>
+            We are offering a 25% discount on all registrations from GDSC Career Fest starting from June 3rd, 2023
           </Text>
 
           <Button
@@ -121,7 +118,7 @@ export const SponsorHero = () => {
             as={Link}
             href="/sponsorship#instructions"
           >
-            See details
+            Apply Now
           </Button>
         </Flex>
 
