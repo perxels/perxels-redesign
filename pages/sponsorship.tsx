@@ -9,13 +9,12 @@ import { MainLayout } from '../layouts'
 
 const sponsorship = () => {
   return (
-    <></>
-    // <MainLayout>
-    //   <SponsorHero />
-    //   <Instructions />
-    //   <ClassPlan />
-    //   <Testimonial />
-    // </MainLayout>
+    <MainLayout>
+     <SponsorHero />
+    <Instructions />
+    <ClassPlan />
+      <Testimonial />
+    </MainLayout>
   )
 }
 
