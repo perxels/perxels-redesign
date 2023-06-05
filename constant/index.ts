@@ -13,4 +13,5 @@ export * from './motionClassPlanContent'
 export * from './challengeInstruction'
 export * from './motionProjects'
 export * from './winnerContent'
+export * from './termsContent'
 
