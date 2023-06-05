@@ -7,6 +7,7 @@ export const TermsNav = () => {
     <Box
     p=""
     boxShadow="0px 0px 5px 1px rgba(52, 41, 107, 0.15)"
+   
     >
         {
             TermsNavLink.map(({name, url}) => {
