@@ -13,14 +13,16 @@ export const TermsLayout = () => {
         px={["5%","10%"]}
         py="10%"
         justifyContent={['center', 'center', 'center', 'space-between', 'space-between']}
+        position={"relative"}
         >
           <Box
           width="30%"
           display={['none', 'none', 'none', 'block']}
+       
           >
           <TermsNav/>
           </Box>
-          <Box width={["100%","60%"]}>
+          <Box  width={["100%","60%"]}>
         <TermsContent/>
         </Box>
         </Flex>
