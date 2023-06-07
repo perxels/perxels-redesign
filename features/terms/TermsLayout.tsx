@@ -14,15 +14,18 @@ export const TermsLayout = () => {
         py="10%"
         justifyContent={['center', 'center', 'center', 'space-between', 'space-between']}
         position={"relative"}
+       
         >
           <Box
           width="30%"
           display={['none', 'none', 'none', 'block']}
-       
+          position="sticky"
+          // left="50%"
+          // minHeight="100vh"
           >
           <TermsNav/>
           </Box>
-          <Box  width={["100%","60%"]}>
+          <Box  width={["100%","60%"]} height={["100%","100vh"]} overflowY={["visible","scroll"]}> 
         <TermsContent/>
         </Box>
         </Flex>

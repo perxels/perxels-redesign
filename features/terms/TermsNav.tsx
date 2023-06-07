@@ -1,6 +1,7 @@
 import React from 'react'
 import {Box, Text, Heading, OrderedList, ListItem} from '@chakra-ui/react'
 import { TermsNavLink } from '../../constant'
+import Link from 'next/link'
 export const TermsNav = () => {
     const [active, setActive] = React.useState('payment-policy')
   return (
@@ -18,14 +19,14 @@ export const TermsNav = () => {
                     borderLeft={active === url ? "4px solid rgba(52, 41, 107, 0.8)" : "4px solid #fff"}
                     borderLeftRadius="0px 10px 10px 0px;"
                     >
+                        <Link href={`/policy#${url}`}>
                         <Text
                         fontSize="1rem"
                         lineHeight="1.6875rem"
                         color="#121212"
-                        mt="1.25rem"
-                        as="a"
-                        href={`/terms#${url}`}
+                        mt="1.25rem"    
                         >{name}</Text>
+                        </Link>
                     </Box>
                 )
             })
