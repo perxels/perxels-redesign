@@ -14,7 +14,6 @@ export const TermsLayout = () => {
         py="10%"
         justifyContent={['center', 'center', 'center', 'space-between', 'space-between']}
         position={"relative"}
-       
         >
           <Box
           width="30%"

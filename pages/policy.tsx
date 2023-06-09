@@ -1,12 +1,15 @@
 import React from 'react'
 import {TermsLayout} from '../features/terms'
 import { MainLayout } from '../layouts'
+import {Header, Footer} from '../components/'
 const terms = () => {
   return (
     <div>
-        <MainLayout>
-        <TermsLayout/>
-        </MainLayout>
+      <Header isRelative />
+        {/* <MainLayout> */}
+        <TermsLayout/>   
+        <Footer />
+        {/* </MainLayout> */}
     </div>
   )
 }

@@ -9,14 +9,15 @@ import Logo from './Logo'
 
 interface HeaderProps {
   isDark?: boolean
+  isRelative?: boolean
 }
 
-const Header = ({ isDark = false }) => {
+const Header = ({ isDark = false, isRelative= false }) => {
   const [showDropdown, setShowDropdown] = React.useState(false)
 
   return (
     <Box
-      pos="sticky"
+      pos={isRelative ? "relative" : "sticky" }
       top="0"
       zIndex="5"
       bg={isDark ? 'brand.dark.200' : 'brand.white'}
