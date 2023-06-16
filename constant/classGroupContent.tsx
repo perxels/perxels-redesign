@@ -65,12 +65,20 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
   //   link: '/international',
   //   image: '/assets/images/class-group/international.jpg',
   // },
+  // {
+  //   title: 'Private Class',
+  //   content: `
+  //   One-on-one training and mentorship to build your design skills to solve problems and create delightful products.
+  //       `,
+  //   link: '/private',
+  //   image: '/assets/images/class-group/international.jpg',
+  // },
   {
-    title: 'Private Class',
+    title: 'Physical Class',
     content: `
-    One-on-one training and mentorship to build your design skills to solve problems and create delightful products.
+    Physical training and mentorship to build your design skills to solve problems and create delightful products.
         `,
-    link: '/private',
+    link: '/enrol#physical-class',
     image: '/assets/images/class-group/international.jpg',
   },
 ]
@@ -80,11 +88,11 @@ export const classGroupDetails = [
     title: 'Physical Class',
     id: 'physical-class',
     classDur: '3 Months.',
-    classTime: '2-3 times a week.',
+    classTime: '2 times a week.',
     classType: 'PHYSICAL TRAINING',
     installments: ['70% On Admission,', '30% after one month.'],
-    tuition: '₦200,000',
-    physicalTuition: '₦210,000',
+    tuition: '₦210,000',
+    physicalTuition: '₦200,000',
     courseOutline: [
       'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
       'It includes everything in the Basic and Advanced class curriculum.',
@@ -101,7 +109,7 @@ export const classGroupDetails = [
     branchAddress: 'Ring Road, Ibadan Oyo State',
     isTab: true,
     installmentPhysical: ['70% On Admission,', '30% after one month.'],
-    classTimePhysical: '2-3 times a week.',
+    classTimePhysical: '2 times a week.',
   },
   {
     title: 'Basic Class',

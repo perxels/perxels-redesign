@@ -200,16 +200,16 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               >
-                <option value="Basic Program">Basic Program</option>
-                <option value="Advanced Program">Advanced Program</option>
-                <option value="Premium (Virtual) Program">
-                  Premium Program
+                <option value="Basic Class">Basic Class</option>
+                <option value="Advanced Class">Advanced Class</option>
+                <option value="Premium (Virtual) Class">
+                  Premium Class
                 </option>
-                <option value="Physical Program (Lagos)">
-                  Physical Program (Lagos)
+                <option value="Physical Class (Lagos)">
+                  Physical Class (Lagos)
                 </option>
-                <option value="Physical Program (Ibadan)">
-                  Physical Program (Ibadan)
+                <option value="Physical Class (Ibadan)">
+                  Physical Class (Ibadan)
                 </option>
                 <option value="International Class">International Class</option>
                 <option value="Private Class">Private Class</option>
