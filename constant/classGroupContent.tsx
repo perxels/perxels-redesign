@@ -65,12 +65,20 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
   //   link: '/international',
   //   image: '/assets/images/class-group/international.jpg',
   // },
+  // {
+  //   title: 'Private Class',
+  //   content: `
+  //   One-on-one training and mentorship to build your design skills to solve problems and create delightful products.
+  //       `,
+  //   link: '/private',
+  //   image: '/assets/images/class-group/international.jpg',
+  // },
   {
-    title: 'Private Class',
+    title: 'Physical Class',
     content: `
-    One-on-one training and mentorship to build your design skills to solve problems and create delightful products.
+    Physical training and mentorship to build your design skills to solve problems and create delightful products.
         `,
-    link: '/private',
+    link: '/enrol#physical-class',
     image: '/assets/images/class-group/international.jpg',
   },
 ]
