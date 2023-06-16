@@ -90,7 +90,7 @@ export const classGroupDetails = [
     classDur: '3 Months.',
     classTime: '2 times a week.',
     classType: 'PHYSICAL TRAINING',
-    installments: ['70% On Admission,', '30% after one month.'],
+    installments: ['60% on admission', '40% after one month'],
     tuition: '₦210,000',
     physicalTuition: '₦200,000',
     courseOutline: [
@@ -108,7 +108,7 @@ export const classGroupDetails = [
     address: 'Lekki Phase 1, Lagos Nigeria',
     branchAddress: 'Ring Road, Ibadan Oyo State',
     isTab: true,
-    installmentPhysical: ['70% On Admission,', '30% after one month.'],
+    installmentPhysical: ['60% on admission', '40% after one month'],
     classTimePhysical: '2 times a week.',
   },
   {
@@ -175,7 +175,7 @@ export const classGroupDetails = [
     ],
     address: 'Lekki Phase 1, Lagos Nigeria',
     isTab: false,
-    installmentPhysical: ['60% On Admission,', '40% after one month.'],
+    installmentPhysical: ['60% on admission', '40% after one month'],
     classTimePhysical: '2 times a week.',
   },
 ]
