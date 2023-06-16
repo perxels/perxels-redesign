@@ -77,6 +77,10 @@ export const links = [
         url: '/enrol#premium-class',
       },
       {
+        name: 'Private Class',
+        url: '/private',
+      },
+      {
         name: 'International Class',
         url: '/international',
       },
