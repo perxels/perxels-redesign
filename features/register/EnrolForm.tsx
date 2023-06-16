@@ -206,10 +206,10 @@ const EnrolForm = () => {
                   Premium Program
                 </option>
                 <option value="Physical Program (Lagos)">
-                  Premium Program (Lagos)
+                  Physical Program (Lagos)
                 </option>
                 <option value="Physical Program (Ibadan)">
-                  Premium Program (Ibadan)
+                  Physical Program (Ibadan)
                 </option>
                 <option value="International Class">International Class</option>
                 <option value="Private Class">Private Class</option>
