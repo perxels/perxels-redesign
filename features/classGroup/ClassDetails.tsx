@@ -52,6 +52,7 @@ export const ClassDetails = ({
   isTab,
   physicalTuition,
   address,
+  branchAddress,
   installmentPhysical,
   classTimePhysical
 }: ClassGroupDetailsProps) => {
@@ -110,7 +111,7 @@ export const ClassDetails = ({
                 h="62px"
                 animation={tabState === 'physical' ? glowAnimation : 'none'}
               >
-                VIRTUAL CLASS
+                LAGOS
               </Button>
               <Button
                 w="50%"
@@ -130,7 +131,7 @@ export const ClassDetails = ({
                 h="62px"
                 animation={tabState === 'virtual' ? glowAnimation : 'none'}
               >
-                PHYSICAL CLASS
+               IBADAN
               </Button>
             </HStack>
           </Box>
@@ -191,7 +192,7 @@ export const ClassDetails = ({
                 fontSize={['lg', 'lg', 'lg', '2xl']}
                 color="brand.gray.200"
               >
-                {tabState === 'virtual' ? 'Class Type:' : 'Address:'}
+                Class Type:
               </Text>
               <Heading
                 color="brand.dark.200"
@@ -200,9 +201,31 @@ export const ClassDetails = ({
                 fontSize={['lg', 'lg', 'lg', '2xl']}
                 pr={['1rem', '1rem']}
               >
-                {tabState === 'virtual' ? classType : address}
+                {classType}
               </Heading>
             </VStack>
+            {
+              isTab ? (
+                <VStack spacing="5px">
+              <Text
+                w="full"
+                fontSize={['lg', 'lg', 'lg', '2xl']}
+                color="brand.gray.200"
+              >
+                {tabState === 'virtual' ? 'Address' : 'Address:'}
+              </Text>
+              <Heading
+                color="brand.dark.200"
+                textTransform="uppercase"
+                w="full"
+                fontSize={['lg', 'lg', 'lg', '2xl']}
+                pr={['1rem', '1rem']}
+              >
+                {tabState === 'virtual' ? address : branchAddress}
+              </Heading>
+            </VStack>
+              ) : null
+            }
             <VStack spacing="5px">
               <Text
                 w="full"

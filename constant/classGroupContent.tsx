@@ -19,6 +19,7 @@ export interface ClassGroupDetailsProps {
   isTab?: boolean
   physicalTuition?: string
   address?: string
+  branchAddress?: string
   installmentPhysical?: string[]
   classTimePhysical?: string
 }
@@ -76,6 +77,33 @@ export const ClassGroupContent: ClassGroupContentProps[] = [
 
 export const classGroupDetails = [
   {
+    title: 'Physical Class',
+    id: 'physical-class',
+    classDur: '3 Months.',
+    classTime: '2-3 times a week.',
+    classType: 'PHYSICAL TRAINING',
+    installments: ['70% On Admission,', '30% after one month.'],
+    tuition: '₦200,000',
+    physicalTuition: '₦210,000',
+    courseOutline: [
+      'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
+      'It includes everything in the Basic and Advanced class curriculum.',
+      'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
+      'Exposure to design tips and tricks - shortcuts and resources.',
+      'Work on complex case studies and projects that will build your problem solving skills.',
+      'Direct mentorship with a Senior Product Designer.',
+      'Learn how to collaborate with developers and product managers.',
+      'Certificate of Completion.',
+      'Job search support and guidance + job recommendation and placement when available**',
+      '6 weeks internship placement after completing the training.',
+    ],
+    address: 'Lekki Phase 1, Lagos Nigeria',
+    branchAddress: 'Ring Road, Ibadan Oyo State',
+    isTab: true,
+    installmentPhysical: ['70% On Admission,', '30% after one month.'],
+    classTimePhysical: '2-3 times a week.',
+  },
+  {
     title: 'Basic Class',
     id: 'basic-class',
     classDur: '7 Weeks.',
@@ -125,7 +153,6 @@ export const classGroupDetails = [
     classType: 'ONLINE TRAINING.',
     installments: ['70% On Admission,', '30% after one month.'],
     tuition: '₦200,000',
-    physicalTuition: '₦210,000',
     courseOutline: [
       'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
       'It includes everything in the Basic and Advanced class curriculum.',
@@ -139,7 +166,7 @@ export const classGroupDetails = [
       '6 weeks internship placement after completing the training.',
     ],
     address: 'Lekki Phase 1, Lagos Nigeria',
-    isTab: true,
+    isTab: false,
     installmentPhysical: ['60% On Admission,', '40% after one month.'],
     classTimePhysical: '2 times a week.',
   },
