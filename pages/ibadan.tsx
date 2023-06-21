@@ -17,7 +17,7 @@ const privateClass = () => {
     <MainLayout>
       <PrivateHero />
       <HeroSubSection />
-      <MarqueeComp />
+      {/* <MarqueeComp /> */}
       <ClassPlan />
       <StudentWorkWrapper />
       <LeaningTools />
