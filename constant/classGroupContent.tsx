@@ -22,6 +22,7 @@ export interface ClassGroupDetailsProps {
   branchAddress?: string
   installmentPhysical?: string[]
   classTimePhysical?: string
+  isAddress?: boolean
 }
 
 export interface StudentWorkProps {

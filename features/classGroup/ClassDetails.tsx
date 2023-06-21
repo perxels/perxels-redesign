@@ -54,7 +54,8 @@ export const ClassDetails = ({
   address,
   branchAddress,
   installmentPhysical,
-  classTimePhysical
+  classTimePhysical, 
+  isAddress
 }: ClassGroupDetailsProps) => {
   console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
@@ -225,6 +226,28 @@ export const ClassDetails = ({
               </Heading>
             </VStack>
               ) : null
+            }
+            {
+              isAddress && (
+                <VStack spacing="5px">
+                <Text
+                  w="full"
+                  fontSize={['lg', 'lg', 'lg', '2xl']}
+                  color="brand.gray.200"
+                >
+                  Address:
+                </Text>
+                <Heading
+                  color="brand.dark.200"
+                  textTransform="uppercase"
+                  w="full"
+                  fontSize={['lg', 'lg', 'lg', '2xl']}
+                  pr={['1rem', '1rem']}
+                > 
+                  {address}
+                </Heading>
+              </VStack>
+              )
             }
             <VStack spacing="5px">
               <Text
