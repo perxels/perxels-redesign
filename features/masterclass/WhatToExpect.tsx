@@ -20,7 +20,7 @@ export const WhatToExpect = () => {
         </Box>
       </MainContainer>
       <Basic />
-      <Intermediate />
+      {/* <Intermediate /> */}
     </Box>
   )
 }

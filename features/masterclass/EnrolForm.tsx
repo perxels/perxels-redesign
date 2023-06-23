@@ -51,7 +51,7 @@ const EnrolForm = () => {
             name: '',
             phone: '',
             email: '',
-            class: '',
+            // class: '',
             location: '',
             reason: '',
             howdidyouknow: '',
@@ -63,7 +63,7 @@ const EnrolForm = () => {
             email: Yup.string()
               .email('Invalid email address')
               .required('Email is required'),
-            class: Yup.string().required('Class is required'),
+            // class: Yup.string().required('Class is required'),
             location: Yup.string().required('Location is required'),
             howdidyouknow: Yup.string().required(
               'How did you know is required',
@@ -81,7 +81,7 @@ const EnrolForm = () => {
             formData.append('name', values.name as string)
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
-            formData.append('class', values.class as string)
+            // formData.append('class', values.class as string)
             formData.append('location', values.location as string)
             formData.append('howdidyouknow', values.howdidyouknow as string)
             formData.append('category', values.category as string)
@@ -189,7 +189,7 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-              <Select
+              {/* <Select
                 h="3.5rem"
                 placeholder="What class do you want to apply for?"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -214,7 +214,7 @@ const EnrolForm = () => {
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.class}
                 </Text>
-              ) : null}
+              ) : null} */}
 
               <Input
                 h="3.5rem"

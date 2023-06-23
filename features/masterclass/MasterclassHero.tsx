@@ -74,7 +74,8 @@ export const MasterclassHero = () => {
             mt="1.125rem"
             className="heroText"
           >
-             A  special design masterclass to help you transition into UIUX design
+             {/* A  special design masterclass to help you transition into UIUX design */}
+             A Free Physical Masterclass For <b>Residents Of Ibadan, Oyo State.</b> 
           </Text>
         </Center>
 

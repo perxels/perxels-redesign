@@ -23,7 +23,9 @@ gsap.registerPlugin(ScrollTrigger)
 const lists: string[] = [
   'Beginners and those transitioning into UIUX design.',
   'You have never designed before.',
-  'You design but you have issues with alignment, color usage, hierarchy, white space and the basic principles of design',
+  // 'You design but you have issues with alignment, color usage, hierarchy, white space and the basic principles of design',
+  'People who know nothing about UIUX design but are willing to learn.',
+  'People residing in Ibadan and its environs'
 ]
 
 export const Basic = () => {
@@ -118,7 +120,9 @@ export const Basic = () => {
                 color="brand.gray.500"
                 mt="1rem"
               >
-                You automatically get 15% discount off Perxels paid training on registering for the masterclass
+                {/* You automatically get 15% discount off Perxels paid training on registering for the masterclass */}
+                At the end of this masterclass, participants would be able to do the following:
+                Design simple landing pages, understand the basics of sizing, hierarchy, alignment, consistency, etc.
               </Text>
 
               <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']} flexWrap="wrap" rowGap="2rem">
