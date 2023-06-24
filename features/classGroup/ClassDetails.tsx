@@ -22,6 +22,7 @@ import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { ClassGroupDetailsProps } from '../../constant'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import {ImLocation2} from 'react-icons/im'
 // added class details props
 
 const glow = keyframes`
@@ -59,6 +60,7 @@ export const ClassDetails = ({
 }: ClassGroupDetailsProps) => {
   console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
+  const [location, setLocation] = useState('lagos')
   const glowAnimation = `${glow} 2s ease-in-out infinite`
   return (
     <SimpleGrid id={id} columns={[1, 1, 1, 12]}>
@@ -100,7 +102,7 @@ export const ClassDetails = ({
                 background={tabState === 'virtual' ? '#383084' : '#F6F7FD'}
                 color={tabState === 'virtual' ? '#F6F7FD' : '#383084'}
                 borderRadius={'5px'}
-                onClick={() => setTabState('virtual')}
+                onClick={() => {setTabState('virtual'); setLocation('lagos')}}
                 cursor="pointer"
                 fontWeight={'700'}
                 textAlign="center"
@@ -112,7 +114,7 @@ export const ClassDetails = ({
                 h="62px"
                 animation={tabState === 'physical' ? glowAnimation : 'none'}
               >
-                LAGOS
+              ONLINE
               </Button>
               <Button
                 w="50%"
@@ -120,7 +122,7 @@ export const ClassDetails = ({
                 background={tabState === 'physical' ? '#383084' : '#F6F7FD'}
                 color={tabState === 'physical' ? '#F6F7FD' : '#383084'}
                 borderRadius={'5px'}
-                onClick={() => setTabState('physical')}
+                onClick={() => {setTabState('physical'); setLocation('lagos')}}
                 cursor="pointer"
                 fontWeight={'700'}
                 textAlign="center"
@@ -132,11 +134,46 @@ export const ClassDetails = ({
                 h="62px"
                 animation={tabState === 'virtual' ? glowAnimation : 'none'}
               >
-               IBADAN
+              PHYSICAL
               </Button>
             </HStack>
           </Box>
         ) : null}
+        {
+          tabState === 'physical' ? (
+              <HStack px={['0.75rem', '1.875rem']}>
+                <Button leftIcon={<ImLocation2/>}
+                 bg="rgba(115, 230, 255, 0.25)" 
+                 fontWeight="400"
+                 color="#000000"
+                 _hover={{
+                  background: 'rgba(115, 230, 255, 0.25)',
+                  color: '400'
+                 }}
+                 cursor="pointer"
+                 fontSize="18px"
+                 onClick={() => setLocation("lagos")}
+                 >
+                  Lagos
+                </Button>
+                <Button
+                leftIcon={<ImLocation2/>}
+                bg="rgba(115, 230, 255, 0.25)" 
+                fontWeight="400"
+                color="#000000"
+                _hover={{
+                 background: 'rgba(115, 230, 255, 0.25)',
+                 color: '400'
+                }}
+                cursor="pointer"
+                fontSize="18px"
+                onClick={() => setLocation("ibadan")}
+                >
+                 Ibadan
+                </Button>
+              </HStack>
+          ) : null
+        }
 
         <Box
           px={['.75rem', '.75rem', '.75rem', '1.875rem']}
@@ -202,7 +239,7 @@ export const ClassDetails = ({
                 fontSize={['lg', 'lg', 'lg', '2xl']}
                 pr={['1rem', '1rem']}
               >
-                {classType}
+                  {tabState === 'virtual' ?  "ONLINE" : "PHYSICAL TRAINING"}
               </Heading>
             </VStack>
             {
@@ -213,7 +250,7 @@ export const ClassDetails = ({
                 fontSize={['lg', 'lg', 'lg', '2xl']}
                 color="brand.gray.200"
               >
-                {tabState === 'virtual' ? 'Address' : 'Address:'}
+                {tabState === 'virtual' ? null : 'Address:'}
               </Text>
               <Heading
                 color="brand.dark.200"
@@ -222,7 +259,7 @@ export const ClassDetails = ({
                 fontSize={['lg', 'lg', 'lg', '2xl']}
                 pr={['1rem', '1rem']}
               >
-                {tabState === 'virtual' ? address : branchAddress}
+                { tabState === 'physical' && location === 'lagos' ? address :  ( location === 'ibadan' ? branchAddress : null)}
               </Heading>
             </VStack>
               ) : null
@@ -313,7 +350,7 @@ export const ClassDetails = ({
                   Tuition:
                 </Text>
                 <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
-                  {tabState === 'virtual' ? tuition : physicalTuition}
+                  {tabState === 'virtual' || location !== 'ibadan' ? tuition : physicalTuition}
                 </Heading>
               </VStack>
             </GridItem>
