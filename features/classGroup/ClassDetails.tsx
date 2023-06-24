@@ -143,12 +143,12 @@ export const ClassDetails = ({
           tabState === 'physical' ? (
               <HStack px={['0.75rem', '1.875rem']}>
                 <Button leftIcon={<ImLocation2/>}
-                 bg="rgba(115, 230, 255, 0.25)" 
+                  bg= {location === "lagos" ? "rgba(115, 230, 255, 0.25)" : "#BCC7CA"}
                  fontWeight="400"
                  color="#000000"
                  _hover={{
                   background: 'rgba(115, 230, 255, 0.25)',
-                  color: '400'
+                  color: '#000'
                  }}
                  cursor="pointer"
                  fontSize="18px"
@@ -158,12 +158,12 @@ export const ClassDetails = ({
                 </Button>
                 <Button
                 leftIcon={<ImLocation2/>}
-                bg="rgba(115, 230, 255, 0.25)" 
+                bg= {location === "ibadan" ? "rgba(115, 230, 255, 0.25)" : "#BCC7CA"}
                 fontWeight="400"
                 color="#000000"
                 _hover={{
                  background: 'rgba(115, 230, 255, 0.25)',
-                 color: '400'
+                 color: '#000'
                 }}
                 cursor="pointer"
                 fontSize="18px"
