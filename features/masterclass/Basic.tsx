@@ -10,7 +10,10 @@ import {
   SimpleGrid,
   Text,
   VStack,
-  Flex
+  Flex, 
+  List,
+  UnorderedList,
+  ListItem,
 } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { BsArrowRightCircle, BsFillCheckCircleFill } from 'react-icons/bs'
@@ -73,13 +76,13 @@ export const Basic = () => {
                 >
                   <Img src="/assets/icons/masterBasicCalender.svg" alt="" />
                   <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
-                  22nd April 
+                  8th July
                   </Text>
                 </HStack>
                 <HStack>
                   <Img src="/assets/icons/masterBasicClock.svg" alt="" />
                   <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
-                  4pm - 5pm 
+                  2pm - 5pm 
                   </Text>
                 </HStack>
               </Flex>
@@ -106,7 +109,41 @@ export const Basic = () => {
                   </Grid>
                 ))}
               </VStack>
-
+              <Heading
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.gray.500"
+                mt="3rem"
+              >
+               Please note the following:
+              </Heading>
+              <UnorderedList>
+                <ListItem>
+                <Text
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.gray.500"
+                mt="1rem"
+              >
+             This is going to be a physical masterclass and the exact venue will be sent to those who registered
+              </Text>
+                </ListItem>
+                <ListItem>
+                <Text
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.gray.500"
+                mt="1rem"
+              >
+             The training is for beginners and those who just started designing
+              </Text>
+                </ListItem>
+              </UnorderedList>
+              {/* <Text
+                fontSize={['xl', 'xl', '2xl']}
+                color="brand.gray.500"
+                mt="1rem"
+              >
+                You automatically get 15% discount off Perxels paid training on registering for the masterclass
+             
+              </Text> */}
               <Heading
                 fontSize={['xl', 'xl', '2xl']}
                 color="brand.gray.500"

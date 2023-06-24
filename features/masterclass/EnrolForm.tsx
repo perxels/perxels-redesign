@@ -29,7 +29,7 @@ const EnrolForm = () => {
         title={`Thank you for your registering for the ${classVal} Masterclass!`}
         description="Join our Class by clicking on the button."
         buttonTitle="Join Class"
-        buttonHref={classVal === 'Basic' ? 'https://chat.whatsapp.com/IAM6UuymZGJ1HLS1KWGIDi' : 'https://chat.whatsapp.com/JfE40BZ14dP74MoqkIOrnX'}
+        buttonHref={'https://chat.whatsapp.com/CAye6G9gng832emONzNUkZ'}
       />
       <Box
         className="enrol-form"
