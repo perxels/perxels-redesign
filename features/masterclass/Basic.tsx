@@ -158,8 +158,7 @@ export const Basic = () => {
                 mt="1rem"
               >
                 {/* You automatically get 15% discount off Perxels paid training on registering for the masterclass */}
-                At the end of this masterclass, participants would be able to do the following:
-                Design simple landing pages, understand the basics of sizing, hierarchy, alignment, consistency, etc.
+                At the end of this masterclass, participants would be able to do the following: Design simple landing pages, understand the basics of sizing, hierarchy, alignment, consistency, etc.
               </Text>
 
               <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']} flexWrap="wrap" rowGap="2rem">
