@@ -86,7 +86,7 @@ export const Basic = () => {
                   </Text>
                 </HStack>
               </Flex>
-              <Text fontSize={['2xl', '2xl', '3xl']} color="brand.gray.500">
+              {/* <Text fontSize={['2xl', '2xl', '3xl']} color="brand.gray.500">
                 This class is for those with the following criteria:
               </Text>
 
@@ -108,7 +108,7 @@ export const Basic = () => {
                     <Text fontSize={['xl', 'xl', '2xl']} color="brand.gray.500">{list}</Text>
                   </Grid>
                 ))}
-              </VStack>
+              </VStack> */}
               <Heading
                 fontSize={['xl', 'xl', '2xl']}
                 color="brand.gray.500"
