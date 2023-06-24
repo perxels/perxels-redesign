@@ -22,16 +22,19 @@ export const Expectation = () => {
     <MainContainer>
       <Box display="flex" justifyContent="center" alignItems="center">
         <Box maxW={{ base: '100%', md: '100%', lg: '80%' }}>
-          <SectionHeader
+           <SectionHeader
             title="Everything you need to know about this Masterclass."
             subTitle="what to expect"
           />
           <Center>
             <Text marginTop={'-2.25rem'}>
               This is a{' '}
-              <Text as="span" fontWeight={'bold'}>
+              {/* <Text as="span" fontWeight={'bold'}>
                 2 Days Free{' '}
-              </Text>{' '}
+              </Text>{' '} */}
+              <Text as="span" fontWeight={'bold'}>
+              1 DAY FREE PHYSICAL{' '}
+              </Text>
               Masterclass.
             </Text>
           </Center>

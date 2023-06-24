@@ -29,7 +29,7 @@ const EnrolForm = () => {
         title={`Thank you for your registering for the ${classVal} Masterclass!`}
         description="Join our Class by clicking on the button."
         buttonTitle="Join Class"
-        buttonHref={classVal === 'Basic' ? 'https://chat.whatsapp.com/IAM6UuymZGJ1HLS1KWGIDi' : 'https://chat.whatsapp.com/JfE40BZ14dP74MoqkIOrnX'}
+        buttonHref={'https://chat.whatsapp.com/CAye6G9gng832emONzNUkZ'}
       />
       <Box
         className="enrol-form"
@@ -51,7 +51,7 @@ const EnrolForm = () => {
             name: '',
             phone: '',
             email: '',
-            class: '',
+            // class: '',
             location: '',
             reason: '',
             howdidyouknow: '',
@@ -63,7 +63,7 @@ const EnrolForm = () => {
             email: Yup.string()
               .email('Invalid email address')
               .required('Email is required'),
-            class: Yup.string().required('Class is required'),
+            // class: Yup.string().required('Class is required'),
             location: Yup.string().required('Location is required'),
             howdidyouknow: Yup.string().required(
               'How did you know is required',
@@ -73,7 +73,7 @@ const EnrolForm = () => {
           })}
           onSubmit={(values, action) => {
             setLoading(true)
-            setClassValue(values.class)
+            // setClassValue(values.class)
             console.log(values)
           
             const formData = new FormData()
@@ -81,7 +81,7 @@ const EnrolForm = () => {
             formData.append('name', values.name as string)
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
-            formData.append('class', values.class as string)
+            // formData.append('class', values.class as string)
             formData.append('location', values.location as string)
             formData.append('howdidyouknow', values.howdidyouknow as string)
             formData.append('category', values.category as string)
@@ -189,7 +189,7 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-              <Select
+              {/* <Select
                 h="3.5rem"
                 placeholder="What class do you want to apply for?"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -214,12 +214,12 @@ const EnrolForm = () => {
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.class}
                 </Text>
-              ) : null}
+              ) : null} */}
 
               <Input
                 h="3.5rem"
                 type="text"
-                placeholder="Where are you located? E.g Lagos, Nigeria"
+                placeholder="Where are you located? E.g Bodija, Oyo State"
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="location"
                 value={formik.values.location}

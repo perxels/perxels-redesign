@@ -13,14 +13,14 @@ export const WhatToExpect = () => {
           <SectionHeader
             title="Everything you need to know about this Masterclass."
             subTitle="what to expect"
-            paragraph="This is a <b>2 DAYS FREE VIRTUAL</b> Masterclass."
+            paragraph="This is a <b>1 DAY FREE PHYSICAL</b> Masterclass."
             maxW={['300px', '300px', '300px', 'full']}
             headingColor="brand.dark.200"
           />
         </Box>
       </MainContainer>
       <Basic />
-      <Intermediate />
+      {/* <Intermediate /> */}
     </Box>
   )
 }
