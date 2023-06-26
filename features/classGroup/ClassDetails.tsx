@@ -348,6 +348,15 @@ export const ClassDetails = ({
                   color="brand.gray.200"
                 >
                   Tuition:
+                  {" "} {" "}
+                  {
+                  location === "ibadan" ?
+                  (
+                 <Text fontSize=".75rem" as="span" padding=".5rem 1.125rem" rounded="15px" bg="#FDF6F6" color="#E3719C" fontWeight="700">
+                 Discounted price
+                 </Text>
+                 ): null
+                 }
                 </Text>
                 <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
                   {tabState === 'virtual' || location !== 'ibadan' ? tuition : physicalTuition}
