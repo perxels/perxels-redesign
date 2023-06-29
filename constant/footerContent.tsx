@@ -101,6 +101,10 @@ export const links = [
         name: '+2348135369680',
         url: 'tel:+2348135369680',
       },
+      {
+        name: 'Privacy Policy',
+        url: '/policy',
+      },
     ],
   },
 ]

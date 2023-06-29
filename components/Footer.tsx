@@ -189,7 +189,7 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
                 perxels@gmail.com
               </Text>
             </Link>
-            <Link w="full" target="_blank" href="tel: +2348135369680">
+            <Link w="full" target="_blank" href="/privacy">
               <Text
                 w="full"
                 fontSize={['lg', 'xl', '2xl']}
@@ -198,6 +198,17 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
                 _hover={{ color: 'brand.yellow.500' }}
               >
                 +2348135369680
+              </Text>
+            </Link>
+            <Link w="full" href="/policy">
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+             Privacy Policy
               </Text>
             </Link>
           </VStack>
