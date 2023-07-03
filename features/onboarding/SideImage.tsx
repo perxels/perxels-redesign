@@ -5,25 +5,23 @@ import { Logo } from '../../components'
 const SideImage = () => {
   return (
     <Flex
-      bg="brand.pink.700"
+      background='url("/assets/images/onboarding/onboardform.png") center/cover no-repeat'
       w="full"
       h="full"
-      px="2rem"
       alignItems="flex-end"
       position="relative"
       display={['none', 'none', 'none', 'flex']}
     >
-      <Box as={Link} href="/" pos="absolute" top="3.125rem" left="6.25rem">
-        <Logo color="#fff" />
-      </Box>
-      <Img
-        src="/assets/images/register/registerHero.png"
+      
+      {/* <Img
+        src="/assets/images/onboarding/onboardform.png"
         alt="Register Hero"
         w="100%"
         maxW="500px"
         mx="auto"
+        h="full"
         className="enrol-hero"
-      />
+      /> */}
     </Flex>
   )
 }

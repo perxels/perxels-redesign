@@ -16,18 +16,18 @@ interface BannerContent {
 }
 
 export const bannerContent: BannerContent = {
-  mainTitle: 'LIVE DESIGN SESSION: ',
-  subTitle: 'DATA REPRESENTATION ',
+  mainTitle: 'DESIGN DIGEST SESSION: ',
+  subTitle: '10 BEST THINGS CHATGPT CAN DO FOR DESIGNERS',
   time: '7pm - 8pm (WAT)',
-  date: 'Sunday, June 18th, 2023',
+  date: 'Sunday, July 9th, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-    "This session is a practical session where the  facilitator designs a simple webpage with a chart or graph to display monthly website traffic for a blog alongside the audience.",
-  content1: "The chart will be easy to read and visually appealing, which will  display data for at least 12 months.",
-  content2: "By attending this session, you will understand the practical use of charts and graphs to display data in a visually appealing way and be able to represent data effectively.",
+  "Join us for an eye-opening session where we unveil the top 10 incredible capabilities of ChatGPT that empower designers to achieve unparalleled creativity and productivity.From generating design ideas and refining design briefs to inspiring branding and crafting engaging content, ChatGPT offers a transformative toolkit for designers.",
+  content1: "Elevate your design process and stay ahead of trends as you unlock a vast library of icons, illustrations, and color palettes. Experience the power of ChatGPT in problem-solving and troubleshooting, ensuring a seamless design journey. Don't miss this opportunity to explore the limitless potential of ChatGPT and revolutionize your design workflow!",
+  content2: "",
   content3: "",
   content4: "",
-  speakerName: 'Abolaji Olunuga',
-  speakerRole: 'Product Designer',
+  speakerName: 'Olamide Alowooja',
+  speakerRole: 'Senior Product Designer',
 }
