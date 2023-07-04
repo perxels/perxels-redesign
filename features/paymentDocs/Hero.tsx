@@ -12,7 +12,7 @@ export const Hero = () => {
       >
         <Logo color="#FFFFFF"/>
       </Box>
-      <Center  height={["100%","80vh"]} flexDir="column"  pos="relative" alignItems={["flex-start", "center"]} pl="2rem">
+      <Center  height={["100%","80vh"]} flexDir="column"  pos="relative" alignItems={["flex-start", "center"]} pl={["1.2rem","0rem"]}>
         <Heading
         fontSize={["2.125rem","96px"]} lineHeight={["2.5312rem","5.3125rem"]} textAlign={["left","center" ]} width="70%" fontWeight="700"
           color="#EFEBFF"
