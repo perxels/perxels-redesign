@@ -23,7 +23,7 @@ export const Hero = () => {
 
                     <a href="https://forms.gle/jvKBZGgMkpFgPee56">
                     <Button bg="#E35371" cursor="pointer" rounded="5px" mt={["22px","2.375rem"]} py="1.3125rem" fontSize={["1.25rem","1.5625rem"]}
-                    height="3.875rem"
+                    height={["3.25rem","3.875rem"]}
                     >
                     Get Onboarded
                     </Button>

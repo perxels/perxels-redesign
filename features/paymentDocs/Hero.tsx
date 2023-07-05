@@ -27,7 +27,7 @@ export const Hero = () => {
           This form is for those that just paid the balance of their tuition
         </Text>
         <a href="https://forms.gle/KdE747Qh6gT2sMDu6">
-        <Button  bg="#E35371" cursor="pointer" rounded="5px" mt={["22px","2.375rem"]} py="1.3125rem" fontSize={["1.25rem","1.5625rem"]}  height={["3.25rem","3.875rem"]}s>
+        <Button  bg="#E35371" cursor="pointer" rounded="5px" mt={["22px","2.375rem"]} py="1.3125rem" fontSize={["1.25rem","1.5625rem"]}  height={["3.25rem","3.875rem"]}>
           Fill form
         </Button>
         </a>
