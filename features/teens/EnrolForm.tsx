@@ -104,7 +104,7 @@ const EnrolForm = () => {
             >
               <Input
                 h="3.5rem"
-                placeholder="Name*"
+                placeholder="Teenager Name*"
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="name"
                 border="1px solid #000"

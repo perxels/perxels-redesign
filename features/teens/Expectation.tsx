@@ -34,7 +34,7 @@ const sliderData: SliderDataProps[] = [
     id: 3,
     img: './assets/images/teens/favour.png',
     cat: 'UI/UX',
-    title: 'Coinpro - Cryptocurrency App',
+    title: 'Cooking Instruction Mobile App',
   },
   // {
   //   id: 3,
@@ -126,7 +126,7 @@ export const Expectation = ({ title }: ExpectationProps) => {
               roundedTopLeft: '0',
             }}
           >
-            Apply Now
+            Enroll Now
           </Button>
           </Link>
         </Center>
