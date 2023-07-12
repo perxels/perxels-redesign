@@ -1,3 +1,4 @@
+import { TestimonialCardProps } from './testimonialContent'
 export interface AboutTeenContentProps {
   id: number
   title: string
@@ -106,5 +107,29 @@ export const process: AdmissionProcessProps[] = [
     step: 'step 4',
     desc: 'Get onboarded to our learning platform.',
     icon: 'assets/images/teens/components.svg',
+  },
+]
+
+export const teenTestimonial: TestimonialCardProps[] = [
+  {
+    id: 1,
+    imgUrl: '/assets/images/teens/testimonialImage1.png',
+    name: 'Pelumi Adekolu',
+    title: '13 years old',
+    content: `Learning at Perxels was absolutely amazing! I can't even express how much I learned about UI/UX design. The instructors were super cool and patient with us, even when we asked a million questions. This program is very helpful for teens who want to dive into the world of design.`,
+  },
+  {
+    id: 2,
+    imgUrl: '/assets/images/teens/testimonialImage2.png',
+    name: 'Cynthia Madu',
+    title: '16 years old',
+    content: `Perxels design training program was a game-changer for me. I had always been interested in design, but this program helped me turn my passion into a skill set. The supportive community and expert guidance made the learning process enjoyable.`,
+  },
+  {
+    id: 2,
+    imgUrl: '/assets/images/teens/testimonialImage3.png',
+    name: 'Cynthia Madu',
+    title: '16 years old',
+    content: `I was mind-blown by the training! The classes were well-organized and covered everything from computer basics to user experience design. The practical exercises were so helpful, and I connected with other talented teens who share my design passion.`,
   },
 ]

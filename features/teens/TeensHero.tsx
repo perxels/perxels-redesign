@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { MainContainer } from '../../layouts'
+import Link from 'next/link'
 
 export const TeensHero = () => {
   return (
@@ -43,9 +44,11 @@ export const TeensHero = () => {
               Register your teens today
             </Text>
 
+            <Link href="/teens/register">
             <Button mt="1.25rem" h="3.125rem">
               Get Started
             </Button>
+            </Link>
           </Center>
           <Img
             pos="absolute"

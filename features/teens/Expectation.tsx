@@ -5,7 +5,7 @@ import Slider from 'react-slick'
 
 import { SectionHeader } from '../../components'
 import { MainContainer } from '../../layouts'
-
+import Link from 'next/link'
 interface SliderDataProps {
   id: number
   img: string
@@ -22,7 +22,7 @@ const sliderData: SliderDataProps[] = [
     id: 1,
     img: './assets/images/teens/rebecca.png',
     cat: 'UI/UX',
-    title: 'Logistic Company Website',
+    title: 'eCommerce Mobile App',
   },
   {
     id: 2,
@@ -32,16 +32,17 @@ const sliderData: SliderDataProps[] = [
   },
   {
     id: 3,
-    img: './assets/images/teens/daniju.png',
-    cat: 'UI/UX',
-    title: 'Charity Website',
-  },
-  {
-    id: 4,
     img: './assets/images/teens/favour.png',
     cat: 'UI/UX',
     title: 'Coinpro - Cryptocurrency App',
   },
+  // {
+  //   id: 3,
+  //   img: './assets/images/teens/daniju.png',
+  //   cat: 'UI/UX',
+  //   title: 'Cooking Instruction Mobile App',
+  // },
+ 
 ]
 
 export const Expectation = ({ title }: ExpectationProps) => {
@@ -112,6 +113,7 @@ export const Expectation = ({ title }: ExpectationProps) => {
         </Slider>
 
         <Center mt="4rem">
+          <Link href="/teens/register">
           <Button
             px="4rem"
             h="4.5rem"
@@ -126,6 +128,7 @@ export const Expectation = ({ title }: ExpectationProps) => {
           >
             Apply Now
           </Button>
+          </Link>
         </Center>
       </MainContainer>
     </Box>
