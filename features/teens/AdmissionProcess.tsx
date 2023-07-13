@@ -55,11 +55,11 @@ export const AdmissionProcess = () => {
             </Center>
           ))}
         </SimpleGrid>
-        <Box px={["2%","10%"]} py="5%">
+        <Box px={["2%","13%"]} py="5%">
         <Box
         >
           <SimpleGrid columns={[1, 1, 2, 2]} spacing="3.125rem">
-            <Box maxW={"391px"}  backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.1875rem"]}   rounded="1.25rem"
+            <Box   backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.125rem"]}   rounded=".3125rem"
         padding={["2.5rem 5%"]}>
               <Center background="#34296B" rounded=".625rem" w="11.25rem" h="45px">
               <HStack>
@@ -67,18 +67,18 @@ export const AdmissionProcess = () => {
               <Text textAlign="center" color="#FFF" fontSize="1.25rem">Start Date</Text>
               </HStack>
               </Center>
-              <Text textAlign="center" fontSize="2.5rem" fontWeight="700">August 1, 2023</Text>
+              <Text color="#121212" textAlign="center" fontSize="2.5rem" fontWeight="700">August 1, 2023</Text>
             </Box>
-            <Box maxW="391px" backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.187rem"]}   rounded="1.25rem"
-        padding={["2.5rem 5%"]}>
+            <Box  backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.187rem"]}   rounded=".3125rem"
+        padding={["2.5rem 4rem","2.5rem 5.5rem"]}>
             <Center background="#34296B" rounded=".625rem" w="11.25rem" h="45px">
             <HStack>
               <Icon color="#FFF" as={IoLocationOutline} fontSize="1.5625rem" />
               <Text textAlign="center" color="#FFF" fontSize="1.25rem">Location</Text>
               </HStack>
             </Center>
-              <HStack flexDir={["column", "row"]}>
-              <Text textAlign="center" fontSize="2.5rem" fontWeight="700">
+              <HStack flexDir={["column", "row"]} width={["100%","80%"]}>
+              <Text color="#121212" textAlign="center" fontSize="2.5rem" fontWeight="700" lineHeight="2.7rem">
                Lekki, Ajah  and Berger
               </Text>
               </HStack>
