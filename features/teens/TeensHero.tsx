@@ -13,11 +13,15 @@ import Link from 'next/link'
 
 export const TeensHero = () => {
   return (
+    <Box overflow="hidden" mb={["-70px", "0"]}>
     <Box
       bg="url('/assets/images/teens/teenHeroBg.jpg')"
       backgroundRepeat="no-repeat"
       backgroundSize="cover"
       overflowX="hidden"
+      pos="relative"
+      zIndex="2"
+     
     >
       <MainContainer bg="none">
         <Box pos="relative" py={['3rem', '3rem', '3rem', '9rem']}>
@@ -60,7 +64,19 @@ export const TeensHero = () => {
             display={['none', 'none', 'none', 'block']}
           />
         </Box>
+       
       </MainContainer>
+    </Box>
+    <Img
+            zIndex="1"
+             pos="relative"
+             top="-80px"
+            //  right="-120px"
+             width="full"
+             h="auto"
+            src="./assets/images/teens/heroMobile.png"
+            display={['block', 'block', 'block', 'none']}
+          />
     </Box>
   )
 }

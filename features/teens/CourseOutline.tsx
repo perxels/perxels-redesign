@@ -68,8 +68,11 @@ export const CourseOutline = () => {
         <MainContainer bg="#34296B">
           <Flex px={["5%","10%"]} flexDir={["column","row"]}  py="1.5625rem" alignItems={["flex-start","center"]} justifyContent="space-between" rowGap="2px">
             <Box display="flex"  alignItems={["flex-start","center"]} flexDir={["column","row"]} columnGap="2.5rem">
-            <Text color="#FFF" fontSize="1.25rem" fontWeight="700">
+            <Text color="#FFF" fontSize="1.25rem" fontWeight="700" w={["90%", "100%"]} display={["none", "block"]}>
             Gain access to all these with just an investment fee of 
+            </Text>
+            <Text color="#FFF" fontSize="1.25rem" fontWeight="700" w={["100%", "100%"]} display={["block", "none"]}>
+            Gain access to all these with <br/> just an investment fee of 
             </Text>
             <Text color="#FDE85C"  fontSize="2.19rem" fontWeight="700">
             ₦50,000
