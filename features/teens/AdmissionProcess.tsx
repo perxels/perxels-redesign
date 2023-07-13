@@ -55,7 +55,7 @@ export const AdmissionProcess = () => {
             </Center>
           ))}
         </SimpleGrid>
-        <Box px={["2%","10%"]} py="5%">
+        {/* <Box px={["2%","10%"]} py="5%">
         <Box
         backgroundColor={"#FDE85C"}
         rounded="1.25rem"
@@ -96,7 +96,7 @@ export const AdmissionProcess = () => {
             </Box>
           </Box>
         </Box>
-        </Box>
+        </Box> */}
       </MainContainer>
     </Box>
   )

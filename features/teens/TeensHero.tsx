@@ -70,7 +70,7 @@ export const TeensHero = () => {
     <Img
             zIndex="1"
              pos="relative"
-             top="-80px"
+             top={["-140px", "-280px"]}
             //  right="-120px"
              width="full"
              h="auto"
