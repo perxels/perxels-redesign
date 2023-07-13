@@ -74,7 +74,7 @@ export const AdmissionProcess = () => {
             <Center background="#34296B" rounded=".625rem" w="11.25rem" h="45px">
             <HStack>
               <Icon color="#FFF" as={IoLocationOutline} fontSize="1.5625rem" />
-              <Text textAlign="center" color="#FFF" fontSize="1.25rem">Location</Text>
+              <Text textAlign="center" color="#FFF" fontSize="1.25rem">Locations</Text>
               </HStack>
             </Center>
               <HStack flexDir={["column", "row"]} width={["100%","90%"]}>
