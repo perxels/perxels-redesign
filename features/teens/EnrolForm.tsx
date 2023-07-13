@@ -8,11 +8,15 @@ import {
   Textarea,
   VStack,
   useDisclosure,
+  Flex,
+  Icon
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { SuccessModal } from '../../components'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import {IoIosArrowBack} from 'react-icons/io'
+import Link from 'next/link'
 const EnrolForm = () => {
   // const scriptUrl =
   //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
@@ -34,6 +38,12 @@ const EnrolForm = () => {
         px={['1rem', '1rem', '15%']}
         py="2rem"
       >
+         <Link href="/teens/">
+        <Flex display={['flex', 'none']} color="#121212" transform={"translateY(-30px)"} alignItems="center">
+          <Icon as={IoIosArrowBack} fontSize="1rem" />
+         <Text  fontSize="1rem" ml="0.5rem">Back</Text> 
+        </Flex>
+        </Link>
         <Heading
           fontSize="6xl"
           maxW="full"

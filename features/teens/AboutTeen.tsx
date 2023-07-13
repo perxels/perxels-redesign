@@ -34,12 +34,12 @@ export const AboutTeen = () => {
             >
               A Special Design Training for Teenagers between the age of{' '}
               <Box fontWeight="bold" as="span">
-                13
+                12
               </Box>{' '}
               and
               <Box fontWeight="bold" as="span">
                 {' '}
-                19
+                18
               </Box>
             </Text>
 
