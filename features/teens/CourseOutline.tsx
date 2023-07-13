@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Center,
+  Flex,
   Heading,
   SimpleGrid,
   Text,
@@ -9,6 +10,7 @@ import {
 import React from 'react'
 import { courseOutlines } from '../../constant/teensContent'
 import { MainContainer } from '../../layouts'
+import Link from 'next/link'
 
 export const CourseOutline = () => {
   return (
@@ -56,13 +58,34 @@ export const CourseOutline = () => {
             </Box>
           ))}
         </SimpleGrid>
-
-        <Center>
+        {/* <Center>
           <Button h="5rem" rounded="5rem" mt="2.5rem">
             INVESTMENT FEE: ₦50,000
           </Button>
-        </Center>
+        </Center> */}
       </MainContainer>
+      <Box mt="5rem">
+        <MainContainer bg="#34296B">
+          <Flex px={["5%","10%"]} flexDir={["column","row"]}  py="1.5625rem" alignItems={["flex-start","center"]} justifyContent="space-between" rowGap="2px">
+            <Box display="flex"  alignItems={["flex-start","center"]} flexDir={["column","row"]} columnGap="2.5rem">
+            <Text color="#FFF" fontSize="1.25rem" fontWeight="700" w={["90%", "100%"]} display={["none", "block"]}>
+            Gain access to all these with just an investment fee of 
+            </Text>
+            <Text color="#FFF" fontSize="1.25rem" fontWeight="700" w={["100%", "100%"]} display={["block", "none"]}>
+            Gain access to all these with <br/> just an investment fee of 
+            </Text>
+            <Text color="#FDE85C"  fontSize="2.19rem" fontWeight="700">
+            ₦50,000
+            </Text>
+            </Box>
+            <Link href='/teens/register'>
+            <Button fontSize="20px" color="#34296B" fontWeight="700" backgroundColor="#FFF" rounded='.625rem'  >
+            Enroll Now
+            </Button>
+            </Link>
+          </Flex>
+        </MainContainer>
+      </Box>
     </Box>
   )
 }

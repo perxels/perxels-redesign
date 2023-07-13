@@ -1,9 +1,9 @@
-import { Box, Center, Img, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Center, Img, SimpleGrid, Text, Heading, Icon, HStack } from '@chakra-ui/react'
 import React from 'react'
 import { SectionHeader } from '../../components'
 import { process } from '../../constant/teensContent'
 import { MainContainer } from '../../layouts'
-
+import {IoCalendarOutline, IoLocationOutline} from 'react-icons/io5'
 export const AdmissionProcess = () => {
   return (
     <Box py={['3rem', '3rem', '3rem', '6.75rem']}>
@@ -55,6 +55,37 @@ export const AdmissionProcess = () => {
             </Center>
           ))}
         </SimpleGrid>
+        <Box px={["2%","14%"]} py="5%">
+        <Box
+        >
+          <SimpleGrid columns={[1, 1, 2, 2]} spacing="3.125rem">
+            <Box   backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.125rem"]}   rounded=".3125rem"
+        padding={["2.5rem 5%"]}>
+              <Center background="#34296B" rounded=".625rem" w="11.25rem" h="45px">
+              <HStack>
+              <Icon color="#FFF" as={IoCalendarOutline} fontSize="1.5625rem" />
+              <Text textAlign="center" color="#FFF" fontSize="1.25rem">Start Date</Text>
+              </HStack>
+              </Center>
+              <Text color="#121212" textAlign="center" fontSize="2.5rem" fontWeight="700">August 1, 2023</Text>
+            </Box>
+            <Box  backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.187rem"]}   rounded=".3125rem"
+        padding={["2.5rem 3rem","2.5rem 5.5rem"]}>
+            <Center background="#34296B" rounded=".625rem" w="11.25rem" h="45px">
+            <HStack>
+              <Icon color="#FFF" as={IoLocationOutline} fontSize="1.5625rem" />
+              <Text textAlign="center" color="#FFF" fontSize="1.25rem">Locations</Text>
+              </HStack>
+            </Center>
+              <HStack flexDir={["column", "row"]} width={["100%","90%"]}>
+              <Text color="#121212" textAlign="center" fontSize="2.5rem" fontWeight="700" lineHeight="2.7rem">
+               Lekki, Ajah  and Berger
+              </Text>
+              </HStack>
+            </Box>
+            </SimpleGrid>
+        </Box>
+        </Box>
       </MainContainer>
     </Box>
   )

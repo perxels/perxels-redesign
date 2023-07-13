@@ -6,6 +6,7 @@ import {
   CourseOutline,
   Expectation,
   TeensHero,
+  TeenTesti
 } from '../features/teens'
 import { MainLayout } from '../layouts'
 
@@ -17,7 +18,8 @@ const Teens = () => {
       <CourseOutline />
       <AdmissionProcess />
       <Expectation title="A glimpse into what the teens would be able to do at the end of the training" />
-      <Testimonial />
+      {/* <Testimonial /> */}
+      <TeenTesti/>
     </MainLayout>
   )
 }

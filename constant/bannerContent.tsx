@@ -17,17 +17,17 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
-  subTitle: '10 BEST THINGS CHATGPT CAN DO FOR DESIGNERS',
+  subTitle: 'IMPORTANCE OF COMMUNICATION AS A DESIGNER',
   time: '7pm - 8pm (WAT)',
-  date: 'Sunday, July 9th, 2023',
+  date: 'Sunday, July 23rd, 2023',
   location: 'GOOGLE MEET',
-  bannerImage: '/assets/images/banner/bannerImage.jpeg',
+  bannerImage: '/assets/images/banner/bannerImage.jpg',
   description:
-  "Join us for an eye-opening session where we unveil the top 10 incredible capabilities of ChatGPT that empower designers to achieve unparalleled creativity and productivity.From generating design ideas and refining design briefs to inspiring branding and crafting engaging content, ChatGPT offers a transformative toolkit for designers.",
-  content1: "Elevate your design process and stay ahead of trends as you unlock a vast library of icons, illustrations, and color palettes. Experience the power of ChatGPT in problem-solving and troubleshooting, ensuring a seamless design journey. Don't miss this opportunity to explore the limitless potential of ChatGPT and revolutionize your design workflow!",
+  "Calling all designers! Join us for an insightful session that delves into the pivotal role of communication in the world of design. Discover why effective communication is the cornerstone of successful design projects and how it can elevate your creative process to new heights",
+  content1: "Don't miss this opportunity to grasp the significance of communication in your design journey and unlock the key to achieving impactful, client-centric designs.",
   content2: "",
   content3: "",
   content4: "",
-  speakerName: 'Olamide Alowooja',
-  speakerRole: 'Senior Product Designer',
+  speakerName: 'DIANNE EBERHARDT',
+  speakerRole: 'Co-Founder, The Design Project',
 }
