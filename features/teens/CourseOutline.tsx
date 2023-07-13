@@ -75,7 +75,7 @@ export const CourseOutline = () => {
             Gain access to all these with <br/> just an investment fee of 
             </Text>
             <Text color="#FDE85C"  fontSize="2.19rem" fontWeight="700">
-            ₦50,000
+            ₦40,000
             </Text>
             </Box>
             <Link href='/teens/register'>
