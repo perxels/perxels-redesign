@@ -55,48 +55,37 @@ export const AdmissionProcess = () => {
             </Center>
           ))}
         </SimpleGrid>
-        {/* <Box px={["2%","10%"]} py="5%">
+        <Box px={["2%","10%"]} py="5%">
         <Box
-        backgroundColor={"#FDE85C"}
-        rounded="1.25rem"
-        padding={["3% 10%"]}
         >
-          <Heading
-          textAlign="center"
-          fontSize={["30px"]}
-          mb="1.75rem"
-          >
-          Training Information
-          </Heading>
-          <Box display="flex" flexDir={["column", "row"]}justifyContent="space-between" rowGap="2.5rem">
-            <Box display="flex" alignItems="center" flexDir="column" rowGap={["0.5rem","1.25rem"]}>
+          <SimpleGrid columns={[1, 1, 2, 2]} spacing="3.125rem">
+            <Box maxW={"391px"}  backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.1875rem"]}   rounded="1.25rem"
+        padding={["2.5rem 5%"]}>
+              <Center background="#34296B" rounded=".625rem" w="11.25rem" h="45px">
               <HStack>
-              <Icon as={IoCalendarOutline} fontSize="1.5625rem" />
-              <Text textAlign="center" fontSize="1.25rem">Start Date</Text>
+              <Icon color="#FFF" as={IoCalendarOutline} fontSize="1.5625rem" />
+              <Text textAlign="center" color="#FFF" fontSize="1.25rem">Start Date</Text>
               </HStack>
-              <Text textAlign="center" fontSize="1.25rem" fontWeight="700">August 1, 2023</Text>
+              </Center>
+              <Text textAlign="center" fontSize="2.5rem" fontWeight="700">August 1, 2023</Text>
             </Box>
-            <Box display="flex" alignItems="center" flexDir="column" rowGap={["0.5rem","1.25rem"]}>
+            <Box maxW="391px" backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.187rem"]}   rounded="1.25rem"
+        padding={["2.5rem 5%"]}>
+            <Center background="#34296B" rounded=".625rem" w="11.25rem" h="45px">
             <HStack>
-              <Icon as={IoLocationOutline} fontSize="1.5625rem" />
-              <Text textAlign="center" fontSize="1.25rem">Location</Text>
+              <Icon color="#FFF" as={IoLocationOutline} fontSize="1.5625rem" />
+              <Text textAlign="center" color="#FFF" fontSize="1.25rem">Location</Text>
               </HStack>
+            </Center>
               <HStack flexDir={["column", "row"]}>
-              <Text textAlign="center" fontSize="1.25rem" fontWeight="700">
-              <Text as="span" fontWeight="500">Island:{" "}</Text>
-               Lekki, Ajah
+              <Text textAlign="center" fontSize="2.5rem" fontWeight="700">
+               Lekki, Ajah  and Berger
               </Text>
-              <Text textAlign="center" fontSize="1.25rem" fontWeight="700">
-              <Text as="span" fontWeight="500">Mainland:{" "}</Text>
-              Berger
-              </Text>
-            
               </HStack>
-              
             </Box>
-          </Box>
+            </SimpleGrid>
         </Box>
-        </Box> */}
+        </Box>
       </MainContainer>
     </Box>
   )
