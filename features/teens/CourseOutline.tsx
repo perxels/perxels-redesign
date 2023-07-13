@@ -79,7 +79,7 @@ export const CourseOutline = () => {
             </Text>
             </Box>
             <Link href='/teens/register'>
-            <Button fontSize="20px" color="#34296B" fontWeight="700" backgroundColor="#FFF" rounded='3.125rem' >
+            <Button fontSize="20px" color="#34296B" fontWeight="700" backgroundColor="#FFF" rounded='.625rem'  >
             Enroll Now
             </Button>
             </Link>
