@@ -61,13 +61,17 @@ const EnrolForm = () => {
             phone: '',
             email: '',
             age: '',
+            class:'',
             parentPhone: '',
+            howdidyouknow: ''
           }}
           validationSchema={Yup.object({
             name: Yup.string().required('Name is required'),
             phone: Yup.string().required('Phone number is required'),
             email: Yup.string().email('Invalid email address').required('Email is required'),
+            class: Yup.string().required('Class is required'),
             age: Yup.string().required('Age is required'),
+            howdidyouknow: Yup.string().required('How you knew is required'),
             parentPhone: Yup.string().required('Parent Phone number is required'),
           })}
           onSubmit={(values, action) => {
@@ -81,7 +85,9 @@ const EnrolForm = () => {
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
             formData.append('age', values.age as string)
+            formData.append('class', values.class as string)
             formData.append('parentPhone', values.parentPhone as string)
+            formData.append('howdidyouknow', values.howdidyouknow as string)
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
 
@@ -216,6 +222,37 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
               
+              <Select
+                h="3.5rem"
+                placeholder="Which of this class plan do you want?"
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="class"
+                value={formik.values.class}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.class && formik.errors.class
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option value="Physical Training, Berger">Physical Training, Berger</option>
+                <option value="Physical Training, Lekki">Physical Training, Lekki</option>
+                <option value="Online Training">
+                  Online Training
+                </option>
+              </Select>
+              {formik.touched.class && formik.errors.class ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.class}
+                </Text>
+              ) : null}
+
+
               <Input
                 h="3.5rem"
                 type="tel"
@@ -237,6 +274,36 @@ const EnrolForm = () => {
               {formik.touched.parentPhone && formik.errors.parentPhone ? (
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.parentPhone}
+                </Text>
+              ) : null}
+
+<Select
+                h="3.5rem"
+                placeholder="How did you get to know about Perxels?"
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="howdidyouknow"
+                value={formik.values.howdidyouknow}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.howdidyouknow && formik.errors.howdidyouknow
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option value="Facebook">Facebook</option>
+                <option value="Twitter">Twitter</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Instagram">Instagram</option>
+                <option value="WhatsApp">WhatsApp</option>
+              </Select>
+              {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.howdidyouknow}
                 </Text>
               ) : null}
 
