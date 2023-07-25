@@ -8,11 +8,12 @@ export const Hero = () => {
     bg="#EFECFF"
     height={["100%","100vh"]}
     pos="relative"
+    w="100vw"
     >
              <Box as={Link} href="/" pos={["relative","absolute"]} top="2.125rem" left={["1.3rem","3.25rem"]} display={['block']} mb="4rem" pt="1rem" >
-        <Logo  />
+        <Logo />
       </Box>
-             <Center height={["100%","80vh"]} flexDir="column"  pos="relative" alignItems={["flex-start", "center"]} pl={["1.2rem","0rem"]}>
+             <Center height={["100%","80vh"]} flexDir="column"  pos="relative" alignItems={["flex-start", "center"]} pl={["1.2rem","0rem"]} zIndex="2">
                     <Heading fontSize={["3.125rem","96px"]} lineHeight={["2.5312rem","5.3125rem"]} textAlign={["left","center" ]} fontWeight="700" width="70%">
                     PERXELS <br/> DESIGN SCHOOL
                     </Heading>
@@ -33,10 +34,10 @@ export const Hero = () => {
                 <Image src="./assets/images/onboarding/femaleMobile.png" alt="" pos="relative" bottom="0" left="0" />
             </Box> 
 
-            <Box display={["none", "block"]}>
+            <Box zIndex="1" display={["none", "block"]}>
                 <Image src="./assets/images/onboarding/femaleRight.png" alt="" pos="absolute" bottom="0" right="0" />
             </Box>
-            <Box display={["none", "block"]}>
+            <Box  zIndex="1"  display={["none", "block"]}>
                 <Image src="./assets/images/onboarding/femaleLeft.png" alt="" pos="absolute" bottom="0" left="0" />
             </Box>
 
