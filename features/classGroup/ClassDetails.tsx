@@ -359,7 +359,9 @@ export const ClassDetails = ({
                  }
                 </Text>
                 <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
-                  {tabState === 'virtual' || location !== 'ibadan' ? tuition : physicalTuition}
+                  {tabState === 'virtual' || location !== 'ibadan' ? (
+                    location === 'lagos' && tabState === 'physical' ? '₦210,000' : tuition
+                  ) : physicalTuition}
                 </Heading>
               </VStack>
             </GridItem>
