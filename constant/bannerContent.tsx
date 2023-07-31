@@ -17,17 +17,17 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
-  subTitle: 'IMPORTANCE OF COMMUNICATION AS A DESIGNER',
+  subTitle: 'THE PRINCIPLE OF SIMPLICITY IN UX DESIGN',
   time: '7pm - 8pm (WAT)',
-  date: 'Sunday, July 23rd, 2023',
+  date: 'Sunday, August 6th, 2023',
   location: 'GOOGLE MEET',
-  bannerImage: '/assets/images/banner/bannerImage.jpg',
+  bannerImage: '/assets/images/banner/bannerImage.png',
   description:
-  "Calling all designers! Join us for an insightful session that delves into the pivotal role of communication in the world of design. Discover why effective communication is the cornerstone of successful design projects and how it can elevate your creative process to new heights",
-  content1: "Don't miss this opportunity to grasp the significance of communication in your design journey and unlock the key to achieving impactful, client-centric designs.",
+  " Attention all designers! Prepare to be inspired as we unravel the transformative potential of simplicity in UX design. Join us for an unmissable session that explores how simplicity can elevate your designs to new levels of impact and user satisfaction.",
+  content1: "Don't miss this golden opportunity to discover the secrets behind creating intuitive and delightful user experiences through the principle of simplicity. Mark your calendars and get ready to embark on a design journey that will revolutionize your approach.",
   content2: "",
   content3: "",
   content4: "",
-  speakerName: 'DIANNE EBERHARDT',
-  speakerRole: 'Co-Founder, The Design Project',
+  speakerName: 'TIMOTHY EXODUS',
+  speakerRole: 'UX Designer',
 }
