@@ -60,7 +60,7 @@ export const Basic = () => {
           <Center>
             <Box>
               <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.dark.200">
-                Basic Class
+              Foundational UIUX Class
               </Heading>
               <Flex
               bg="rgba(227, 113, 156, 0.3)"
