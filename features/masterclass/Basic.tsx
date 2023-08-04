@@ -60,7 +60,7 @@ export const Basic = () => {
           <Center>
             <Box>
               <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.dark.200">
-                Basic Class
+              Foundational UIUX Class
               </Heading>
               <Flex
               bg="rgba(227, 113, 156, 0.3)"
@@ -76,13 +76,13 @@ export const Basic = () => {
                 >
                   <Img src="/assets/icons/masterBasicCalender.svg" alt="" />
                   <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
-                  8th July
+                 12th August
                   </Text>
                 </HStack>
                 <HStack>
                   <Img src="/assets/icons/masterBasicClock.svg" alt="" />
                   <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
-                  1pm
+                  3pm
                   </Text>
                 </HStack>
               </Flex>
