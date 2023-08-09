@@ -63,7 +63,7 @@ export const MasterclassHero = () => {
             className="heroText"
         
           >
-          Free Exclusive UIUX Design Masterclass
+          Free Physical UIUX Design Masterclass
           </Heading>
 
           <Text
@@ -75,7 +75,7 @@ export const MasterclassHero = () => {
             className="heroText"
           >
              {/* A  special design masterclass to help you transition into UIUX design */}
-             A Free Physical Masterclass For <b>Residents Of Triangle Mall, Osapa London, Lekki, Ajah, Lagos State.</b> 
+             An exclusive physical training for people based on the Island, Lekki, Ajah axis who are looking to embark on a fulfilling design career.
           </Text>
         </Center>
 
