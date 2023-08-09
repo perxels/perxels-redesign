@@ -76,7 +76,7 @@ export const Basic = () => {
                 >
                   <Img src="/assets/icons/masterBasicCalender.svg" alt="" />
                   <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
-                 12th August
+                 19th August
                   </Text>
                 </HStack>
                 <HStack>
