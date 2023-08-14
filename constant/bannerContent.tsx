@@ -17,17 +17,17 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
-  subTitle: 'THE PRINCIPLE OF SIMPLICITY IN UX DESIGN',
+  subTitle: 'JOURNEY TO SUCCESS: UNVEILING THE PATH OF A YOUNG DESIGNER',
   time: '7pm - 8pm (WAT)',
-  date: 'Sunday, August 6th, 2023',
+  date: 'Sunday, August 20th, 2023',
   location: 'GOOGLE MEET',
-  bannerImage: '/assets/images/banner/bannerImage.png',
+  bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-  " Attention all designers! Prepare to be inspired as we unravel the transformative potential of simplicity in UX design. Join us for an unmissable session that explores how simplicity can elevate your designs to new levels of impact and user satisfaction.",
-  content1: "Don't miss this golden opportunity to discover the secrets behind creating intuitive and delightful user experiences through the principle of simplicity. Mark your calendars and get ready to embark on a design journey that will revolutionize your approach.",
+  "Join us for an exclusive Q&A session with a trailblazer in the design industry. Prepare to be inspired, motivated, and gain invaluable insights from this influential young designer who paved his way to success. Discover the untold stories, challenges overcome, and key milestones that have helped shaped his career.",
+  content1: "This event is a must-attend for aspiring designers, seasoned professionals, and anyone curious about the world of design. Seize the opportunity to tap into the wisdom and experiences of this visionary, fueling your own creative journey.",
   content2: "",
   content3: "",
   content4: "",
-  speakerName: 'TIMOTHY EXODUS',
-  speakerRole: 'UX Designer',
+  speakerName: 'AJAYI AKINTOMIWA',
+  speakerRole: ' Product Designer',
 }
