@@ -17,7 +17,7 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   // mainTitle: 'DESIGN DIGEST SESSION: ',
-  mainTitle: 'JOURNEY TO SUCCESS:'
+  mainTitle: 'JOURNEY TO SUCCESS:',
   subTitle: 'UNVEILING THE PATH OF A YOUNG DESIGNER',
   time: '7pm - 8pm (WAT)',
   date: 'Sunday, August 20th, 2023',
