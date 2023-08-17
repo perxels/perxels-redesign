@@ -49,8 +49,8 @@ export const Hero = () => {
       />
       {/* top right logo with absolute position */}
       <Box position="absolute" top="0" left="0" p={["20px 0px 0px 20px","20px 0px 0px 100px"]}>
-        <Image display={["none", "block"]} src={"/assets/images/hub/hubLogoDesktop.svg" }alt="hub logo" />
-        <Image display={["block", "none"]} src={"/assets/images/hub/hubLogoMobile.svg" }alt="hub logo" />
+        <Image src={"/assets/images/hub/hubLogoDesktop.svg" }alt="hub logo" />
+        {/* <Image display={["block", "none"]} src={"/assets/images/hub/hubLogoMobile.svg" } alt="hub logo" /> */}
       </Box>
       <Box px={["5%",'32%']} position="relative" pt={["25%","5%"]}>
         <Box display="flex" justifyContent="center">
@@ -109,7 +109,7 @@ export const Hero = () => {
             initialValues={{
               name: '',
               email: '',
-              datetime: '',
+              datetime: '10-08-2023 11:00AM',
               hours: '0',
             }}
             validationSchema={Yup.object({
@@ -216,7 +216,7 @@ export const Hero = () => {
                 <InputGroup>
                   <Input
                       h={["3.125rem","3.75rem"]}
-                    placeholder="Email address (e.g name@example.com)"
+                    placeholder="10-08-2023 11:00AM"
                     _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
                     name="datetime"
                     type="datetime-local"
