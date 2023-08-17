@@ -34,7 +34,7 @@ export const Hero = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Box
-      w="99vw"
+      w={["100vw","99vw"]}
       minHeight={'100vh'}
       background="url(/assets/images/hub/hubImageBg.png) no-repeat center center"
       backgroundSize={'cover'}
