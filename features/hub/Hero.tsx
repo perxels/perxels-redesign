@@ -109,7 +109,7 @@ export const Hero = () => {
             initialValues={{
               name: '',
               email: '',
-              datetime: '10-08-2023 11:00AM',
+              datetime: '2023-08-18T03:35',
               hours: '0',
             }}
             validationSchema={Yup.object({
