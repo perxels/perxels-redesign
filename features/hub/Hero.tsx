@@ -128,7 +128,7 @@ export const Hero = () => {
               name: '',
               email: '',
               datetime: '2023-08-18T03:35',
-              hours: '0',
+              hours: '',
             }}
             validationSchema={Yup.object({
               name: Yup.string().required('Name is Required'),
@@ -269,7 +269,7 @@ export const Hero = () => {
                     </Text>
                   ) : null}
                 <NumberInput
-                  defaultValue={0}
+                  
                   step={1}
                   border="none"
                   min={0}
@@ -279,6 +279,7 @@ export const Hero = () => {
                   
                 >
                   <NumberInputField
+                    placeholder="Number of hours"
                     name="hours"
                     backgroundColor={'#F2F2F2'}
                     _focusVisible={{
@@ -287,7 +288,7 @@ export const Hero = () => {
                     w="full"
                     borderRadius="6.25rem"
                     h={["3.125rem","3.75rem"]}
-                    placeholder="Number of hours"
+                    
                     _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
                     value={formik.values.hours}
                     onChange={formik.handleChange}
