@@ -233,6 +233,7 @@ export const Hero = () => {
 
                 <InputGroup>
                   <Input
+                  cursor="pointer"
                       h={["3.125rem","3.75rem"]}
                     placeholder="10-08-2023 11:00AM"
                     _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
@@ -258,6 +259,7 @@ export const Hero = () => {
                           center/100% no-repeat;
                         color: black;
                         margin-right: 27px;
+                        cursor: pointer;
                       }
                     `}
                   />
