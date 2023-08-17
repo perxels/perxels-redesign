@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   Box,
   Image,
@@ -27,16 +27,34 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { SuccessModal } from '../../components'
 
+const HeroArray = [
+    "/assets/images/hub/imageHub1.png",
+    "/assets/images/hub/imageHub2.png",
+    "/assets/images/hub/imageHub3.png",
+    "/assets/images/hub/imageHub4.png",
+    "/assets/images/hub/imageHub5.png"
+]
 
 export const Hero = () => {
-  const scriptUrl =
+    const [active, setActive] = useState<number>(0);
+    const scriptUrl =
     'https://script.google.com/macros/s/AKfycbxXWHyW58PmCmQKETOyzDfRLL-udfjCpXHUyylGf28E2oV1yfQ-r8gxCyW53uHLICkkuw/exec'
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    useEffect(() => {
+    const interval = setInterval(() => {
+    setActive((prev) => (prev === 4 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+    console.log(active)
+    }, [])
+    
+
   return (
     <Box
       w={["100vw","99vw"]}
       minHeight={'100vh'}
-      background="url(/assets/images/hub/hubImageBg.png) no-repeat center center"
+      background={`url(${HeroArray[active]}) no-repeat center center`}
       backgroundSize={'cover'}
       position="relative"
       pb="5%"
