@@ -54,11 +54,14 @@ export const Hero = () => {
     <Box
       w={["100vw","99vw"]}
       minHeight={'100vh'}
-      background={`url(${HeroArray[active]}) no-repeat center center`}
+    //   background={`url(${HeroArray[active]}) no-repeat center center`}
       backgroundSize={'cover'}
       position="relative"
       pb="5%"
     >
+        {/* image with position absolute as background image */}
+        <Image src={HeroArray[active]} alt="hero image" position="absolute" top="0" left="0" w="100%" h="100%" objectFit="cover" />        
+
          <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
