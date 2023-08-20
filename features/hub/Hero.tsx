@@ -130,6 +130,7 @@ export const Hero = () => {
             initialValues={{
               name: '',
               email: '',
+              phone: '',
               datetime: '2023-08-18T03:35',
               hours: '',
             }}
@@ -138,6 +139,7 @@ export const Hero = () => {
               email: Yup.string()
                 .email('Invalid email address')
                 .required('Email is Required'),
+              phone: Yup.string().required('Phone Number is Required'),
               datetime: Yup.string().required('Datetime is Required'),
               hours: Yup.number().required('Hours are Required'),
             })}
@@ -148,6 +150,7 @@ export const Hero = () => {
              console.log(values, "values")
               formData.append('name', values.name as string)
               formData.append('email', values.email as string)
+              formData.append('phone', values.phone as string)
               formData.append('datetime', values.datetime as string)
               formData.append('hours', values.hours as string)
               formData.append('created_at', new Date().toLocaleString())
@@ -207,7 +210,32 @@ export const Hero = () => {
                     {formik.errors.name}
                   </Text>
                 ) : null}
-    
+
+                <Input 
+                h={["3.125rem","3.75rem"]}
+                placeholder="Phone Number (e.g. 08012345678)"
+                _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
+                name="phone"
+                type="tel"
+                border="none"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                backgroundColor={'#F2F2F2'}
+                borderColor={
+                  formik.touched.phone && formik.errors.phone ? 'red' : ''
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+                borderRadius="6.25rem"
+              />
+                {formik.touched.phone && formik.errors.phone ? (
+                  <Text color="red" fontSize="12px">
+                    {formik.errors.phone}
+                  </Text>
+                ) : null}
+
                 <Input
                    h={["3.125rem","3.75rem"]}
                   placeholder="Email address (e.g name@example.com)"
