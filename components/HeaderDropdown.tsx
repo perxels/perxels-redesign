@@ -5,7 +5,7 @@ import React from 'react'
 const HeaderDropdown = ({ setShowDropdown }: { setShowDropdown: any }) => {
   return (
     <Center w="full" h="calc(100vh - 4rem)" bg="brand.white">
-      <Flex alignItems="center" gap="4.375rem" flexDir="column">
+      <Flex alignItems="center" gap="3rem" flexDir="column">
         <Link onClick={() => setShowDropdown(false)} href="/">
           <Text fontSize="xl">Home</Text>
         </Link>
@@ -20,6 +20,9 @@ const HeaderDropdown = ({ setShowDropdown }: { setShowDropdown: any }) => {
         </Link>
         <Link onClick={() => setShowDropdown(false)} href="/partners">
           <Text fontSize="xl">Be a Partner</Text>
+        </Link>
+        <Link onClick={() => setShowDropdown(false)} href="/hub">
+          <Text fontSize="xl">Hub</Text>
         </Link>
         {/* change button content */}
         <Link onClick={() => setShowDropdown(false)} href="/enrol">

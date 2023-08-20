@@ -69,6 +69,15 @@ const Header = ({ isDark = false, isRelative= false }) => {
                   Be a Partner
                 </Text>
               </Link>
+              <Link href="/hub">
+                <Text
+                  color={isDark ? 'brand.white' : 'brand.primary.500'}
+                  _hover={{ color: 'brand.yellow.500' }}
+                  fontSize="xl"
+                >
+                 Hub
+                </Text>
+              </Link>
             </Flex>
           </Flex>
 
