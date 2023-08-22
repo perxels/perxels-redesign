@@ -296,8 +296,10 @@ export const Hero = () => {
                           center/100% no-repeat;
                         color: black;
                         margin-right: 27px;
-                        cursor: pointer;
-                        text-align: left;
+                        cursor: pointer;                  
+                      }
+                      ::-webkit-date-and-time-value{
+                        text-align:left;
                       }
                     `}
                   />
