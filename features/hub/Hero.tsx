@@ -314,7 +314,7 @@ export const Hero = () => {
 
                 <Select
                   h={["3.125rem", "3.75rem"]}
-                  placeholder="What type of space are you reserving ?"
+                  // placeholder="What type of space are you reserving ?"
                   _placeholder={{ color: 'brand.dark.200' }}
                   color="brand.dark.200"
                   name="spacetype"
@@ -330,6 +330,7 @@ export const Hero = () => {
                   }}
                   borderRadius="6.25rem"
                 >
+                  <option value="" disabled selected>What type of space are you reserving ?</option>
                   <option value="Workstation(N1500per Hour)">Workstation(N1500per Hour)</option>
                   <option value="Boardroom(N10,000per Hour)"> Boardroom(N10,000per Hour)</option>
 
