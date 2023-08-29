@@ -66,14 +66,22 @@ export const Banner = () => {
               flexDirection={['column', 'column', 'row', 'row']}
               alignItems={["flex-start", "flex-start", "center", "center"]}
             >
-              <Box boxSize={['9.3125rem']}>
+              <Flex columnGap={['0.5rem','1rem']}>
+              <Box boxSize={['7rem','9.3125rem']}>
                 <Img
                   src={bannerContent.bannerImage}
                   alt="Banner"
                   rounded={'100%'}
                 />
               </Box>
-
+               <Box boxSize={['7rem','9.3125rem']}>
+                <Img
+                  src={'/assets/images/banner/bannerImage2.jpeg'}
+                  alt="Banner"
+                  rounded={'100%'}
+                />
+              </Box>
+              </Flex>
               <Box
                 display={['block', 'block', 'block', 'block']}
                 mt={['1rem', '1rem', '0rem', '0rem']}

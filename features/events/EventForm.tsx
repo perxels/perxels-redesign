@@ -26,34 +26,10 @@ export const EventForm = () => {
   )
   const formRef = useRef(null)
   const [loading, setLoading] = useState(false)
-  const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbwT-2FTNzCeyQ1f9bZQgcRoTuepP0kHNVemyh5jmrP_H3z7p_EaDNNMAlcWrpdZJj4Cvw/exec'
+  // const scriptUrl ='https://script.google.com/macros/s/AKfycbwT-2FTNzCeyQ1f9bZQgcRoTuepP0kHNVemyh5jmrP_H3z7p_EaDNNMAlcWrpdZJj4Cvw/exec'
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbyJWfSEOPbCvWkAGhqQZ5VSdLk7GOhhLHantKuWHFtXW4G1HbtZPBiirVGDBc66v6Ov2Q/exec'
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    setLoading(true)
-    const inputData = e.target as typeof e.target & {
-      name: { value: string }
-      email: { value: string }
-      phone: { value: string }
-      howyouknew: { value: string }
-      perxelsStudent: {value: string}
-      questions: { value: string }
-    }
 
-    const formData = new FormData()
-    formData.append('name', inputData.name.value as string)
-    formData.append('email', inputData.email.value as string)
-    formData.append('phone', inputData.phone.value as string)
-    formData.append('howyouknew', inputData.howyouknew.value as string)
-    formData.append('questions', inputData.questions.value as string)
-    formData.append('perxelsStudent', inputData.perxelsStudents.value as string)
-    //current date and time
-    formData.append('date', new Date().toLocaleString())
-    // const data = Object.fromEntries(formData)
-    // console.log(data)
-  
-  }
 
   return (
     <>
@@ -70,7 +46,7 @@ export const EventForm = () => {
           phone: '',
           howyouknew: '',
           questions: '',
-          perxelsStudent: ''
+          // perxelsStudent: ''
         }}
         validationSchema={Yup.object({
           name: Yup.string().required('Name is Required'),
@@ -78,7 +54,7 @@ export const EventForm = () => {
           phone: Yup.string().required('Phone Number is Required'),
           howyouknew: Yup.string().required('How you knew is Required'),
           questions: Yup.string().required('Questions is Required'),
-          perxelsStudent: Yup.string().required('Are you a Perxels Student? Kindly Answer'),
+          // perxelsStudent: Yup.string().required('Are you a Perxels Student? Kindly Answer'),
         })}
         onSubmit ={(values, action) => {
           console.log(values)
@@ -89,7 +65,7 @@ export const EventForm = () => {
             formData.append('phone', values.phone as string)
             formData.append('howyouknew', values.howyouknew as string)
             formData.append('questions', values.questions as string)
-            formData.append('perxelsStudent', values.perxelsStudent as string)
+            // formData.append('perxelsStudent', values.perxelsStudent as string)
             formData.append('date', new Date().toLocaleString())
 
             fetch(scriptUrl, {
@@ -125,6 +101,9 @@ export const EventForm = () => {
            type="text"
            placeholder='Full Name*'
            h="3.5rem"
+          _placeholder={{
+            color: '#B4B4B4'
+          }}
            backgroundColor={'#FCFCFC'}
            border="0.406872px solid #B4B4B4"
            _focusVisible={{
@@ -145,6 +124,9 @@ export const EventForm = () => {
            _focusVisible={{
              outline: 'none',
            }}
+           _placeholder={{
+            color: '#B4B4B4'
+          }}
            _focus={{ border: 'none' }}
            value={formik.values.email}
             onChange={formik.handleChange}
@@ -163,6 +145,9 @@ export const EventForm = () => {
            _focusVisible={{
              outline: 'none',
            }}
+           _placeholder={{
+            color: '#B4B4B4'
+          }}
            _focus={{ border: 'none' }}
             value={formik.values.phone}
             onChange={formik.handleChange}
@@ -182,6 +167,7 @@ export const EventForm = () => {
              _focusVisible={{
                outline: 'none',
              }}
+
              value ={formik.values.howyouknew}
              onChange={formik.handleChange}
              borderColor={
@@ -197,7 +183,7 @@ export const EventForm = () => {
            </Select>
          </FormControl>
 
-            <FormControl id="perxelsStudent">
+            {/* <FormControl id="perxelsStudent">
              <Select  
                 backgroundColor={'#FCFCFC'}
                 border="0.406872px solid #B4B4B4"
@@ -217,7 +203,7 @@ export const EventForm = () => {
                 <option value="No">No</option>
                 </Select>
 
-            </FormControl>
+            </FormControl> */}
 
 
          <FormControl id="questions">
@@ -225,8 +211,11 @@ export const EventForm = () => {
              backgroundColor={'#FCFCFC'}
              outline="none"
              border="0.406872px solid #B4B4B4"
-             placeholder="Questions for the Session"
+             placeholder="What do you hope to gain from this event?"
              name="questions"
+             _placeholder={{
+              color: '#B4B4B4'
+            }}
              _focusVisible={{
                outline: 'none',
              }}
