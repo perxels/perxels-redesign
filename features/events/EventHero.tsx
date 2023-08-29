@@ -47,7 +47,7 @@ export const EventHero = () => {
                 backgroundColor: '#E3719C',
                 color: '#fff',
               }}
-              mb={{ base: 4, md: 4 }}
+              mb={{ base: 2, md: 2 }}
             >
               {/* <Text>DESIGN DIGEST SESSION</Text> */}
               {/* <Text>AMA SESSION</Text> */} 
@@ -56,19 +56,19 @@ export const EventHero = () => {
               <Text>{bannerContent.mainTitle}</Text> 
             </Button>
 
-            <Flex columnGap="1.2rem" alignItems="center">
+            <Flex columnGap="1rem" alignItems="center">
               <Box>
                   <Logo/>
               </Box>
               <Text
-              fontSize={{ base: '5xl', md: '5xl', lg: '5xl' }}
+              fontSize={{ base: '4xl', md: '4xl', lg: '4xl' }}
               color="brand.dark.100"
               lineHeight={'110%'}
               >
                 X
               </Text>
               <Box>
-                <Img width="100px" height="100px" src="/assets/images/banner/rtLogo.svg" alt="amaLogo" />
+                <Img width="200px" height="150px" src="/assets/images/banner/rtLogo.svg" alt="amaLogo" />
               </Box>
 
             </Flex>
