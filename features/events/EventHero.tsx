@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react'
-import { Box, Flex, Heading, Text, Button, Grid, Img, List, OrderedList,ListItem } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, Button, Grid, Img, List, OrderedList,ListItem, Image } from '@chakra-ui/react'
 import { bannerContent } from '../../constant'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { EventForm } from './'
 import { MainContainer } from '../../layouts'
-
+import {Logo} from '../../components'
 import gsap from 'gsap'
 
 export const EventHero = () => {
@@ -47,7 +47,7 @@ export const EventHero = () => {
                 backgroundColor: '#E3719C',
                 color: '#fff',
               }}
-              mb={{ base: 4, md: 7 }}
+              mb={{ base: 4, md: 4 }}
             >
               {/* <Text>DESIGN DIGEST SESSION</Text> */}
               {/* <Text>AMA SESSION</Text> */} 
@@ -55,6 +55,24 @@ export const EventHero = () => {
               {/* <Text>LIVE DESIGN SESSION</Text>  */}
               <Text>{bannerContent.mainTitle}</Text> 
             </Button>
+
+            <Flex columnGap="1.2rem" alignItems="center">
+              <Box>
+                  <Logo/>
+              </Box>
+              <Text
+              fontSize={{ base: '5xl', md: '5xl', lg: '5xl' }}
+              color="brand.dark.100"
+              lineHeight={'110%'}
+              >
+                X
+              </Text>
+              <Box>
+                <Img width="100px" height="100px" src="/assets/images/banner/rtLogo.svg" alt="amaLogo" />
+              </Box>
+
+            </Flex>
+
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}
               color="brand.dark.100"
@@ -65,6 +83,7 @@ export const EventHero = () => {
               {/* {bannerContent.mainTitle} */}
               {" "}{bannerContent.subTitle}
             </Heading>
+            
             <Flex
               className="ama-other-content"
               columnGap={{ base: '0.5rem', lg: '1.3rem' }}
