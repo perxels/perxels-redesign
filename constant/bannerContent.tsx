@@ -17,18 +17,18 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   // mainTitle: 'DESIGN DIGEST SESSION: ',
-  mainTitle: 'JOURNEY TO SUCCESS:',
-  subTitle: 'UNVEILING THE PATH OF A YOUNG DESIGNER',
-  time: '7pm - 8pm (WAT)',
-  date: 'Sunday, August 20th, 2023',
+  mainTitle: 'JOB CONFERENCE: ',
+  subTitle: 'MAXIMIZING JOB OPPORTUNITIES',
+  time: '3pm-6pm',
+  date: 'Saturday, August 20th, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-  "Join us for an exclusive Q&A session with a trailblazer in the design industry. Prepare to be inspired, motivated, and gain invaluable insights from this influential young designer who paved his way to success. Discover the untold stories, challenges overcome, and key milestones that have helped shaped his career.",
-  content1: "This event is a must-attend for aspiring designers, seasoned professionals, and anyone curious about the world of design. Seize the opportunity to tap into the wisdom and experiences of this visionary, fueling your own creative journey.",
+  "Join us in this one-day event as we delve into the intricacies of the design job market and explore innovative approaches to landing your dream job. This conference is tailor-made for people seeking to excel in the design and tech space. By attending, you will:",
+  content1: "",
   content2: "",
   content3: "",
   content4: "",
-  speakerName: 'AJAYI AKINTOMIWA',
-  speakerRole: ' Product Designer',
+  speakerName: 'MICHAEL ETUKUDOH',
+  speakerRole: 'Senior Talent Partner at KingMakers',
 }
