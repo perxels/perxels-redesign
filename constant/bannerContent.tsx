@@ -20,7 +20,7 @@ export const bannerContent: BannerContent = {
   mainTitle: 'JOB CONFERENCE: ',
   subTitle: 'MAXIMIZING JOB OPPORTUNITIES',
   time: '3pm-6pm',
-  date: 'Saturday, August 20th, 2023',
+  date: 'Saturday, September 16th, 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:

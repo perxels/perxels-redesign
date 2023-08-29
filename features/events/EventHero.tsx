@@ -142,7 +142,7 @@ export const EventHero = () => {
                 textTransform={'uppercase'}
                 mb={{ base: 2, md: 4 }}
               >
-                Speaker:
+                Speakers:
                 {/* Panelists: */}
                 {/* Facilitator */}
               </Text>
