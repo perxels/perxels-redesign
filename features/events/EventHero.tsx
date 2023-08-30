@@ -68,7 +68,7 @@ export const EventHero = () => {
                 X
               </Text>
               <Box>
-                <Img width="200px" height="150px" src="/assets/images/banner/rtLogo.svg" alt="amaLogo" />
+                <Img width="150px" height="150px" src="/assets/images/banner/rtLogo.svg" alt="amaLogo" />
               </Box>
 
             </Flex>
