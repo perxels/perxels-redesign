@@ -46,6 +46,7 @@ export const EventForm = () => {
           phone: '',
           howyouknew: '',
           questions: '',
+          community: '',
           // perxelsStudent: ''
         }}
         validationSchema={Yup.object({
@@ -54,6 +55,7 @@ export const EventForm = () => {
           phone: Yup.string().required('Phone Number is Required'),
           howyouknew: Yup.string().required('How you knew is Required'),
           questions: Yup.string().required('Questions is Required'),
+          community: Yup.string().required('Community is Required'),
           // perxelsStudent: Yup.string().required('Are you a Perxels Student? Kindly Answer'),
         })}
         onSubmit ={(values, action) => {
@@ -65,6 +67,7 @@ export const EventForm = () => {
             formData.append('phone', values.phone as string)
             formData.append('howyouknew', values.howyouknew as string)
             formData.append('questions', values.questions as string)
+            formData.append('community', values.community as string)
             // formData.append('perxelsStudent', values.perxelsStudent as string)
             formData.append('date', new Date().toLocaleString())
 
@@ -180,6 +183,31 @@ export const EventForm = () => {
              <option value="Twitter">Twitter</option>
              <option value="Friend">Friend</option>
              <option value="Others">Others</option>
+           </Select>
+         </FormControl>
+
+         <FormControl id="how">
+           <Select
+             backgroundColor={'#FCFCFC'}
+             border="0.406872px solid #B4B4B4"
+             placeholder="Which of the communities do you belong to?"
+             _placeholder={{ color: '#B4B4B4' }}
+             name="community"
+             h="3.5rem"
+             _focusVisible={{
+               outline: 'none',
+             }}
+
+             value ={formik.values.community}
+             onChange={formik.handleChange}
+             borderColor={
+                formik.touched.community && formik.errors.community ? 'red.500' : '#B4B4B4'
+             }
+           >
+             <option value="Perxels">Perxels</option>
+             <option value="Roadtrip">RoadTrip</option>
+             <option value="None">None of the communities</option>
+             
            </Select>
          </FormControl>
 
