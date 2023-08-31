@@ -1,1 +1,6 @@
 export * from './Hero'
+export * from './NewHero'
+export * from './SpaceType'
+export * from './HubFeats'
+export * from './HubForm'
+export * from './LocateHub'

@@ -28,74 +28,19 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { SuccessModal } from '../../components'
 
-const HeroArray = [
-  "/assets/images/hub/imageHub1.png",
-  "/assets/images/hub/imageHub2.png",
-  "/assets/images/hub/imageHub3.png",
-  "/assets/images/hub/imageHub4.png",
-  "/assets/images/hub/imageHub5.png"
-]
-
-export const Hero = () => {
-  const [active, setActive] = useState<number>(0);
-  const scriptUrl =
+export const FormComp = () => {
+    const scriptUrl =
     'https://script.google.com/macros/s/AKfycbxXWHyW58PmCmQKETOyzDfRLL-udfjCpXHUyylGf28E2oV1yfQ-r8gxCyW53uHLICkkuw/exec'
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActive((prev) => (prev === 4 ? 0 : prev + 1));
-    }, 5000);
-    return () => clearInterval(interval);
-    console.log(active)
-  }, [])
-
-
   return (
-    <Box
-      w={["100vw", "99vw"]}
-      minHeight={'100vh'}
-      //   background={`url(${HeroArray[active]}) no-repeat center center`}
-      backgroundSize={'cover'}
-      position="relative"
-      pb="5%"
-    >
-      {/* image with position absolute as background image */}
-      <Image src={HeroArray[active]} alt="hero image" position="absolute" top="0" left="0" w="100%" h="100%" objectFit="cover" />
-
-      <SuccessModal
+    <Box>
+        <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
         title="Thank you for Booking a Space!"
         description="Our representative will call you within the next 24 hours."
       />
-      {/* top right logo with absolute position */}
-      <Box position="absolute" top="0" left="0" p={["20px 0px 0px 20px", "20px 0px 0px 100px"]}>
-        <Image src={"/assets/images/hub/hubLogoDesktop.svg"} alt="hub logo" />
-        {/* <Image display={["block", "none"]} src={"/assets/images/hub/hubLogoMobile.svg" } alt="hub logo" /> */}
-      </Box>
-      <Box px={["5%", '32%']} position="relative" pt={["25%", "5%"]}>
-        <Box display="flex" justifyContent="center">
-          <Center
-            display="inline-flex"
-            backgroundColor="#E3719C"
-            alignItems="center"
-            p=".625rem"
-            columnGap=".3513rem"
-            rounded=".375rem"
-          >
-            <Icon as={RiRouterFill} color="white" fontSize="15px" />
-            <Text
-              fontSize="15px"
-              lineHeight="1.1419rem"
-              color="#FFF"
-              fontWeight="700"
-            >
-              Free Wi-Fi
-            </Text>
-          </Center>
-        </Box>
-        <Box
+      <Box
           mt="1.0625rem"
           rounded="10px"
           p={["2.0625rem 1.375rem", "34px 33px"]}
@@ -114,7 +59,7 @@ export const Hero = () => {
             </Heading>{' '}
             today!
           </Heading>
-          <Flex mt=".7813rem" alignItems="center" columnGap={'.6875rem'}>
+          {/* <Flex mt=".7813rem" alignItems="center" columnGap={'.6875rem'}>
             <Icon as={TiLocation} color="#555555" fontSize="23px" />
             <Text fontSize="16px" lineHeight="1.2181rem" color="#121212">
               Triangle Business Mall, Osapa London
@@ -125,7 +70,7 @@ export const Hero = () => {
             <Text color="#121212" fontSize="16px" lineHeight="1.2181rem">
               08135369680
             </Text>
-          </Flex>
+          </Flex> */}
 
           <Formik
             initialValues={{
@@ -397,8 +342,7 @@ export const Hero = () => {
               </VStack>
             )}
           </Formik>
-        </Box>
-      </Box>
+        </Box>  
     </Box>
   )
 }
