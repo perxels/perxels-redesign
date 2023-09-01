@@ -33,7 +33,7 @@ export const SpaceType = () => {
                 title="Flexible Solutions for You - Choose What Works Best for You."
             />
             </Box>
-            <SimpleGrid columns={[1, 1, 2, 2]} spacing="1.875rem" px="0" py="2rem">
+            <SimpleGrid columns={[1, 1, 2, 2]} spacing={["1.25rem","1.875rem"]} px="0" py="2rem">
                 {
                     SpaceTypeData.map((data, index) => (
                         <SpaceCard
