@@ -4,14 +4,14 @@ import { MainLayout } from '../layouts'
 const hub = () => {
   return (
     <div>
-        {/* <Hero/> */}
-        <MainLayout>
+        <Hero/>
+        {/* <MainLayout>
         <NewHero/>
         <SpaceType/>
         <HubFeats/>
         <HubForm/>
         <LocateHub/>
-        </MainLayout>
+        </MainLayout> */}
     </div>
   )
 }
