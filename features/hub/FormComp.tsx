@@ -48,7 +48,7 @@ export const FormComp = () => {
         >
           <Heading
             fontSize={["1.875rem", "2.5rem"]}
-            w={["100%", "80%"]}
+            w={["70%", "70%"]}
             color="#121212"
             lineHeight={["1.875rem", "3.0169rem"]}
           >
