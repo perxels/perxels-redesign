@@ -60,7 +60,7 @@ export const TermsContentObj: TermsContentProps[] = [
         termsContent3:"To initiate the deferment process:",
         termsList: [
             "Send an email to Perxels Design School: perxels@gmail.com",
-            "Said email addressed to Perxels should have the subject: 'I WANT TO TAKE A BREAK'",
+            "Said email addressed to Perxels should have the subject: 'PROGRAM DEFERMENT'",
             "Said email should contain the student's full name, class, and last project done, including reasons for deferment.",
             "Subsequent follow-up should be done within the same email thread for proper documentation."
         ]
