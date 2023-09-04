@@ -7,6 +7,7 @@ export const HubForm = () => {
     <Box  
     background={['url("/assets/images/hub/hubFormBg.png")', 'linear-gradient(0deg, rgba(52, 41, 107, 0.10) 0%, rgba(52, 41, 107, 0.10) 100%), #FFF;']}
     // backgroundColor={["none","]}
+    id="bookspace"
     >
         <MainContainer bg="transparent">
             <Flex pt="5%" pb="10%">

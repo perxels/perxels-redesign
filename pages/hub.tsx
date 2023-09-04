@@ -1,17 +1,20 @@
 import React from 'react'
-import { Hero, NewHero,SpaceType, HubFeats, HubForm, LocateHub } from '../features/hub'
+import { Hero, NewHero,SpaceType, HubFeats, HubForm, LocateHub, HubHeader } from '../features/hub'
 import { MainLayout } from '../layouts'
+import {Footer} from '../components'
 const hub = () => {
   return (
     <div>
-        <Hero/>
-        {/* <MainLayout>
+        {/* <Hero/> */}
+        {/* <MainLayout> */}
+        <HubHeader/>
         <NewHero/>
         <SpaceType/>
         <HubFeats/>
         <HubForm/>
         <LocateHub/>
-        </MainLayout> */}
+        <Footer yellowFooterPill/>
+        {/* </MainLayout> */}
     </div>
   )
 }

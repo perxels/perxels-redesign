@@ -75,7 +75,7 @@ export const FormComp = () => {
           <Formik
             initialValues={{
               name: '',
-              email: '',
+              // email: '',
               phone: '',
               datetime: '2023-08-18T03:35',
               spacetype: '',
@@ -83,9 +83,9 @@ export const FormComp = () => {
             }}
             validationSchema={Yup.object({
               name: Yup.string().required('Name is Required'),
-              email: Yup.string()
-                .email('Invalid email address')
-                .required('Email is Required'),
+              // email: Yup.string()
+              //   .email('Invalid email address')
+              //   .required('Email is Required'),
               spacetype: Yup.string().required('Space Type is required'),
               phone: Yup.string().required('Phone Number is Required'),
               datetime: Yup.string().required('Datetime is Required'),
@@ -97,7 +97,7 @@ export const FormComp = () => {
               const formData = new FormData()
               console.log(values, "values")
               formData.append('name', values.name as string)
-              formData.append('email', values.email as string)
+              // formData.append('email', values.email as string)
               formData.append('phone', values.phone as string)
               formData.append('datetime', values.datetime as string)
               formData.append('spacetype', values.spacetype as string)
@@ -187,7 +187,7 @@ export const FormComp = () => {
                   </Text>
                 ) : null}
 
-                <Input
+                {/* <Input
                   h={["3.125rem", "3.75rem"]}
                   placeholder="Email address (e.g name@example.com)"
                   _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
@@ -211,7 +211,7 @@ export const FormComp = () => {
                     {formik.errors.email}
                   </Text>
                 ) : null
-                }
+                } */}
 
                 <InputGroup>
                   <Input
