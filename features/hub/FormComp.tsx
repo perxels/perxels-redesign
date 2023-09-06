@@ -273,6 +273,7 @@ export const FormComp = () => {
                   _focusVisible={{
                     outline: 'none',
                   }}
+                  border="none"
                   borderRadius="6.25rem"
                 >
                   <option value="" disabled selected>What type of space are you reserving ?</option>
@@ -311,7 +312,7 @@ export const FormComp = () => {
                     w="full"
                     borderRadius="6.25rem"
                     h={["3.125rem", "3.75rem"]}
-                    
+                    border="none"
                     onBlur={formik.handleBlur}
                     _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
                   
