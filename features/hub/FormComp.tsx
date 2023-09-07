@@ -275,7 +275,28 @@ export const FormComp = () => {
                   }}
                   border="none"
                   borderRadius="6.25rem"
-                >
+                  // move select arrow to left
+                //   css={css`
+                //     select{
+                //       -webkit-appearance: none;
+                //     }
+                // `}
+                  background ={`url(${'https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png'}) no-repeat right #ddd`} 
+                  appearance='none'
+                  icon={<></>}
+                  css={
+                    css`
+                    appearance: none;
+                    -webkit-appearance: none;
+                    background-position-x: 93%;
+                    @media(max-width: 768px){
+                      background-position-x: 85%;
+                    }
+                    `
+                  }
+                 
+                
+                  >
                   <option value="" disabled selected>What type of space are you reserving ?</option>
                   <option value="Workstation(N1500per Hour)">Workstation(N1500per Hour)</option>
                   <option value="Boardroom(N10,000per Hour)"> Boardroom(N10,000per Hour)</option>
