@@ -75,7 +75,7 @@ export const FormComp = () => {
           <Formik
             initialValues={{
               name: '',
-              email: '',
+              // email: '',
               phone: '',
               datetime: '2023-08-18T03:35',
               spacetype: '',
@@ -83,9 +83,9 @@ export const FormComp = () => {
             }}
             validationSchema={Yup.object({
               name: Yup.string().required('Name is Required'),
-              email: Yup.string()
-                .email('Invalid email address')
-                .required('Email is Required'),
+              // email: Yup.string()
+              //   .email('Invalid email address')
+              //   .required('Email is Required'),
               spacetype: Yup.string().required('Space Type is required'),
               phone: Yup.string().required('Phone Number is Required'),
               datetime: Yup.string().required('Datetime is Required'),
@@ -97,7 +97,7 @@ export const FormComp = () => {
               const formData = new FormData()
               console.log(values, "values")
               formData.append('name', values.name as string)
-              formData.append('email', values.email as string)
+              // formData.append('email', values.email as string)
               formData.append('phone', values.phone as string)
               formData.append('datetime', values.datetime as string)
               formData.append('spacetype', values.spacetype as string)
@@ -187,7 +187,7 @@ export const FormComp = () => {
                   </Text>
                 ) : null}
 
-                <Input
+                {/* <Input
                   h={["3.125rem", "3.75rem"]}
                   placeholder="Email address (e.g name@example.com)"
                   _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
@@ -211,7 +211,7 @@ export const FormComp = () => {
                     {formik.errors.email}
                   </Text>
                 ) : null
-                }
+                } */}
 
                 <InputGroup>
                   <Input
@@ -273,8 +273,30 @@ export const FormComp = () => {
                   _focusVisible={{
                     outline: 'none',
                   }}
+                  border="none"
                   borderRadius="6.25rem"
-                >
+                  // move select arrow to left
+                //   css={css`
+                //     select{
+                //       -webkit-appearance: none;
+                //     }
+                // `}
+                  background ={`url(${'https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png'}) no-repeat right #ddd`} 
+                  appearance='none'
+                  icon={<></>}
+                  css={
+                    css`
+                    appearance: none;
+                    -webkit-appearance: none;
+                    background-position-x: 93%;
+                    @media(max-width: 768px){
+                      background-position-x: 85%;
+                    }
+                    `
+                  }
+                 
+                
+                  >
                   <option value="" disabled selected>What type of space are you reserving ?</option>
                   <option value="Workstation(N1500per Hour)">Workstation(N1500per Hour)</option>
                   <option value="Boardroom(N10,000per Hour)"> Boardroom(N10,000per Hour)</option>
@@ -311,7 +333,7 @@ export const FormComp = () => {
                     w="full"
                     borderRadius="6.25rem"
                     h={["3.125rem", "3.75rem"]}
-                    
+                    border="none"
                     onBlur={formik.handleBlur}
                     _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
                   
