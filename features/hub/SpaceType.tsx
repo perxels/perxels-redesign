@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect }  from 'react'
 import {Box, Flex, Heading, Text, Spacer, Button, SimpleGrid} from '@chakra-ui/react'
 import {SectionHeader} from '../../components'
 import {MainContainer} from '../../layouts'
 import {SpaceCard} from './SpaceCard'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 const SpaceTypeData = [
     {
@@ -24,6 +27,21 @@ const SpaceTypeData = [
 ]
 
 export const SpaceType = () => {
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+          gsap.from('.section-grid', {
+            opacity: '0',
+            y: 200,
+            duration: 1,
+            delay: 1,
+            scrollTrigger: {
+              trigger: '.section-grid',
+            },
+          })
+        })
+    
+        return () => ctx.revert()
+      }, [])
   return (
     <Box>
         <MainContainer>
@@ -33,7 +51,7 @@ export const SpaceType = () => {
                 title="Choose a space that suits your needs"
             />
             </Box>
-            <SimpleGrid columns={[1, 1, 2, 2]} spacing={["1.25rem","1.875rem"]} px="0" py="2rem">
+            <SimpleGrid  className="section-grid" columns={[1, 1, 2, 2]} spacing={["1.25rem","1.875rem"]} px="0" py="2rem">
                 {
                     SpaceTypeData.map((data, index) => (
                         <SpaceCard

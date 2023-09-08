@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Flex, Box, Text, Image, VStack, HStack, SimpleGrid, Button, Heading} from '@chakra-ui/react'
 import {MainContainer} from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
 export const LocateHub = () => {
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+          gsap.from('.locate-grid', {
+            opacity: '0',
+            y: 200,
+            duration: 1,
+            delay: 1,
+            scrollTrigger: {
+              trigger: '.locate-grid',
+            },
+          })
+        })
+    
+        return () => ctx.revert()
+      }, [])
   return (
     <MainContainer>
-        <Flex justifyContent="space-between" flexDir={["column", "row"]} py="6rem" rowGap="2.5rem" id="location">
+        <Flex className="locate-grid" justifyContent="space-between" flexDir={["column", "row"]} py="6rem" rowGap="2.5rem" id="location">
         <Flex flexDir="column" w={["100%","45%"]}>
             <Heading fontSize={["1.875rem","3rem"]} color="#333" fontWeight="400" mb={[".9375rem","2.25rem"]} >
             LOCATE US
