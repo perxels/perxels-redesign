@@ -75,7 +75,7 @@ export const MasterclassHero = () => {
             className="heroText"
           >
              {/* A  special design masterclass to help you transition into UIUX design */}
-             An exclusive physical training for people based on the <b> Island, Lekki, Ajah axis</b> who are looking to embark on a fulfilling design career.
+             An exclusive physical training for people based in <b> Ibadan</b> who are looking to embark on a fulfilling design career.
           </Text>
         </Center>
 
