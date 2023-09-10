@@ -141,32 +141,36 @@ export const ClassDetails = ({
         ) : null}
         {
           tabState === 'physical' ? (
-              <HStack px={['0.75rem', '1.875rem']}>
-                <Button leftIcon={<ImLocation2/>}
-                  bg= {location === "lagos" ? "rgba(115, 230, 255, 0.25)" : "#BCC7CA"}
-                 fontWeight="400"
-                 color="#000000"
+              <HStack px={['0.75rem', '1.875rem']} gap="0">
+                <Button leftIcon={location === "lagos" ?<Img src="./assets/icons/gpsfilled.svg"  alt="" /> : <Img src="./assets/icons/gpsunfilled.svg" alt="" />}
+                  bg= {location === "lagos" ? "transparent" : "transparent"}
+                 fontWeight={location==="lagos" ? "600" : "400"}
+                 color={location ==="lagos" ? "#383084": "#434343"}
                  _hover={{
                   background: 'rgba(115, 230, 255, 0.25)',
                   color: '#000'
                  }}
+                 borderBottom={location === "lagos" ? "1.8px solid #434343" : "0.9px solid rgba(0, 0, 0, 0.25)"}
                  cursor="pointer"
                  fontSize="18px"
                  onClick={() => setLocation("lagos")}
+                 rounded="0"
                  >
                   Lagos
                 </Button>
                 <Button
-                leftIcon={<ImLocation2/>}
-                bg= {location === "ibadan" ? "rgba(115, 230, 255, 0.25)" : "#BCC7CA"}
-                fontWeight="400"
+                leftIcon={location === "ibadan" ?  <Img src="./assets/icons/gpsfilled.svg" alt="" />  :<Img src="./assets/icons/gpsunfilled.svg"  alt="" />} 
+                bg=  {location === "ibadan" ? "transparent" : "transparent"}
+                fontWeight={location==="ibadan" ? "600" : "400"}
                 color="#000000"
                 _hover={{
                  background: 'rgba(115, 230, 255, 0.25)',
                  color: '#000'
                 }}
+                borderBottom={location === "ibadan" ? "1.8px solid #434343" :  "0.9px solid rgba(0, 0, 0, 0.25)"}
                 cursor="pointer"
                 fontSize="18px"
+                 rounded="0"
                 onClick={() => setLocation("ibadan")}
                 >
                  Ibadan
