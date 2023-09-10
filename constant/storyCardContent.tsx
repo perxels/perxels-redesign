@@ -5,7 +5,7 @@ export interface StoryCardProps {
 
 export const storyCardContent: StoryCardProps[] = [
   {
-    studentStat: '1,000+',
+    studentStat: '3,000+',
     studentStatText: 'Trained.',
   },
   {
