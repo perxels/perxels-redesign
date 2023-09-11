@@ -222,7 +222,7 @@ const EnrolForm = () => {
               ) : null} */}
               <Select
                 h="3.5rem"
-                placeholder="Do you own a laptop"
+                placeholder="Do you own a laptop?"
                 _placeholder={{ color: 'brand.dark.200' }}
                 color="brand.dark.200"
                 name="laptop"
