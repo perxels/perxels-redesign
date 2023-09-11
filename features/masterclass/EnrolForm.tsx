@@ -29,7 +29,7 @@ const EnrolForm = () => {
         title={`Thank you for your registering for the ${classVal} Masterclass!`}
         description="Join the Class by clicking on the button."
         buttonTitle="Join Class"
-        buttonHref={'https://chat.whatsapp.com/DT2daJjhl8D381BuiMr6I9'}
+        buttonHref={'https://chat.whatsapp.com/BQljkHzw5nKKsVGVyAzKaO'}
       />
       <Box
         className="enrol-form"
@@ -56,6 +56,7 @@ const EnrolForm = () => {
             reason: '',
             howdidyouknow: '',
             category: '',
+            laptop: '',
           }}
           validationSchema={Yup.object({
             name: Yup.string().required('Name is required'),
@@ -70,6 +71,7 @@ const EnrolForm = () => {
             ),
             reason: Yup.string().required('Reason is required'),
             category: Yup.string().required('Category is required'),
+            laptop: Yup.string().required('Laptop is Required')
           })}
           onSubmit={(values, action) => {
             setLoading(true)
@@ -86,6 +88,8 @@ const EnrolForm = () => {
             formData.append('howdidyouknow', values.howdidyouknow as string)
             formData.append('category', values.category as string)
             formData.append('reason', values.reason as string)
+            formData.append('laptop', values.laptop as string)
+          
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
 
@@ -145,8 +149,9 @@ const EnrolForm = () => {
                 h="3.5rem"
                 type="tel"
                 placeholder="Phone Number*"
-                _placeholder={{ color: 'brand.dcark.200' }}
+                _placeholder={{ color: 'brand.dark.200' }}
                 name="phone"
+            
                 value={formik.values.phone}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -215,6 +220,33 @@ const EnrolForm = () => {
                   {formik.errors.class}
                 </Text>
               ) : null} */}
+              <Select
+                h="3.5rem"
+                placeholder="Do you own a laptop"
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="laptop"
+                value={formik.values.laptop}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.laptop && formik.errors.laptop
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Select>
+              {formik.touched.laptop && formik.errors.laptop ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.laptop}
+                </Text>
+              ) : null}
+
 
               <Input
                 h="3.5rem"
