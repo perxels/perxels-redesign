@@ -56,7 +56,8 @@ export const ClassDetails = ({
   branchAddress,
   installmentPhysical,
   classTimePhysical, 
-  isAddress
+  isAddress,
+  stateLocation
 }: ClassGroupDetailsProps) => {
   console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
@@ -243,7 +244,7 @@ export const ClassDetails = ({
                 fontSize={['lg', 'lg', 'lg', '2xl']}
                 pr={['1rem', '1rem']}
               >
-                  {tabState === 'virtual' ?  "ONLINE" : "PHYSICAL TRAINING"}
+                  {tabState === 'virtual' ?  classType ? classType :  "ONLINE"   : "PHYSICAL TRAINING"}
               </Heading>
             </VStack>
             {
@@ -354,7 +355,7 @@ export const ClassDetails = ({
                   Tuition:
                   {" "} {" "}
                   {
-                  location === "ibadan" ?
+                  location === "ibadan" || stateLocation === "ibadan"  ?
                   (
                  <Text fontSize=".75rem" as="span" padding=".5rem 1.125rem" rounded="15px" bg="#FDF6F6" color="#E3719C" fontWeight="700">
                  Discounted price
