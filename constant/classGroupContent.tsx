@@ -23,7 +23,7 @@ export interface ClassGroupDetailsProps {
   installmentPhysical?: string[]
   classTimePhysical?: string
   isAddress?: boolean
-  
+  stateLocation?: string
 }
 
 export interface StudentWorkProps {
