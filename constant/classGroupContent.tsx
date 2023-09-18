@@ -24,6 +24,8 @@ export interface ClassGroupDetailsProps {
   classTimePhysical?: string
   isAddress?: boolean
   stateLocation?: string
+  enrolRoute?: any
+  isPhysical?: boolean
 }
 
 export interface StudentWorkProps {

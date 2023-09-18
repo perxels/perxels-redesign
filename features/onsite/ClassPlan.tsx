@@ -34,7 +34,8 @@ export const ClassPlan = () => {
         classType= "Physical Training"
         address= "LEKKI PHASE 1, LAGOS NIGERIA"
         isAddress
-     
+        enrolRoute='/onsite/signup'
+        isPhysical
       />
     </MainContainer>
   )
