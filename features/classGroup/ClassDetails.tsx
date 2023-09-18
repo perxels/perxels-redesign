@@ -57,7 +57,9 @@ export const ClassDetails = ({
   installmentPhysical,
   classTimePhysical, 
   isAddress,
-  stateLocation
+  stateLocation,
+  enrolRoute,
+  isPhysical
 }: ClassGroupDetailsProps) => {
   console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
@@ -380,7 +382,7 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['none', 'none', 'none', 'inline-block']}
             as={Link}
-            href={isSponsor ? '/sponsorship/signup' : '/signup'}
+            href={isSponsor ? '/sponsorship/signup' : isPhysical ? enrolRoute : '/signup'}
           >
             {isSponsor ? 'Apply Now' : 'Enroll For This Plan'}
           </Button>
@@ -426,7 +428,7 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['inline-block', 'inline-block', 'inline-block', 'none']}
             as={Link}
-            href={isSponsor ? '/sponsorship/signup' : '/signup'}
+            href={isSponsor ? '/sponsorship/signup' : isPhysical ? enrolRoute : '/signup'}
           >
             {isSponsor ? 'Apply Now' : 'Enroll For This Plan'}
           </Button>

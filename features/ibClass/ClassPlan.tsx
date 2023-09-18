@@ -35,6 +35,8 @@ export const ClassPlan = () => {
         address= "RING ROAD, IBADAN OYO STATE"
         isAddress
         stateLocation="ibadan"
+        enrolRoute='/ibadan/signup'
+        isPhysical
       />
     </MainContainer>
   )
