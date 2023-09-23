@@ -3,7 +3,7 @@ import { EnrolWrapper } from '../../features/ibClass'
 const signup = () => {
   return (
     <div>
-        <EnrolWrapper/>
+    {/* <EnrolWrapper/> */}
     </div>
   )
 }
