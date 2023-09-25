@@ -59,6 +59,10 @@ export const links = [
         name: 'Be a Partner',
         url: '/partners',
       },
+      {
+        name: 'Privacy Policy',
+        url: '/policy',
+      },
     ],
   },
   {
@@ -94,6 +98,10 @@ export const links = [
     title: 'Contact Us',
     links: [
       {
+        name: "Triangle Mall, Osapa London, Lekki ExpressWay. Lagos",
+        url: ''
+      },
+      {
         name: 'perxels@gmail.com',
         url: 'mailto:perxels@gmail.com',
       },
@@ -101,10 +109,7 @@ export const links = [
         name: '+2348135369680',
         url: 'tel:+2348135369680',
       },
-      {
-        name: 'Privacy Policy',
-        url: '/policy',
-      },
+     
     ],
   },
 ]
