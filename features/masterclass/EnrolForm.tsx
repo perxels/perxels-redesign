@@ -251,7 +251,7 @@ const EnrolForm = () => {
               <Input
                 h="3.5rem"
                 type="text"
-                placeholder="Where are you located? E.g Bodija, Iwo road..."
+                placeholder="Where are you located? E.g Lekki, Ikeja..."
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="location"
                 value={formik.values.location}

@@ -3,7 +3,7 @@ import {RegisterWrapper} from '../../features/masterclass'
 const register = () => {
   return  (
     <>
-    {/* <RegisterWrapper/> */}
+    <RegisterWrapper/>
     </>
   )
 }
