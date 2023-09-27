@@ -7,11 +7,11 @@ import { MainLayout } from '../layouts'
 const masterclass = () => {
   return (
     <>    
-    {/* <MainLayout> */}
-      {/* <MasterclassHero /> */}
-      {/* <WhatToExpect /> */}
-      {/* <Portfolio /> */}
-    {/* </MainLayout> */}
+    <MainLayout>
+      <MasterclassHero />
+      <WhatToExpect />
+      <Portfolio />
+    </MainLayout>
     </>
   )
 }
