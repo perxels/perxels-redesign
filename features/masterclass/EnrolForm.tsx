@@ -340,6 +340,8 @@ const EnrolForm = () => {
                 <option value="LinkedIn">LinkedIn</option>
                 <option value="Instagram">Instagram</option>
                 <option value="WhatsApp">WhatsApp</option>
+                <option value= "Customer Representative">Customer Representative</option>
+                <option value="Friends">Friends</option>
               </Select>
               {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
                 <Text color="red.500" fontSize="sm">
