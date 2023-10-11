@@ -60,17 +60,6 @@ export const EventHero = () => {
               <Box>
                   <Logo/>
               </Box>
-              <Text
-              fontSize={{ base: '4xl', md: '4xl', lg: '4xl' }}
-              color="brand.dark.100"
-              lineHeight={'110%'}
-              >
-                X
-              </Text>
-              <Box>
-                <Img width="150px" height="150px" src="/assets/images/banner/rtLogo.svg" alt="amaLogo" />
-              </Box>
-
             </Flex>
 
             <Heading
