@@ -132,7 +132,7 @@ const RegisterForm = () => {
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
             // formData.append('class', values.class as string)
-            formData.append('question', values.why as string)
+            formData.append('question', values.question as string)
             formData.append('howdidyouknow', values.howdidyouknow as string)
             formData.append('gender', values.gender as string)
             formData.append('location', values.location as string)
