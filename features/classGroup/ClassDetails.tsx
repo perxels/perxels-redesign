@@ -26,7 +26,6 @@ import {ImLocation2} from 'react-icons/im'
 // added class details props
 
 const glow = keyframes`
-  
   0% {
     background-color: #ddddff;
   }
@@ -35,9 +34,7 @@ const glow = keyframes`
   }
   100% {
     background-color: #ddddff;
-  }
-
-`
+  }`
 
 export const ClassDetails = ({
   title,
@@ -365,7 +362,9 @@ export const ClassDetails = ({
                  ): null
                  }
                 </Text>
-                <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
+                <Heading w="full" fontSize={['6xl', '6xl', '7xl']}
+                textDecoration={stateLocation === "scholarship" ? "line-through" : " "}
+                >
                   {tabState === 'virtual' || location !== 'ibadan' ? (
                     location === 'lagos' && tabState === 'physical' ? '₦210,000' : tuition
                   ) : physicalTuition}
@@ -430,7 +429,7 @@ export const ClassDetails = ({
             as={Link}
             href={isSponsor ? '/sponsorship/signup' : isPhysical ? enrolRoute : '/signup'}
           >
-            {isSponsor ? 'Apply Now' : 'Enroll For This Plan'}
+            {isSponsor ? 'Apply For Scholarship' : 'Enroll For This Plan'}
           </Button>
         </Box>
       </GridItem>

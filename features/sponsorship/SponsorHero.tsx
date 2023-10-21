@@ -85,7 +85,7 @@ export const SponsorHero = () => {
             </HStack>
           </HStack>
 
-          <Heading
+          {/* <Heading
             fontSize={['6xl', '6xl', '6xl', '8xl']}
             maxW={['350px', '350px', '350px', '550px']}
             fontWeight="700"
@@ -95,8 +95,18 @@ export const SponsorHero = () => {
             opacity={0}
           >
           Get 25% Discount Off From June Tuition Fees
+          </Heading> */}
+          <Heading
+            fontSize={['6xl', '6xl', '6xl', '8xl']}
+            maxW={['350px', '350px', '350px', '550px']}
+            fontWeight="700"
+            mt="1.25rem"
+            color="brand.dark.300"
+            className="desc"
+            opacity={0}
+          >
+              Schorlarship for  Two(2) people in Ibadan
           </Heading>
-
           <Text
             fontSize={['lg', 'lg', 'lg', 'xl']}
             color="brand.dark.200"
@@ -105,7 +115,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-            We are offering a 25% discount on all registrations from GDSC Career Fest starting from June 3rd, 2023
+           Our sponsor, Adeniyi Soniki is giving two people in Ibadan scholarship to learn basic UIUX Design
           </Text>
 
           <Button

@@ -8,39 +8,39 @@ export interface InstructionProps {
 export const instructions: InstructionProps[] = [
   {
     id: 1,
-    title: 'Virtual Learning',
+    title: 'Physical Learning',
     description:
-      'Perxels is an online training school and all class are fully virtual.',
+      'Applicants must be available to attend physical training at Ringroad Ibadan, every sunday 2PM TO 5PM',
     image: './assets/images/sponsorship/virtual-learn.svg',
   },
   {
     id: 2,
     title: 'Laptop and Internet',
     description:
-      'A laptop and good internet is required to have a smooth learning experience.',
+      'Applicants must have laptop to use for the seven weeks training',
     image: './assets/images/sponsorship/laptop-internet.svg',
   },
-  {
-    id: 3,
-    title: 'Installmental Payment',
-    description:
-      'You can split your payment into two and pay at different installments.',
-    image: './assets/images/sponsorship/virtual-learn.svg',
-  },
+  // {
+  //   id: 3,
+  //   title: 'Installmental Payment',
+  //   description:
+  //     'You can split your payment into two and pay at different installments.',
+  //   image: './assets/images/sponsorship/virtual-learn.svg',
+  // },
   {
     id: 4,
     title: 'Class Types',
     description:
-      'You can apply for any of Perxels class plans; Basic class, Advanced class & Premium class.',
+      'This scholarship covers for only basic plan which is 7weeks training',
     image: './assets/images/sponsorship/laptop-internet.svg',
   },
-  {
-    id: 5,
-    title: 'Online Curriculum',
-    description:
-      'A carefully designed curriculum to guide you through the required design  principles.',
-    image: './assets/images/sponsorship/online-curriculum.svg',
-  },
+  // {
+  //   id: 5,
+  //   title: 'Online Curriculum',
+  //   description:
+  //     'A carefully designed curriculum to guide you through the required design  principles.',
+  //   image: './assets/images/sponsorship/online-curriculum.svg',
+  // },
   {
     id: 6,
     title: 'Social Interaction',

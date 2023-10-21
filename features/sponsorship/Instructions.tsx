@@ -27,15 +27,15 @@ export const Instructions = () => {
         <Box py={['3rem', '3rem', '3rem', '4.875rem']}>
           <SectionHeader
             title="Read the following information before applying."
-            subTitle="Instructions"
+            subTitle="Criterias"
             isWhite
             maxW="936px"
             headingSize={['1.75rem', '1.75rem', '1.75rem', '7xl']}
           />
 
           <SimpleGrid
-            mt={['3rem', '3rem', '3rem', '6rem']}
-            mb="1rem"
+            mt={['5rem', '3rem', '3rem', '10rem']}
+            mb="4rem"
             alignItems="center"
             columns={[1, 1, 1, 2]}
             gap={['0.5rem', '0.5rem', '0.5rem', '4rem']}

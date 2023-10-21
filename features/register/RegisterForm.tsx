@@ -31,7 +31,7 @@ const RegisterForm = () => {
   const { onCopy, value, setValue } = useClipboard("https://perxels.com/sponsorship");
 
   const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbzElDzlPDTpufKIge395gGbj68amRNIOy_SPWqm69CZc0ydxc4bVj8nC0jqzVY9RzO9Fg/exec'
+    'https://script.google.com/macros/s/AKfycbzUpMQB2x8Rl8gj11LyLHG1Gz7m5wCln6xoCOUuoR0EkZlfRE-ijDG_JAX6rEOI7elJ/exec'
   const handleSubmit = (e: any) => {
     e.preventDefault()
 
@@ -92,9 +92,16 @@ const RegisterForm = () => {
             name: '',
             phone: '',
             email: '',
-            class: '',
-            why: '',
+            // class: '',
+            question: '',
             howdidyouknow: '',
+            gender: '',
+            laptop: '',
+            available: '',
+            socials: '',
+            location: '',
+            discount: '',
+            
           }}
           validationSchema={Yup.object({
             name: Yup.string().required('Name is required'),
@@ -102,11 +109,17 @@ const RegisterForm = () => {
             email: Yup.string()
               .email('Invalid email address')
               .required('Email is required'),
-            class: Yup.string().required('Class is required'),
-            why: Yup.string().required('reason is required'),
+            // class: Yup.string().required('Class is required'),
+            question: Yup.string().required('question is required'),
             howdidyouknow: Yup.string().required(
               'How did you know is required',
             ),
+            gender: Yup.string().required('Gender is required'),
+            laptop: Yup.string().required('Laptop Field is required'),
+            available: Yup.string().required('Availability is required'),
+            socials: Yup.string().required('Socials is required'),
+            location: Yup.string().required('Location is required'),
+            discount: Yup.string().required('Discount is required'),
           })}
           onSubmit={(values, action) => {
             setLoading(true)
@@ -119,8 +132,14 @@ const RegisterForm = () => {
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
             formData.append('class', values.class as string)
-            formData.append('why', values.why as string)
+            formData.append('question', values.why as string)
             formData.append('howdidyouknow', values.howdidyouknow as string)
+            formData.append('gender', values.gender as string)
+            formData.append('location', values.location as string)
+            formData.append('laptop', values.laptop as string)
+            formData.append('available', values.available as string)
+            formData.append('socials', values.socials as string)
+            formData.append('discount', values.discount as string)
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
 
@@ -199,6 +218,44 @@ const RegisterForm = () => {
                 </Text>
               ) : null}
 
+
+            <Select
+                h="3.5rem"
+                placeholder="Gender"
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="gender"
+                value={formik.values.gender}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.gender && formik.errors.gender
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option
+                  value="Male"
+                >
+                 Male
+                </option>
+                <option
+                  value="Female"
+                >
+                 Female
+                </option>
+                
+              </Select>
+              {formik.touched.gender && formik.errors.gender ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.gender}
+                </Text>
+              ) : null}
+
+
               <Input
                 h="3.5rem"
                 type="email"
@@ -223,7 +280,7 @@ const RegisterForm = () => {
                 </Text>
               ) : null}
 
-              <Select
+              {/* <Select
                 h="3.5rem"
                 placeholder="Which of the class plan do you want to go for?"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -262,23 +319,24 @@ const RegisterForm = () => {
                   Premium Class for beginners to learn everything in UIUX design
                   from basic to PROFESSIONAL level in 3 months 
                 </option>
-              </Select>
-              {formik.touched.class && formik.errors.class ? (
+              </Select> */}
+              {/* {formik.touched.class && formik.errors.class ? (
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.class}
                 </Text>
-              ) : null}
+              ) : null} */}
 
-              <Textarea
+              <Input
                 h="3.5rem"
-                placeholder="Why shouid you be selected for this sponsorship (This will determine our selection?"
+                type="text"
+                placeholder="Where do you reside in Ibadan?"
                 _placeholder={{ color: 'brand.dark.200' }}
-                name="why"
-                value={formik.values.why}
+                name="location"
+                value={formik.values.location}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 borderColor={
-                  formik.touched.why && formik.errors.why
+                  formik.touched.location && formik.errors.location
                     ? 'red.500'
                     : 'brand.dark.200'
                 }
@@ -286,9 +344,109 @@ const RegisterForm = () => {
                   outline: 'none',
                 }}
               />
-              {formik.touched.why && formik.errors.why ? (
+              {formik.touched.location && formik.errors.location ? (
                 <Text color="red.500" fontSize="sm">
-                  {formik.errors.why}
+                  {formik.errors.location}
+                </Text>
+              ) : null}
+
+                <Select
+                h="3.5rem"
+                placeholder="Do you own a laptop?"
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="laptop"
+                value={formik.values.laptop}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.laptop && formik.errors.laptop
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Select>
+              {formik.touched.laptop && formik.errors.laptop ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.laptop}
+                </Text>
+              ) : null}
+
+
+               
+                <Textarea
+                h="3.5rem"
+                placeholder="The training is Sundays, 2pm to 5pm for 7 weeks. Would you make yourself available??"
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="available"
+                value={formik.values.available}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.available && formik.errors.available
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.available && formik.errors.available ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.available}
+                </Text>
+              ) : null}
+              
+               <Textarea
+                h="3.5rem"
+                placeholder=" If not selected for the scholarship, would you consider a discount opportunity?"
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="discount"
+                value={formik.values.discount}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.discount && formik.errors.discount
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.discount && formik.errors.discount ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.discount}
+                </Text>
+              ) : null}
+
+
+
+              <Textarea
+                h="3.5rem"
+                placeholder="Drop any question you have"
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="question"
+                value={formik.values.question}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.question && formik.errors.question
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.question && formik.errors.question ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.question}
                 </Text>
               ) : null}
 
@@ -319,6 +477,30 @@ const RegisterForm = () => {
               {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.howdidyouknow}
+                </Text>
+              ) : null}
+
+            <Input
+                h="3.5rem"
+                type="text"
+                placeholder="Drop your twitter and instagram handle"
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="socials"
+                value={formik.values.socials}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.socials && formik.errors.socials
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.socials && formik.errors.socials ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.socials}
                 </Text>
               ) : null}
 
