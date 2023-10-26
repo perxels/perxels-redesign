@@ -12,8 +12,8 @@ export default function Home() {
      {/* <Banner/>  */}
       <Hero />
       <HeroSubSection />
-      <Story />
       <OurClassGroup />
+      <Story />
       <Portfolio />
       <Testimonial />
     </MainLayout>
