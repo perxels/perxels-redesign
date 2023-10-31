@@ -238,6 +238,17 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
              Privacy Policy
               </Text>
             </Link>
+            <Link w="full" href="https://www.actd.us/perxels/">
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+             Accreditation
+              </Text>
+            </Link>
           </VStack>
           <VStack alignItems="flex-start">
             <Text

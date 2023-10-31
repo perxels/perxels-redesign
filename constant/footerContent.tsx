@@ -109,6 +109,10 @@ export const links = [
         name: '+2348135369680',
         url: 'tel:+2348135369680',
       },
+      {
+        name: 'Accreditation',
+        url: 'https://www.actd.us/perxels/',
+      },
      
     ],
   },
