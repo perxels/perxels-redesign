@@ -12,7 +12,7 @@ const ibadan = () => {
         <ClassPlanIb/>
         <LeaningTools/>
         <OtherPhysCardLayout/>
-        <StudentWorkWrapper/>
+        {/* <StudentWorkWrapper/> */}
         <StudentJob/>
         <Testimonial/>
     </MainLayout>

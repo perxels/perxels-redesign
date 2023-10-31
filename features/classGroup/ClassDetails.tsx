@@ -87,7 +87,7 @@ export const ClassDetails = ({
           </Heading>
         </Box>
 
-        {isTab ? (
+        {/* {isTab ? (
           <Box px={['0.75rem', '1.875rem']} py="1rem">
             <HStack
               backgroundColor={'#F6F7FD'}
@@ -138,8 +138,8 @@ export const ClassDetails = ({
               </Button>
             </HStack>
           </Box>
-        ) : null}
-        {
+        ) : null} */}
+        {/* {
           tabState === 'physical' ? (
               <HStack px={['0.75rem', '1.875rem']} gap="0">
                 <Button leftIcon={location === "lagos" ?<Img src="./assets/icons/gpsfilled.svg"  alt="" /> : <Img src="./assets/icons/gpsunfilled.svg" alt="" />}
@@ -177,7 +177,7 @@ export const ClassDetails = ({
                 </Button>
               </HStack>
           ) : null
-        }
+        } */}
 
         <Box
           px={['.75rem', '.75rem', '.75rem', '1.875rem']}

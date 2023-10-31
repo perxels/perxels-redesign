@@ -42,7 +42,7 @@ export const OnlineClassPlan = () => {
             lineHeight="1.6812rem"
             mt={[".75rem","1.875rem"]}
             >
-            On our quest to continue expanding and bringing design education to your dorrstep, we have established a couple of physical learning spaces.
+            Uncover the world of design through our online classes. Learn, collaborate, and design with us, anytime, anywhere.
             </Text>
 
             <Button

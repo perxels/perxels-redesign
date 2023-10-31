@@ -31,7 +31,7 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
   }, [])
 
   return (
-    <Box mt={['3.75rem', '3.75rem', '7.5rem']} mb={['3.75rem', '3.75rem', '7.5rem']} className="class-group-wrapper">
+    <Box mt={['3.75rem', '3.75rem', '0']} mb={['3.75rem', '3.75rem', '7.5rem']} className="class-group-wrapper">
       <MainContainer>
         <SectionHeader
           subTitle={title || 'Our CLass Groups'}

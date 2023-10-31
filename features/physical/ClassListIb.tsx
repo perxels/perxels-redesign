@@ -25,7 +25,7 @@ export const ClassPlanIb = () => {
         title="Basic Class"
         id="#"
         classDur="7 Weeks."
-        classTime="2-3 times a week."
+        classTime="2 times a week."
         installments={['70% On Admission;', '30% after one month.']}
         tuition="₦60,000"
         courseOutline={[
@@ -41,8 +41,8 @@ export const ClassPlanIb = () => {
             "Certificate of Completion."
         ]}
         classType="Physical Training"
-        // address="LEKKI PHASE 1, LAGOS NIGERIA"
-        // isAddress
+        address="RING ROAD, IBADAN OYO STATE"
+        isAddress
         // stateLocation="scholarship"
         enrolRoute="/signup"
         //   isPhysical
@@ -53,10 +53,10 @@ export const ClassPlanIb = () => {
       <ClassDetails
         title="Premium Class"
         id="#"
-        classDur="9 Weeks."
-        classTime="2-3 times a week."
+        classDur="3 Months"
+        classTime="2 times a week."
         installments={['70% On Admission;', '30% after one month.']}
-        tuition="₦160,000"
+        tuition="₦200,000"
         courseOutline={[
           ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
           'It includes everything in the Basic and Advanced class curriculum.',
@@ -70,8 +70,8 @@ export const ClassPlanIb = () => {
           '6 weeks internship placement after completing the training.',
         ]}
         classType="Physical Training"
-        // address="LEKKI PHASE 1, LAGOS NIGERIA"
-        // isAddress
+        address="RING ROAD, IBADAN OYO STATE"
+        isAddress
         // stateLocation="scholarship"
         enrolRoute="/signup"
         //   isPhysical

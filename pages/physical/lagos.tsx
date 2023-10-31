@@ -12,7 +12,7 @@ const lagos = () => {
         <ClassPlan/>
         <LeaningTools/>
         <OtherPhysCardLayout/>
-        <StudentWorkWrapper/>
+        {/* <StudentWorkWrapper/> */}
         <StudentJob/>
         <Testimonial/>
     </MainLayout>
