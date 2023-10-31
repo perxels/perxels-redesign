@@ -56,7 +56,7 @@ export const ClassPlanIb = () => {
         classDur="3 Months"
         classTime="2 times a week."
         installments={['70% On Admission;', '30% after one month.']}
-        tuition="₦200,000"
+        tuition="₦160,000"
         courseOutline={[
           ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
           'It includes everything in the Basic and Advanced class curriculum.',
@@ -76,6 +76,8 @@ export const ClassPlanIb = () => {
         enrolRoute="/signup"
         //   isPhysical
         //   isSponsor
+        stateLocation="ibadan"
+        
       />
       </Box>
     </MainContainer>

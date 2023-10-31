@@ -24,7 +24,7 @@ export const ClassPlan = () => {
       <ClassDetails
         title="Weekend Class"
         id="#"
-        classDur="9 Weeks."
+        classDur="12 Weeks."
         classTime="2 times a week."
         installments={['70% On Admission;', '30% after one month.']}
         tuition="₦210,000"
@@ -53,8 +53,8 @@ export const ClassPlan = () => {
       <ClassDetails
         title="Weekday Classes"
         id="#"
-        classDur="9 Weeks."
-        classTime="2-3 times a week."
+        classDur="12 Weeks."
+        classTime="2 times a week."
         installments={['70% On Admission;', '30% after one month.']}
         tuition="₦250,000"
         courseOutline={[
