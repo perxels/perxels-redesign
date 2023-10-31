@@ -12,8 +12,8 @@ const lagos = () => {
         <ClassPlan/>
         <LeaningTools/>
         <OtherPhysCardLayout/>
-        {/* <StudentWorkWrapper/> */}
-        <StudentJob/>
+        <StudentWorkWrapper/>
+        {/* <StudentJob/> */}
         <Testimonial/>
     </MainLayout>
   )

@@ -10,7 +10,7 @@ const physicalspace = () => {
         <Hero/>
         <PhysCardLayout/>
         <LeaningTools/>
-        {/* <StudentWorkWrapper/> */}
+        <StudentWorkWrapper/>
         <Box py={["3rem", "0"]} />
         <Testimonial/>
     </MainLayout>

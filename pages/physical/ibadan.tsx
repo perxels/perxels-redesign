@@ -12,8 +12,8 @@ const ibadan = () => {
         <ClassPlanIb/>
         <LeaningTools/>
         <OtherPhysCardLayout/>
-        {/* <StudentWorkWrapper/> */}
-        <StudentJob/>
+        <StudentWorkWrapper/>
+        {/* <StudentJob/> */}
         <Testimonial/>
     </MainLayout>
   )
