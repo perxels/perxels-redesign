@@ -17,7 +17,8 @@ const PhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/perxels-abuja"
+        locationLink: "/physical/perxels-abuja",
+        isComing: true
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",
@@ -35,7 +36,8 @@ const OtherPhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/perxels-abuja"
+        locationLink: "/physical/perxels-abuja",
+        isComing: true
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",
@@ -57,6 +59,7 @@ export const PhysCardLayout = () => {
                 bgImage={data.bgImage}
                 location={data.location}
                 locationLink={data.locationLink}
+                isComing={data?.isComing}
                 />
             ))
         }
@@ -84,6 +87,7 @@ export const OtherPhysCardLayout = () => {
                   locationLink={data.locationLink}
                   heightValue="25.3125rem"
                   fontSizeProp="2.1rem"
+                  isComing={data?.isComing}
                   />
               ))
           }

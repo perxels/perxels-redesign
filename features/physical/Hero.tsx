@@ -15,7 +15,7 @@ export const Hero = () => {
         .to(headingRef.current, { opacity: 1, duration: 1, delay: 1 })
         .to(descRef.current, { opacity: 1, duration: 1 }, '-=0.5')
         .to(imgRef.current, { opacity: 1, duration: 1 }, '-=0.5')
-        .to('.hero-animation', { opacity: 1, y: 0, duration: 1 }, '-=0.5')
+        // .to('.hero-animation', { opacity: 1, y: 0, duration: 1 }, '-=0.5')
         .play()
     }, heroRef)
 
