@@ -17,7 +17,7 @@ export const OnlineClassPlan = () => {
             <Image src="/assets/images/class-group/onlinePerx.png" alt=""  /> 
         </Box>
         <Box
-        width={["100%","45%"]}
+        width={["100%","50%"]}
         >
             <Heading
             color="#121212"
@@ -49,7 +49,7 @@ export const OnlineClassPlan = () => {
             fontSize=".9375rem"
             mt={[".6875rem","1.875rem"]}
             as={Link}
-            href="/enrol"
+            href="/online"
             >
             View Online Class Plans
             </Button>
@@ -110,7 +110,7 @@ export const PhysicalClassPlan = () => {
               color="#34296B"
               background="#FFF"
               as={Link}
-              href="/physicalspace"
+              href="/physical"
               >
               View Physical Class Plans
               </Button>

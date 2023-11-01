@@ -19,6 +19,8 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
     borderRadius=".625rem"
     position="relative"
     minHeight={heightValue ? heightValue : ["27.5rem","31.5625rem"]}
+    as={Link}
+    href={locationLink}
     >
     {
       isComing &&   <Box

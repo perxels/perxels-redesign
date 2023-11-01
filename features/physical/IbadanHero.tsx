@@ -6,7 +6,6 @@ import gsap from 'gsap'
 export const IbadanHero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
-  const descRef = useRef<HTMLParagraphElement>(null)
 
   const tl = useRef<any>(gsap.timeline({ paused: true }))
 

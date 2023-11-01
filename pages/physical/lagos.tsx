@@ -1,5 +1,5 @@
 import React from 'react'
-import {LagosHero, LagSpace, StudentJob, ClassPlan, OtherPhysCardLayout, MarqueeComp} from '../../features/physical'
+import {LagosHero, LagSpace, StudentJob, ClassPlan, OtherPhysCardLayout, MarqueeComp, OtherPhysicalCardData} from '../../features/physical'
 import {LeaningTools, StudentWorkWrapper} from '../../features/classGroup'
 import { Testimonial } from '../../features/testimonial'
 import { MainLayout } from '../../layouts'
@@ -11,7 +11,7 @@ const lagos = () => {
         <MarqueeComp/>
         <ClassPlan/>
         <LeaningTools/>
-        <OtherPhysCardLayout/>
+        <OtherPhysCardLayout cardData={OtherPhysicalCardData}/>
         <StudentWorkWrapper/>
         {/* <StudentJob/> */}
         <Testimonial/>
