@@ -19,8 +19,8 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
     borderRadius=".625rem"
     position="relative"
     minHeight={heightValue ? heightValue : ["27.5rem","31.5625rem"]}
-    as={Link}
-    href={locationLink}
+    as={!isComing ? Link : Box}
+    href={locationLink }
     >
     {
       isComing &&   <Box
@@ -45,39 +45,41 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
       </Box>
     }
       
-       <Box  p={["0 0 2.125rem 1.625rem","0 0 2.5rem 2.9375rem"]} position="absolute" bottom={"0"} left="0" >
-        <Heading
-        color="#FFFFFF"
-        fontSize={fontSizeProp ? fontSizeProp : ["2rem","2.8125rem"]}
-        fontWeight="800"
-        >
-        {location}
-        </Heading>
-        <Flex
-        alignItems="center"
+     {
+      !isComing &&   <Box  p={["0 0 2.125rem 1.625rem","0 0 2.5rem 2.9375rem"]} position="absolute" bottom={"0"} left="0" >
+      <Heading
+      color="#FFFFFF"
+      fontSize={fontSizeProp ? fontSizeProp : ["2rem","2.8125rem"]}
+      fontWeight="800"
+      >
+      {location}
+      </Heading>
+      <Flex
+      alignItems="center"
 
-        >
-        <Text
-         color="#FFFFFF"
-         fontSize={["1.25rem","1.25rem"]}
-         fontWeight="400"
-         as={Link}
-         href={locationLink}
-         _hover={{
-          color: "#FCD900"
-        }}
+      >
+      <Text
+       color="#FFFFFF"
+       fontSize={["1.25rem","1.25rem"]}
+       fontWeight="400"
+       as={Link}
+       href={locationLink}
+       _hover={{
+        color: "#FCD900"
+      }}
 
-        display="flex"
-        alignItems="center"
-        >
-        Explore Now
-        <Icon  _hover={{
-          color: "#FCD900"
-        }} as={AiOutlineArrowRight} color="#FFFFFF" fontSize="1.25rem" ml="1.25rem" />
-        </Text>
-       
-        </Flex>
-       </Box>
+      display="flex"
+      alignItems="center"
+      >
+      Explore Now
+      <Icon  _hover={{
+        color: "#FCD900"
+      }} as={AiOutlineArrowRight} color="#FFFFFF" fontSize="1.25rem" ml="1.25rem" />
+      </Text>
+     
+      </Flex>
+     </Box>
+     }
     </Box>
   )
 }
