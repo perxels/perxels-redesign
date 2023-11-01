@@ -16,19 +16,19 @@ interface BannerContent {
 }
 
 export const bannerContent: BannerContent = {
-  // mainTitle: 'DESIGN DIGEST SESSION: ',
-  mainTitle: 'JOB CONFERENCE: ',
-  subTitle: 'MAXIMIZING JOB OPPORTUNITIES',
-  time: '3pm-6pm',
-  date: 'Saturday, September 16th, 2023',
+  mainTitle: 'DESIGN DIGEST SESSION: ',
+  // mainTitle: 'JOB CONFERENCE: ',
+  subTitle: 'AUTOLAYOUT FREE TRAINING (FROM SCRATCH TO FINISH)',
+  time: '7pm-8pm',
+  date: '12th and 19th November 2023',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-  "Join us in this one-day event as we delve into the intricacies of the design job market and explore innovative approaches to landing your dream job. This conference is tailor-made for people seeking to excel in the design and tech space. By attending, you will:",
+  " Are you tired of struggling with auto layout issues? Join us for a two-part mini-course specially designed for designers looking to enhance their skills. From responsive web design to mobile app UIs, you'll leave the sessions with newfound confidence in your design abilities.",
   content1: "",
   content2: "",
   content3: "",
   content4: "",
-  speakerName: 'MICHAEL ETUKUDOH',
-  speakerRole: 'Senior Talent Partner at KingMakers',
+  speakerName: 'YEMI JEFF',
+  speakerRole: 'FACILITATOR, PERXELS',
 }
