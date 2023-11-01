@@ -85,6 +85,10 @@ export const links = [
         url: '/private',
       },
       {
+        name: 'Physical Class',
+        url: '/physical'
+      },
+      {
         name: 'International Class',
         url: '/international',
       },
