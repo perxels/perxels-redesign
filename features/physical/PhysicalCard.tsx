@@ -45,8 +45,7 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
       </Box>
     }
       
-     {
-      !isComing &&   <Box  p={["0 0 2.125rem 1.625rem","0 0 2.5rem 2.9375rem"]} position="absolute" bottom={"0"} left="0" >
+     <Box  p={["0 0 2.125rem 1.625rem","0 0 2.5rem 2.9375rem"]} position="absolute" bottom={"0"} left="0" >
       <Heading
       color="#FFFFFF"
       fontSize={fontSizeProp ? fontSizeProp : ["2rem","2.8125rem"]}
@@ -54,6 +53,8 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
       >
       {location}
       </Heading>
+      {
+      !isComing &&  
       <Flex
       alignItems="center"
 
@@ -76,10 +77,11 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
         color: "#FCD900"
       }} as={AiOutlineArrowRight} color="#FFFFFF" fontSize="1.25rem" ml="1.25rem" />
       </Text>
-     
+      
       </Flex>
+      }
      </Box>
-     }
+     
     </Box>
   )
 }
