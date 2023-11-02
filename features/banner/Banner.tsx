@@ -41,6 +41,7 @@ export const Banner = () => {
     <Box
       w="100%"
       bg="#34296B"
+      position="relative"
       display={visibility ? 'block' : 'none'}
       animation={`${slideUp} cubic-bezier(0.25, 0.46, 0.45, 0.94) .5s both`}
     >
