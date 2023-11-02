@@ -38,7 +38,7 @@ export const Story = () => {
   }, [])
 
   return (
-    <Box className="story-section">
+    <Box className="story-section" mb={["3rem","5rem"]}>
       <MainContainer
         bg={switcher === 1 ? 'brand.purple.500' : 'brand.yellow.300'}
       >

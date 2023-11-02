@@ -41,6 +41,7 @@ export const Banner = () => {
     <Box
       w="100%"
       bg="#34296B"
+      position="relative"
       display={visibility ? 'block' : 'none'}
       animation={`${slideUp} cubic-bezier(0.25, 0.46, 0.45, 0.94) .5s both`}
     >
@@ -66,22 +67,14 @@ export const Banner = () => {
               flexDirection={['column', 'column', 'row', 'row']}
               alignItems={["flex-start", "flex-start", "center", "center"]}
             >
-              <Flex columnGap={['0.5rem','1rem']}>
-              <Box boxSize={['7rem','9.3125rem']}>
+              <Box boxSize={['9.3125rem']}>
                 <Img
                   src={bannerContent.bannerImage}
                   alt="Banner"
                   rounded={'100%'}
                 />
               </Box>
-               <Box boxSize={['7rem','9.3125rem']}>
-                <Img
-                  src={'/assets/images/banner/bannerImage2.jpeg'}
-                  alt="Banner"
-                  rounded={'100%'}
-                />
-              </Box>
-              </Flex>
+
               <Box
                 display={['block', 'block', 'block', 'block']}
                 mt={['1rem', '1rem', '0rem', '0rem']}

@@ -12,6 +12,7 @@ import {
   SimpleGrid,
   Text,
   VStack,
+  Image
 } from '@chakra-ui/react'
 import React from 'react'
 import { FooterSocialLinks, links } from '../constant'
@@ -56,8 +57,8 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
         <Grid
           display={['none', 'none', 'none', 'grid']}
           mt="4.125rem"
-          templateColumns="repeat(6, 1fr)"
-          gap={6}
+          templateColumns="repeat(7, 1fr)"
+          gap={4}
         >
           <GridItem colSpan={3} w="100%">
             <Logo color="white" />
@@ -124,8 +125,18 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
                   </Link>
                 ))}
               </VStack>
+
             </GridItem>
           ))}
+
+            <GridItem>
+              <VStack alignItems="center">
+              <Image src="/assets/icons/americanTraining.svg" alt=""/>
+              <Heading textAlign="center" color="#FFF" fontSize=".75rem" fontWeight="700">
+              ACCREDITED BY THE AMERICAN COUNCIL OF TRAINING AND DEVELOPMENT
+              </Heading>
+              </VStack>
+            </GridItem>
         </Grid>
 
         {/* mobile cta. */}
@@ -147,7 +158,7 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
             </Box>{' '}
             with design.
           </Heading>
-
+          
           <Box mt="1.5rem" display={['block', 'block', 'block', 'none']}>
            
             <Button
@@ -159,6 +170,12 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
             </Button>
            
           </Box>
+        </VStack>
+        <VStack mt="2rem" display={['flex', 'flex', 'flex', 'none']} alignItems="center" width="40%">
+              <Image src="/assets/icons/americanTraining.svg" alt=""/>
+              <Heading textAlign="center" color="#FFF" fontSize=".75rem" fontWeight="700">
+              ACCREDITED BY THE AMERICAN COUNCIL OF TRAINING AND DEVELOPMENT
+              </Heading>
         </VStack>
 
         <SimpleGrid
@@ -219,6 +236,17 @@ const Footer = ({yellowFooterPill}: FooterProps) => {
                 _hover={{ color: 'brand.yellow.500' }}
               >
              Privacy Policy
+              </Text>
+            </Link>
+            <Link w="full" href="https://www.actd.us/perxels/">
+              <Text
+                w="full"
+                fontSize={['lg', 'xl', '2xl']}
+                textAlign="left"
+                color="brand.white"
+                _hover={{ color: 'brand.yellow.500' }}
+              >
+             Accreditation
               </Text>
             </Link>
           </VStack>

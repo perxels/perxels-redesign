@@ -188,19 +188,19 @@ export const classGroupDetails = [
 
 export const StudentWorks: StudentWorkProps[] = [
   {
-    imgUrl: './assets/images/sudent-work/mosope.png',
+    imgUrl: '/assets/images/sudent-work/mosope.png',
     link: '/casestudy/mosope',
   },
   {
-    imgUrl: './assets/images/sudent-work/daniju.png',
+    imgUrl: '/assets/images/sudent-work/daniju.png',
     link: '/casestudy/daniju',
   },
   {
-    imgUrl: './assets/images/sudent-work/rebecca.png',
+    imgUrl: '/assets/images/sudent-work/rebecca.png',
     link: '/casestudy/rebecca',
   },
   {
-    imgUrl: './assets/images/sudent-work/favour.png',
+    imgUrl: '/assets/images/sudent-work/favour.png',
     link: '/casestudy/favour',
   },
 ]

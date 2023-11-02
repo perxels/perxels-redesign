@@ -75,13 +75,13 @@ export const Basic = () => {
                 alignItems="center"
                 >
                   <Img src="/assets/icons/masterBasicCalender.svg" alt="" />
-                  <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
-                  14th October
+                  <Text fontSize={['0.75rem','.9375rem']} color="brand.dark.200" fontWeight="700">
+                  4 SATURDAYS IN NOVEMBER
                   </Text>
                 </HStack>
                 <HStack>
                   <Img src="/assets/icons/masterBasicClock.svg" alt="" />
-                  <Text fontSize={['.9375rem']} color="brand.dark.200" fontWeight="700">
+                  <Text fontSize={['0.75rem','.9375rem']} color="brand.dark.200" fontWeight="700">
                   2pm
                   </Text>
                 </HStack>

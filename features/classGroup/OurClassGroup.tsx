@@ -1,10 +1,10 @@
-import { Box, SimpleGrid } from '@chakra-ui/react'
+import { Box, SimpleGrid, Flex } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { SectionHeader } from '../../components'
 import { ClassGroupContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import { ClassCard } from './ClassCard'
-
+import {OnlineClassPlan, PhysicalClassPlan} from './ClassPlan'
 import gsap from 'gsap'
 
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
@@ -31,7 +31,7 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
   }, [])
 
   return (
-    <Box mt={['3.75rem', '3.75rem', '7.5rem']} className="class-group-wrapper">
+    <Box mt={['3.5rem', '3.75rem', '0']} mb={['3.75rem', '3.75rem', '7.5rem']} className="class-group-wrapper">
       <MainContainer>
         <SectionHeader
           subTitle={title || 'Our CLass Groups'}
@@ -39,7 +39,12 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
           paragraph="Our class groups are designed to accommodate your current level of design and unique learning process."
         />
 
-        <SimpleGrid
+
+        <Flex flexDir="column" rowGap="30px">
+        <OnlineClassPlan/>
+        <PhysicalClassPlan/>
+        </Flex>
+        {/* <SimpleGrid
           mb={['3.75rem', '3.75rem', '7rem']}
           columns={[1, 1, 2]}
           spacing="1rem"
@@ -53,7 +58,7 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
               image={image}
             />
           ))}
-        </SimpleGrid>
+        </SimpleGrid> */}
       </MainContainer>
     </Box>
   )

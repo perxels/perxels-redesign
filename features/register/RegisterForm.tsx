@@ -194,32 +194,7 @@ const RegisterForm = () => {
                 </Text>
               ) : null}
 
-              <Input
-                h="3.5rem"
-                type="tel"
-                placeholder="Phone Number*"
-                _placeholder={{ color: 'brand.dark.200' }}
-                name="phone"
-                value={formik.values.phone}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                borderColor={
-                  formik.touched.phone && formik.errors.phone
-                    ? 'red.500'
-                    : 'brand.dark.200'
-                }
-                _focusVisible={{
-                  outline: 'none',
-                }}
-              />
-              {formik.touched.phone && formik.errors.phone ? (
-                <Text color="red.500" fontSize="sm">
-                  {formik.errors.phone}
-                </Text>
-              ) : null}
-
-
-            <Select
+<Select
                 h="3.5rem"
                 placeholder="Gender"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -254,6 +229,33 @@ const RegisterForm = () => {
                   {formik.errors.gender}
                 </Text>
               ) : null}
+
+              <Input
+                h="3.5rem"
+                type="tel"
+                placeholder="Phone Number*"
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="phone"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.phone && formik.errors.phone
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.phone && formik.errors.phone ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.phone}
+                </Text>
+              ) : null}
+
+
+         
 
 
               <Input

@@ -1,26 +1,16 @@
 import React from 'react'
-import {
-  ClassLists,
-  Hero,
-  LeaningTools,
-  StudentWorkWrapper,
-} from '../features/classGroup'
-import { Testimonial } from '../features/testimonial'
+import {Box} from '@chakra-ui/react'
 import { MainLayout } from '../layouts'
-import {HeroBook, BookBanner} from '../features/book'
-
-const ClassPlans = () => {
+import { OurClassGroup } from '../features/classGroup'
+import { Testimonial } from '../features/testimonial'
+const enrol = () => {
   return (
-    <MainLayout>
-      {/* <BookBanner/> */}
-      <Hero />
-      <ClassLists/>
-      {/* <HeroBook/> */}
-      <StudentWorkWrapper />
-      <LeaningTools />
-      <Testimonial />
-    </MainLayout>
+   <MainLayout>
+        <Box py={["0rem", "3%"]} />
+        <OurClassGroup/>
+        <Testimonial />
+   </MainLayout>
   )
 }
 
-export default ClassPlans
+export default enrol

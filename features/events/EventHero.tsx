@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react'
-import { Box, Flex, Heading, Text, Button, Grid, Img, List, OrderedList,ListItem, Image } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, Button, Grid, Img, List, OrderedList,ListItem } from '@chakra-ui/react'
 import { bannerContent } from '../../constant'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { EventForm } from './'
 import { MainContainer } from '../../layouts'
-import {Logo} from '../../components'
+
 import gsap from 'gsap'
 
 export const EventHero = () => {
@@ -47,21 +47,13 @@ export const EventHero = () => {
                 backgroundColor: '#E3719C',
                 color: '#fff',
               }}
-              mb={{ base: 2, md: 2 }}
+              mb={{ base: 4, md: 7 }}
             >
               {/* <Text>DESIGN DIGEST SESSION</Text> */}
               {/* <Text>AMA SESSION</Text> */} 
               {/* <Text>PANEL SESSION</Text> */}
-              {/* <Text>LIVE DESIGN SESSION</Text>  */}
-              <Text>{bannerContent.mainTitle}</Text> 
+              <Text>LIVE DESIGN SESSION</Text> 
             </Button>
-
-            <Flex columnGap="1rem" alignItems="center">
-              <Box>
-                  <Logo/>
-              </Box>
-            </Flex>
-
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}
               color="brand.dark.100"
@@ -72,7 +64,6 @@ export const EventHero = () => {
               {/* {bannerContent.mainTitle} */}
               {" "}{bannerContent.subTitle}
             </Heading>
-            
             <Flex
               className="ama-other-content"
               columnGap={{ base: '0.5rem', lg: '1.3rem' }}
@@ -150,9 +141,9 @@ export const EventHero = () => {
                 textTransform={'uppercase'}
                 mb={{ base: 2, md: 4 }}
               >
-                Speakers:
+                {/* Speaker: */}
                 {/* Panelists: */}
-                {/* Facilitator */}
+                Facilitator
               </Text>
               <Flex 
               mb="3rem"
@@ -186,38 +177,6 @@ export const EventHero = () => {
                   </Text>
                 </Box>
               </Flex>
-              <Flex 
-              mb="3rem"
-              flexDir={["row","row"]}
-              rowGap={"3rem"}
-               alignItems={'center'}
-               columnGap={"1rem"} 
-              // alignItems="flex-start"
-              >
-               
-                <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
-                  <Img
-                    borderRadius={'50%'}
-                    src={'/assets/images/banner/bannerImage2.jpeg'}
-                    alt="speakerImg"
-                  />
-                </Box>
-                <Box>
-                  <Text
-                    fontSize={{ base: '1.10965rem', lg: '1.596875rem' }}
-                    fontWeight={'bold'}
-                    color={'brand.dark.100'}
-                  >
-                  JOE BRENDAN
-                  </Text>
-                  <Text
-                    fontSize={{ base: '0.806875rem', lg: '1.25rem' }}
-                    color="#5F6368"
-                  >
-                   Senior Technical Instructor at Dev & Design
-                  </Text>
-                </Box>
-              </Flex>
             </Box>
 
             {/* event description */}
@@ -238,37 +197,6 @@ export const EventHero = () => {
               >
                 {bannerContent.description}
               </Text>
-              <OrderedList>
-                <ListItem
-                  fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                  color="brand.dark.200"
-                  lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-                >
-                 Gain valuable career guidance and strategies from industry experts
-                </ListItem>
-                <ListItem
-                  fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                  color="brand.dark.200"
-                  lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-                >
-                 Learn innovative approaches to navigate the competitive job market
-                </ListItem>
-                <ListItem
-                  fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                  color="brand.dark.200"
-                  lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-                >
-                  Interact with industry experts during the Q&A session for personalized feedback
-                </ListItem>
-                <ListItem
-                  fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                  color="brand.dark.200"
-                  lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-                >
-                  Expand your professional network by connecting with like-minded individuals
-                </ListItem>
-              </OrderedList>
-
                 <Text
                 fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
                 color="brand.dark.200"
@@ -298,7 +226,7 @@ export const EventHero = () => {
                 lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
               >
                 {bannerContent.content4}
-              </Text>
+              </Text>     
             </Box>
           </Box>
           <Box>
