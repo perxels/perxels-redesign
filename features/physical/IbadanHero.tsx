@@ -26,7 +26,7 @@ export const IbadanHero = () => {
   return (
     <Box
     background={[`url(/assets/images/class-group/ibadanMobile.png) no-repeat center center`,`url(/assets/images/class-group/ibadanDesktop.png) no-repeat center center`]}
-    minHeight={["43.75rem","25rem"]}
+    minHeight={["28.75rem","25rem"]}
     backgroundSize="cover"
     opacity={0}
     ref={heroRef}
@@ -35,7 +35,7 @@ export const IbadanHero = () => {
         flexDir="column"
         justifyContent="center"
         alignItems="center"
-        minHeight={["43.75rem","25rem"]}
+        minHeight={["28.75rem","25rem"]}
         >
         <Heading
         color="#FFFFFF"
@@ -47,7 +47,7 @@ export const IbadanHero = () => {
         >
            Ring Road, Ibadan
         </Heading>
-        <Text
+        {/* <Text
         color="#FFF"
         as={Link}
         href="/"
@@ -55,7 +55,7 @@ export const IbadanHero = () => {
         className="descClass"
         >
         VIEW ON GOOGLE MAPS
-        </Text>
+        </Text> */}
         </Center>
     </Box>
   )

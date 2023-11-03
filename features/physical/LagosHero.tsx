@@ -23,7 +23,7 @@ export const LagosHero = () => {
   return (
     <Box
     background={[`url(/assets/images/class-group/lagosMobile.png) no-repeat center center`,`url(/assets/images/class-group/lagosDesktop.png) no-repeat center center`]}
-    minHeight={["43.75rem","25rem"]}
+    minHeight={["28.75rem","25rem"]}
     backgroundSize="cover"
     opacity={0}
     ref={heroRef}
@@ -32,7 +32,7 @@ export const LagosHero = () => {
         flexDir="column"
         justifyContent="center"
         alignItems="center"
-        minHeight={["43.75rem","25rem"]}
+        minHeight={["28.75rem","25rem"]}
         >
         <Heading
         color="#FFFFFF"
@@ -44,7 +44,7 @@ export const LagosHero = () => {
         >
             Lekki, Lagos
         </Heading>
-        <Text
+        {/* <Text
         color="#FFF"
         as={Link}
         href="/"
@@ -52,7 +52,7 @@ export const LagosHero = () => {
         className="descClass"
         >
         VIEW ON GOOGLE MAPS
-        </Text>
+        </Text> */}
         </Center>
     </Box>
   )
