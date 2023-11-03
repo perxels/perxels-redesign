@@ -5,7 +5,7 @@ import { MainContainer } from '../../layouts'
 export const LagSpace = () => {
   return (
     <Box
-    py="6.25rem"
+    py={["3.3rem","6.25rem"]}
     >
         <MainContainer>
         <SectionHeader
