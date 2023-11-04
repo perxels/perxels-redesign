@@ -22,7 +22,7 @@ export const bannerContent: BannerContent = {
   time: '7pm-8pm',
   date: '12th and 19th November 2023',
   location: 'GOOGLE MEET',
-  bannerImage: '/assets/images/banner/bannerImage.png',
+  bannerImage: '/assets/images/banner/bannerImage.jpg',
   description:
   " Are you tired of struggling with auto layout issues? Join us for a two-part mini-course specially designed for designers looking to enhance their skills. From responsive web design to mobile app UIs, you'll leave the sessions with newfound confidence in your design abilities.",
   content1: "",

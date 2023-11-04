@@ -67,7 +67,7 @@ export const Banner = () => {
               flexDirection={['column', 'column', 'row', 'row']}
               alignItems={["flex-start", "flex-start", "center", "center"]}
             >
-              <Box boxSize={['9.3125rem']}>
+              <Box boxSize={['7.3125rem']} mb="1rem">
                 <Img
                   src={bannerContent.bannerImage}
                   alt="Banner"
