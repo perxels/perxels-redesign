@@ -26,6 +26,26 @@ const PhysicalCardData=[
         locationLink: "/international"
     }
 ]
+
+export const OnlinePhysicalCardData=[
+    {
+        bgImage: "/assets/images/class-group/lagosPhysical.png",
+        location: "Lekki, Lagos",
+        locationLink: "/physical/lagos"
+    },
+    {
+        bgImage: "/assets/images/class-group/ibadanPhysical.png",
+        location: "Ring Road, Ibadan",
+        locationLink: "/physical/ibadan"
+    },
+    {
+        bgImage: "/assets/images/class-group/abujaPhysical.png",
+        location: "Perxels Abuja",
+        locationLink: "/physical/perxels-abuja",
+        isComing: true
+    },
+]
+
 export const OtherPhysicalCardData=[
   
     {

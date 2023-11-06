@@ -8,7 +8,8 @@ import {
 import { Testimonial } from '../features/testimonial'
 import { MainLayout } from '../layouts'
 import {HeroBook, BookBanner} from '../features/book'
-
+import {OtherPhysCardLayout, OnlinePhysicalCardData} from '../features/physical'
+import {Box} from '@chakra-ui/react'
 const ClassPlans = () => {
   return (
     <MainLayout>
@@ -17,7 +18,10 @@ const ClassPlans = () => {
       <ClassLists/>
       {/* <HeroBook/> */}
       <StudentWorkWrapper />
+      {/* <Box py="3rem"/> */}
       <LeaningTools />
+      {/* <Box py="3rem"/> */}
+      <OtherPhysCardLayout cardData={OnlinePhysicalCardData} />
       <Testimonial />
     </MainLayout>
   )
