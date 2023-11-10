@@ -193,6 +193,7 @@ export const EventForm = () => {
              <option value="Facebook">Facebook</option>
              <option value="Twitter">Twitter</option>
              <option value="Friend">Friend</option>
+             <option value="Roadtrip community">Roadtrip community</option>
              <option value="Others">Others</option>
            </Select>
          </FormControl>
