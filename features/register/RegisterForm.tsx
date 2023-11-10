@@ -475,6 +475,8 @@ const RegisterForm = () => {
                 <option value="LinkedIn">LinkedIn</option>
                 <option value="Instagram">Instagram</option>
                 <option value="WhatsApp">WhatsApp</option>
+                <option value="Roadtrip community">Roadtrip community</option>
+
               </Select>
               {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
                 <Text color="red.500" fontSize="sm">
