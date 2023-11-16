@@ -51,12 +51,14 @@ const EnrolForm = () => {
             name: '',
             phone: '',
             email: '',
+            attendDate: '',
             // class: '',
             location: '',
             reason: '',
             howdidyouknow: '',
             category: '',
             laptop: '',
+           
           }}
           validationSchema={Yup.object({
             name: Yup.string().required('Name is required'),
@@ -65,13 +67,15 @@ const EnrolForm = () => {
               .email('Invalid email address')
               .required('Email is required'),
             // class: Yup.string().required('Class is required'),
+            attendDate: Yup.string().required('Pick a date to attend'),
             location: Yup.string().required('Location is required'),
             howdidyouknow: Yup.string().required(
               'How did you know is required',
             ),
             reason: Yup.string().required('Reason is required'),
             category: Yup.string().required('Category is required'),
-            laptop: Yup.string().required('Laptop is Required')
+            laptop: Yup.string().required('Laptop is Required'),
+           
           })}
           onSubmit={(values, action) => {
             setLoading(true)
@@ -89,7 +93,7 @@ const EnrolForm = () => {
             formData.append('category', values.category as string)
             formData.append('reason', values.reason as string)
             formData.append('laptop', values.laptop as string)
-          
+            formData.append('attendDate', values.attendDate as string)
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
 
@@ -317,6 +321,36 @@ const EnrolForm = () => {
                   {formik.errors.category}
                 </Text>
               ) : null}
+
+   
+
+            {/* <Select
+                h="3.5rem"
+                placeholder="Which date are you attending"
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="class"
+                value={formik.values.attendDate}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.attendDate && formik.errors.attendDate
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option value="November 18, 2023">November 18, 2023</option>
+                <option value="November 25, 2023">November 25, 2023</option>
+              </Select>
+              {formik.touched.attendDate && formik.errors.attendDate ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.attendDate}
+                </Text>
+              ) : null}  */}
+
               <Select
                 h="3.5rem"
                 placeholder="How did you get to know about Perxels?"
@@ -342,10 +376,38 @@ const EnrolForm = () => {
                 <option value="WhatsApp">WhatsApp</option>
                 <option value= "Customer Representative">Customer Representative</option>
                 <option value="Friends">Friends</option>
+                <option value="Banner on the road">Banner on the road</option>
               </Select>
               {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.howdidyouknow}
+                </Text>
+              ) : null}
+
+<Select
+                h="3.5rem"
+                placeholder="What date are you attending?"
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="attendDate"
+                value={formik.values.attendDate}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.attendDate && formik.errors.attendDate
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option value="18th November 2023">18th November 2023</option>
+                <option value="25th November 2023">25th November 2023</option>
+              </Select>
+              {formik.touched.attendDate && formik.errors.attendDate ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.attendDate}
                 </Text>
               ) : null}
 
