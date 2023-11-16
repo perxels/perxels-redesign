@@ -101,7 +101,7 @@ export const PhysicalClassPlan = () => {
               lineHeight={["1.1rem","1.6812rem"]}
               mt={[".75rem","1.875rem"]}
               >
-             On our quest to continue expanding and bringing design education to your dorrstep, we have establishde a couple of physical learning spaces.
+             On our quest to continue expanding and bringing design education to your doorstep, we have established a couple of physical learning spaces.
               </Text>
   
               <Button
