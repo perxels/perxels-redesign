@@ -8,16 +8,16 @@ export interface InstructionProps {
 export const instructions: InstructionProps[] = [
   {
     id: 1,
-    title: 'Physical Learning',
+    title: 'Remote Learning',
     description:
-      'Applicants must be available to attend physical training at Ringroad Ibadan, every sunday 2PM TO 5PM',
+      'Applicants must be prepared to participate virtually as the scholarship exclusively covers remote class options.',
     image: './assets/images/sponsorship/virtual-learn.svg',
   },
   {
     id: 2,
     title: 'Laptop and Internet',
     description:
-      'Applicants must have laptop to use for the seven weeks training',
+      'Applicants must have access to a laptop and a good internet connection for the duration of the training.',
     image: './assets/images/sponsorship/laptop-internet.svg',
   },
   // {
@@ -31,7 +31,7 @@ export const instructions: InstructionProps[] = [
     id: 4,
     title: 'Class Types',
     description:
-      'This scholarship covers for only basic plan which is 7weeks training',
+      'Applicants must have access to a laptop and a good internet connection for the duration of the training.',
     image: './assets/images/sponsorship/laptop-internet.svg',
   },
   // {
