@@ -14,6 +14,7 @@ import {
   VStack,
   HStack,
   keyframes,
+  Flex,
 
 } from '@chakra-ui/react'
 import Link from 'next/link'
@@ -345,7 +346,7 @@ export const ClassDetails = ({
                 </GridItem>
               ))}
             <GridItem colSpan={[2, 2, 2, 1]}>
-              <VStack spacing="5px">
+              <Flex flexDir="column" alignItems="flex-start" rowGap="5px">
                 <Text
                   w="full"
                   fontSize={['lg', 'lg', 'lg', '2xl']}
@@ -362,14 +363,28 @@ export const ClassDetails = ({
                  ): null
                  }
                 </Text>
-                <Heading w="full" fontSize={['6xl', '6xl', '7xl']}
+                <Flex
+                // justifyContent="flex-start"
+                alignItems="center"
+                columnGap="1.1875rem"
+                >
+                <Heading  fontSize={isSponsor ? '20px'  : ['6xl', '6xl', '7xl']}
                 textDecoration={stateLocation === "scholarship" ? "line-through" : " "}
                 >
                   {tabState === 'virtual' || location !== 'ibadan' ? (
                     location === 'lagos' && tabState === 'physical' ? '₦210,000' : tuition
                   ) : physicalTuition}
                 </Heading>
-              </VStack>
+                {
+                isSponsor ? (<>
+                    <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
+                  {physicalTuition}
+                </Heading>
+                </>
+                ) : null
+              }
+                </Flex>
+              </Flex>
             </GridItem>
           </Grid>
 

@@ -28,6 +28,7 @@ export const ClassPlan = () => {
       classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
       tuition="₦60,000"
+      physicalTuition="₦42,000"
       courseOutline={[
         'For beginners to learn the fundamentals of design; focus is majorly on UI (User Interface) design.',
         'What is UI design - difference between UI and UX design.',
@@ -40,8 +41,68 @@ export const ClassPlan = () => {
         'Mock interviews: showcasing your skills.',
         'Certificate of Completion.',
       ]}
-      classType= "Physical Training"
-      address= "RING ROAD, IBADAN OYO STATE"
+      classType= "Live Virtual Training."
+      // address= "RING ROAD, IBADAN OYO STATE"
+      // sAddress
+      stateLocation="scholarship"
+      enrolRoute='/sponsorship/signup'
+      // isPhysical
+      isSponsor
+    />
+
+<Box mt="60px" />
+
+<ClassDetails
+      title="Premium Class"
+      id="#"
+      classDur="3 months."
+      classTime="2-3 times a week."
+      installments={['70% On Admission;', '30% after one month.']}
+      tuition="₦210,000"
+      physicalTuition="₦147,000"
+      courseOutline={[
+        'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
+        'It includes everything in the Basic and Advanced class curriculum.',
+        'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
+        'Exposure to design tips and tricks - shortcuts and resources.',
+        'Work on complex case studies and projects that will build your problem solving skills.',
+        'Direct mentorship with a Senior Product Designer.',
+        'Learn how to collaborate with developers and product managers.',
+        'Certificate of Completion.',
+        'Job search support and guidance + job recommendation and placement when available**',
+        '6 weeks internship placement after completing the training.',
+      ]}
+      classType= "Live Virtual Training."
+      // address= "RING ROAD, IBADAN OYO STATE"
+      // isAddress
+      stateLocation="scholarship"
+      enrolRoute='/sponsorship/signup'
+      // isPhysical
+      isSponsor
+    />
+<Box mt="60px" />
+      <ClassDetails
+      title="Physical Class"
+      id="#"
+      classDur="3 Months."
+      classTime="2-3 times a week."
+      installments={['70% On Admission;', '30% after one month.']}
+      tuition="₦300,000"
+      physicalTuition="₦210,000"
+      courseOutline={[
+        'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
+        'It includes everything in the Basic and Advanced class curriculum.',
+        'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
+        'Exposure to design tips and tricks - shortcuts and resources.',
+        'Work on complex case studies and projects that will build your problem solving skills.',
+        'Direct mentorship with a Senior Product Designer.',
+        'Learn how to collaborate with developers and product managers.',
+        'Certificate of Completion.',
+        'Job search support and guidance + job recommendation and placement when available**',
+        '6 weeks internship placement after completing the training.',
+      ]}
+      classType= "Live Virtual Training."
+      address= "LEKKI PHASE 1, LAGOS NIGERIA"
       isAddress
       stateLocation="scholarship"
       enrolRoute='/sponsorship/signup'

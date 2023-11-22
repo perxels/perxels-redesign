@@ -69,7 +69,7 @@ export const SponsorHero = () => {
               px="10px"
               py="2px"
             >
-              There is an ongoing sponsorship!
+              There is an ongoing scholarship!
             </Box>
             <HStack spacing="4px">
               <Box
@@ -105,7 +105,7 @@ export const SponsorHero = () => {
             className="desc"
             opacity={0}
           >
-              Schorlarship for  Two(2) people in Ibadan
+             Loba Scholarship offers a 30% tuition fee discount
           </Heading>
           <Text
             fontSize={['lg', 'lg', 'lg', 'xl']}
@@ -115,7 +115,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-           Our sponsor, Adeniyi Soniki is giving two people in Ibadan scholarship to learn basic UIUX Design
+           200 Nigerian students will receive a 30% scholarship to enable them to launch their design journey with Perxels.
           </Text>
 
           <Button
