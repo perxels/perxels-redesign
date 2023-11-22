@@ -61,7 +61,8 @@ const RegisterForm = () => {
 
         <Formik
           initialValues={{
-            name: '',
+            firstname: '',
+            lastname: '',
             phone: '',
             email: '',
             class: '',
@@ -76,7 +77,8 @@ const RegisterForm = () => {
             
           }}
           validationSchema={Yup.object({
-            name: Yup.string().required('Name is required'),
+            firstname: Yup.string().required('First Name is required'),
+            lastname: Yup.string().required('Last Name is required'),
             phone: Yup.string().required('Phone number is required'),
             email: Yup.string()
               .email('Invalid email address')
@@ -100,7 +102,8 @@ const RegisterForm = () => {
 
             const formData = new FormData()
 
-            formData.append('name', values.name as string)
+            formData.append('firstname', values.firstname as string)
+            formData.append('lastname', values.lastname as string)
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
             formData.append('class', values.class as string)
@@ -144,15 +147,15 @@ const RegisterForm = () => {
             >
               <Input
                 h="3.5rem"
-                placeholder="Full Name*"
+                placeholder="First Name*"
                 _placeholder={{ color: 'brand.dark.200' }}
-                name="name"
+                name="firstname"
                 border="1px solid #000"
-                value={formik.values.name}
+                value={formik.values.firstname}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 borderColor={
-                  formik.touched.name && formik.errors.name
+                  formik.touched.firstname && formik.errors.firstname
                     ? 'red.500'
                     : 'brand.dark.200'
                 }
@@ -160,9 +163,32 @@ const RegisterForm = () => {
                   outline: 'none',
                 }}
               />
-              {formik.touched.name && formik.errors.name ? (
+              {formik.touched.firstname && formik.errors.firstname ? (
                 <Text color="red.500" fontSize="sm">
-                  {formik.errors.name}
+                  {formik.errors.firstname}
+                </Text>
+              ) : null}
+               <Input
+                h="3.5rem"
+                placeholder="Last Name*"
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="lastname"
+                border="1px solid #000"
+                value={formik.values.lastname}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.lastname && formik.errors.lastname
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.lastname && formik.errors.lastname ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.lastname}
                 </Text>
               ) : null}
 

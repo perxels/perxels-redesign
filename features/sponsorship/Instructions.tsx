@@ -22,6 +22,7 @@ export const Instructions = () => {
       backgroundRepeat="repeat"
       backgroundSize={'cover'}
       id='instructions'
+      mb="3rem"
     >
       <MainContainer bg="none">
         <Box py={['3rem', '3rem', '3rem', '4.875rem']}>

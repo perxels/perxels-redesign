@@ -115,7 +115,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-           500 Nigerian students will receive a 30% scholarship to enable them to launch their design journey with Perxels.
+           200 Nigerian students will receive a 30% scholarship to enable them to launch their design journey with Perxels.
           </Text>
 
           <Button

@@ -8,7 +8,7 @@ export interface InstructionProps {
 export const instructions: InstructionProps[] = [
   {
     id: 1,
-    title: 'Remote Learning',
+    title: 'Learning Options',
     description:
       'Applicants have the opportunity to choose between the virtual class plans and the physical class plan (at Lagos',
     image: './assets/images/sponsorship/virtual-learn.svg',
