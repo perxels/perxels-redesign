@@ -280,11 +280,11 @@ const RegisterForm = () => {
                   weeks 
                 </option>
                 <option
-                  value="Advance Class to expand your DESIGN THINKING and PROBLEM
-                  SOLVING skills in 9 weeks"
+                  value="Premium class for beginners to learn everything in UIUX design
+                  from basic to PROFESSIONAL level in 3 months"
                 >
-                  Advance Class to expand your DESIGN THINKING and PROBLEM
-                  SOLVING skills in 9 weeks 
+                  Premium Class to expand your DESIGN THINKING and PROBLEM
+                  SOLVING skills in 3 months
                 </option>
                 <option
                   value="Premium Class for beginners to learn everything in UIUX design
