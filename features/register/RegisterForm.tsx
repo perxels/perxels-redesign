@@ -69,7 +69,7 @@ const RegisterForm = () => {
             howdidyouknow: '',
             gender: '',
             laptop: '',
-            // available: '',
+            discount: '',
             socials: '',
             location: '',
             why: '',
@@ -88,7 +88,7 @@ const RegisterForm = () => {
             ),
             gender: Yup.string().required('Gender is required'),
             laptop: Yup.string().required('Laptop Field is required'),
-            // available: Yup.string().required('Availability is required'),
+            discount: Yup.string().required('Discount field is required'),
             socials: Yup.string().required('Socials is required'),
             location: Yup.string().required('Location is required'),
             why: Yup.string().required('why is required'),
@@ -109,7 +109,7 @@ const RegisterForm = () => {
             formData.append('gender', values.gender as string)
             formData.append('location', values.location as string)
             formData.append('laptop', values.laptop as string)
-            // formData.append('available', values.available as string)
+            formData.append('discount', values.discount as string)
             formData.append('socials', values.socials as string)
             formData.append('why', values.why as string)
             //current date and time
@@ -288,10 +288,10 @@ const RegisterForm = () => {
                 </option>
                 <option
                   value="Premium Class for beginners to learn everything in UIUX design
-                  from basic to PROFESSIONAL level in 3 months"
+                  from basic to PROFESSIONAL level for 3 months"
                 >
-                  Premium Class for beginners to learn everything in UIUX design
-                  from basic to PROFESSIONAL level in 3 months 
+                  Physical Class for beginners to learn everything in UIUX design
+                  from basic to PROFESSIONAL level for 3 months in our Lekki Workspace
                 </option>
               </Select>
               {formik.touched.class && formik.errors.class ? (
@@ -323,6 +323,39 @@ const RegisterForm = () => {
                   {formik.errors.location}
                 </Text>
               ) : null}
+
+                <Box>
+                  <Text mb="1rem">
+                  *This scholarship offers a 30% discount on tuition, would you be able to pay the remaining 70%?
+                  </Text>
+                  <Select
+                h="3.5rem"
+                placeholder="This scholarship offers ..."
+                _placeholder={{ color: 'brand.dark.200' }}
+                color="brand.dark.200"
+                name="discount"
+                value={formik.values.discount}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.discount && formik.errors.discount
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </Select>
+              {formik.touched.discount && formik.errors.discount ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.discount}
+                </Text>
+              ) : null}
+                </Box>
+           
 
                 <Select
                 h="3.5rem"

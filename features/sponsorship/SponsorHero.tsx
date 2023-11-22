@@ -69,7 +69,7 @@ export const SponsorHero = () => {
               px="10px"
               py="2px"
             >
-              There is an ongoing sponsorship!
+              There is an ongoing scholarship!
             </Box>
             <HStack spacing="4px">
               <Box

@@ -10,7 +10,7 @@ export const instructions: InstructionProps[] = [
     id: 1,
     title: 'Remote Learning',
     description:
-      'Applicants must be prepared to participate virtually as the scholarship exclusively covers remote class options.',
+      'Applicants have the opportunity to choose between the virtual class plans and the physical class plan (at Lagos',
     image: './assets/images/sponsorship/virtual-learn.svg',
   },
   {

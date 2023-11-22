@@ -13,7 +13,7 @@ import { BsCheckCircle } from 'react-icons/bs'
 import { SectionHeader } from '../../components'
 import { instructions } from '../../constant'
 import { MainContainer } from '../../layouts'
-
+import {InstructionBox} from './InstructionBox'
 export const Instructions = () => {
   return (
     <Box
@@ -90,10 +90,15 @@ export const Instructions = () => {
                         </Text>
                       </Box>
                     </Grid>
+
                   </GridItem>
                 ))}
               </SimpleGrid>
+              <Box px={["10%","0"]}>
+              <InstructionBox/>
+              </Box>
             </GridItem>
+
           </SimpleGrid>
         </Box>
       </MainContainer>
