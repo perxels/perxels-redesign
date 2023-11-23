@@ -31,7 +31,7 @@ export const instructions: InstructionProps[] = [
     id: 4,
     title: 'Class Types',
     description:
-      'Applicants must have access to a laptop and a good internet connection for the duration of the training.',
+      'This scholarship caters to the Basic, Premium, and Physical class plans',
     image: './assets/images/sponsorship/laptop-internet.svg',
   },
   // {
