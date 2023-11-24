@@ -5,7 +5,7 @@ import { ClassLists } from '../classGroup'
 import { MainContainer } from '../../layouts'
 import { ClassDetails } from '../classGroup/ClassDetails'
 
-export const ClassPlan = () => {
+export const  ClassPlan = () => {
   return (
     // <Box my="3.625rem">
     //   <SectionHeader
@@ -56,7 +56,7 @@ export const ClassPlan = () => {
       title="Premium Class"
       id="#"
       classDur="3 months."
-      classTime="2-3 times a week."
+      classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
       tuition="₦210,000"
       physicalTuition="₦147,000"
@@ -85,7 +85,7 @@ export const ClassPlan = () => {
       title="Physical Class"
       id="#"
       classDur="3 Months."
-      classTime="2-3 times a week."
+      classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
       tuition="₦300,000"
       physicalTuition="₦210,000"
@@ -101,7 +101,7 @@ export const ClassPlan = () => {
         'Job search support and guidance + job recommendation and placement when available**',
         '6 weeks internship placement after completing the training.',
       ]}
-      classType= "Live Virtual Training."
+      classType= "Physical Training"
       address= "LEKKI PHASE 1, LAGOS NIGERIA"
       isAddress
       stateLocation="scholarship"
@@ -109,6 +109,7 @@ export const ClassPlan = () => {
       isPhysical
       isSponsor
     />
+    <Box mt="60px" />
   </MainContainer>
   )
 }
