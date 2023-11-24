@@ -10,7 +10,7 @@ export const instructions: InstructionProps[] = [
     id: 1,
     title: 'Learning Options',
     description:
-      'Applicants have the opportunity to choose between the virtual class plans and the physical class plan (at Lagos',
+      'Applicants have the opportunity to choose between the virtual class plans and the physical class plan',
     image: './assets/images/sponsorship/virtual-learn.svg',
   },
   {
@@ -31,7 +31,7 @@ export const instructions: InstructionProps[] = [
     id: 4,
     title: 'Class Types',
     description:
-      'Applicants must have access to a laptop and a good internet connection for the duration of the training.',
+      'This scholarship caters to the Basic, Premium, and Physical class plans',
     image: './assets/images/sponsorship/laptop-internet.svg',
   },
   // {
@@ -43,8 +43,8 @@ export const instructions: InstructionProps[] = [
   // },
   {
     id: 6,
-    title: 'Social Interaction',
-    description: 'Students at Perxels collaborate on projects together.',
+    title: 'Inclusive Opportunity',
+    description: 'Open to applicants from all backgrounds and professions as a gateway to kickstart their journey in UIUX design.',
     image: './assets/images/sponsorship/social-interaction.svg',
   },
 ]
