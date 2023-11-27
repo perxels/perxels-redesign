@@ -2,10 +2,11 @@ import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import testimonialReducer from './features/TestimonialSlice'
-
+import testimonialSchReducer from './features/TestimonialSchl'
 export const store = configureStore({
   reducer: {
     testimonial: testimonialReducer,
+    testimonialSch: testimonialSchReducer
   },
 })
 

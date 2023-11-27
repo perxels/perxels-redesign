@@ -51,6 +51,39 @@ export const testimonialSliderContent: TestimonialCardProps[] = [
   },
 ]
 
+export const testimonialSliderContentScholarship: TestimonialCardProps[] = [
+  {
+    id: 1,
+    name: 'Esther',
+    title: 'Perxels Student',
+    imgUrl: '/assets/images/testimonial/Esther.png',
+    smallImgUrl: '/assets/images/testimonial/Esther.png',
+    content: '“I had an amazing experience at Perxels Design School.”',
+    video:
+      'https://res.cloudinary.com/deudl0ryy/video/upload/v1701079603/Esther_testimonial_lxtsrl.mp4',
+  },
+  {
+    id: 2,
+    name: 'Ayo',
+    title: 'Perxels Student',
+    imgUrl: '/assets/images/testimonial/Ayoo.jpg',
+    smallImgUrl: '/assets/images/testimonial/Ayoo.jpg',
+    content: '“I had an amazing experience at Perxels Design School.”',
+    video:
+      'https://res.cloudinary.com/deudl0ryy/video/upload/v1701082614/Ayo_1_xokwle.mp4',
+  },
+  {
+    id: 3,
+    name: 'Abigail',
+    title:' Perxels Student',
+    imgUrl: '/assets/images/testimonial/Abigail.png',
+    smallImgUrl: '/assets/images/testimonial/Abigail.png',
+    content: '“I had an amazing experience at Perxels Design School.”',
+    video:
+      'https://res.cloudinary.com/deudl0ryy/video/upload/v1701079580/Abigiel_vnvoyj.mp4',
+  },
+]
+
 export const testimonialContent: TestimonialCardProps[] = [
   {
     id: 1,
