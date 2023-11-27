@@ -6,7 +6,7 @@ import {
 } from '../features/sponsorship'
 import {MarqueeComp} from '../features/physical'
 import { MainLayout } from '../layouts'
-import { Testimonial } from '../features/testimonial'
+import { TestimonialSch } from '../features/testimonial'
 
 const sponsorship = () => {
   return (
@@ -15,7 +15,7 @@ const sponsorship = () => {
     <Instructions />
     <MarqueeComp/>
     <ClassPlan />
-      <Testimonial />
+      <TestimonialSch />
     </MainLayout>
   )
 }
