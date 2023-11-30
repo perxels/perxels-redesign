@@ -126,7 +126,7 @@ export const SponsorHero = () => {
             maxW="212px"
             mt="2rem"
             as={Link}
-            href="/sponsorship#instructions"
+            href="/scholarship#instructions"
           >
             Apply Now
           </Button>
