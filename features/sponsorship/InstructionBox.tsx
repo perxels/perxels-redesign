@@ -4,7 +4,7 @@ import { MdOutlineTimer } from 'react-icons/md'
 import { IoCalendarClearOutline } from 'react-icons/io5'
 export const InstructionBox = () => {
   return (
-    <Box display="flex" flexDir={["row", "column"]} background="#FDE85C" p={['35px 49px 33px 30px','17px 34px 18px 33px']} maxWidth={["504px"]} mt="3rem" columnGap="12px">
+    <Box display="flex" flexDir={["row", "column"]} background="#FDE85C" p={['35px 49px 33px 30px','17px 34px 18px 33px']} maxWidth={["510px"]} mt="3rem" columnGap="12px">
       <Box mt={["0.5rem","0rem"]} ml={["0rem","2.875rem"]} mb="1rem">
         <Image src="/assets/icons/sponsorLine.svg" alt="" 
         display={["none", "block"]}
@@ -51,7 +51,7 @@ export const InstructionBox = () => {
           <HStack  mt={["-0.5rem","0px"]}>
             <Icon as={IoCalendarClearOutline}  fontSize="1rem"/>
             <Text fontSize="1.125rem" fontWeight="700" color="#383084">
-              December 6, 2023
+              December 10, 2023
             </Text>
           </HStack>
         </VStack>
