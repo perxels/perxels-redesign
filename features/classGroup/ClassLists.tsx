@@ -30,7 +30,8 @@ export const ClassLists = ({
               address,
               installmentPhysical,
               classTimePhysical,
-              branchAddress
+              branchAddress,
+              stateLocation
             }) => (
               <ClassDetails
                 key={id}
@@ -50,6 +51,7 @@ export const ClassLists = ({
                 branchAddress={branchAddress}
                 installmentPhysical={installmentPhysical}
                 classTimePhysical={classTimePhysical}
+                stateLocation={stateLocation}
               />
             ),
           )}

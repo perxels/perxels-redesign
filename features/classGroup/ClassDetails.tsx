@@ -355,7 +355,7 @@ export const ClassDetails = ({
                   Tuition:
                   {" "} {" "}
                   {
-                  location === "ibadan" || stateLocation === "ibadan"  ?
+                   stateLocation ==="discount"  ?
                   (
                  <Text fontSize=".75rem" as="span" padding=".5rem 1.125rem" rounded="15px" bg="#FDF6F6" color="#E3719C" fontWeight="700">
                  Discounted price
