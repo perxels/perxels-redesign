@@ -122,7 +122,8 @@ export const classGroupDetails = [
     classTime: '2-3 times a week.',
     classType: 'Live Virtual Training.',
     installments: ['70% On Admission,', '30% after one month.'],
-    tuition: '₦50,000',
+    tuition: '₦42,000',
+    stateLocation: 'discount',
     courseOutline: [
       'For beginners to learn the fundamentals of design; focus is majorly on UI (User Interface) design.',
       'What is UI design - difference between UI and UX design.',
@@ -164,7 +165,8 @@ export const classGroupDetails = [
     classTime: '2-3 times a week.',
     classType: 'ONLINE TRAINING.',
     installments: ['70% On Admission,', '30% after one month.'],
-    tuition: '₦200,000',
+    tuition: '₦147,000',
+    stateLocation: 'discount',
     courseOutline: [
       'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
       'It includes everything in the Basic and Advanced class curriculum.',

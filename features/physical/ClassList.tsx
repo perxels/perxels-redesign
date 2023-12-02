@@ -45,6 +45,7 @@ export const ClassPlan = () => {
         isAddress
         // stateLocation="scholarship"
         enrolRoute="/sponsorship/signup"
+        stateLocation='discount'
         //   isPhysical
         //   isSponsor
       />
@@ -74,6 +75,7 @@ export const ClassPlan = () => {
         isAddress
         // stateLocation="scholarship"
         enrolRoute="/sponsorship/signup"
+        stateLocation='discount'
         //   isPhysical
         //   isSponsor
       />
