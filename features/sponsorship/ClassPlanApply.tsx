@@ -9,7 +9,7 @@ interface classInt{
   isApply ?:boolean
 }
 
-export const  ClassPlan = ({isApply}: classInt) => {
+export const  ClassPlanApply = ({isApply}: classInt) => {
   return (
     // <Box my="3.625rem">
     //   <SectionHeader
@@ -49,9 +49,9 @@ export const  ClassPlan = ({isApply}: classInt) => {
       // address= "RING ROAD, IBADAN OYO STATE"
       // sAddress
       stateLocation="scholarship"
-      enrolRoute={isApply === true ? '/apply/signup' :'/sponsorship/signup'}
-      // isPhysical
-      isSponsor
+      enrolRoute={'/apply/signup'}
+      isPhysical
+      // isSponsor
     />
 
 <Box mt="60px" />
@@ -80,9 +80,9 @@ export const  ClassPlan = ({isApply}: classInt) => {
       // address= "RING ROAD, IBADAN OYO STATE"
       // isAddress
       stateLocation="scholarship"
-      enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
-      // isPhysical
-      isSponsor
+      enrolRoute={'/apply/signup'}
+      isPhysical
+      // isSponsor
     />
 <Box mt="60px" />
       <ClassDetails
@@ -109,9 +109,9 @@ export const  ClassPlan = ({isApply}: classInt) => {
       address= "LEKKI PHASE 1, LAGOS NIGERIA"
       isAddress
       stateLocation="scholarship"
-      enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
+      enrolRoute={'/apply/signup' }
       isPhysical
-      isSponsor
+      // isSponsor
     />
     <Box mt="60px" />
   </MainContainer>

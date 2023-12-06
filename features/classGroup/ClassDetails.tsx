@@ -368,7 +368,7 @@ export const ClassDetails = ({
                 alignItems="center"
                 columnGap="1.1875rem"
                 >
-                <Heading  fontSize={isSponsor ? '20px'  : ['6xl', '6xl', '7xl']}
+                <Heading  fontSize={isSponsor || isPhysical ? '20px'  : ['6xl', '6xl', '7xl']}
                 textDecoration={stateLocation === "scholarship" ? "line-through" : " "}
                 >
                   {tabState === 'virtual' || location !== 'ibadan' ? (
@@ -376,7 +376,7 @@ export const ClassDetails = ({
                   ) : physicalTuition}
                 </Heading>
                 {
-                isSponsor ? (<>
+                isSponsor || isPhysical ? (<>
                     <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
                   {physicalTuition}
                 </Heading>
