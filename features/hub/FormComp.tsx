@@ -19,6 +19,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   useDisclosure,
+  Textarea
 } from '@chakra-ui/react'
 import { css } from '@emotion/react'
 import { RiRouterFill } from 'react-icons/ri'
@@ -78,18 +79,22 @@ export const FormComp = () => {
               // email: '',
               phone: '',
               datetime: '2023-08-18T03:35',
-              spacetype: '',
+              // spacetype: '',
               hours: '',
+              teamnum: '',
+              questions: '',
             }}
             validationSchema={Yup.object({
               name: Yup.string().required('Name is Required'),
               // email: Yup.string()
               //   .email('Invalid email address')
               //   .required('Email is Required'),
-              spacetype: Yup.string().required('Space Type is required'),
+              // spacetype: Yup.string().required('Space Type is required'),
+               questions: Yup.string().required('Questions  is required'),
               phone: Yup.string().required('Phone Number is Required'),
               datetime: Yup.string().required('Datetime is Required'),
               hours: Yup.number().required('Hours are Required'),
+              teamnum: Yup.number().required('Number of team is Required'),
             })}
 
             onSubmit={(values, action) => {
@@ -100,8 +105,10 @@ export const FormComp = () => {
               // formData.append('email', values.email as string)
               formData.append('phone', values.phone as string)
               formData.append('datetime', values.datetime as string)
-              formData.append('spacetype', values.spacetype as string)
+              // formData.append('spacetype', values.spacetype as string)
+              formData.append('questions', values.questions as string)
               formData.append('hours', values.hours as string)
+              formData.append('teamnum', values.teamnum as string)
               formData.append('created_at', new Date().toLocaleString())
 
               console.log(formData, "formData")
@@ -257,9 +264,9 @@ export const FormComp = () => {
                   </Text>
                 ) : null}
 
-                <Select
+                {/* <Select
                   h={["3.125rem", "3.75rem"]}
-                  // placeholder="What type of space are you reserving ?"
+                
                   _placeholder={{ color: 'brand.dark.200' }}
                   color="brand.dark.200"
                   name="spacetype"
@@ -275,12 +282,7 @@ export const FormComp = () => {
                   }}
                   border="none"
                   borderRadius="6.25rem"
-                  // move select arrow to left
-                //   css={css`
-                //     select{
-                //       -webkit-appearance: none;
-                //     }
-                // `}
+              
                   background ={`url(${'https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png'}) no-repeat right #ddd`} 
                   appearance='none'
                   icon={<></>}
@@ -306,7 +308,7 @@ export const FormComp = () => {
                   <Text color="red.500" fontSize="sm">
                     {formik.errors.spacetype}
                   </Text>
-                ) : null}
+                ) : null} */}
 
                
 
@@ -351,6 +353,74 @@ export const FormComp = () => {
                     {formik.errors.hours}
                   </Text>
                 ) : null}
+
+
+                  <NumberInput
+                  step={1}
+                  border="none"
+                  min={0}
+                  max={24}
+                  name="teamnum"
+                  w="full"
+                  onChange= {
+                    (value) => formik.setFieldValue("teamnum", value)
+                  }
+                  value={formik.values.teamnum}
+                >
+                  <NumberInputField
+                    placeholder="Number of team members"
+                    // name="hours"
+                    backgroundColor={'#F2F2F2'}
+                    _focusVisible={{
+                      outline: 'none',
+                    }}
+                    w="full"
+                    borderRadius="6.25rem"
+                    h={["3.125rem", "3.75rem"]}
+                    border="none"
+                    onBlur={formik.handleBlur}
+                    _placeholder={{ color: '#555555', fontSize: '.9375rem' }}
+                  
+                    borderColor={
+                      formik.touched.teamnum && formik.errors.teamnum ? 'red' : 'none'
+                    }
+                  />
+                  <NumberInputStepper mr="1.875rem">
+                    <NumberIncrementStepper color="#000" />
+                    <NumberDecrementStepper color="#000" />
+                  </NumberInputStepper>
+                </NumberInput>
+                {formik.touched.teamnum && formik.errors.teamnum ? (
+                  <Text color="red" fontSize="12px">
+                    {formik.errors.teamnum}
+                  </Text>
+                ) : null}
+
+            <Textarea
+                h="3.5rem"
+                placeholder="Do you have any questions? Type Nil if you do not have any."
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="questions"
+                value={formik.values.questions}
+                onChange={formik.handleChange}
+                border="none"
+                borderRadius="6.25rem"
+                onBlur={formik.handleBlur}
+                backgroundColor={'#F2F2F2'}
+                borderColor={
+                  formik.touched.questions && formik.errors.questions
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.questions && formik.errors.questions ? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.questions}
+                </Text>
+              ) : null}
 
                 <Button
                   h={["3.125rem", "3.75rem"]}
