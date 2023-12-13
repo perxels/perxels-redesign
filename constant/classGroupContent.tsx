@@ -25,7 +25,7 @@ export interface ClassGroupDetailsProps {
   isAddress?: boolean
   stateLocation?: string
   enrolRoute?: any
-  isPhysical?: boolean
+  isPhysical?: boolean,
 }
 
 export interface StudentWorkProps {
@@ -123,7 +123,7 @@ export const classGroupDetails = [
     classType: 'Live Virtual Training.',
     installments: ['70% On Admission,', '30% after one month.'],
     tuition: '₦50,000',
-    // stateLocation: 'discount',
+    stateLocation: '',
     courseOutline: [
       'For beginners to learn the fundamentals of design; focus is majorly on UI (User Interface) design.',
       'What is UI design - difference between UI and UX design.',
@@ -166,7 +166,7 @@ export const classGroupDetails = [
     classType: 'ONLINE TRAINING.',
     installments: ['70% On Admission,', '30% after one month.'],
     tuition: '₦200,000',
-    // stateLocation: 'discount',
+    stateLocation: '',
     courseOutline: [
       'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
       'It includes everything in the Basic and Advanced class curriculum.',
