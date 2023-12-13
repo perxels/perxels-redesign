@@ -122,8 +122,8 @@ export const classGroupDetails = [
     classTime: '2-3 times a week.',
     classType: 'Live Virtual Training.',
     installments: ['70% On Admission,', '30% after one month.'],
-    tuition: '₦42,000',
-    stateLocation: 'discount',
+    tuition: '₦50,000',
+    // stateLocation: 'discount',
     courseOutline: [
       'For beginners to learn the fundamentals of design; focus is majorly on UI (User Interface) design.',
       'What is UI design - difference between UI and UX design.',
@@ -165,8 +165,8 @@ export const classGroupDetails = [
     classTime: '2-3 times a week.',
     classType: 'ONLINE TRAINING.',
     installments: ['70% On Admission,', '30% after one month.'],
-    tuition: '₦147,000',
-    stateLocation: 'discount',
+    tuition: '₦200,000',
+    // stateLocation: 'discount',
     courseOutline: [
       'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
       'It includes everything in the Basic and Advanced class curriculum.',
@@ -183,7 +183,7 @@ export const classGroupDetails = [
     isTab: true,
     installmentPhysical: ['60% on admission', '40% after one month'],
     classTimePhysical: '2 times a week.',
-    physicalTuition: '₦160,000',
+    physicalTuition: '₦200,000',
     branchAddress: 'Ring Road, Ibadan Oyo State',
   },
 ]
