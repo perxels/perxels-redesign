@@ -16,4 +16,4 @@ export * from './winnerContent'
 export * from './termsContent'
 export * from './hubFeatsContent'
 export * from './evaluationContent'
-
+export * from './portalContent'
