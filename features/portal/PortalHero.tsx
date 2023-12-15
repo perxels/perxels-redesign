@@ -1,12 +1,29 @@
-import React from 'react'
+import React, {useEffect, useRef} from 'react'
 import {Box, Text, Heading, SimpleGrid} from '@chakra-ui/react'
 import {PortalBoxes} from './PortalBoxes'
 import {PortalContent} from '../../constant'
+import gsap from 'gsap'
+
 export const PortalHero = () => {
+    const heroRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        let ctx = gsap.context(() =>{
+            gsap.to(heroRef.current, { 
+                opacity: 1,
+                duration: 3,
+                y: 0,
+                x: 0,
+                delay: 1,
+            })  
+        })
+        return () => ctx.revert()
+     }, [])
   return (
     <Box
+    ref={heroRef}
     padding={["5% 5%"]}
     bg={`url(./assets/images/heroBg.png) center/cover no-repeat`}
+    opacity={0}
     >
         <Heading
         textAlign="center"
