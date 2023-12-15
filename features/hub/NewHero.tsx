@@ -22,6 +22,7 @@ export const NewHero = () => {
     video?.addEventListener('loadeddata', () => {
       video.play()
     })
+    return () => ctx.revert()
   }, [])
   return (
     <Box pb="4.375rem"
