@@ -10,7 +10,7 @@ export const Overview = () => {
                 Overview
                 </Heading>
                 <Text fontSize={["1.25rem","1.5rem"]} lineHeight={["2rem","2.4375rem"]} textAlign={["left","center" ]} width={["100%","70%"]} mt={["20px","40px"]}>
-                On our quest to continue expanding and bringing design education to your doorstep, we have established a couple of physical learning spaces. your dorrstep, we have established couple of physical learning spaces. 
+                The core purpose of this examination is to offer you a competitive edge among your peers, elevate your CV, and push you to uncover your capabilities. The certification granted by this examination is accredited by the American Counsel of Training and Development.
                 </Text>
             </Center>
             <Box mt={["3rem","4.1875rem"]}>

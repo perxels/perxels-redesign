@@ -2,7 +2,7 @@ import React from 'react'
 import {Box, Text} from '@chakra-ui/react'
 export const StagesCard = () => {
   return (
-    <Box width="90%">
+    <Box width="75%">
         <Box
         borderLeft="6px solid #34296B"
         pl="1.375rem"
@@ -20,7 +20,7 @@ export const StagesCard = () => {
         fontWeight={"400"}
         color="#1A1A1A"
         >
-        When you invest in this product, you&apos;re getting in at an early stage when property prices are affordable. 
+        Individuals who have completed a design course, regardless of whether it was at Perxels or elsewhere, are eligible to take the examination.
         </Text>
         </Box>
         <Box
@@ -52,7 +52,7 @@ export const StagesCard = () => {
         //  color="#707070"
          className='text-title'
         >
-        When you invest in this product, you&apos;re getting in at an early stage when property prices are affordable. 
+        To enroll for this examination, please fill the form on  at perxels.com/exam. You will be contacted regarding the examination upon completing this form and payment follow.
         </Text>
         </Box>
         
@@ -81,7 +81,7 @@ export const StagesCard = () => {
          fontSize="20px"
          fontWeight={"400"}
         >
-        When you invest in this product, you&apos;re getting in at an early stage when property prices are affordable. 
+        Expect an email informing you about the scheduled date and time of your examination. Stay tuned to your inbox for updates.
         </Text>
         </Box>
         <Box
@@ -109,7 +109,7 @@ export const StagesCard = () => {
          fontSize="20px"
          fontWeight={"400"}
         >
-        When you invest in this product, you&apos;re getting in at an early stage when property prices are affordable. 
+        The examination is graded as follows: 70% - 100% signifies excellence, 40% - 69% indicates a good performance, while 0% - 39% reflects a lower performance.
         </Text>
         </Box>
         <Box
@@ -137,7 +137,7 @@ export const StagesCard = () => {
          fontSize="20px"
          fontWeight={"400"}
         >
-        When you invest in this product, you&apos;re getting in at an early stage when property prices are affordable. 
+       This exam evaluates your competency through rigorous testing and our certification is accredited by the American Counsel of Training and Development
         </Text>
         </Box>
     </Box>

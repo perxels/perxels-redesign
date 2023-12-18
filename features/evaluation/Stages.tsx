@@ -9,11 +9,11 @@ export const Stages = () => {
         <Heading fontSize="72px" mb="8.25rem" fontWeight={"700"}>
         Stages 
         </Heading>
-        <Flex alignItems={"center"}>
+        <Flex >
             <Box>
                 <StagesCard/>   
             </Box>
-            <Box width="80%" display={["none", "block"]}>
+            <Box width="90%" display={["none", "block"]}>
                 <Img src="/assets/images/evaluation/stageImg.png" alt="" />
             </Box>
         </Flex>

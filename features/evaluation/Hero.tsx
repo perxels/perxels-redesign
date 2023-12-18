@@ -9,14 +9,14 @@ export const Hero = () => {
       <Box width={["100%","60%"]}>
         <Box display={["none", "block"]} padding="8px 16px" bgColor="#FAFAFA" maxW={"24.375rem"} rounded=".75rem">
           <Text fontSize="1.125rem" color="#1A1A1A" >
-        📚 The best learning process for your career
+        📚 The premier examination to set you apart.
         </Text>
         </Box>
       <Heading fontSize={["2.1875rem","3.625rem"]} fontWeight="800" lineHeight={["2.4875rem","4rem"]}>
       Evaluate competencies with design examination
       </Heading>
       <Text fontSize={["1rem","1.175rem"]} color={"#1A1A1A"} lineHeight={["1.3rem","1.675rem" ]}mt={["1rem","1.5rem"]} w={["100%","70%"]}>
-      If you want to reach the next level in your product design career certification from a peak industry body might just help.
+      Elevate your UI/UX design career by obtaining certification through examination. Enhance your CV and gain a competitive edge in the field
       </Text>
       <Flex mt={["1rem","1.675rem"]} justifyContent={["center", "flex-start"]}>
       <Button as={Link} href="/evaluation/register" rounded=".3125rem" fontSize={["1rem","1.25rem"]}  w={["12.25rem","16.375rem"]}>
