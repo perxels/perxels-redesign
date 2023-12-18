@@ -29,7 +29,7 @@ const EnrolForm = () => {
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
   const [classVal, setClassValue] = useState<string> ("")
-  const { onCopy, value, setValue } = useClipboard("https://perxels.com/evaluation");
+  const { onCopy, value, setValue } = useClipboard("https://perxels.com/exam");
 
   return (
     <>
@@ -80,7 +80,7 @@ const EnrolForm = () => {
             email: Yup.string()
               .email('Invalid email address')
               .required('Email is required'),
-            // location: Yup.string().required('Location is required'),
+            //x location: Yup.string().required('Location is required'),
             // howdidyouknow: Yup.string().required(
             //   'How did you know is required',
             // ),
@@ -369,7 +369,7 @@ const EnrolForm = () => {
           <SimpleGrid w="full" columns={2} gap="0.75rem">
              <Box w="full">
                <WhatsappShareButton
-                 url={'https://perxels.com/evaluation'}
+                 url={'https://perxels.com/exam'}
                  title={'Get Full Evaluation on your skills'}
                  separator=":: "
                  style={{ width: '100%' }}
@@ -391,7 +391,7 @@ const EnrolForm = () => {
              </Box>
              <Box w="full">
                <TwitterShareButton
-                  url={'https://perxels.com/evaluation'}
+                  url={'https://perxels.com/exam'}
                   title={'Get Full Evaluation on your skills'}
                  style={{ width: '100%' }}
                >
