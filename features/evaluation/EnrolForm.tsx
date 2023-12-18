@@ -69,9 +69,9 @@ const EnrolForm = () => {
             phone: '',
             email: '',
             class: '',
-            location: '',
-            reason: '',
-            howdidyouknow: '',
+            experience: '',
+            portfolio: '',
+            linkedin: '',
             // category: '',
           }}
           validationSchema={Yup.object({
@@ -80,11 +80,20 @@ const EnrolForm = () => {
             email: Yup.string()
               .email('Invalid email address')
               .required('Email is required'),
-            location: Yup.string().required('Location is required'),
-            howdidyouknow: Yup.string().required(
-              'How did you know is required',
-            ),
-            reason: Yup.string().required('Reason is required'),
+            // location: Yup.string().required('Location is required'),
+            // howdidyouknow: Yup.string().required(
+            //   'How did you know is required',
+            // ),
+            // reason: Yup.string().required('Reason is required'),
+            experience: Yup.string().required('Experience is required'),
+            portfolio: Yup.string().matches(
+              /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+              'Enter correct url!'
+          ).required('Portfolio is required'),
+            linkedin: Yup.string().matches(
+              /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+              'Enter correct url!'
+          ).required('Linkedin is required'),
             // category: Yup.string().required('Category is required'),
           })}
           onSubmit={(values, action) => {
@@ -96,10 +105,13 @@ const EnrolForm = () => {
             formData.append('name', values.name as string)
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
-            formData.append('location', values.location as string)
-            formData.append('howdidyouknow', values.howdidyouknow as string)
+            // formData.append('location', values.location as string)
+            // formData.append('howdidyouknow', values.howdidyouknow as string)
             // formData.append('category', values.category as string)
-            formData.append('reason', values.reason as string)
+            // formData.append('reason', values.reason as string)
+            formData.append('experience', values.experience as string)
+            formData.append('portfolio', values.portfolio as string)
+            formData.append('linkedin', values.linkedin as string)
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
 
@@ -206,14 +218,14 @@ const EnrolForm = () => {
               <Input
                 h="3.5rem"
                 type="text"
-                placeholder="Where are you located? E.g Lagos, Nigeria"
+                placeholder="How many years of experience in designing"
                 _placeholder={{ color: 'brand.dark.200' }}
-                name="location"
-                value={formik.values.location}
+                name="experience"
+                value={formik.values.experience}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 borderColor={
-                  formik.touched.location && formik.errors.location
+                  formik.touched.experience && formik.errors.experience
                     ? 'red.500'
                     : 'brand.dark.200'
                 }
@@ -221,14 +233,17 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               />
-              {formik.touched.location && formik.errors.location ? (
+              {formik.touched.experience && formik.errors.experience ? (
                 <Text color="red.500" fontSize="sm">
-                  {formik.errors.location}
+                  {formik.errors.experience}
                 </Text>
               ) : null}
+
+
+              
             
              
-              <Select
+              {/* <Select
                 h="3.5rem"
                 placeholder="How did you get to know about Perxels?"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -246,29 +261,31 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               >
-                <option value="Facebook">Facebook</option>
+                <option value="Facebook">Faceboo</option>
                 <option value="Twitter">Twitter</option>
                 <option value="LinkedIn">LinkedIn</option>
                 <option value="Instagram">Instagram</option>
                 <option value="WhatsApp">WhatsApp</option>
-              </Select>
-              {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
+              </Select> */}
+              {/* {formik.touched.howdidyouknow && formik.errors.howdidyouknow ? (
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.howdidyouknow}
                 </Text>
-              ) : null}
+              ) : null} */}
 
-                 <Textarea
+
+
+<Input
                 h="3.5rem"
-                
-                placeholder="Tell us about yourself *"
+                type="text"
+                placeholder="Portfolio Link"
                 _placeholder={{ color: 'brand.dark.200' }}
-                name="reason"
-                value={formik.values.reason}
+                name="portfolio"
+                value={formik.values.portfolio}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 borderColor={
-                  formik.touched.reason && formik.errors.reason
+                  formik.touched.portfolio && formik.errors.portfolio
                     ? 'red.500'
                     : 'brand.dark.200'
                 }
@@ -276,9 +293,33 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               />
-              {formik.touched.reason && formik.errors.reason ? (
+              {formik.touched.portfolio && formik.errors.portfolio ? (
                 <Text color="red.500" fontSize="sm">
-                  {formik.errors.reason}
+                  {formik.errors.portfolio}
+                </Text>
+              ) : null}
+
+<Input
+                h="3.5rem"
+                type="text"
+                placeholder="Linkedin Profile Link"
+                _placeholder={{ color: 'brand.dark.200' }}
+                name="linkedin"
+                value={formik.values.linkedin}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                borderColor={
+                  formik.touched.linkedin && formik.errors.linkedin
+                    ? 'red.500'
+                    : 'brand.dark.200'
+                }
+                _focusVisible={{
+                  outline: 'none',
+                }}
+              />
+              {formik.touched.linkedin && formik.errors.linkedin? (
+                <Text color="red.500" fontSize="sm">
+                  {formik.errors.linkedin}
                 </Text>
               ) : null}
 

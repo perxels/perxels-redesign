@@ -35,8 +35,8 @@ export const Pricing = () => {
                     </Box>
                 </Flex>
                 <Box >
-                    <Button as={Link} href="/evaluation/register"  w="100%" h={["3.9375rem","6.0625rem"]} mt={["1rem","3.75rem"]}>
-                    Enroll For This Plan
+                    <Button as={Link} href="/evaluation/register"  w="100%" h={["3.9375rem","4.0625rem"]} mt={["1rem","3.75rem"]}>
+                    Apply for the exam
                     </Button>
                 </Box>
             </Box>
