@@ -18,8 +18,7 @@ export const Pricing = () => {
                         Cost
                         </Text>
                         <Text fontSize={["1rem","24px"]} color="#3D3D3D" w={["100%","80%"]} mt="1rem" textAlign={["center", "left"]}>
-                        For individuals that need advanced 
-                        in career
+                        Here is the examination cost for this examination, click on the button to apply
                         </Text>
                     </Box>
                     <Box 
@@ -31,7 +30,7 @@ export const Pricing = () => {
                     />
                     <Box>
                         <Heading fontSize={["2.625rem","4.5rem"]}>
-                        ₦40,000
+                        ₦50,000
                         </Heading>
                     </Box>
                 </Flex>
