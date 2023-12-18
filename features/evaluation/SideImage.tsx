@@ -17,7 +17,8 @@ const SideImage = () => {
         <Logo color="#fff" />
       </Box>
       <Heading color="#FFF" fontSize="3.375rem" lineHeight="120%" mb="50%">
-      Register now to take the first step in your design career advancment 
+      Evaluate competencies
+with design examination
       </Heading>
       <Img src="/assets/images/evaluation/rightTop.png"  alt="" position="absolute" top="0" right="0"
       opacity={0.5}

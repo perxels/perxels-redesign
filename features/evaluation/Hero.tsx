@@ -19,8 +19,8 @@ export const Hero = () => {
       Elevate your UI/UX design career by obtaining certification through examination. Enhance your CV and gain a competitive edge in the field
       </Text>
       <Flex mt={["1rem","1.675rem"]} justifyContent={["center", "flex-start"]}>
-      <Button as={Link} href="/evaluation/register" rounded=".3125rem" fontSize={["1rem","1.25rem"]}  w={["12.25rem","16.375rem"]}>
-      Enroll Now
+      <Button as={Link} href="/exam/register" rounded=".3125rem" fontSize={["1rem","1.25rem"]}  w={["12.25rem","16.375rem"]}>
+      Apply
       </Button>
       </Flex>
       <Flex  bgColor="#FAFAFA" mt="1.675rem" p=".5rem .75rem" rounded=".5rem" maxWidth="25.9375rem" alignItems="center" display={["none", "flex"]}>
