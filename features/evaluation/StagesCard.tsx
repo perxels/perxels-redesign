@@ -3,7 +3,7 @@ import {Box, Text} from '@chakra-ui/react'
 export const StagesCard = () => {
   const [first, setFirst] = useState("firstCard")
   return (
-    <Box width="75%">
+    <Box width={["100%","75%"]}>
         <Box
         borderLeft={
           first === "firstCard" ? "6px solid #34296B" : "6px solid #EBEBEB"
