@@ -16,7 +16,7 @@ export const Testimonial = () => {
                 <Text fontSize={["14px", "20px"]} color="#1A1A1A">
                 CE0, Perxels
                 </Text>
-                <Button as={Link} href="/exam/register"  mt={["1rem","10.625rem"]} bgColor="#FDE85C" color="#383084">
+                <Button as={Link} href="/exam/register"  mt={["1rem","10.625rem"]} bgColor="#FDE85C" color="#383084"  h={["3.25rem","56px"]} w={["12.25rem","12.1875rem"]}>
                 Apply
                 </Button>
 
