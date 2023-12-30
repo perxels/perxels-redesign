@@ -15,7 +15,7 @@ export const ClassPlan = () => {
       <ClassDetails
         title="Premium Class"
         id="#"
-        classDur="7 Weeks."
+        classDur="3 Months."
         classTime="2 times a week."
         installments={['60% On Admission;', '40% after one month.']}
         tuition="₦160,000"
