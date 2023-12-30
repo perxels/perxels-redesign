@@ -4,11 +4,12 @@ import { HeroSubSection } from '../features/home'
 import {
   ClassPlan,
     PrivateHero,
-  MarqueeComp,
+  // MarqueeComp,
   ClassVid,
 } from '../features/ibClass'
 import { Expectation } from '../features/teens'
 import { Testimonial } from '../features/sponsorship'
+import {IbadanHero, IbadanSpace, StudentJob, ClassPlanIb, OtherPhysCardLayout, MarqueeComp, IbadanPhysicalCardData} from '../features/physical'
 import { MainLayout } from '../layouts'
 import {LeaningTools} from '../features/classGroup'
 
@@ -16,15 +17,23 @@ const privateClass = () => {
   return (
     <>
   <MainLayout>
-      <PrivateHero />
-     <HeroSubSection />
+      {/* <PrivateHero /> */}
+     {/* <HeroSubSection /> */}
       {/* <MarqueeComp /> */}
-     <ClassPlan />
-      <StudentWorkWrapper />
-       <LeaningTools />
-      <ClassVid/> 
+     {/* */}
+      {/* <StudentWorkWrapper /> */}
+       {/* <LeaningTools /> */}
+      {/* <ClassVid/>  */}
       {/* <Expectation  title={"A glimpse into what you would be able to do at the end of the training."}/> */}
-       <Testimonial />
+       {/* <Testimonial /> */}
+       <IbadanHero/>
+        <IbadanSpace/>
+        <MarqueeComp/>
+        {/* <ClassPlanIb/> */}
+        <ClassPlan />
+        <LeaningTools/>
+        <OtherPhysCardLayout cardData={IbadanPhysicalCardData} />
+        <StudentWorkWrapper/>
     </MainLayout>
     </>
   )
