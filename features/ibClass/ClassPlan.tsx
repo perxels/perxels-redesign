@@ -15,7 +15,7 @@ export const ClassPlan = () => {
       <ClassDetails
         title="Premium Class"
         id="#"
-        classDur="3 Months."
+        classDur="7 Weeks."
         classTime="2 times a week."
         installments={['60% On Admission;', '40% after one month.']}
         tuition="₦160,000"
@@ -34,9 +34,10 @@ export const ClassPlan = () => {
         classType= "Physical Training"
         address= "RING ROAD, IBADAN OYO STATE"
         isAddress
-        stateLocation="ibadan"
+        stateLocation="scholarship"
         enrolRoute='/ibadan/signup'
         isPhysical
+        physicalTuition="₦140,000"
       />
     </MainContainer>
   )

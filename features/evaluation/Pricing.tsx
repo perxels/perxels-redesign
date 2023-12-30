@@ -23,7 +23,6 @@ export const Pricing = () => {
                     </Box>
                     <Box 
                     height={["0.001px","72px" ]}
-                   
                     width={["100%","0.001px"]}
                     borderLeft="1px solid #BFBFBF"
                     borderTop="1px solid #BFBFBF"
