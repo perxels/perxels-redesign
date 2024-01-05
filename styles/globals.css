@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap');
 /* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@0,400;0,500&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair:opsz,wght@5..1200,400;5..1200,500&display=swap');
@@ -51,4 +51,79 @@
 
 .slick-track{
   height: auto !important;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/Gilroy-Light.ttf');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/Gilroy-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@font-face{
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/Gilroy-Medium.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+@font-face{
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/Gilroy-SemiBold.ttf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/Gilroy-Bold.ttf');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/Gilroy-ExtraBold.ttf');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('/assets/fonts/Gilroy-Black.ttf');
+  font-weight: 900;
+  font-style: normal;
+}
+
+
+.slick-slider > .slick-dots > ul >  li.slick-active {
+  background-color: #060022;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.slick-slider > .slick-dots > ul >  li{
+  background-color: transparent;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #060022;
+}
+
+.slick-slider > .slick-dots{
+  bottom: -30px;
 }
