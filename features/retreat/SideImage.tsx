@@ -7,7 +7,7 @@ const SideImage = () => {
     <Flex
       w={["100%","90%"]}
       h="full"
-      px="2rem"
+      pl="15%"
       py="10%"
       alignItems="flex-start"
       position="relative"
@@ -18,7 +18,7 @@ const SideImage = () => {
       </Box>
        */}
        <Box display="flex" flexDir="column" rowGap={["2.125rem","3.4375rem"]}>
-        <Heading color="#000" as="h1" fontSize={["1.375rem","4.375rem"]} fontWeight="700" lineHeight="normal" >
+        <Heading w={["100%","95%"]} color="#000" as="h1" fontSize={["1.375rem","3.4375rem"]} fontWeight="700" lineHeight="normal" >
           Steps to join this retreat
         </Heading>
     <Flex alignItems="center" >

@@ -4,6 +4,7 @@ export interface RetreatInfoInterface {
     iconSrc: string;
     fontSize: string;
      bgColor: string;
+     marginT?: string;
 }
 
 export const InfoContent : RetreatInfoInterface[] = [
@@ -20,7 +21,8 @@ export const InfoContent : RetreatInfoInterface[] = [
         content: "Event Date",
         iconSrc: "https://res.cloudinary.com/deudl0ryy/image/upload/v1704516234/Icon4_goxhic.svg",
         fontSize: "2.5rem",
-        bgColor: "#FFFCDF"
+        bgColor: "#FFFCDF",
+        marginT: "2rem"
     },
     {
         title: "Lekki",

@@ -4,7 +4,7 @@ import {Box, Text} from '@chakra-ui/react'
 export const ExpectationCard = ({bgImage, description}: {bgImage: string; description: string}) => {
   return (
     <Box
-     minHeight={["22.6875rem","399px"]}
+     height={["22.6875rem","399px"]}
     background={`url(${bgImage}) no-repeat center center`}
     backgroundSize="cover"
     borderRadius="10px"

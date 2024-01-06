@@ -24,7 +24,7 @@ import { TwitterShareButton, WhatsappShareButton } from 'next-share'
 const EnrolForm = () => {
   // const scriptUrl =
   //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbywtjxJuYUUh8nkKcXwrP2oEp-ZtKLgYawz5mBiyWcp44iM0HdeQwekweC0kX0ngDwOYg/exec"
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbyqxYzmTBDjpvDZpXLpnJiqX5nB8ynWeJ3bLNmgRzz-ZTjzBmxvNIa_yN55RbLo7VC1DA/exec"
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
@@ -329,7 +329,8 @@ const EnrolForm = () => {
                     h="3.688rem"
                     w="full"
                     type="submit"
-                    
+                    as='a'
+                    href='https://chat.whatsapp.com/L7eumYzNnu4JIfnyvJCHF5'
                   >
                   Click to join the whatsapp group
                 </Button>
