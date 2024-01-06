@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Box, Flex, Heading, Center, Button} from '@chakra-ui/react'
 import {ExpectationCard} from './ExpectationCard'
 import {MainContainer} from '../../layouts'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 export const Expectation = () => {
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+          gsap.from('.section-flex', {
+            opacity: '0',
+            y: 200,
+            duration: 1,
+            delay: 1,
+            scrollTrigger: {
+              trigger: '.section-flex',
+            },
+          })
+        })
+    
+        return () => ctx.revert()
+      }, [])
   return (
     <MainContainer bg="#422D80"
     >
@@ -17,11 +35,12 @@ export const Expectation = () => {
     mb="1.5rem"
     flexDir={["column","row"]}
     rowGap="1.5rem"
+    className="section-flex"
     >
     <ExpectationCard bgImage="/assets/images/retreat/expect1.png" description="Networking " />
     <ExpectationCard bgImage="/assets/images/retreat/expect2.png" description="Vision Board" />
     </Flex>
-    <Flex  rowGap="1.5rem" flexDir={["column","row"]}  columnGap="1.5rem">
+    <Flex  rowGap="1.5rem" flexDir={["column","row"]}  columnGap="1.5rem" className="section-flex">
     <ExpectationCard bgImage="/assets/images/retreat/expect3.png" description="Panel Session" />
     <ExpectationCard bgImage="/assets/images/retreat/expect4.png" description="Mock Interview" />
     <ExpectationCard bgImage="/assets/images/retreat/expect5.png" description="CV Evaluation" />

@@ -1,10 +1,27 @@
-import React from 'react'
+import React, { useEffect }  from 'react'
 import {EventCard} from './EventCard'
 import {Box, Text, Heading, Image, Center, SimpleGrid, Button} from '@chakra-ui/react'
 import { InfoContent } from '../../constant'
 import {MainContainer} from '../../layouts'
-
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 export const EventInfo = () => {
+    useEffect(() => {
+        let ctx = gsap.context(() => {
+          gsap.from('.section-grid', {
+            opacity: '0',
+            y: 200,
+            duration: 1,
+            delay: 1,
+            scrollTrigger: {
+              trigger: '.section-grid',
+            },
+          })
+        })
+    
+        return () => ctx.revert()
+      }, [])
   return (
     <MainContainer>
     <Box pr={["0%","10%"]} py="5%">
@@ -16,7 +33,7 @@ export const EventInfo = () => {
             This retreat aims to empower our alumni with insights into the current job market landscape and effective strategies to secure employment in 2024.
             </Text>
         </Box>
-        <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} spacing="26px" mt="2.625rem">
+        <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} spacing="26px" mt="2.625rem" className="section-grid">
                     {
                 InfoContent.map((item, index) => (
                     <EventCard
