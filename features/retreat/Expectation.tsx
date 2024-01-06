@@ -6,7 +6,7 @@ export const Expectation = () => {
   return (
     <MainContainer bg="#422D80"
     >
-    <Box py="10%">
+    <Box p="5% 0 3% 0">
     <Heading textAlign="center" color="#fff" fontSize={["1.875rem","4.375rem"]} lineHeight="normal" fontWeight="bold" mb={["1.25rem","2.5rem"]}>
     What to Expect
     </Heading>
@@ -28,7 +28,7 @@ export const Expectation = () => {
     </Flex>
     </Box>
     <Center>
-            <Button as='a' href="/retreat/register" backgroundColor="#FFBF33" color="#34296B" fontSize="1.25rem" fontWeight="700" mt="2.125rem" mb="3.125rem" w={["100%", "40%"]} h="4.375rem" borderRadius="4px" >
+            <Button as='a' href="/retreat/register" backgroundColor="#FFBF33" color="#34296B" fontSize="1.25rem" fontWeight="700" mt=".125rem" mb="3.125rem" w={["100%", "30%"]} h="4.375rem" borderRadius="4px" >
             Register for the retreat
             </Button>
         </Center>

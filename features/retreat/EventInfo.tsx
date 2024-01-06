@@ -7,16 +7,16 @@ import {MainContainer} from '../../layouts'
 export const EventInfo = () => {
   return (
     <MainContainer>
-    <Box>
+    <Box pr={["0%","10%"]}>
         <Box>
-            <Heading fontSize={["1.5625rem","55px"]} color="#34296B" lineHeight="110%" fontWeight="900" width={["90%","50%"]} fontFamily="Montserrat">
+            <Heading fontSize={["1.5625rem","55px"]} color="#34296B" lineHeight="110%" fontWeight="900" width={["90%","70%"]} fontFamily="Montserrat">
             A retreat to help our Alumnis get Jobs
             </Heading>
-            <Text fontSize={["1rem","30px"]} fontWeight="400" w={["100%","60%"]} lineHeight="133%" fontFamily="Montserrat" mt="2.1875rem">
+            <Text fontSize={["1rem","30px"]} fontWeight="400" w={["100%","60%"]} lineHeight="133%" fontFamily="Montserrat" mt="1.15rem">
             This retreat aims to empower our alumni with insights into the current job market landscape and effective strategies to secure employment in 2024.
             </Text>
         </Box>
-        <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} spacing="40px" mt="2.625rem">
+        <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} spacing="26px" mt="2.625rem">
                     {
                 InfoContent.map((item, index) => (
                     <EventCard
@@ -32,7 +32,7 @@ export const EventInfo = () => {
         </SimpleGrid>
 
         <Center>
-            <Button  as='a' href="/retreat/register"  backgroundColor="#34296B" color="#fff" fontSize="1.25rem" fontWeight="700" mt="3.125rem" mb="3.125rem" w={["100%", "40%"]} h="4.375rem" borderRadius="4px" >
+            <Button  as='a' href="/retreat/register"  backgroundColor="#34296B" color="#fff" fontSize="1.25rem" fontWeight="700" mt="3.125rem" mb="3.125rem" w={["100%", "30%"]} h="4.375rem" borderRadius="4px" >
             Register for the retreat
             </Button>
         </Center>
