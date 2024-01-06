@@ -22,7 +22,7 @@ export const EventInfo = () => {
                     <EventCard
                         key={index}
                         title={item.title}
-                        iconSrc={item.iconSrc}
+                        iconSrc={"/icon1.svg"}
                         content={item.content}
                         fontSize={item.fontSize}
                         bgColor={item.bgColor}
