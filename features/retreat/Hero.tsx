@@ -27,9 +27,9 @@ export const Hero = () => {
         >
         Navigating the UIUX Job Market in 2024
         </Heading>
-        <Image src="assets/icons/leftRet.png" alt="" position="absolute" left="5%" bottom="10%" />
+        <Image src="assets/icons/leftRet.png" alt="" position="absolute" left="5%" bottom="10%" display={["none", "block"]} />
         <Image src="assets/icons/centerRet.svg" alt="" position="absolute" bottom={["13%","45%"]} right={["40%","50%"]} />
-        <Image src="assets/icons/rightRet.svg" alt="" position="absolute" bottom="15%" right="50%"   />
+        <Image src="assets/icons/rightRet.svg" alt="" position="absolute" bottom="15%" right="0"  display={["none", "block"]}  />
 
         <Box mt={["3.25rem","4.375rem"]} display="flex" justifyContent="space-between" alignItems="flex-end" columnGap="60px">
             <Image height="90%" src="assets/images/retreat/image1.png" alt="retreat1"  display={["none", "block"]} />
