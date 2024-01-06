@@ -11,21 +11,21 @@ export const InfoContent : RetreatInfoInterface[] = [
     {
         title: "₦5000",
         content: "Access Fee",
-        iconSrc: "/icon1.svg",
+        iconSrc: "https://res.cloudinary.com/deudl0ryy/image/upload/v1704516234/Icon1_khkypy.svg",
         fontSize: "4.0625rem",
         bgColor: "#F0FFDF"
     },
     {
         title: "FEB 4, 11AM",
         content: "Event Date",
-        iconSrc: "/icon4.svg",
+        iconSrc: "https://res.cloudinary.com/deudl0ryy/image/upload/v1704516234/Icon4_goxhic.svg",
         fontSize: "2.5rem",
         bgColor: "#FFFCDF"
     },
     {
         title: "Lekki",
         content: "Venue",
-        iconSrc: "/icon2.svg",
+        iconSrc: "https://res.cloudinary.com/deudl0ryy/image/upload/v1704516237/Icon2_p9vcfk.svg",
         fontSize: "4rem",
         bgColor: "#FCEBFF"
     }
