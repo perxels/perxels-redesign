@@ -10,6 +10,7 @@ import {
   Heading
 } from "@chakra-ui/react";
 import { SpeakerData } from "./";
+import parse from 'html-react-parser'
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 export const SpeakerMobile = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -82,7 +83,7 @@ export const SpeakerMobile = () => {
                 fontWeight="400"
                 lineHeight="1.9125rem"
               >
-                {item.description}
+                {parse(item.description)}
               </Text>
 
               <Box>
@@ -114,7 +115,7 @@ export const SpeakerMobile = () => {
       <Box display="flex">
         <Box 
         position="absolute"
-        bottom="14%"
+        bottom="10%"
         >
           <Text color="#060022" fontSize="30px" fontWeight={400}>
             <BsArrowLeftCircle onClick={previous} />
@@ -122,7 +123,7 @@ export const SpeakerMobile = () => {
         </Box>
         <Box
          position="absolute"
-         bottom="14%"
+         bottom="10%"
          right="0"
         >
           <Text color="#060022" fontSize="30px" >
