@@ -78,7 +78,7 @@ export const SpeakerMobile = () => {
             //   pl="1.1875rem"
             >
               <Text
-                mb="2.5625rem"
+                mb="1.5625rem"
                 fontSize="1.125rem"
                 fontWeight="400"
                 lineHeight="1.9125rem"
@@ -88,23 +88,24 @@ export const SpeakerMobile = () => {
 
               <Box>
                 <Text
-                  fontWeight="500"
+                  fontWeight="700"
                   fontSize="1.125rem"
                   lineHeight="170%"
                   mb=".6875rem"
+                  
                 >
                   {item.name}
                 </Text>
               </Box>
 
               <Box backgroundColor={"#060022"} padding="20px 
-              36px" rounded="1.6875rem" display="inline-flex" flexDir="column" mt="45px" >
+              36px" rounded="1.6875rem" display="inline-flex" flexDir="column" mt="25px" >
                 <Text color="#FFF">
                     Topic:
                 </Text>
-                <Heading color="#FFF" fontSize="40px" fontWeight="900" >
+                <Heading color="#FFF" fontSize="25px" fontWeight="900" >
                     {
-                        item.topic
+                       parse(item.topic)
                     }
                 </Heading>
             </Box>

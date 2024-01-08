@@ -21,41 +21,42 @@ export interface SpeakerInterface {
 
 export const SpeakerData: SpeakerInterface[] = [
   {
-    name: 'Dan Praise',
+    name: 'Michael Etukudoh, Global Recruiter',
     description:
-      "With a robust background in marketing, I bring extensive expertise in Content Marketing, Brand Marketing, and Design customized to fuel sustainable growth strategies. My experience spans across diverse industries and markets, allowing me to harness the power of compelling content, strategic brand positioning, and impactful design to drive tangible business growth. I've honed my skills in crafting narratives that resonate with audiences while implementing innovative branding strategies that elevate a company's visibility and market presence.<br/>Having navigated various facets of marketing, I've developed a keen understanding of how to harmonize content, branding, and design to create cohesive, impactful campaigns. This holistic approach not only captures attention but also cultivates lasting connections with target audiences.",
-    image: 'assets/images/retreat/speaker4.jpeg',
-    role: 'UIUX Designer',
-    topic: 'Vision Board',
-  },
-  {
-    name: 'Michael Etukudoh',
-    description:
-      "With a background in sourcing, recruiting, and people operations across Advertising, Marketing, and financial technology start-ups, I specialize in identifying top candidates for challenging roles. My expertise lies in building candidate relationships to maintain a consistent talent pipeline while efficiently managing multiple positions. Skill sets I've honed encompass sourcing techniques, technical and executive recruiting, and employing data-driven strategies for full-life cycle recruitment.<br/>In the tech start-up sphere, particularly in Advertising (Adtech), Marketing (Martech), and Financial Technology (Fintech), my impact has been substantial. I led a recruiting team that reshaped a company's strategy by hiring Machine Learning experts, attracting investors from pre-seed to series A funding.",
+      "Michael is a global recruiter with a background in sourcing, recruiting, and people operations across Advertising, Marketing, and financial technology start-ups, He specialize in identifying top candidates for challenging roles. His expertise lies in building candidate relationships to maintain a consistent talent pipeline while efficiently managing multiple positions. The skill sets he has honed encompass sourcing techniques, technical and executive recruiting, and employing data-driven strategies for full-life cycle recruitment.",
     image: 'assets/images/retreat/speaker1.png',
     role: 'UIUX Designer',
-    topic: 'Vision Board',
+    topic: 'Enhancing Your CV and Interview Skills for Confident Presentation.',
   },
   {
-    name: 'Abiodun Fiwa',
+    name: 'Dan Praise, Designer',
     description:
-      'Abiodun Fiwa has spent a good time of her life using her skills and career experiences to train and mentor aspiring UIUX designers to grow and thrive in the industry. She is a design facilitator with over 7 years of experience organizing design meetups and boot camps. She is also a FigmaAfrica Ambassador. <br/> Fiwa believes that this day&quot;s businessenvironment is changing at a fast pace. Tough business problems require technical skills and soft skills to create sustainable solutions. And that is why she takes delight in mentoring aspiring designers to take time to practice, improve and explore different ways of solving problems through a design thinking approach.',
+      "Daniel has a robust background in marketing, he brings extensive expertise in Content Marketing, Brand Marketing, and Design customized to fuel sustainable growth strategies. His experience spans across diverse industries and markets, allowing me to harness the power of compelling content, strategic brand positioning, and impactful design to drive tangible business growth. He has honed his skills in crafting narratives that resonate with audiences while implementing innovative branding strategies that elevate a company's visibility and market presence.",
+    image: 'assets/images/retreat/speaker4.jpeg',
+    role: 'UIUX Designer',
+    topic: 'Strategies for secu-<br/>ring Employment',
+  },
+ 
+  {
+    name: 'Abiodun Fiwa, Product Designer',
+    description:
+      'Abiodun Fiwa has spent a good time of her life using her skills and career experiences to train and mentor aspiring UIUX designers to grow and thrive in the industry. She is a design facilitator with over 7 years of experience organizing design meetups and boot camps. She is also a FigmaAfrica Ambassador. <br/> Fiwa believes that this days business environment is changing at a fast pace. Tough business problems require technical skills and soft skills to create sustainable solutions. And that is why she takes delight in mentoring aspiring designers to take time to practice, improve and explore different ways of solving problems through a design thinking approach.',
     image: 'assets/images/retreat/speaker2.png',
     role: 'UIUX Designer',
     topic: 'Vision Board',
   },
   {
-    name: 'Onuoha, Anayor Daniel',
+    name: 'Onuoha, Anayor Daniel, Technical Recruiter',
     description:
       'Anayor, a seasoned HR professional with three years of experience, excels in various HR domains, particularly recruitment, talent management, and performance evaluation. He has collaborated with senior advisors and managers across FinTech, manufacturing, healthcare, and technology sectors. <br/>An expert in unlocking individual potential, Anayor believes in maximizing performance by helping individuals discover their best selves. His competencies span technical and non-technical recruitment, talent onboarding, employer branding, workforce management, talent development, workplace diversity, and emotional intelligence.',
     image: 'assets/images/retreat/speaker3.png',
     role: 'UIUX Designer',
-    topic: 'Vision Board',
+    topic: 'Strategies for secu-<br/>ring Employment',
   },
 ]
 
 export const Speaker = () => {
-  const [speaker, setSpeaker] = useState<number>(SpeakerData.length - 1)
+  const [speaker, setSpeaker] = useState<number>(0)
 
   const handleNext = () => {
     if (speaker === SpeakerData.length - 1) {
@@ -112,8 +113,11 @@ export const Speaker = () => {
         </Box>
 
         {/* {Text container} */}
-        <Box width="100%" style={{ transition: 'opacity 0.5s ease' }}>
-          <Text fontSize="18px" fontWeight="400" w="100%" lineHeight="214%">
+        <Box width={"100%"} style={{ transition: 'opacity 0.5s ease' }}>
+          <Text fontSize="30px" fontWeight="700" color="#282828" >
+            {SpeakerData[speaker]?.name}
+          </Text>
+          <Text fontSize="22px" fontWeight="400" w="100%" lineHeight="214%">
             {parse(SpeakerData[speaker]?.description)}
           </Text>
           <Box
@@ -123,16 +127,17 @@ export const Speaker = () => {
             display="inline-flex"
             flexDir="column"
             mt="45px"
+            // w={["95%"]}
           >
             <Text color="#FFF">Topic:</Text>
             <Heading color="#FFF" fontSize="40px" fontWeight="900">
-              {SpeakerData[speaker]?.topic}
+              {parse(SpeakerData[speaker]?.topic)}
             </Heading>
           </Box>
         </Box>
       </Flex>
 
-      <Flex
+      {/* <Flex
         display={['none', 'flex']}
         justifyContent="center"
         alignItems="center"
@@ -149,7 +154,7 @@ export const Speaker = () => {
           Next
         </Text>
         <IoIosArrowRoundForward size="2rem" />
-      </Flex>
+      </Flex> */}
 
       <Box display={['block', 'none']}>
         <SpeakerMobile />
