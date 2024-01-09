@@ -21,6 +21,7 @@ import { IoCopyOutline, IoLogoTwitter, IoLogoWhatsapp } from 'react-icons/io5'
 import { TwitterShareButton, WhatsappShareButton } from 'next-share'
 
 
+
 const EnrolForm = () => {
   // const scriptUrl =
   //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
@@ -53,7 +54,7 @@ const EnrolForm = () => {
             py="2rem"
             display="flex"
             flexDir="column"
-            alignItems="center"
+            alignItems={["flex-start","center"]}
             justifyContent="center"
             pt="8rem"
             pos={"relative"}
@@ -64,10 +65,9 @@ const EnrolForm = () => {
               textAlign="left"
               color="brand.dark.100"
             >
-        The retreat cost: ₦5000
+              The retreat cost: ₦5000
             </Heading>
-            <Text>
-            Fill the form, pay and join the whatsapp group
+            <Text textAlign="left">Fill the form, pay and join the whatsapp group
             </Text>
     
             <Formik

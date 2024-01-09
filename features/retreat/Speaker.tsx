@@ -25,15 +25,15 @@ export const SpeakerData: SpeakerInterface[] = [
     description:
       "Michael is a global recruiter with a background in sourcing, recruiting, and people operations across Advertising, Marketing, and financial technology start-ups, He specialize in identifying top candidates for challenging roles. His expertise lies in building candidate relationships to maintain a consistent talent pipeline while efficiently managing multiple positions. The skill sets he has honed encompass sourcing techniques, technical and executive recruiting, and employing data-driven strategies for full-life cycle recruitment.",
     image: 'assets/images/retreat/speaker1.png',
-    role: 'UIUX Designer',
+    role: 'Topic',
     topic: 'Enhancing Your CV and Interview Skills for Confident Presentation.',
   },
   {
     name: 'Dan Praise, Designer',
     description:
-      "Daniel has a robust background in marketing, he brings extensive expertise in Content Marketing, Brand Marketing, and Design customized to fuel sustainable growth strategies. His experience spans across diverse industries and markets, allowing me to harness the power of compelling content, strategic brand positioning, and impactful design to drive tangible business growth. He has honed his skills in crafting narratives that resonate with audiences while implementing innovative branding strategies that elevate a company's visibility and market presence.",
+      "Daniel has a robust background in marketing, he brings extensive expertise in Content Marketing, Brand Marketing, and Design customized to fuel sustainable growth strategies. His experience spans across diverse industries and markets, allowing him to harness the power of compelling content, strategic brand positioning, and impactful design to drive tangible business growth. He has honed his skills in crafting narratives that resonate with audiences while implementing innovative branding strategies that elevate a company's visibility and market presence.",
     image: 'assets/images/retreat/speaker4.jpeg',
-    role: 'UIUX Designer',
+    role: 'Panel Speaker',
     topic: 'Strategies for secu-<br/>ring Employment',
   },
  
@@ -42,15 +42,15 @@ export const SpeakerData: SpeakerInterface[] = [
     description:
       'Abiodun Fiwa has spent a good time of her life using her skills and career experiences to train and mentor aspiring UIUX designers to grow and thrive in the industry. She is a design facilitator with over 7 years of experience organizing design meetups and boot camps. She is also a FigmaAfrica Ambassador. <br/> Fiwa believes that this days business environment is changing at a fast pace. Tough business problems require technical skills and soft skills to create sustainable solutions. And that is why she takes delight in mentoring aspiring designers to take time to practice, improve and explore different ways of solving problems through a design thinking approach.',
     image: 'assets/images/retreat/speaker2.png',
-    role: 'UIUX Designer',
+    role: 'Speaker',
     topic: 'Vision Board',
   },
   {
     name: 'Onuoha, Anayor Daniel, Technical Recruiter',
     description:
-      'Anayor, a seasoned HR professional with three years of experience, excels in various HR domains, particularly recruitment, talent management, and performance evaluation. He has collaborated with senior advisors and managers across FinTech, manufacturing, healthcare, and technology sectors. <br/>An expert in unlocking individual potential, Anayor believes in maximizing performance by helping individuals discover their best selves. His competencies span technical and non-technical recruitment, talent onboarding, employer branding, workforce management, talent development, workplace diversity, and emotional intelligence.',
+      'Anayor, a seasoned HR professional who has excelled in various HR domains, particularly recruitment, talent management, and performance evaluation. He has collaborated with senior advisors and managers across FinTech, manufacturing, healthcare, and technology sectors.<br/>An expert in unlocking individual potential, Anayor believes in maximizing performance by helping individuals discover their best selves. His competencies span technical and non-technical recruitment, talent onboarding, employer branding, workforce management, talent development, workplace diversity, and emotional intelligence.',
     image: 'assets/images/retreat/speaker3.png',
-    role: 'UIUX Designer',
+    role: 'Panel Speaker',
     topic: 'Strategies for secu-<br/>ring Employment',
   },
 ]
@@ -129,7 +129,7 @@ export const Speaker = () => {
             mt="45px"
             // w={["95%"]}
           >
-            <Text color="#FFF">Topic:</Text>
+            <Text color="#FFF">{SpeakerData[speaker]?.role}</Text>
             <Heading color="#FFF" fontSize="40px" fontWeight="900">
               {parse(SpeakerData[speaker]?.topic)}
             </Heading>

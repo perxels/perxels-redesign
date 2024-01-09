@@ -77,16 +77,7 @@ export const SpeakerMobile = () => {
               py="2.5625rem"
             //   pl="1.1875rem"
             >
-              <Text
-                mb="1.5625rem"
-                fontSize="1.125rem"
-                fontWeight="400"
-                lineHeight="1.9125rem"
-              >
-                {parse(item.description)}
-              </Text>
-
-              <Box>
+                <Box>
                 <Text
                   fontWeight="700"
                   fontSize="1.125rem"
@@ -97,11 +88,21 @@ export const SpeakerMobile = () => {
                   {item.name}
                 </Text>
               </Box>
+              <Text
+                mb="1.5625rem"
+                fontSize="1.125rem"
+                fontWeight="400"
+                lineHeight="1.9125rem"
+              >
+                {parse(item.description)}
+              </Text>
+
+        
 
               <Box backgroundColor={"#060022"} padding="20px 
               36px" rounded="1.6875rem" display="inline-flex" flexDir="column" mt="25px" >
                 <Text color="#FFF">
-                    Topic:
+                   {item?.role}
                 </Text>
                 <Heading color="#FFF" fontSize="25px" fontWeight="900" >
                     {

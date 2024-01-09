@@ -7,7 +7,7 @@ export const EventCard = ({title, iconSrc, content, fontSize, bgColor, marginT}:
   return (
     <Box backgroundColor={bgColor}  py="3.5625rem" display="flex" alignItems="center" flexDir="column">
         <Image src={iconSrc} alt="retreat4" />
-        <Heading lineHeight="110%" fontFamily="Montserrat" fontSize={fontSize} fontWeight="900" mt="1.25rem">
+        <Heading lineHeight="110%"  fontSize={fontSize} fontWeight="900" mt="1.25rem">
         {title}
         </Heading>
         <Text fontSize="1.25rem" mt={ marginT ? marginT : "1rem" }fontFamily="Montserrat">

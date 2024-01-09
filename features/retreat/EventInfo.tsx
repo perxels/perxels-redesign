@@ -26,10 +26,10 @@ export const EventInfo = () => {
     <MainContainer>
     <Box pr={["0%","10%"]} py="5%">
         <Box>
-            <Heading fontSize={["1.5625rem","55px"]} color="#34296B" lineHeight="110%" fontWeight="900" width={["90%","70%"]} fontFamily="Montserrat">
+            <Heading fontSize={["1.5625rem","55px"]} color="#34296B" lineHeight="110%" fontWeight="900" width={["90%","70%"]} >
             A retreat to help our Alumnis get Jobs
             </Heading>
-            <Text fontSize={["1rem","24px"]} fontWeight="400" w={["100%","70%"]} lineHeight="133%" fontFamily="Montserrat" mt="1.15rem">
+            <Text fontSize={["1rem","24px"]} fontWeight="400" w={["100%","70%"]} lineHeight="133%"  mt="1.15rem">
             This retreat aims to empower our alumni with insights into the current job market landscape and effective strategies to secure employment in 2024.
             </Text>
         </Box>
