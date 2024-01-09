@@ -33,7 +33,7 @@ export const SpeakerData: SpeakerInterface[] = [
     description:
       "Daniel has a robust background in marketing, he brings extensive expertise in Content Marketing, Brand Marketing, and Design customized to fuel sustainable growth strategies. His experience spans across diverse industries and markets, allowing him to harness the power of compelling content, strategic brand positioning, and impactful design to drive tangible business growth. He has honed his skills in crafting narratives that resonate with audiences while implementing innovative branding strategies that elevate a company's visibility and market presence.",
     image: 'assets/images/retreat/speaker4.jpeg',
-    role: 'Panel Speaker',
+    role: 'Panel Topic',
     topic: 'Strategies for secu-<br/>ring Employment',
   },
  
