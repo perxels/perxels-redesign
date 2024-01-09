@@ -1,7 +1,7 @@
 import { Box, Flex, Img, Link } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import { Logo } from '../../components'
-
+import { IoArrowBack } from "react-icons/io5";
 const SideImage = () => {
   return (
     <Flex
