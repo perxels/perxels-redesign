@@ -26,7 +26,7 @@ export const EventInfo = () => {
     <MainContainer>
     <Box pr={["0%","10%"]} py="5%">
         <Box>
-            <Heading fontSize={["1.5625rem","55px"]} color="#34296B" lineHeight="110%" fontWeight="900" width={["90%","70%"]} >
+            <Heading fontSize={["1.5625rem","55px"]} color="#34296B" lineHeight="110%" fontWeight="900" width={["90%","60%"]} >
             A retreat to help our Alumnis get Jobs
             </Heading>
             <Text fontSize={["1rem","24px"]} fontWeight="400" w={["100%","70%"]} lineHeight="133%"  mt="1.15rem">

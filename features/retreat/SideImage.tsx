@@ -13,7 +13,7 @@ const SideImage = () => {
       position="relative"
       display={['flex']}
     >
-      <Box as={Link} href="/" pos="absolute" top={["0.125rem", "5%" ]}left={["15%","15%"]}>
+      <Box as={Link} href="/retreat" pos="absolute" top={["0.125rem", "5%" ]}left={["15%","15%"]}>
         <Flex  alignItems="center">
        <IoArrowBack/> <Text fontWeight="700">Back</Text>
         </Flex>
