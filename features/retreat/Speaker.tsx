@@ -80,7 +80,7 @@ export const Speaker = () => {
 
       {/* Image interaction      */}
 
-      <Flex display={['none', 'flex']}>
+      <Flex display={['none', 'flex']} columnGap="5%">
         {/* {Images container} */}
         <Box width="100%">
           <Flex columnGap="0">

@@ -12,9 +12,9 @@ export const Hero = () => {
   useEffect(() => {
     let ctx = gsap.context(() => {
       tl.current
-        .to(headingRef.current, { opacity: 1, duration: 1, delay: 0.5 })
-        .to(descRef.current, { opacity: 1, duration: 1 }, '-=0.5')
-        .to(imageRef.current, { opacity: 1, y: 0, duration: 1 }, '-=0.5')
+        .to(headingRef.current, { opacity: 1, duration: 1, delay: 0.2 })
+        .to(descRef.current, { opacity: 1, duration: 1 }, '-=0.3')
+        .to(imageRef.current, { opacity: 1, y: 0, duration: 1 }, '-=0.3')
         .play()
     }, heroRef)
     return () => ctx.revert()
