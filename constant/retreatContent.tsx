@@ -17,7 +17,7 @@ export const InfoContent : RetreatInfoInterface[] = [
         bgColor: "#F0FFDF"
     },
     {
-        title: "FEB 4, 11AM",
+        title: "FEB 3, 11AM",
         content: "Event Date",
         iconSrc: "https://res.cloudinary.com/deudl0ryy/image/upload/v1704516234/Icon4_goxhic.svg",
         fontSize: "2.5rem",
