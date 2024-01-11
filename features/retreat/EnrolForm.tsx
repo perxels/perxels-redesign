@@ -314,7 +314,7 @@ const EnrolForm = () => {
                 <Heading fontSize="40px" color="#34296B" fontWeight="700" 
                 
                 >
-                077553140
+                0775531140
                 </Heading>
                 <Heading fontSize="38px" color="#000" fontWeight="700" 
                 >
