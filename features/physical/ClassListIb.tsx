@@ -20,7 +20,7 @@ export const ClassPlanIb = () => {
       title="It’s everything you’ll ever need."
       subTitle="Class Plan"
     /> */}
-
+{/* 
       <ClassDetails
         title="Basic Class"
         id="#"
@@ -48,8 +48,9 @@ export const ClassPlanIb = () => {
         //   isPhysical
         //   isSponsor
       />
+ */}
 
-      <Box py="3.75rem" >
+      <Box py=".75rem" >
       <ClassDetails
         title="Premium Class"
         id="#"
