@@ -29,8 +29,8 @@ const privateClass = () => {
        <IbadanHero/>
         <IbadanSpace/>
         <MarqueeComp/>
-        {/* <ClassPlanIb/> */}
-        <ClassPlan />
+        <ClassPlanIb/>
+        {/* <ClassPlan /> */}
         <LeaningTools/>
         <OtherPhysCardLayout cardData={IbadanPhysicalCardData} />
         <StudentWorkWrapper/>

@@ -21,6 +21,7 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
     minHeight={heightValue ? heightValue : ["27.5rem","31.5625rem"]}
     as={!isComing ? Link : Box}
     href={locationLink }
+    width="100%"
     >
     {
       isComing &&   <Box
@@ -68,7 +69,6 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
        _hover={{
         color: "#FCD900"
       }}
-
       display="flex"
       alignItems="center"
       >
@@ -77,7 +77,6 @@ export const PhysicalCard = ({bgImage, location, locationLink, heightValue, font
         color: "#FCD900"
       }} as={AiOutlineArrowRight} color="#FFFFFF" fontSize="1.25rem" ml="1.25rem" />
       </Text>
-      
       </Flex>
       }
      </Box>
