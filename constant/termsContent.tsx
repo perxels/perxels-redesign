@@ -25,7 +25,7 @@ export const TermsContentObj: TermsContentProps[] = [
         termsSubTitle1: "Note",
         termsList: [
             "No refunds on fee payment would be made by Perxels after the first (1st) week of training by an enrollee who has begun training.",
-            "However, in the case of payment for a course made and the enrollee has not begun training, the enrollee can request for a refund of payment after 1 week. The said refund would be processed by Perxels within the duration of 30 days.",
+            "In the event of payment for a course being made and the enrollee has not commenced training, 70% of the money will be refunded to the enrollee in 30days, with the remaining 30% allocated to perxels.",
             "After the period of one (1) month, no refunds would be made by Perxels, even in cases where the enrollee has not begun training."
         ]
     },
