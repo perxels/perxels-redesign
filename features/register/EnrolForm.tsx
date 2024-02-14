@@ -211,6 +211,9 @@ const EnrolForm = () => {
                 <option value="Physical Class (Ibadan)">
                   Physical Class (Ibadan)
                 </option>
+                <option value="Physical Class (Abuja)">
+                  Physical Class (Abuja)
+                </option>
                 <option value="International Class">International Class</option>
                 <option value="Private Class">Private Class</option>
               </Select>

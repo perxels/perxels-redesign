@@ -115,7 +115,7 @@ export const EventForm = () => {
          py={['1.5rem', '1.5rem', '1.5rem', '3.5rem']}
          rounded="10px"
          className="speaker-form"
-        onSubmit = {(event) => {
+         onSubmit = {(event) => {
           event.preventDefault()
           formik.handleSubmit()
         }}

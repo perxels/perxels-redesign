@@ -1,0 +1,6 @@
+export * from './InternshipHero'
+export * from './TrainCenters'
+export * from './Activities'
+export * from './Benefits'
+export * from './Course'
+export * from './Impact'
