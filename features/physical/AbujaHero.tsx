@@ -25,7 +25,7 @@ export const AbujaHero = () => {
 
   return (
     <Box
-    background={[`url(/assets/images/class-group/ibadanMobile.png) no-repeat center center`,`url(/assets/images/class-group/ibadanDesktop.png) no-repeat center center`]}
+    background={[`url(/assets/images/class-group/abujaImage.jpeg) no-repeat center center`,`url(/assets/images/class-group/abujaImage.jpeg) contain no-repeat center center`]}
     minHeight={["28.75rem","25rem"]}
     backgroundSize="cover"
     opacity={0}

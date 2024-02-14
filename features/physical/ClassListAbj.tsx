@@ -36,7 +36,7 @@ export const ClassPlanAbj = () => {
       enrolRoute="/signup"
       //   isPhysical
       //   isSponsor
-      stateLocation="ibadan"
+      stateLocation="discount"
       
     />
     </Box>
