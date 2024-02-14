@@ -365,11 +365,13 @@ export const ClassDetails = ({
                 </Text>
                 <Flex
                 // justifyContent="flex-start"
-                alignItems="center"
+                alignItems="flex-start"
                 columnGap="1.1875rem"
+                flexDirection="column"
                 >
                 <Heading  fontSize={isSponsor || isPhysical ? '20px'  : ['6xl', '6xl', '7xl']}
-                textDecoration={stateLocation === "scholarship" ? "line-through" : " "}
+                textDecoration={stateLocation === "discount" ? "line-through" : " "}
+                color={stateLocation === "discount" ? "#9C9C9C" : " "}
                 >
                   {tabState === 'virtual' || location !== 'ibadan' ? (
                     location === 'lagos' && tabState === 'physical' ? '₦210,000' : tuition

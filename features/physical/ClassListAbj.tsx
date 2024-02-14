@@ -34,10 +34,10 @@ export const ClassPlanAbj = () => {
       isAddress
       // stateLocation="scholarship"
       enrolRoute="/signup"
-      //   isPhysical
+        isPhysical
       //   isSponsor
       stateLocation="discount"
-      
+      physicalTuition='₦250,000'
     />
     </Box>
     </MainContainer>
