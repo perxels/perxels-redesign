@@ -17,8 +17,7 @@ const PhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/perxels-abuja",
-        isComing: true
+        locationLink: "/physical/abuja",
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",
@@ -41,8 +40,7 @@ export const OnlinePhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/perxels-abuja",
-        isComing: true
+        locationLink: "/physical/abuja",
     },
 ]
 
@@ -57,7 +55,7 @@ export const OtherPhysicalCardData=[
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
         locationLink: "/physical/perxels-abuja",
-        isComing: true
+     
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",
@@ -75,8 +73,25 @@ export const IbadanPhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/perxels-abuja",
-        isComing: true
+        locationLink: "/physical/abuja",
+    },
+    {
+        bgImage: "/assets/images/class-group/internationalPhysical.png",
+        location: "Perxels International",
+        locationLink: "/international"
+    }
+]
+
+export const AbujaPhysicalCardData=[
+    {
+        bgImage: "/assets/images/class-group/lagosPhysical.png",
+        location: "Lekki, Lagos",
+        locationLink: "/physical/lagos"
+    },
+    {
+        bgImage: "/assets/images/class-group/ibadanPhysical.png",
+        location: "Ring Road, Ibadan",
+        locationLink: "/physical/ibadan"
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",
@@ -98,7 +113,6 @@ export const PhysCardLayout = () => {
                 bgImage={data.bgImage}
                 location={data.location}
                 locationLink={data.locationLink}
-                isComing={data?.isComing}
                 />
             ))
         }
@@ -130,7 +144,6 @@ export const OtherPhysCardLayout = ({cardData}: PhysCardInterface) => {
                   locationLink={data?.locationLink}
                   heightValue="25.3125rem"
                   fontSizeProp="2.1rem"
-                  isComing={data?.isComing}
                   />
               ))
           }
