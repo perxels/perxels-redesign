@@ -19,12 +19,12 @@ export const AbujaSpace = () => {
         flexDir={["column", "row"]}
         rowGap="1.25rem"
         >
-            <Box>
-            <Image display={["none","block"]} src={"/assets/images/class-group/ibadanSpace1.png"} alt="" />
-            <Image display={["block","none"]} src={"/assets/images/class-group/ibadanSpaceMobile1.png"} alt="" />
+            <Box >
+            <Image display={["none","block"]}  src={"/assets/images/class-group/abujaSpace1.png"} objectFit="cover" alt="" />
+            <Image display={["block","none"]} src={"/assets/images/class-group/abujaSpace1.png"} alt="" />
             </Box>
-            <Box>
-                <Image src="/assets/images/class-group/ibadanSpace2.png" alt=""/>
+            <Box >
+                <Image src="/assets/images/class-group/abujaSpace2.png" alt=""/>
             </Box>
         </Flex>
         </MainContainer>
