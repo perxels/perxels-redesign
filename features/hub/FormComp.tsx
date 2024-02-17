@@ -81,7 +81,7 @@ export const FormComp = () => {
               datetime: '2023-08-18T03:35',
               // spacetype: '',
               hours: '',
-              teamnum: '',
+              // teamnum: '',
               questions: '',
             }}
             validationSchema={Yup.object({
@@ -94,7 +94,7 @@ export const FormComp = () => {
               phone: Yup.string().required('Phone Number is Required'),
               datetime: Yup.string().required('Datetime is Required'),
               hours: Yup.number().required('Hours are Required'),
-              teamnum: Yup.number().required('Number of team is Required'),
+              // teamnum: Yup.number().required('Number of team is Required'),
             })}
 
             onSubmit={(values, action) => {
@@ -108,7 +108,7 @@ export const FormComp = () => {
               // formData.append('spacetype', values.spacetype as string)
               formData.append('questions', values.questions as string)
               formData.append('hours', values.hours as string)
-              formData.append('teamnum', values.teamnum as string)
+              // formData.append('teamnum', values.teamnum as string)
               formData.append('created_at', new Date().toLocaleString())
 
               console.log(formData, "formData")
@@ -355,7 +355,7 @@ export const FormComp = () => {
                 ) : null}
 
 
-                  <NumberInput
+                  {/* <NumberInput
                   step={1}
                   border="none"
                   min={0}
@@ -394,7 +394,7 @@ export const FormComp = () => {
                   <Text color="red" fontSize="12px">
                     {formik.errors.teamnum}
                   </Text>
-                ) : null}
+                ) : null} */}
 
             <Textarea
                 h="3.5rem"
