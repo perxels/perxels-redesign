@@ -17,7 +17,7 @@ const PhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/abuja",
+        locationLink: "/abuja",
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",
@@ -40,7 +40,7 @@ export const OnlinePhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/abuja",
+        locationLink: "/abuja",
     },
 ]
 
@@ -54,7 +54,7 @@ export const OtherPhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/perxels-abuja",
+        locationLink: "/abuja",
      
     },
     {
