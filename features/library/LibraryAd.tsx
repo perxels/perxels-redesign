@@ -14,9 +14,9 @@ export const LibraryAd = () => {
         </Box>
       <Box
         background="url('./assets/images/library/libraryAd.png') no-repeat center center"
-        height="345px"
+        height={["262px","345px"]}
         backgroundSize="cover"
-        padding={["0 2%","0 5%"]}
+        padding={["0 5%","0 5%"]}
         borderRadius={"8px"}
       >
         <Flex 
@@ -27,7 +27,7 @@ export const LibraryAd = () => {
         >
           <Heading 
           as="h1" 
-          fontSize={["24px","32px" ]}
+          fontSize={["22px","32px" ]}
           color="#FFF" 
           textAlign="left"
           fontWeight={700}
@@ -37,7 +37,7 @@ export const LibraryAd = () => {
             Embark on a Learning Journey with Our Premium Courses!
           </Heading>
           <Text
-          fontSize={"16px"}
+          fontSize={["12px","16px"]}
           fontWeight={"400"}
           color="#FFF"
           lineHeight={"138%"}
