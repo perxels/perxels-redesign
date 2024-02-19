@@ -49,10 +49,10 @@ export const EventHero = () => {
               }}
               mb={{ base: 4, md: 7 }}
             >
-              {/* <Text>DESIGN DIGEST SESSION</Text> */}
+              <Text>DESIGN DIGEST SESSION</Text>
               {/* <Text>AMA SESSION</Text> */} 
               {/* <Text>PANEL SESSION</Text> */}
-              <Text>LIVE DESIGN SESSION</Text> 
+              {/* <Text>LIVE DESIGN SESSION</Text>  */}
             </Button>
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}

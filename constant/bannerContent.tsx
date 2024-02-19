@@ -18,17 +18,17 @@ interface BannerContent {
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
   // mainTitle: 'JOB CONFERENCE: ',
-  subTitle: 'AUTOLAYOUT FREE TRAINING (FROM SCRATCH TO FINISH)',
+  subTitle: 'THE KEY TO CONFIDENCE FOR DESIGNERS',
   time: '7pm-8pm',
-  date: '12th and 19th November 2023',
+  date: 'February 25, 2024',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpg',
   description:
-  " Are you tired of struggling with auto layout issues? Join us for a two-part mini-course specially designed for designers looking to enhance their skills. From responsive web design to mobile app UIs, you'll leave the sessions with newfound confidence in your design abilities.",
+  " Discover how to build confidence in your design career as and master key elements for success.",
   content1: "",
   content2: "",
   content3: "",
   content4: "",
-  speakerName: 'YEMI JEFF',
-  speakerRole: 'FACILITATOR, PERXELS',
+  speakerName: 'ABIODUN FIWA OKUNADE',
+  speakerRole: 'CEO, PERXELS, Senior Designer and Mentor',
 }

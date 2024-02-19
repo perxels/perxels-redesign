@@ -116,7 +116,6 @@ export const Sidebar = () => {
             backgroundColor={["#F8F8F8", "#FFF"]}
             border={["1px solid #ECECEC","none"]}
             minWidth={["fit-content"]}
-            // h="42px"
             display={["inline-flex"]}
             flexWrap="wrap"
             alignItems="center"
