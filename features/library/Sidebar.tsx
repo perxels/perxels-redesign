@@ -40,13 +40,6 @@ const SidebarData = [
     cName: 'nav-text',
   },
   {
-    title: 'Contact',
-    path: '/contact',
-    icon: IoChatbubblesOutline,
-    cName: 'nav-text',
-  },
-
-  {
     title: 'Paid courses',
     path: '/about',
     icon: SlGraduation,
@@ -94,6 +87,7 @@ export const Sidebar = () => {
         mb="32px"
         pt={["28px","42px"]}
         overflowY={["scroll","visible"]}
+        width="100%"
         borderTop={['none','1px solid rgba(26, 26, 26, 0.10)']}
       >
         {SidebarData.map((item, index) => {
@@ -101,7 +95,7 @@ export const Sidebar = () => {
             <HStack
             key={index}
             spacing={["0px", "20px"]}
-            // mt="10px"
+           
             cursor="pointer"
             _hover={{
                 color: '#FFF',
@@ -121,14 +115,14 @@ export const Sidebar = () => {
             }}
             backgroundColor={["#F8F8F8", "#FFF"]}
             border={["1px solid #ECECEC","none"]}
-            // minWidth="100%"
-            h="42px"
-            display={["flex"]}
-            width={["150px","full"]}
-
+            minWidth={["fit-content"]}
+            // h="42px"
+            display={["inline-flex"]}
+            flexWrap="wrap"
+            alignItems="center"
         >
             <Icon display={["none", "block"]} fontSize={["16px", '20px']} as={item.icon} />
-            <Text display="flex"   fontSize={["16px", "20px"]}>{item.title}</Text>
+            <Text   fontSize={["16px", "20px"]}>{item.title}</Text>
         </HStack>
           )
         })}
