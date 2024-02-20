@@ -76,7 +76,7 @@ export const Basic = () => {
                 >
                   <Img src="/assets/icons/masterBasicCalender.svg" alt="" />
                   <Text fontSize={['0.75rem','.9375rem']} color="brand.dark.200" fontWeight="700">
-                  4 SATURDAYS IN NOVEMBER
+                 2ND March 2024
                   </Text>
                 </HStack>
                 <HStack>
@@ -123,7 +123,7 @@ export const Basic = () => {
                 color="brand.gray.500"
                 mt="1rem"
               >
-             This is going to be a physical masterclass and the exact venue will be sent to those who registered
+             This is going to be a virtual masterclass and the link to the class will be share via the whatsapp group and email
               </Text>
                 </ListItem>
                 <ListItem>
@@ -132,7 +132,7 @@ export const Basic = () => {
                 color="brand.gray.500"
                 mt="1rem"
               >
-             The training is for beginners and those who just started designing
+            The training is for beginners and those who just started designing
               </Text>
                 </ListItem>
               </UnorderedList>

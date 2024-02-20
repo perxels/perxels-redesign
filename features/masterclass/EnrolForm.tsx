@@ -51,7 +51,7 @@ const EnrolForm = () => {
             name: '',
             phone: '',
             email: '',
-            attendDate: '',
+            // attendDate: '',
             // class: '',
             location: '',
             reason: '',
@@ -67,7 +67,7 @@ const EnrolForm = () => {
               .email('Invalid email address')
               .required('Email is required'),
             // class: Yup.string().required('Class is required'),
-            attendDate: Yup.string().required('Pick a date to attend'),
+            // attendDate: Yup.string().required('Pick a date to attend'),
             location: Yup.string().required('Location is required'),
             howdidyouknow: Yup.string().required(
               'How did you know is required',
@@ -93,7 +93,7 @@ const EnrolForm = () => {
             formData.append('category', values.category as string)
             formData.append('reason', values.reason as string)
             formData.append('laptop', values.laptop as string)
-            formData.append('attendDate', values.attendDate as string)
+            // formData.append('attendDate', values.attendDate as string)
             //current date and time
             formData.append('created_at', new Date().toLocaleString())
 
@@ -255,7 +255,7 @@ const EnrolForm = () => {
               <Input
                 h="3.5rem"
                 type="text"
-                placeholder="Where are you located? E.g Lekki, Ikeja..."
+                placeholder="Where are you located? E.g Wuse, Gwarimpa..."
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="location"
                 value={formik.values.location}
@@ -383,7 +383,7 @@ const EnrolForm = () => {
                   {formik.errors.howdidyouknow}
                 </Text>
               ) : null}
-
+{/* 
 <Select
                 h="3.5rem"
                 placeholder="What date are you attending?"
@@ -409,7 +409,7 @@ const EnrolForm = () => {
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.attendDate}
                 </Text>
-              ) : null}
+              ) : null} */}
 
               <Button
                 h="3.688rem"

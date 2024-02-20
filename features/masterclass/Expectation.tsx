@@ -33,7 +33,7 @@ export const Expectation = () => {
                 2 Days Free{' '}
               </Text>{' '} */}
               <Text as="span" fontWeight={'bold'}>
-              1 DAY FREE PHYSICAL{' '}
+              1 DAY VIRTUAL{' '}
               </Text>
               Masterclass.
             </Text>
