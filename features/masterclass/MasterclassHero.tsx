@@ -63,7 +63,7 @@ export const MasterclassHero = () => {
             className="heroText"
         
           >
-          Free Physical UIUX Design Masterclass
+          Free Virtual UIUX Design Masterclass
           </Heading>
 
           <Text
