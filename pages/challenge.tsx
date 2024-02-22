@@ -11,7 +11,7 @@ const challenge = () => {
         <Prizes/>
         <Submission/>
         <Winners/>
-        {/* <ChallengeForm/> */}
+        <ChallengeForm/>
         <Testimonial/>
         <Footer/>
     </div>

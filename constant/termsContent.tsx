@@ -59,7 +59,7 @@ export const TermsContentObj: TermsContentProps[] = [
         termsContent2:"During this deferment period, the student temporarily suspends their participation in the program. However, it's important to note that the deferment is valid for one month only. Upon the expiration of one month, the student is expected to fully re-enroll to regain access to the program. Please note that no refund will be provided after the one-month deferment period.",
         termsContent3:"To initiate the deferment process:",
         termsList: [
-            "Send an email to Perxels Design School: perxels@gmail.com",
+            "Send an email to Perxels Design School: perxelsmanager@gmail.com",
             "Said email addressed to Perxels should have the subject: 'PROGRAM DEFERMENT'",
             "Said email should contain the student's full name, class, and last project done, including reasons for deferment.",
             "Subsequent follow-up should be done within the same email thread for proper documentation."
@@ -84,14 +84,14 @@ export const TermsContentObj: TermsContentProps[] = [
         slug:"certification",
         termsTitle: "Certification",
         termsContent1:"At the completion of training at Perxels, students are required to fill out a form provided. This is compulsory for the processing of Students' certificates.",
-        termsContent2:"For students who had missed out on this, they are required to send an email to perxels@gmail.com requesting for the form ",
+        termsContent2:"For students who had missed out on this, they are required to send an email to perxelsmanager@gmail.com requesting for the form ",
         termsContent3:"Certificates are sent out every first week of every month to students who have completed training and met all requirements for graduation."
     },
     {
         id: 9,
         slug: "contact-us",
         termsTitle:"Contact Us",
-        termsContent1:"For questions, inquiries, and suggestions about our Privacy Policy, do not hesitate to Contact Us at perxels@gmail.com."
+        termsContent1:"For questions, inquiries, and suggestions about our Privacy Policy, do not hesitate to Contact Us at perxelsmanager@gmail.com."
     }
 ]
 
