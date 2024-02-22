@@ -67,7 +67,8 @@ export const OutlineSection = () => {
       ))}
   
         <Flex mt={["2.5rem","3rem"]} justifyContent="center" >
-        <Button h="full" fontSize={["40px","97px"]} bgColor="#E3719C" rounded="24px" fontWeight="800" color="#FFF" rightIcon={<FiArrowUpRight/>}>
+        <Button  as={'a'}
+            href="/wdb#register" h="full" fontSize={["40px","97px"]} bgColor="#E3719C" rounded="24px" fontWeight="800" color="#FFF" rightIcon={<FiArrowUpRight/>}>
         Register here 
         </Button>
         </Flex>

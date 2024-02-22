@@ -69,7 +69,7 @@ export const EventForm = () => {
   };
 
   return (
-    <Box py={["2.3rem","3.75rem"]} px={["0","25%"]} id="join">
+    <Box id="register" py={["2.3rem","3.75rem"]} px={["0","25%"]}>
       <SuccessModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
@@ -173,11 +173,11 @@ export const EventForm = () => {
                   </InputWrapper>
                
                 <FormControl id="how">
-                <InputWrapper label="How did you get to know about us">
+                <InputWrapper label="How did you hear about this event?">
                   <Select
                    
                     border="0.406872px solid #B4B4B4"
-                    placeholder="How did you get to know about Us?"
+                    placeholder=" "
                     // _placeholder={{ color: '#B4B4B4' }}
                     name="howyouknew"
                     h="3.5rem"
@@ -217,23 +217,32 @@ export const EventForm = () => {
                   />
                 </InputWrapper>
                 <InputWrapper label="Do you want to attend physically or virtually">
-                  <Input
-                    type="text"
-                    w="full"
-                    h={['3rem', '3rem', '3rem', '3.5rem']}
-                    name="attendance"
-                    backgroundColor="#F4F7FF"
-                    value={formik.values.attendance}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    borderColor={formik.touched.attendance && formik.errors.attendance ? 'red.500' : '#B4B4B4'}
-                    required
-                  />
+                <Select
+                   border="0.406872px solid #B4B4B4"
+                   placeholder=" "
+                   // _placeholder={{ color: '#B4B4B4' }}
+                   name="attendance"
+                   h="3.5rem"
+                   _focusVisible={{
+                     outline: 'none',
+                   }}
+                   value={formik.values.attendance}
+                   onChange={formik.handleChange}
+                   borderColor={
+                     formik.touched.attendance && formik.errors.attendance ? 'red.500' : '#B4B4B4'
+                   }
+                   backgroundColor="#F4F7FF"
+                   required
+                 >
+                   <option value="Physical">Physical</option>
+                   <option value="Virtual">Virtual</option>
+                   </Select>
+
                 </InputWrapper>
-                <InputWrapper label="LOCATION">
+                <InputWrapper label="Location e.g Badore, Ajah">
                   <Input
                     type="text"
-                    placeholder="Enter Location"
+                    placeholder="Enter your Location"
                     w="full"
                     h={['3rem', '3rem', '3rem', '3.5rem']}
                     name="location"

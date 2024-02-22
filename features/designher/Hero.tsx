@@ -32,7 +32,10 @@ export const Hero = () => {
                 I&apos;m Fiwa and I am championing diversity. Let&apos;s all inspire inclusion to help forge a better, more inclusive world for women.
                 </Text>
             </Box>
-            <Button fontSize="15px">
+            <Button 
+            as={'a'}
+            href="/wdb#register"
+            fontSize="15px">
                 Register
             </Button>
             </Box>

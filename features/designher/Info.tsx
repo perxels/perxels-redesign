@@ -62,13 +62,13 @@ export const Info = () => {
           alignItems="center"
           pb="5%"
         >
-          <Heading as="h1" fontSize={["46px","97px" ]}fontWeight="800" mt="40px">
+          <Heading as="h1" fontSize={["38px","97px" ]}fontWeight="800" mt="40px">
             8th March, 2024
           </Heading>
           <Flex justifyContent="center" alignItems="center">
-            <Image width={["5%","5%"]} src="./assets/images/designher/infoLeft.svg" alt="" />
+            <Image width={["5%","5%"]} src="https://res.cloudinary.com/deudl0ryy/image/upload/v1708638117/InfoLeft_zm6bm8.svg" alt="" />
             <Text
-              fontSize={["14px","32px"]}
+              fontSize={["14px","24px"]}
               color="#1A1A1A"
               lineHeight="150%"
               fontWeight="600"
@@ -76,7 +76,7 @@ export const Info = () => {
             >
               The physical class is at our Lekki office.
             </Text>
-            <Image  width={["5%","5%"]}  src="./assets/images/designher/infoRight.svg" alt="" />
+            <Image  width={["5%","5%"]}  src="https://res.cloudinary.com/deudl0ryy/image/upload/v1708638117/InfoRight_q2fpye.svg" alt="" />
           </Flex>
         </Box>
       </Box>
