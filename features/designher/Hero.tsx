@@ -34,7 +34,7 @@ export const Hero = () => {
             </Box>
             <Button 
             as={'a'}
-            href="/wdb#register"
+            href="/iwd#register"
             fontSize="15px">
                 Register
             </Button>
