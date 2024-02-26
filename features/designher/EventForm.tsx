@@ -29,7 +29,7 @@ export const EventForm = () => {
     surname: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email address').required('Required'),
     phone: Yup.string().required('Required'),
-    howyouknew: Yup.string().required('Required'),
+    laptop: Yup.string().required('Required'),
     reason: Yup.string().required('Required'),
     attendance: Yup.string().required('Required'),
     location: Yup.string().required('Required'),
@@ -42,24 +42,24 @@ export const EventForm = () => {
     formData.append('surname', values.surname as string);
     formData.append('email', values.email as string);
     formData.append('phone', values.phone as string);
-    formData.append('howyouknew', values.howyouknew as string);
+    formData.append('laptop', values.laptop as string);
     formData.append('reason', values.reason as string);
     formData.append('attendance', values.attendance as string);
     formData.append('location', values.location as string   );
     formData.append('created_at', new Date().toLocaleString());
     try {
-      const response = await fetch(scriptUrl, {
+      const response =await fetch(scriptUrl, {
         method: 'POST',
         body: formData,
-      });
-
-      if (response.ok) {
-        actions.reset()
-        setIsOpen(true);
-
-      } else {
-        throw new Error('Something went wrong');
-      }
+      }).then((response)=>{
+        if(response.status === 200){
+          setIsOpen(true);
+          actions.resetForm();
+          setLoading(false);
+        }
+      }).catch((error)=>{
+        console.log(error)
+      })
     } catch (error) {
       console.error('Error:', error);
       alert('Something went wrong, please try again');
@@ -86,7 +86,7 @@ export const EventForm = () => {
               surname: '',
               email: '',
               phone: '',
-              howyouknew: '',
+              laptop: '',
               reason: '',
               attendance: '',
               location: '',
@@ -172,33 +172,28 @@ export const EventForm = () => {
                     />
                   </InputWrapper>
                
-                <FormControl id="how">
-                <InputWrapper label="How did you hear about this event?">
+                <FormControl id="laptop">
+                <InputWrapper label="Do you have a working laptop??">
                   <Select
                    
                     border="0.406872px solid #B4B4B4"
                     placeholder=" "
                     // _placeholder={{ color: '#B4B4B4' }}
-                    name="howyouknew"
+                    name="laptop"
                     h="3.5rem"
                     _focusVisible={{
                       outline: 'none',
                     }}
-                    value={formik.values.howyouknew}
+                    value={formik.values.laptop}
                     onChange={formik.handleChange}
                     borderColor={
-                      formik.touched.howyouknew && formik.errors.howyouknew ? 'red.500' : '#B4B4B4'
+                      formik.touched.laptop && formik.errors.laptop ? 'red.500' : '#B4B4B4'
                     }
                     backgroundColor="#F4F7FF"
                     required
                   >
-                    <option value="Whatsapp">Whatsapp</option>
-                    <option value="Instagram">Instagram</option>
-                    <option value="Facebook">Facebook</option>
-                    <option value="Twitter">Twitter</option>
-                    <option value="Friend">Friend</option>
-                    <option value="Roadtrip community">Roadtrip community</option>
-                    <option value="Others">Others</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
                   </Select>
                   </InputWrapper>
                 </FormControl>
