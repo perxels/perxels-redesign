@@ -43,8 +43,8 @@ export const instructions: InstructionProps[] = [
   // },
   {
     id: 6,
-    title: 'Inclusive Opportunity',
-    description: 'Open to applicants from all backgrounds and professions as a gateway to kickstart their journey in UIUX design.',
+    title: 'Equality Opportunity',
+    description: 'Open to women all around the world from different backgrounds as a gateway to kickstart their journey in UIUX design.',
     image: './assets/images/sponsorship/social-interaction.svg',
   },
 ]
