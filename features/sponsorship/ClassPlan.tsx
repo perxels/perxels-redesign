@@ -31,10 +31,10 @@ export const  ClassPlan = ({isApply}: classInt) => {
       classDur="7 Weeks."
       classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
-      tuition="₦60,000"
-      physicalTuition="₦42,000"
+      tuition="₦50,000"
+      physicalTuition="₦40,000"
       courseOutline={[
-        'For beginners to learn the fundamentals of design; focus is majorly on UI (User Interface) design.',
+        'For women who is starting out in UIUX design and want to elevate from beginner to professional level',
         'What is UI design - difference between UI and UX design.',
         'Practical principle of UI design: typography, colours, layout, hierarchy, whitespace, icons, balance and alignment.',
         'Wireframes: creating standard low fidelity and high fidelity wireframes.',
@@ -46,8 +46,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
         'Certificate of Completion.',
       ]}
       classType= "Live Virtual Training."
-      // address= "RING ROAD, IBADAN OYO STATE"
-      // sAddress
+
       stateLocation="scholarship"
       enrolRoute={isApply === true ? '/apply/signup' :'/sponsorship/signup'}
       // isPhysical
@@ -62,10 +61,10 @@ export const  ClassPlan = ({isApply}: classInt) => {
       classDur="3 months."
       classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
-      tuition="₦210,000"
-      physicalTuition="₦147,000"
+      tuition="₦200,000"
+      physicalTuition="₦150,000"
       courseOutline={[
-        'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
+        'For women who is starting out in UIUX design and want to elevate from beginner to professional level',
         'It includes everything in the Basic and Advanced class curriculum.',
         'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
         'Exposure to design tips and tricks - shortcuts and resources.',
@@ -77,8 +76,6 @@ export const  ClassPlan = ({isApply}: classInt) => {
         '6 weeks internship placement after completing the training.',
       ]}
       classType= "Live Virtual Training."
-      // address= "RING ROAD, IBADAN OYO STATE"
-      // isAddress
       stateLocation="scholarship"
       enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
       // isPhysical
@@ -91,10 +88,10 @@ export const  ClassPlan = ({isApply}: classInt) => {
       classDur="3 Months."
       classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
-      tuition="₦300,000"
-      physicalTuition="₦210,000"
+      tuition="₦250,000"
+      physicalTuition="₦200,000"
       courseOutline={[
-        'For anyone who wants to learn everything in UIUX design from beginner to professional level.',
+        'For women who is starting out in UIUX design and want to elevate from beginner to professional level',
         'It includes everything in the Basic and Advanced class curriculum.',
         'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
         'Exposure to design tips and tricks - shortcuts and resources.',
@@ -106,7 +103,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
         '6 weeks internship placement after completing the training.',
       ]}
       classType= "Physical Training"
-      address= "LEKKI PHASE 1, LAGOS NIGERIA"
+      address= "LEKKI, IBADAN, ABUJA"
       isAddress
       stateLocation="scholarship"
       enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}

@@ -69,7 +69,7 @@ export const SponsorHero = () => {
               px="10px"
               py="2px"
             >
-              There is an ongoing scholarship!
+             International Women’s Day
             </Box>
             <HStack spacing="4px">
               <Box
@@ -105,7 +105,7 @@ export const SponsorHero = () => {
             className="desc"
             opacity={0}
           >
-             Loba Scholarship offers a 30% tuition fee discount
+             Perxels is offering a 20% tuition fee discount to all women.
           </Heading>
           <Text
             fontSize={['lg', 'lg', 'lg', 'xl']}
@@ -115,7 +115,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-           200 Nigerian students will receive a 30% scholarship to enable them to launch their design journey with Perxels.
+           We are offering a 20% discount on all our classes for women who want to start a career in UIUX Design.
           </Text>
 
           <Button

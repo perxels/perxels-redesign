@@ -32,7 +32,7 @@ const RegisterForm = ({isApply}: registerInt) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState(false)
 
-  const { onCopy, value, setValue } = useClipboard("https://perxels.com/sponsorship");
+  const { onCopy, value, setValue } = useClipboard("https://perxels.com/scholarship");
 
   const scriptUrlApply="https://script.google.com/macros/s/AKfycbxUIlH3eoxZ_8iY2BQp4VxSd_JvaNJkmtjTtCwTAB9UDrAiY9l93ymcOSuxQljwK50dNg/exec"
   const scriptUrl =
@@ -75,7 +75,7 @@ const RegisterForm = ({isApply}: registerInt) => {
             class: '',
             question: '',
             howdidyouknow: '',
-            gender: '',
+            // gender: '',
             laptop: '',
             discount: '',
             socials: '',
@@ -95,7 +95,7 @@ const RegisterForm = ({isApply}: registerInt) => {
             howdidyouknow: Yup.string().required(
               'How did you know is required',
             ),
-            gender: Yup.string().required('Gender is required'),
+            // gender: Yup.string().required('Gender is required'),
             laptop: Yup.string().required('Laptop Field is required'),
             discount: Yup.string().required('Discount field is required'),
             socials: Yup.string().required('Socials is required'),
@@ -116,7 +116,7 @@ const RegisterForm = ({isApply}: registerInt) => {
             formData.append('class', values.class as string)
             formData.append('question', values.question as string)
             formData.append('howdidyouknow', values.howdidyouknow as string)
-            formData.append('gender', values.gender as string)
+            // formData.append('gender', values.gender as string)
             formData.append('location', values.location as string)
             formData.append('laptop', values.laptop as string)
             formData.append('discount', values.discount as string)
@@ -199,7 +199,7 @@ const RegisterForm = ({isApply}: registerInt) => {
                 </Text>
               ) : null}
 
-<Select
+                {/* <Select
                 h="3.5rem"
                 placeholder="Gender"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -233,7 +233,7 @@ const RegisterForm = ({isApply}: registerInt) => {
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.gender}
                 </Text>
-              ) : null}
+              ) : null} */}
 
               <Input
                 h="3.5rem"
@@ -320,11 +320,11 @@ const RegisterForm = ({isApply}: registerInt) => {
                   SOLVING skills in 3 months
                 </option>
                 <option
-                  value="Premium Class for beginners to learn everything in UIUX design
-                  from basic to PROFESSIONAL level for 3 months"
+                  value=" Physical Class for beginners to learn everything in UIUX design
+                  from basic to PROFESSIONAL level for 3 months in our Lekki, Ibadan, Abuja Workspace"
                 >
-                  Physical Class for beginners to learn everything in UIUX design
-                  from basic to PROFESSIONAL level for 3 months in our Lekki Workspace
+                  Physical Class for beginners to learn UIUX design
+                  from basic to PROFESSIONAL level for 3 months in our Lekki, Ibadan, Abuja Workspace
                 </option>
               </Select>
               {formik.touched.class && formik.errors.class ? (
@@ -359,7 +359,7 @@ const RegisterForm = ({isApply}: registerInt) => {
 
                 <Box>
                   <Text mb="1rem">
-                  *This scholarship offers a 30% discount on tuition, would you be able to pay the remaining 70%?
+                  *This scholarship offers a 20% discount on tuition, would you be able to pay the remaining 70%?
                   </Text>
                   <Select
                 h="3.5rem"
@@ -492,7 +492,7 @@ const RegisterForm = ({isApply}: registerInt) => {
 
               <Select
                 h="3.5rem"
-                placeholder="Where did you hear about this Sponsorship?"
+                placeholder="Where did you hear about this Scholarship?"
                 _placeholder={{ color: 'brand.dark.200' }}
                 color="brand.dark.200"
                 name="howdidyouknow"
