@@ -47,7 +47,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
       ]}
       classType= "Live Virtual Training."
 
-      stateLocation="scholarship"
+      stateLocation="discount"
       enrolRoute={isApply === true ? '/apply/signup' :'/sponsorship/signup'}
       // isPhysical
       isSponsor
@@ -76,7 +76,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
         '6 weeks internship placement after completing the training.',
       ]}
       classType= "Live Virtual Training."
-      stateLocation="scholarship"
+      stateLocation="discount"
       enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
       // isPhysical
       isSponsor
@@ -105,7 +105,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
       classType= "Physical Training"
       address= "LEKKI, IBADAN, ABUJA"
       isAddress
-      stateLocation="scholarship"
+      stateLocation="discount"
       enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
       isPhysical
       isSponsor
