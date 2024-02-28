@@ -444,6 +444,8 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['inline-block', 'inline-block', 'inline-block', 'none']}
             as={Link}
+            w={"99%"}
+            textAlign="center"
             href={isSponsor ? '/sponsorship/signup' : isPhysical ? enrolRoute : '/signup'}
           >
             {isSponsor ? 'Apply For Scholarship' : 'Enroll For This Plan'}

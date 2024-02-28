@@ -5,7 +5,7 @@ const designher = () => {
   return (
     <div>
         <MainLayout>
-        <Hero />
+        <Hero heroImg="/assets/images/designher/tomiwa.png" />
         <MarqueeComp/>
         <Info/>
         <OutlineSection/>

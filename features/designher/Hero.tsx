@@ -1,7 +1,12 @@
 import React from 'react'
 import {Box, Heading, Text, Button, Image,Center,Flex} from '@chakra-ui/react'
 import {MainContainer} from '../../layouts'
-export const Hero = () => {
+
+interface Props{
+    heroImg: string;
+}
+
+export const Hero = ({heroImg}: Props) => {
   return (
     <MainContainer>
         <Flex 
@@ -40,7 +45,7 @@ export const Hero = () => {
             </Button>
             </Box>
             <Box width={["100%","40%"]}>
-                <Image src="/assets/images/designher/heroImage.png" alt="DesignHER" />
+                <Image src={heroImg} alt="DesignHER" />
             </Box>
         </Flex>
 

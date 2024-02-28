@@ -359,7 +359,7 @@ const RegisterForm = ({isApply}: registerInt) => {
 
                 <Box>
                   <Text mb="1rem">
-                  *This scholarship offers a 20% discount on tuition, would you be able to pay the remaining 70%?
+                  *This scholarship offers a 20% discount on tuition, would you be able to pay the remaining 80%?
                   </Text>
                   <Select
                 h="3.5rem"
