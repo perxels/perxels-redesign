@@ -30,7 +30,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
       id="#"
       classDur="7 Weeks."
       classTime="2 times a week."
-      installments={['70% On Admission;', '30% after one month.']}
+      installments={['80% On Admission;', '20% after one month.']}
       tuition="₦50,000"
       physicalTuition="₦40,000"
       courseOutline={[
@@ -60,7 +60,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
       id="#"
       classDur="3 months."
       classTime="2 times a week."
-      installments={['70% On Admission;', '30% after one month.']}
+      installments={['80% On Admission;', '20% after one month.']}
       tuition="₦200,000"
       physicalTuition="₦150,000"
       courseOutline={[
@@ -87,7 +87,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
       id="#"
       classDur="3 Months."
       classTime="2 times a week."
-      installments={['70% On Admission;', '30% after one month.']}
+      installments={['80% On Admission;', '20% after one month.']}
       tuition="₦250,000"
       physicalTuition="₦200,000"
       courseOutline={[

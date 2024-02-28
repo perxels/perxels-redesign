@@ -5,7 +5,7 @@ const designher = () => {
   return (
     <div>
         <MainLayout>
-        <Hero />
+        <Hero heroImg="/assets/images/designher/heroImage.png" />
         <MarqueeComp/>
         <Info/>
         <OutlineSection/>
@@ -13,6 +13,6 @@ const designher = () => {
         </MainLayout>
     </div>
   )
-}
+}     
 
 export default designher
