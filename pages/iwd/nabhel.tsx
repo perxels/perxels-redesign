@@ -5,7 +5,7 @@ const designher = () => {
   return (
     <div>
         <MainLayout>
-        <Hero heroName={"Nabhel"} name="nabhel" heroImg="/assets/images/designher/nahbel.png"/>
+        <Hero heroName={"Nabhel"} name="nabhel" heroImg="/assets/images/designher/nabhel.png"/>
         <MarqueeComp/>
         <Info/>
         <OutlineSection name="nabhel"/>
