@@ -4,9 +4,11 @@ import {MainContainer} from '../../layouts'
 
 interface Props{
     heroImg: string;
+    name: string;
+    heroName: string;
 }
 
-export const Hero = ({heroImg}: Props) => {
+export const Hero = ({heroImg, name, heroName}: Props) => {
   return (
     <MainContainer>
         <Flex 
@@ -34,13 +36,14 @@ export const Hero = ({heroImg}: Props) => {
             mb={["24px","40px"]}
             >
                 <Text fontSize={["16px","20px"]} lineHeight="150%" color="#1A1A1A" width={["80%","45%"]} >
-                I&apos;m Fiwa and I am championing diversity. Let&apos;s all inspire inclusion to help forge a better, more inclusive world for women.
+                I&apos;m {heroName} and I am championing diversity. Let&apos;s all inspire inclusion to help forge a better, more inclusive world for women.
                 </Text>
             </Box>
             <Button 
             as={'a'}
-            href="/iwd#register"
-            fontSize="15px">
+            href={`/iwd/${name}#register`}
+            fontSize="15px"
+            >
                 Register
             </Button>
             </Box>

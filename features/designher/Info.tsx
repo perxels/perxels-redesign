@@ -13,7 +13,7 @@ export const Info = () => {
         >
           <Box p="40px"  borderBottom="1px solid #9E9E9E">
             <Image
-              src="./assets/images/designher/puzzle.svg"
+              src="https://res.cloudinary.com/deudl0ryy/image/upload/v1709219109/puzzle_bajdnq.svg"
               alt="heroBg"
               mb="16px"
             />
@@ -34,7 +34,7 @@ export const Info = () => {
           </Box>
           <Box p="40px" borderLeft={["none",'1px solid #9E9E9E']}>
             <Image
-              src="./assets/images/designher/crown.svg"
+              src="https://res.cloudinary.com/deudl0ryy/image/upload/v1709219109/crown_ra1lww.svg"
               alt="heroBg"
               mb="16px"
             />
