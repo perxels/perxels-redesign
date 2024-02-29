@@ -18,12 +18,15 @@ import { SuccessModal } from '../../components';
 import { MainContainer } from '../../layouts';
 import { InputWrapper } from '../../components/InputWrapper';
 
-export const EventForm = () => {
+interface Props{
+  sheetUrl: string;
+}
+
+export const EventForm = ({sheetUrl}: Props) => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbxYSNRrJ1wv1hioFIB7Iuyxg6K_Kos2vgtqCTkKYcQ5xwz5GDkGlxi0O6LaFsjJuSwn/exec';
-
+  // const scriptUrl ='https://script.google.com/macros/s/AKfycbxYSNRrJ1wv1hioFIB7Iuyxg6K_Kos2vgtqCTkKYcQ5xwz5GDkGlxi0O6LaFsjJuSwn/exec';
+  const scriptUrl = sheetUrl
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     surname: Yup.string().required('Required'),

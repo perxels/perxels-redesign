@@ -5,11 +5,11 @@ const designher = () => {
   return (
     <div>
         <MainLayout>
-        <Hero heroImg="/assets/images/designher/ufot.png"/>
+        <Hero heroName={"Ufot"}  name={"ufot"} heroImg="/assets/images/designher/ufot.png"/>
         <MarqueeComp/>
         <Info/>
-        <OutlineSection/>
-        <EventForm/>
+        <OutlineSection  name={"ufot"}/>
+        <EventForm sheetUrl="https://script.google.com/macros/s/AKfycbxas9DxQ895JkUDBJgsNQc5SLFYyLrOKsCY7yEYQfsDO13XZhTyc92x0EpaUx431cX1/exec"/>
         </MainLayout>
     </div>
   )
