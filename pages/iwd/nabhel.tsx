@@ -9,7 +9,7 @@ const designher = () => {
         <MarqueeComp/>
         <Info/>
         <OutlineSection name="nabhel"/>
-        <EventForm sheetUrl="https://script.google.com/macros/s/AKfycbwLuTaD8F0aJ841zvYUgCvp6ELIIQXfHdqGOS4H_i3C8F7tQFLcJaAlsCc7iMYV0dgn1w/exec"/>
+        <EventForm sheetUrl="https://script.google.com/macros/s/AKfycbyDnRuQLyV6DoiHiSMv11fGz_Hs13zrtuouLlNvugmGyuHMVAWabudMc4CNo3yMuzOvzQ/exec"/>
         </MainLayout>
     </div>
   )
