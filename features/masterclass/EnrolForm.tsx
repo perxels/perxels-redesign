@@ -206,7 +206,7 @@ const EnrolForm = () => {
                 name="class"
                 value={formik.values.class}
                 onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                gonBlur={formik.handleBlur}
                 borderColor={
                   formik.touched.class && formik.errors.class
                     ? 'red.500'
@@ -255,7 +255,7 @@ const EnrolForm = () => {
               <Input
                 h="3.5rem"
                 type="text"
-                placeholder="Where are you located? E.g Wuse, Gwarimpa..."
+                placeholder="Where are you located? E.g Ikeja , Lagos..."
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="location"
                 value={formik.values.location}
