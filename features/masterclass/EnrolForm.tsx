@@ -58,6 +58,7 @@ const EnrolForm = () => {
             howdidyouknow: '',
             category: '',
             laptop: '',
+            attend: ''
            
           }}
           validationSchema={Yup.object({
@@ -66,6 +67,7 @@ const EnrolForm = () => {
             email: Yup.string()
               .email('Invalid email address')
               .required('Email is required'),
+            attend: Yup.string().required('Attend is required'),
             // class: Yup.string().required('Class is required'),
             // attendDate: Yup.string().required('Pick a date to attend'),
             location: Yup.string().required('Location is required'),
@@ -87,6 +89,7 @@ const EnrolForm = () => {
             formData.append('name', values.name as string)
             formData.append('phone', values.phone as string)
             formData.append('email', values.email as string)
+            formData.append('attend', values.attend as string)
             // formData.append('class', values.class as string)
             formData.append('location', values.location as string)
             formData.append('howdidyouknow', values.howdidyouknow as string)
@@ -198,17 +201,18 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-              {/* <Select
+
+<Select
                 h="3.5rem"
-                placeholder="What class do you want to apply for?"
+                placeholder="This training is going to be physical, will you be available to attend physically?"
                 _placeholder={{ color: 'brand.dark.200' }}
                 color="brand.dark.200"
-                name="class"
-                value={formik.values.class}
+                name="atttend"
+                value={formik.values.attend}
                 onChange={formik.handleChange}
-                gonBlur={formik.handleBlur}
+                onBlur={formik.handleBlur}
                 borderColor={
-                  formik.touched.class && formik.errors.class
+                  formik.touched.attend && formik.errors.attend
                     ? 'red.500'
                     : 'brand.dark.200'
                 }
@@ -216,14 +220,14 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               >
-                <option value="Basic">Basic Program</option>
-                <option value="Intermediate">Intermediate Program</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </Select>
-              {formik.touched.class && formik.errors.class ? (
+              {formik.touched.attend && formik.errors.attend          ? (
                 <Text color="red.500" fontSize="sm">
-                  {formik.errors.class}
+                  {formik.errors.attend}
                 </Text>
-              ) : null} */}
+              ) : null}
               <Select
                 h="3.5rem"
                 placeholder="Do you own a laptop?"
@@ -234,7 +238,7 @@ const EnrolForm = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 borderColor={
-                  formik.touched.laptop && formik.errors.laptop
+                  formik.touched.laptopw && formik.errors.laptop
                     ? 'red.500'
                     : 'brand.dark.200'
                 }
