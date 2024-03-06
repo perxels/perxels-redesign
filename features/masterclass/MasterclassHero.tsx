@@ -63,7 +63,7 @@ export const MasterclassHero = () => {
             className="heroText"
         
           >
-          Free Virtual UIUX Design Masterclass
+          Free Physical UIUX Design Masterclass
           </Heading>
 
           <Text
@@ -75,7 +75,7 @@ export const MasterclassHero = () => {
             className="heroText"
           >
              {/* A  special design masterclass to help you transition into UIUX design */}
-             An exclusive virtual training for people based in <b> ABUJA</b> who are looking to embark on a fulfilling design career.
+             An exclusive physical training for <b>ONLY WOMEN</b>  based in <b> YABA</b> who are looking to embark on a fulfilling design career.
           </Text>
         </Center>
 
