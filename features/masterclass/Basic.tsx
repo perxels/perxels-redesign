@@ -82,7 +82,7 @@ export const Basic = () => {
                 <HStack>
                   <Img src="/assets/icons/masterBasicClock.svg" alt="" />
                   <Text fontSize={['0.75rem','.9375rem']} color="brand.dark.200" fontWeight="700">
-                  2pm
+                  10am
                   </Text>
                 </HStack>
               </Flex>
