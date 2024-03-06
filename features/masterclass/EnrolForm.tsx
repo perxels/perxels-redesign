@@ -238,7 +238,7 @@ const EnrolForm = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 borderColor={
-                  formik.touched.laptopw && formik.errors.laptop
+                  formik.touched.laptop && formik.errors.laptop
                     ? 'red.500'
                     : 'brand.dark.200'
                 }
