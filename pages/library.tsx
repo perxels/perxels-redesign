@@ -1,13 +1,14 @@
 import React from 'react'
 import { MainLayout } from '../layouts'
 import { Hero, LibraryLayout} from '../features/library'
+import { LibraryCardLayout } from '../features/library'
 const library = () => {
   return (
     <div>
         <MainLayout>
-            <Hero/>
-           
-            <LibraryLayout/>
+            <LibraryLayout>
+            <LibraryCardLayout/>
+            </LibraryLayout>
         </MainLayout>
     </div>
   )

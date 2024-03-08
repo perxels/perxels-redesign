@@ -51,8 +51,6 @@ const EnrolForm = () => {
             name: '',
             phone: '',
             email: '',
-            // attendDate: '',
-            // class: '',
             location: '',
             reason: '',
             howdidyouknow: '',
@@ -68,8 +66,6 @@ const EnrolForm = () => {
               .email('Invalid email address')
               .required('Email is required'),
             attend: Yup.string().required('Attend is required'),
-            // class: Yup.string().required('Class is required'),
-            // attendDate: Yup.string().required('Pick a date to attend'),
             location: Yup.string().required('Location is required'),
             howdidyouknow: Yup.string().required(
               'How did you know is required',

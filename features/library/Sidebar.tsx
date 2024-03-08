@@ -7,53 +7,56 @@ import { IoChatbubblesOutline } from 'react-icons/io5'
 import { BiMessageSquareDetail } from 'react-icons/bi'
 import { SlGraduation } from 'react-icons/sl'
 import { FaWhatsapp } from 'react-icons/fa'
-
+import Link from 'next/link'
 const SidebarData = [
   {
     title: 'All',
-    path: '/',
+    path: '/library',
     icon: IoGrid,
-    cName: 'nav-text',
+    // cName: 'nav-text',
   },
   {
     title: 'Videos',
-    path: '/videos',
+    path: '/library/videos',
     icon: FiPlayCircle,
-    cName: 'nav-text',
+    // cName: 'nav-text',
   },
   {
     title: 'PDF',
-    path: '/library',
+    path: '/library/pdf',
     icon: BsFiletypePdf,
-    cName: 'nav-text',
+    // cName: 'nav-text',
   },
   {
     title: 'Testimonials',
-    path: '/testimonials',
+    path: '/library/testimonies',
     icon: IoChatbubblesOutline,
-    cName: 'nav-text',
+    // cName: 'nav-text',
   },
   {
     title: 'Blog',
-    path: '/blog',
+    path: '/library/blog',
     icon: BiMessageSquareDetail,
-    cName: 'nav-text',
+    // cName: 'nav-text',
   },
   {
     title: 'Paid courses',
-    path: '/about',
+    path: '/library/courses',
     icon: SlGraduation,
-    cName: 'nav-text',
+    // cName: 'nav-text',
   },
   {
     title: 'Join our community',
     path: '/about',
     icon: FaWhatsapp,
-    cName: 'nav-text',
+    // cName: 'nav-text',
   },
 ]
 
 export const Sidebar = () => {
+  //get route
+  const currentRoute = typeof window !== 'undefined' ? window.location.pathname : ''
+
   return (
     <Box
       pr={['1rem', '2rem']}
@@ -95,15 +98,17 @@ export const Sidebar = () => {
             <HStack
             key={index}
             spacing={["0px", "20px"]}
-           
+            as={Link}
+            href={item.path}
             cursor="pointer"
             _hover={{
                 color: '#FFF',
                 backgroundColor: '#34296B',
                 borderRadius: '8px',
             }}
+            backgroundColor={currentRoute === item.path ? '#34296B' : ["#F8F8F8", "#FFF"]}
+            color = {currentRoute === item.path ? '#FFF' : '#888888'}
             p={["8px 16px", "12px"]}
-            color="#888888"
             transition="ease-in-out 0.3s"
             borderRadius={["66px", "8px"]}
             sx={{
@@ -113,7 +118,6 @@ export const Sidebar = () => {
                     },
                 },
             }}
-            backgroundColor={["#F8F8F8", "#FFF"]}
             border={["1px solid #ECECEC","none"]}
             minWidth={["fit-content"]}
             display={["inline-flex"]}
