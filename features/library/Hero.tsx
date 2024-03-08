@@ -8,7 +8,7 @@ export const Hero = () => {
         py={["5%", "5%"]}
         >
             <Box
-            background="url('./assets/images/library/heroBg.png') no-repeat center center"
+            background="url('/assets/images/library/heroBg.png') no-repeat center center"
             height="431px"
             backgroundSize="cover"
             padding={["0 5%","0 21%"]}

@@ -14,12 +14,14 @@ import { TestimonialCard } from './TestimonialCard'
 
 interface TestimonialGridProps {
   testimonialContent: TestimonialCardProps[]
-  isTestimonial?: boolean
+  isTestimonial?: boolean;
+  columns?: number[];
 }
 
 export const TestimonialGrid = ({
   testimonialContent,
   isTestimonial,
+  columns,
 }: TestimonialGridProps) => {
   const [isLargerThan800] = useMediaQuery('(max-width: 720px)', {
     ssr: true,
@@ -81,7 +83,7 @@ export const TestimonialGrid = ({
   return (
     <Box>
       <SimpleGrid
-        columns={[1, 2, 2, 3]}
+        columns={columns ? columns : [1, 2, 2, 3]}
         spacing="1.375rem"
         py="3.75rem"
         pb={['1.5rem', '3.75rem']}
