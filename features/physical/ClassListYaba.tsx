@@ -30,7 +30,7 @@ export const ClassPlanYaba = () => {
         '6 weeks internship placement after completing the training.',
       ]}
       classType="Physical Training"
-      address="HERBERT MACAULAY, YABA"
+      address="YABA, LAGOS"
       isAddress
       // stateLocation="scholarship"
       enrolRoute="/signup"

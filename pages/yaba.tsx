@@ -1,5 +1,5 @@
 import React from 'react'
-import {YabaHero, YabaSpace, StudentJob, ClassPlanYaba, OtherPhysCardLayout, MarqueeComp, AbujaPhysicalCardData} from '../features/physical'
+import {YabaHero, YabaSpace, StudentJob, ClassPlanYaba, OtherPhysCardLayout, MarqueeComp,  OnlinePhysicalCardData} from '../features/physical'
 import {LeaningTools, StudentWorkWrapper} from '../features/classGroup'
 import { Testimonial } from '../features/testimonial'
 import { MainLayout } from '../layouts'
@@ -11,7 +11,7 @@ const ibadan = () => {
         <MarqueeComp/>
         <ClassPlanYaba/>
         <LeaningTools/>
-        <OtherPhysCardLayout cardData={AbujaPhysicalCardData} />
+        <OtherPhysCardLayout cardData={OnlinePhysicalCardData} />
         <StudentWorkWrapper/>
         {/* <StudentJob/> */}
         <Testimonial/>
