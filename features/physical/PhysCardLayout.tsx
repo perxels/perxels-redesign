@@ -20,9 +20,9 @@ const PhysicalCardData=[
         locationLink: "/abuja",
     },
     {
-        bgImage: "/assets/images/class-group/internationalPhysical.png",
-        location: "Perxels International",
-        locationLink: "/international"
+        bgImage: "/assets/images/class-group/yabaPhysical.png",
+        location: "Yaba",
+        locationLink: "/yaba"
     }
 ]
 

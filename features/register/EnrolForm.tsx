@@ -208,6 +208,9 @@ const EnrolForm = () => {
                 <option value="Physical Class (Lagos)">
                   Physical Class (Lagos)
                 </option>
+                <option value="Physical Class (YABA)">
+                  Physical Class (YABA)
+                </option>
                 <option value="Physical Class (Ibadan)">
                   Physical Class (Ibadan)
                 </option>
