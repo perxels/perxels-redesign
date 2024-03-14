@@ -18,7 +18,7 @@ interface BannerContent {
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
   // mainTitle: 'JOB CONFERENCE: ',
-  subTitle: 'ADVANCED PROTOTYPING TEXHNIQUES IN INTERACTION',
+  subTitle: 'ADVANCED PROTOTYPING TECHNIQUES IN INTERACTION',
   time: '7pm-8pm',
   date: 'MARCH 24TH, 2024',
   location: 'GOOGLE MEET',
