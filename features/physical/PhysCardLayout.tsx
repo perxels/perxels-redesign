@@ -7,12 +7,12 @@ const PhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/lagosPhysical.png",
         location: "Lekki, Lagos",
-        locationLink: "/physical/lagos"
+        locationLink: "/lekki"
     },
     {
         bgImage: "/assets/images/class-group/ibadanPhysical.png",
         location: "Ring Road, Ibadan",
-        locationLink: "/physical/ibadan"
+        locationLink: "/ibadan"
     },
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
@@ -30,12 +30,12 @@ export const OnlinePhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/lagosPhysical.png",
         location: "Lekki, Lagos",
-        locationLink: "/physical/lagos"
+        locationLink: "/lekki"
     },
     {
         bgImage: "/assets/images/class-group/ibadanPhysical.png",
         location: "Ring Road, Ibadan",
-        locationLink: "/physical/ibadan"
+        locationLink: "/ibadan"
     },
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
@@ -49,7 +49,7 @@ export const OtherPhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/ibadanPhysical.png",
         location: "Ring Road, Ibadan",
-        locationLink: "/physical/ibadan"
+        locationLink: "/ibadan"
     },
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
@@ -68,12 +68,12 @@ export const IbadanPhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/lagosPhysical.png",
         location: "Lekki, Lagos",
-        locationLink: "/physical/lagos"
+        locationLink: "/lekki"
     },
     {
         bgImage: "/assets/images/class-group/abujaPhysical.png",
         location: "Perxels Abuja",
-        locationLink: "/physical/abuja",
+        locationLink: "/abuja",
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",
@@ -86,12 +86,12 @@ export const AbujaPhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/lagosPhysical.png",
         location: "Lekki, Lagos",
-        locationLink: "/physical/lagos"
+        locationLink: "/lekki"
     },
     {
         bgImage: "/assets/images/class-group/ibadanPhysical.png",
         location: "Ring Road, Ibadan",
-        locationLink: "/physical/ibadan"
+        locationLink: "/ibadan"
     },
     {
         bgImage: "/assets/images/class-group/internationalPhysical.png",

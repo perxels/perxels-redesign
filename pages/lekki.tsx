@@ -1,17 +1,17 @@
 import React from 'react'
-import {YabaHero, YabaSpace, StudentJob, ClassPlanYaba, OtherPhysCardLayout, MarqueeComp,  OnlinePhysicalCardData} from '../features/physical'
+import {LagosHero, LagSpace, StudentJob, ClassPlan, OtherPhysCardLayout, MarqueeComp, OtherPhysicalCardData} from '../features/physical'
 import {LeaningTools, StudentWorkWrapper} from '../features/classGroup'
 import { Testimonial } from '../features/testimonial'
 import { MainLayout } from '../layouts'
-const yaba = () => {
+const lagos = () => {
   return (
     <MainLayout>
-        <YabaHero/>
-        <YabaSpace/>
+        <LagosHero/>
+        <LagSpace/>
         <MarqueeComp/>
-        <ClassPlanYaba/>
+        <ClassPlan/>
         <LeaningTools/>
-        <OtherPhysCardLayout cardData={OnlinePhysicalCardData} />
+        <OtherPhysCardLayout cardData={OtherPhysicalCardData}/>
         <StudentWorkWrapper/>
         {/* <StudentJob/> */}
         <Testimonial/>
@@ -19,4 +19,4 @@ const yaba = () => {
   )
 }
 
-export default yaba
+export default lagos
