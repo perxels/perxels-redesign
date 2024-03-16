@@ -29,7 +29,8 @@ const PhysicalCardData=[
 export const OnlinePhysicalCardData=[
     {
         bgImage: "/assets/images/class-group/lagosPhysical.png",
-        location: "/lekkl"
+        location: "Lekki, Lagos",
+        locationLink: "/lekki"
     },
     {
         bgImage: "/assets/images/class-group/ibadanPhysical.png",

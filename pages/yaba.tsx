@@ -3,7 +3,7 @@ import {YabaHero, YabaSpace, StudentJob, ClassPlanYaba, OtherPhysCardLayout, Mar
 import {LeaningTools, StudentWorkWrapper} from '../features/classGroup'
 import { Testimonial } from '../features/testimonial'
 import { MainLayout } from '../layouts'
-const ibadan = () => {
+const yaba = () => {
   return (
     <MainLayout>
         <YabaHero/>
@@ -19,4 +19,4 @@ const ibadan = () => {
   )
 }
 
-export default ibadan
+export default yaba
