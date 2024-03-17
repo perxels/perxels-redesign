@@ -5,6 +5,7 @@ export interface TermsContentProps {
     termsContent1: string;
     termsContent2?: string;
     termsContent3?: string;
+    termsContent4?: string;
     termsSubTitle1?: string;
     termsList?: string[];
 }
@@ -63,7 +64,8 @@ export const TermsContentObj: TermsContentProps[] = [
             "Said email addressed to Perxels should have the subject: 'PROGRAM DEFERMENT'",
             "Said email should contain the student's full name, class, and last project done, including reasons for deferment.",
             "Subsequent follow-up should be done within the same email thread for proper documentation."
-        ]
+        ],
+        termsContent4: "Also Note: At the return from deferment, the student have to wait until we have a slot in a class. Our classes at Perxels have maximum number, if the class is full, the defered student will have to wait even if it is a year."
     },
     {
         id: 6,

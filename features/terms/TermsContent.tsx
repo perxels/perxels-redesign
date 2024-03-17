@@ -5,7 +5,7 @@ export const TermsContent = () => {
   return (
     <Box>
         {
-            TermsContentObj.map(({termsTitle, termsContent1, termsContent2, termsContent3, termsSubTitle1, termsList, id, slug}) => {
+            TermsContentObj.map(({termsTitle, termsContent1, termsContent2, termsContent3, termsContent4, termsSubTitle1, termsList, id, slug}) => {
                 return (
                     <>
                     <Box  />
@@ -28,6 +28,7 @@ export const TermsContent = () => {
                                 })
                             }
                         </OrderedList>
+                        <Text fontSize="1rem" lineHeight={["1.5rem","1.6875rem"]} color="#121212" mt={[".9375rem","1.25rem"]}>{termsContent4}</Text>
                     </Box>
                     </>
                 )
