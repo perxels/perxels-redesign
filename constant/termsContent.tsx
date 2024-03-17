@@ -22,7 +22,7 @@ export const TermsContentObj: TermsContentProps[] = [
         termsTitle: "Payment Policy",
         termsContent1: "All enrollees of Perxels Design School are required to make an upfront payment of fees as determined by the payment plan and method for their course.",
         termsContent2: "For installment payments, enrollees are expected to settle the remaining balance in monthly installments as specified by the chosen payment plan. Failure to do this would be met with repercussions such as denial of entry into classes.",
-        termsContent3: "For one-time payments, enrollees are expected to make full payment before the commencement of classes. Failure to do this would be met with repercussions such as denial of entry into classes.",
+        termsContent3: "For one-time payments, enrollees are expected to make full payment before the commencement of classes. Failure to do this would be met with repercussions such as denial of entry into classs.",
         termsSubTitle1: "Note",
         termsList: [
             "No refunds on fee payment would be made by Perxels after the first (1st) week of training by an enrollee who has begun training.",
