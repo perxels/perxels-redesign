@@ -64,7 +64,7 @@ export const PhysicalClassPlan = () => {
       <Flex
       justifyContent="space-between"
       backgroundColor="#34296B"
-      padding={["3.5625rem 0.6rem 3.625rem 0.6rem","2.625rem 2.5rem 2.375rem 3.75rem"]}
+      padding={["3.5625rem 1.0625rem 3.625rem 1.25rem","2.625rem 2.5rem 2.375rem 3.75rem"]}
       borderRadius="1.25rem"
       flexDirection="row-reverse"
       alignItems="center"
