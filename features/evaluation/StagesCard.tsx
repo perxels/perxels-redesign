@@ -117,7 +117,9 @@ export const StagesCard = () => {
          fontSize="20px"
          fontWeight={"400"}
         >
-        The examination is graded as follows: 70% - 100% signifies excellence, 40% - 69% indicates a good performance, while 0% - 39% reflects a lower performance.
+        The examination is graded as follows: 70% - 100% signifies excellence and will be awarded certification, 
+        <br/>40% -69% indicates a good 
+        performance and will not be awarded certification, while 0% - 39% reflects a lower performance and will not be awarded certification.
         </Text>
         </Box>
         <Box
