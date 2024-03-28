@@ -37,7 +37,7 @@ const EnrolForm = () => {
         isOpen={isOpen}
         onClose={onClose}
         title={`Thank you for your submission!`}
-        description="Our representative will call you within the next 24 hours."
+        description="Our representative will send a email to you within the next 24 hours."
         buttonTitle="Go back Home"
       />
       <Box

@@ -5,11 +5,11 @@ const designher = () => {
   return (
     <div>
         {/* <MainLayout>
-        <Hero heroImg="/assets/images/designher/heroImage.png" />
+        <Hero name="" heroImg="/assets/images/designher/heroImage.png" />
         <MarqueeComp/>
         <Info/>
-        <OutlineSection/>
-        <EventForm/>
+        <OutlineSection name=""/>
+        <EventForm  sheetUrl=""/>
         </MainLayout> */}
     </div>
   )
