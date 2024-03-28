@@ -18,6 +18,6 @@ export const EvalInfoContent: EvalInfoInterface[] = [
     {
         icon: '/assets/images/evaluation/info3.svg',
         title: 'Examination Duration',
-        description: "The exam is scheduled for a total duration of 1 hour (60 minutes). allowing candidates to take exam from anywhere at any time"
+        description: "The exam is scheduled for a total duration of 1 hour 30 minutes ( 90 minutes), allowing candidates to take exam from anywhere at any time."
     }
 ]
