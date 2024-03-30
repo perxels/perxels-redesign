@@ -212,7 +212,7 @@ export const EventForm = () => {
                 <InputWrapper label="Drop Link to your twitter profile">
                   <Input
                     type="text"
-                    placeholder="Instagram Url"
+                    placeholder="Twitter Url"
                     w="full"
                     h={['3rem', '3rem', '3rem', '3.5rem']}
                     name="twitter"
@@ -227,7 +227,7 @@ export const EventForm = () => {
                 <InputWrapper label="Drop Link to your instagram profile">
                   <Input
                     type="text"
-                    placeholder="Twitter Url"
+                    placeholder="Instagram Url"
                     w="full"
                     h={['3rem', '3rem', '3rem', '3.5rem']}
                     name="instagram"
