@@ -17,27 +17,18 @@ const OutlineData = [
   {
     title: 'Course Outline',
     description: [
-      'The fundamental principles of UI design: Typography, colours, layout, hierarchy, whitespace, icons, balance and alignment.',
-      'How to create your own wireframes (low and high fidelity wireframes)',
-      'Introduction to style guides and practical session on how to create a landing page.',
-      'Mentorship opportunity and networking'
-    ],
-  },
-  {
-    title: 'Pre-requisite',
-    description: [
-      'A working Laptop',
-      'Focused/ready mindset',
-      'Writing materials',
+      "Registration: Register on the landing page perxels.com/competition with accurate details.",
+      "Join the WhatsApp Group: Upon registration, you'll receive an immediate link to join the WhatsApp group.",
+      "Participation in Daily Tasks: Stay engaged in the WhatsApp group discussions and follow all daily tasks provided.",
+      "Portfolio Enhancement: Continuously improve your portfolio until your assigned submission day.",
+      "Engagement with Friends: Encourage your friends to engage with your posts using the correct hashtag, as this will contribute to your points."
     ],
   },
 ]
 
-interface Props{
-  name: string
-}
 
-export const OutlineSection = ({name}: Props) => {
+
+export const OutlineSection = () => {
   return (
     <Box bgColor="#34296B" pb="5%" borderRadius="0 0% 10% 10%">
         <MainContainer bg="transparent">
@@ -71,7 +62,7 @@ export const OutlineSection = ({name}: Props) => {
   
         <Flex mt={["2.5rem","3rem"]} justifyContent="center" >
         <Button  as={'a'}
-            href={`/iwd/${name}#register`} h="full" fontSize={["40px","97px"]} bgColor="#E3719C" rounded="24px" fontWeight="800" color="#FFF" rightIcon={<FiArrowUpRight/>}>
+            href={`/competition#register`} h="full" fontSize={["40px","97px"]} bgColor="#E3719C" rounded="24px" fontWeight="800" color="#FFF" rightIcon={<FiArrowUpRight/>}>
         Register here 
         </Button>
         </Flex>

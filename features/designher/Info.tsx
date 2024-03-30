@@ -18,7 +18,7 @@ export const Info = () => {
               mb="16px"
             />
             <Heading as="h1" fontSize={["24px","40px"]}fontWeight="600">
-              Training Style
+            Competition style
             </Heading>
             <Text
               mt="1rem"
@@ -28,8 +28,7 @@ export const Info = () => {
               color="#1A1A1A"
               width="45%"
             >
-              This is a 5-day exclusive masterclass happening both physically
-              and virtually
+          This competition will be actively conducted on Twitter and other social media platforms as specified by the organizer within the group. The competition will feature daily tasks.
             </Text>
           </Box>
           <Box p="40px" borderLeft={["none",'1px solid #9E9E9E']}>
@@ -39,7 +38,7 @@ export const Info = () => {
               mb="16px"
             />
             <Heading as="h1" fontSize={["24px","40px"]} fontWeight="600">
-              Women
+              Gender
             </Heading>
             <Text
               mt="1rem"
@@ -49,35 +48,38 @@ export const Info = () => {
               color="#1A1A1A"
               width="45%"
             >
-              This class is only intended for women who are interested in
-              learning UI/UX design and are new to tech
+              This competition is open to junior designrs with 1-3 years of experience regardless of gender.
             </Text>
           </Box>
         </Flex>
         <Box
+          backgroundColor="#E3719C"
           display="flex"
+          borderTopLeftRadius="63px"
+          borderTopRightRadius="63px"
           flexDir="column"
           justifyContent={'center'}
           width="100%"
           alignItems="center"
-          pb="5%"
+          pt="40px"
+          pb="20px"
+          mt={["30px","70px"]}
         >
-          <Heading as="h1" fontSize={["38px","97px" ]}fontWeight="800" mt="40px">
-            8th March, 2024
-          </Heading>
-          <Flex justifyContent="center" alignItems="center">
-            <Image width={["5%","5%"]} src="https://res.cloudinary.com/deudl0ryy/image/upload/v1708638117/InfoLeft_zm6bm8.svg" alt="" />
+           <Flex justifyContent="center" alignItems="center">
             <Text
               fontSize={["14px","24px"]}
-              color="#1A1A1A"
-              lineHeight="150%"
+              color="#FFF"
+              lineHeight="100%"
               fontWeight="600"
               textTransform={'uppercase'}
             >
-              The physical class is at our Lekki office.
+              PRICE POOL FOR 4 BEST PORTFOLIOS
             </Text>
-            <Image  width={["5%","5%"]}  src="https://res.cloudinary.com/deudl0ryy/image/upload/v1708638117/InfoRight_q2fpye.svg" alt="" />
           </Flex>
+          <Heading color="#FFF" as="h1" fontSize={["38px","97px" ]}fontWeight="800" mt="5px">
+            N100,000
+          </Heading>
+         
         </Box>
       </Box>
     </MainContainer>
