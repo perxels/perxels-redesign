@@ -34,7 +34,7 @@ export const MarqueeComp = () => {
             >
            •  {" "}{" "}Competition{" "}{" "}•{" "}{" "}<Text as="span" color="#FDE85C">
             Portfolio </Text>{" "}{" "}{" "} • Design{" "}{" "} • {" "}{" "}{" "}<Text as="span" color="#FDE85C">
-          Competion {" "}{" "}</Text> • <Text as="span" color="#FFF">UIUX Design {" "}{" "} </Text>• {" "}{" "}<Text as="span" color="#FDE85C">Challengsigne</Text> •{" "}{" "} <Text as="span" color="#FFF"> Equality</Text>
+          Competion {" "}{" "}</Text> • <Text as="span" color="#FFF">UIUX Design {" "}{" "} </Text>• {" "}{" "}<Text as="span" color="#FDE85C">Competition</Text> •{" "}{" "} <Text as="span" color="#FFF"> Equality</Text>
             </Text>
         </Marquee>
   
