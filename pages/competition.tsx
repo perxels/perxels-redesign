@@ -4,13 +4,13 @@ import { MainLayout } from '../layouts'
 const designher = () => {
   return (
     <div>
-        {/* <MainLayout>
-        <Hero name="" heroImg="/assets/images/designher/heroImage.png" />
+        <MainLayout>
+        <Hero />
         <MarqueeComp/>
         <Info/>
-        <OutlineSection name=""/>
-        <EventForm  sheetUrl=""/>
-        </MainLayout> */}
+        <OutlineSection/>
+        <EventForm />
+        </MainLayout>
     </div>
   )
 }

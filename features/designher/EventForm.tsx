@@ -18,24 +18,21 @@ import { SuccessModal } from '../../components';
 import { MainContainer } from '../../layouts';
 import { InputWrapper } from '../../components/InputWrapper';
 
-interface Props{
-  sheetUrl: string;
-}
 
-export const EventForm = ({sheetUrl}: Props) => {
+export const EventForm = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   // const scriptUrl ='https://script.google.com/macros/s/AKfycbxYSNRrJ1wv1hioFIB7Iuyxg6K_Kos2vgtqCTkKYcQ5xwz5GDkGlxi0O6LaFsjJuSwn/exec';
-  const scriptUrl = sheetUrl
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbwIlHDNqMaywawp4nd-5oYZwOfqB4s4FoVbUBbTEkYXKBJqGD4Js0h2pcxAEK7qo3vfFg/exec"
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Required'),
     surname: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email address').required('Required'),
     phone: Yup.string().required('Required'),
-    laptop: Yup.string().required('Required'),
-    reason: Yup.string().required('Required'),
-    attendance: Yup.string().required('Required'),
-    location: Yup.string().required('Required'),
+    howyouknew: Yup.string().required('Required'),
+    followingPerxels: Yup.string().required('Required'),
+    twitter: Yup.string().required('Required'),
+    instagram: Yup.string().required('Required'),
   });
 
   const handleSubmit = async (values: any, actions: any) => {
@@ -45,10 +42,10 @@ export const EventForm = ({sheetUrl}: Props) => {
     formData.append('surname', values.surname as string);
     formData.append('email', values.email as string);
     formData.append('phone', values.phone as string);
-    formData.append('laptop', values.laptop as string);
-    formData.append('reason', values.reason as string);
-    formData.append('attendance', values.attendance as string);
-    formData.append('location', values.location as string   );
+    formData.append('howyouknew', values.howyouknew as string);
+    formData.append('followingPerxels', values.followingPerxels as string);
+    formData.append('twitter', values.twitter as string);
+    formData.append('instagram', values.instagram as string);
     formData.append('created_at', new Date().toLocaleString());
     try {
       const response =await fetch(scriptUrl, {
@@ -76,10 +73,10 @@ export const EventForm = ({sheetUrl}: Props) => {
       <SuccessModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="Congratulations"
-        description="Registeration complete, our representative will reach out to you via mail."
-        buttonTitle="Back to Home Page"
-        buttonHref="/"
+        title="Thank you for registering for the Portfolio Design Competitions"
+        description="Join the Competition by clicking on the button."
+        buttonTitle="Join Group"
+        buttonHref="https://chat.whatsapp.com/FwlXkkpp4sZ8dIwHSulSX2"
       />
       <MainContainer>
         <Box py="3.75rem">
@@ -89,10 +86,10 @@ export const EventForm = ({sheetUrl}: Props) => {
               surname: '',
               email: '',
               phone: '',
-              laptop: '',
-              reason: '',
-              attendance: '',
-              location: '',
+              howyouknew: '',
+              followingPerxels: '',
+              twitter: '',
+              instagram: '',
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -174,81 +171,71 @@ export const EventForm = ({sheetUrl}: Props) => {
                       required
                     />
                   </InputWrapper>
-               
-                <FormControl id="laptop">
-                <InputWrapper label="Do you have a working laptop??">
-                  <Select
-                   
-                    border="0.406872px solid #B4B4B4"
-                    placeholder=" "
-                    // _placeholder={{ color: '#B4B4B4' }}
-                    name="laptop"
-                    h="3.5rem"
-                    _focusVisible={{
-                      outline: 'none',
-                    }}
-                    value={formik.values.laptop}
-                    onChange={formik.handleChange}
-                    borderColor={
-                      formik.touched.laptop && formik.errors.laptop ? 'red.500' : '#B4B4B4'
-                    }
-                    backgroundColor="#F4F7FF"
-                    required
-                  >
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </Select>
-                  </InputWrapper>
-                </FormControl>
-                <InputWrapper label="Why should you be selected for this masterclass">
+              
+                <InputWrapper label="How did you get to know about us">
                   <Textarea
                     w="full"
                     h="5.75rem"
                     py="1.5rem"
-                    name="reason"
+                    name="howyouknew"
                     backgroundColor="#F4F7FF"
                     required
-                    value={formik.values.reason}
+                    value={formik.values.howyouknew}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    borderColor={formik.touched.reason && formik.errors.reason ? 'red.500' : '#B4B4B4'}
+                    borderColor={formik.touched.howyouknew && formik.errors.howyouknew ? 'red.500' : '#B4B4B4'}
                   />
                 </InputWrapper>
-                <InputWrapper label="Do you want to attend physically or virtually">
+                <InputWrapper label="Are you following Perxels on all social media?">
                 <Select
                    border="0.406872px solid #B4B4B4"
                    placeholder=" "
                    // _placeholder={{ color: '#B4B4B4' }}
-                   name="attendance"
+                   name="followingPerxels"
                    h="3.5rem"
                    _focusVisible={{
                      outline: 'none',
                    }}
-                   value={formik.values.attendance}
+                   value={formik.values.followingPerxels}
                    onChange={formik.handleChange}
                    borderColor={
-                     formik.touched.attendance && formik.errors.attendance ? 'red.500' : '#B4B4B4'
+                     formik.touched.followingPerxels && formik.errors.followingPerxels ? 'red.500' : '#B4B4B4'
                    }
                    backgroundColor="#F4F7FF"
                    required
                  >
-                   <option value="Physical">Physical</option>
-                   <option value="Virtual">Virtual</option>
+                   <option value="Yes">Yes</option>
+                   <option value="No">No</option>
                    </Select>
 
                 </InputWrapper>
-                <InputWrapper label="Location e.g Badore, Ajah">
+                <InputWrapper label="Drop Link to your twitter profile">
                   <Input
                     type="text"
-                    placeholder="Enter your Location"
+                    placeholder="Instagram Url"
                     w="full"
                     h={['3rem', '3rem', '3rem', '3.5rem']}
-                    name="location"
+                    name="twitter"
                     backgroundColor="#F4F7FF"
-                    value={formik.values.location}
+                    value={formik.values.twitter}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    borderColor={formik.touched.location && formik.errors.location ? 'red.500' : '#B4B4B4'}
+                    borderColor={formik.touched.twitter && formik.errors.twitter ? 'red.500' : '#B4B4B4'}
+                    required
+                  />
+                </InputWrapper>
+                <InputWrapper label="Drop Link to your instagram profile">
+                  <Input
+                    type="text"
+                    placeholder="Twitter Url"
+                    w="full"
+                    h={['3rem', '3rem', '3rem', '3.5rem']}
+                    name="instagram"
+                    backgroundColor="#F4F7FF"
+                    value={formik.values.instagram}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    borderColor={formik.touched.instagram && formik.errors.instagram ? 'red.500' : '#B4B4B4'}
                     required
                   />
                 </InputWrapper>
