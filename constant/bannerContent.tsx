@@ -18,17 +18,17 @@ interface BannerContent {
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
   // mainTitle: 'JOB CONFERENCE: ',
-  subTitle: 'ADVANCED PROTOTYPING TECHNIQUES IN INTERACTION DESIGN',
+  subTitle: 'REVAMP AND REIMAGINE: LIVE PRODUCT DESIGN CHALLENGE',
   time: '7pm-8pm',
-  date: 'MARCH 24TH, 2024',
+  date: '7th APRIL, 2024',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.jpeg',
   description:
-  "Join us for an Exclusive Q&A session with Kingsley Ezechukwu Orji! A Senior Designer boasting 8 years of experience, residing in Birmingham, England, United Kingdom as he delves into the intricacies of prototyping techniques, offering invaluable insights that will undoubtedly enrich your design journey.",
-  content1: "Don't miss this opportunity to grasp the significance of communication in your design journey and unlock the key to achieving impactful, client-centric designs.",
+  "Join us for an Exclusive Q&A session with Egbemode Abayomi! A  Product Designer  as he delves into the intricacies of  redesigning an existing product , offering invaluable insights that will undoubtedly enrich your design journey.",
+  content1: "Don't miss this opportunity to Learn the process of redesigning an existing product, have a live session recreating a landing page and to ask questions that you may have.",
   content2: "",
   content3: "",
   content4: "",
-  speakerName: 'KINGSLEY EZECHUKWU ORJI ',
-  speakerRole: 'Senior Product Designer',
+  speakerName: 'EGBEMODE ABAYOMI ',
+  speakerRole: 'Product Designer',
 }

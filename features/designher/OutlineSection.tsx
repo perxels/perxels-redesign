@@ -15,13 +15,14 @@ import { FiArrowUpRight } from "react-icons/fi";
 
 const OutlineData = [
   {
-    title: 'Course Outline',
+    title: 'Prerequisite',
     description: [
       "Registration: Register on the landing page perxels.com/competition with accurate details.",
       "Join the WhatsApp Group: Upon registration, you'll receive an immediate link to join the WhatsApp group.",
       "Participation in Daily Tasks: Stay engaged in the WhatsApp group discussions and follow all daily tasks provided.",
       "Portfolio Enhancement: Continuously improve your portfolio until your assigned submission day.",
-      "Engagement with Friends: Encourage your friends to engage with your posts using the correct hashtag, as this will contribute to your points."
+      "Engagement with Friends: Encourage your friends to engage with your posts using the correct hashtag, as this will contribute to your points.",
+      "Follow Perxels on all social media @perxels"
     ],
   },
 ]

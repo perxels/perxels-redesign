@@ -48,7 +48,7 @@ export const Info = () => {
               color="#1A1A1A"
               width="45%"
             >
-              This competition is open to junior designrs with 1-3 years of experience regardless of gender.
+              This competition is open to junior designers with 1-3 years of experience regardless of gender.
             </Text>
           </Box>
         </Flex>
