@@ -85,7 +85,7 @@ export const Info = () => {
               fontWeight="600"
               textTransform={'uppercase'}
             >
-              PRICE POOL FOR 4 BEST PORTFOLIOS
+              PRICE POOL FOR 2 BEST PORTFOLIOS
             </Text>
           </Flex>
           <Heading
