@@ -77,7 +77,7 @@ export const EventForm = () => {
       <SuccessModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title="Thank you for registering for the Portfolio Design Competitions"
+        title="Thank you for registering for the Perxels Portfolio Design Competitions"
         description="Join the Competition by clicking on the button."
         buttonTitle="Join Group"
         buttonHref="https://chat.whatsapp.com/FwlXkkpp4sZ8dIwHSulSX2"
