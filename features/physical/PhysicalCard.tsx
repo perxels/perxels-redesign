@@ -26,7 +26,7 @@ export const PhysicalCard = ({
       borderRadius=".625rem"
       position="relative"
       minHeight={heightValue ? heightValue : ['27.5rem', '31.5625rem']}
-      as={!isComing ? Link : Box}
+      // as={!isComing ? Link : Box}
       // href={!isComing ? locationLink : '#'}
       width="100%"
     >
