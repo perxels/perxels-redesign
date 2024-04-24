@@ -12,7 +12,6 @@ export const collections = () => {
     <div
       {...props}
       style={{
-        ...props?.style,
         display: 'block',
         background: 'green',
         width: '50px',
@@ -27,7 +26,6 @@ export const collections = () => {
     <div
       {...props}
       style={{
-        ...props?.style,
         display: 'block',
         background: 'blue',
         width: '50px',
