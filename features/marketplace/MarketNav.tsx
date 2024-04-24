@@ -1,22 +1,10 @@
-import {
-  Box,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  HStack,
-  Img,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react'
-import { Logo } from '../../components'
-import { Fragment, PropsWithChildren } from 'react'
+import { Box, HStack, Img, Text, useDisclosure } from '@chakra-ui/react'
+import { Fragment } from 'react'
 import { MainContainer } from '../../layouts'
+import { MarketDrawer } from './MarketDrawer'
 
 export const MarketNav = () => {
- 
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Fragment>
       <Box
@@ -47,24 +35,7 @@ export const MarketNav = () => {
           </HStack>
         </MainContainer>
       </Box>
-      <Drawer onClose={onClose} isOpen={isOpen} size="md">
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>{`md drawer contents`}</DrawerHeader>
-          <DrawerBody>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Consequat nisl vel pretium lectus quam id. Semper quis lectus
-              nulla at volutpat diam ut venenatis. Dolor morbi non arcu risus
-              quis varius quam quisque. Massa ultricies mi quis hendrerit dolor
-              magna eget est lorem. Erat imperdiet sed euismod nisi porta.
-              Lectus vestibulum mattis ullamcorper velit.
-            </p>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <MarketDrawer onClose={onClose} isOpen={isOpen} />
     </Fragment>
   )
 }
