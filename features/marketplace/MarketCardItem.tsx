@@ -1,18 +1,19 @@
-import React from 'react';
-import { Box, Img, Stack, chakra } from '@chakra-ui/react';
+import React from 'react'
+import { Box, Img, Stack, chakra } from '@chakra-ui/react'
+import Link from 'next/link'
 
 interface MarketCardItemProps {
   item: {
-    id: number;
-    title: string;
-    price: string;
-    price_th: number;
-    desc: string;
-    colors: string[];
-    size: string[];
-    imgUrl: string;
-    hoverImage: string; // Add hoverImage property to the item object
-  };
+    id: number
+    title: string
+    price: string
+    price_th: number
+    desc: string
+    colors: string[]
+    size: string[]
+    imgUrl: string
+    hoverImage: string // Add hoverImage property to the item object
+  }
 }
 
 const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
@@ -21,8 +22,10 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
       justifyContent="center"
       alignItems="center"
       w="400px"
-      h="600px"
+      h="550px"
       borderRadius="12px"
+      as={Link}
+      href="/market-place/collections/product"
       bg="#F5F6F7"
       _hover={{ cursor: 'pointer' }}
       position="relative" // Add relative positioning
@@ -49,7 +52,7 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
         _hover={{ opacity: 1 }} // Set opacity to 1 on hover
       />
     </Stack>
-  );
-};
+  )
+}
 
-export default MarketCardItem;
+export default MarketCardItem
