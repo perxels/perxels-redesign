@@ -16,20 +16,18 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
-  // mainTitle: 'JOB CONFERENCE: ',
-  subTitle:
-    'HOW TO TRANSITION FROM A JUNIOR DESIGNER TO A GLOBAL LEVEL DESIGNER',
+  subTitle: 'Strategies for Enhancing UX After Product Launch',
   time: '7pm-8pm',
-  date: '21st APRIL, 2024',
+  date: '5th MAY, 2024',
   location: 'GOOGLE MEET',
-  bannerImage: '/assets/images/banner/bannerImage2.jpg',
+  bannerImage: '/assets/images/banner/bannerImage3.jpg',
   description:
-    'Join us for an Exclusive Q&A session with SARAH SHAIBU! A  Senior Product Designer as she delves into the intricacies of transitioning from a junior designer to a global level designer, offering invaluable insights that will undoubtedly enrich your design journey.',
+    'Join us for an Exclusive Q&A session with OLABINJO EBENEZER.  A Senior User Research and Product Designer boasting 9 years of experience. He started in brand design and visual perception, but he shifted to Product Design about 5 years back, with a strong emphasis on User Research as he delves into the intricacies of strategies of enhancing UX after product launch offering invaluable insights that will undoubtedly enrich your design journey.',
   content1:
-    "Don't miss this opportunity to learn how to Come out of your shell in UX design and push boundaries beyond your current status quo, how to transition from being a Junior Level Designer to a Global Designer, how to maintain the continuous push and always aim to become better and in so doing finding the balance,  the key skills and competence needed to transition from a Junior Level Designer to a Global Designer and also to ask any questions that you may have.",
+    "Don't miss this opportunity to grasp what Product Launch is all about, what it means to enhance UX and the Strategies, and how they are to be implemented after the product Launch. ",
   content2: '',
   content3: '',
   content4: '',
-  speakerName: 'SARAH SHAIBU',
-  speakerRole: 'Senior Product Designer',
+  speakerName: 'OLABINJO EBENEZER',
+  speakerRole: 'Senior User Research and Product Designer',
 }
