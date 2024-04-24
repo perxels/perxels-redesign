@@ -10,8 +10,10 @@ const MarketPlace = () => {
     <Fragment>
       <MarketNav />
       <MainContainer>
-        <MarketHero />
-        <MarketHeroGrid />
+        <Box overflowY={'hidden'}>
+          <MarketHero />
+          <MarketHeroGrid />
+        </Box>
       </MainContainer>
     </Fragment>
   )

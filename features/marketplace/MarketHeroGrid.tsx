@@ -12,53 +12,64 @@ export const MarketHeroGrid = () => {
       mb="5rem"
       w="100%"
       mt={'30px'}
+      justifyItems="center"
+      alignContent="center"
     >
-        
       <Img
         src="/assets/images/market-place/explore_button.svg"
+        alt="Explore"
         width="150px"
         position="absolute"
         bottom="-100px"
         left="0"
         right="0"
         margin="auto"
-        // pointerEvents="none" 
         cursor="pointer"
-        onContextMenu={(e) => e.preventDefault()}
         onClick={() => router.push('/market-place/collections')}
+        css={{
+          '@keyframes spin': {
+            from: {
+              transform: 'rotate(0deg)',
+            },
+            to: {
+              transform: 'rotate(360deg)',
+            },
+          },
+          animation: 'spin 20s linear infinite',
+        }}
       />
 
       <Box
         width={'100%'}
-        height="350px"
-        bg="#9966CC"
+        height={['170px', '350px']}
+        bg="#7971FF"
         cursor="pointer"
         as={Link}
         href="/market-place/collections"
       ></Box>
       <Box
-        width={'100%'}
         cursor="pointer"
         as={Link}
         href="/market-place/collections"
-        height="350px"
-        bg="#FFBE0B"
+        width={'100%'}
+        height={['170px', '350px']}
+        bg="#FDE85C"
       ></Box>
       <Box
-        width={'100%'}
         cursor="pointer"
         as={Link}
         href="/market-place/collections"
-        height="350px"
-        bg="pink.700"
+        width={'100%'}
+        height={['170px', '350px']}
+        bg="#FF9CAE"
       ></Box>
       <Box
-        width={'100%'}
         cursor="pointer"
         as={Link}
         href="/market-place/collections"
-        height="350px"
-        bg="#3A86FF"
+        width={'100%'}
+        height={['170px', '350px']}
+        bg="#00BBF9"
       ></Box>
     </SimpleGrid>
   )
