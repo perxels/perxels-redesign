@@ -18,7 +18,7 @@ export const MarketHeroGrid = () => {
       <Img
         src="/assets/images/market-place/explore_button.svg"
         alt="Explore"
-        width="150px"
+        width={['100px', '150px']}
         position="absolute"
         bottom="-100px"
         left="0"
