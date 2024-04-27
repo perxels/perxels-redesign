@@ -9,7 +9,7 @@ export const MarketHeroGrid = () => {
     <SimpleGrid
       columns={[2, 2, 2, 4]}
       position="relative"
-      mb="5rem"
+      mb={['6rem', '5rem']}
       w="100%"
       mt={'30px'}
       justifyItems="center"
@@ -20,7 +20,7 @@ export const MarketHeroGrid = () => {
         alt="Explore"
         width={['100px', '150px']}
         position="absolute"
-        bottom="-100px"
+        bottom={['-50px', '-100px']}
         left="0"
         right="0"
         margin="auto"
@@ -46,6 +46,10 @@ export const MarketHeroGrid = () => {
         cursor="pointer"
         as={Link}
         href="/market-place/collections"
+        backgroundImage="/assets/images/market-place/mobile_img_1.png"
+        backgroundRepeat="no-repeat"
+        backgroundPosition="bottom"
+        backgroundSize="contain"
       ></Box>
       <Box
         cursor="pointer"
@@ -54,6 +58,10 @@ export const MarketHeroGrid = () => {
         width={'100%'}
         height={['170px', '350px']}
         bg="#FDE85C"
+        backgroundImage="/assets/images/market-place/mobile_img_2.png"
+        backgroundRepeat="no-repeat"
+        backgroundPosition="bottom"
+        backgroundSize="contain"
       ></Box>
       <Box
         cursor="pointer"
@@ -62,6 +70,10 @@ export const MarketHeroGrid = () => {
         width={'100%'}
         height={['170px', '350px']}
         bg="#FF9CAE"
+        backgroundImage="/assets/images/market-place/mobile_img_3.png"
+        backgroundRepeat="no-repeat"
+        backgroundPosition="bottom"
+        backgroundSize="contain"
       ></Box>
       <Box
         cursor="pointer"
@@ -70,6 +82,10 @@ export const MarketHeroGrid = () => {
         width={'100%'}
         height={['170px', '350px']}
         bg="#00BBF9"
+        backgroundImage="/assets/images/market-place/mobile_img_4.png"
+        backgroundRepeat="no-repeat"
+        backgroundPosition="bottom"
+        backgroundSize="contain"
       ></Box>
     </SimpleGrid>
   )

@@ -10,7 +10,7 @@ interface MarketCardItemProps {
     price_th: number
     desc: string
     colors: string[]
-    size: string[]
+    size: number[]
     imgUrl: string
     hoverImage: string // Add hoverImage property to the item object
   }
@@ -25,7 +25,7 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
       h="550px"
       borderRadius="12px"
       as={Link}
-      href="/market-place/collections/product"
+      href={`/market-place/collections/${item.id}`}
       bg="#F5F6F7"
       _hover={{ cursor: 'pointer' }}
       position="relative" // Add relative positioning
