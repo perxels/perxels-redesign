@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Img, Stack, chakra } from '@chakra-ui/react'
+import { Img, Stack } from '@chakra-ui/react'
 import Link from 'next/link'
 
 interface MarketCardItemProps {
@@ -33,9 +33,10 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
       <Img
         src={item.imgUrl}
         alt="Product image"
-        objectFit="cover"
+        objectFit="contain"
         objectPosition="center"
         width="100%"
+        height="100%"
       />
       <Img
         src={item.hoverImage}
@@ -43,6 +44,7 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
         objectFit="cover"
         objectPosition="center"
         width="100%"
+        height="100%"
         rounded="12px"
         position="absolute" // Position the hoverImage absolutely
         top="0"

@@ -32,28 +32,28 @@
 }
 
 @font-face {
-  font-family: "Monument Extended";
-  src: url("/assets/fonts/MonumentExtended-Regular.otf") format("opentype");
+  font-family: 'Monument Extended';
+  src: url('/assets/fonts/MonumentExtended-Regular.otf') format('opentype');
   font-weight: normal;
 }
 @font-face {
-  font-family: "Monument Extended";
-  src: url("/assets/fonts/MonumentExtended-Bold.otf") format("opentype");
+  font-family: 'Monument Extended';
+  src: url('/assets/fonts/MonumentExtended-Bold.otf') format('opentype');
 }
 
-
 * {
-  font-family: 'Proxima Nova', 'Montserrat', 'Playfair', 'Playfair Display SC', sans-serif;
+  font-family: 'Proxima Nova', 'Montserrat', 'Playfair', 'Playfair Display SC',
+    sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.slick-track{
+.slick-track {
   height: auto !important;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -72,16 +72,14 @@
   font-style: normal;
 }
 
-
-@font-face{
+@font-face {
   font-family: 'Gilroy';
   src: url('/assets/fonts/Gilroy-Medium.ttf');
   font-weight: 500;
   font-style: normal;
 }
 
-
-@font-face{
+@font-face {
   font-family: 'Gilroy';
   src: url('/assets/fonts/Gilroy-SemiBold.ttf');
   font-weight: 600;
@@ -109,14 +107,13 @@
   font-style: normal;
 }
 
-
-.slick-slider > .slick-dots > ul >  li.slick-active {
+.slick-slider > .slick-dots > ul > li.slick-active {
   background-color: #060022;
   width: 12px;
   height: 12px;
   border-radius: 50%;
 }
-.slick-slider > .slick-dots > ul >  li{
+.slick-slider > .slick-dots > ul > li {
   background-color: transparent;
   width: 12px;
   height: 12px;
@@ -124,10 +121,12 @@
   border: 1px solid #060022;
 }
 
-.slick-slider > .slick-dots{
+.slick-slider > .slick-dots {
   bottom: -30px;
 }
-
+#custom_collections_arrow::before {
+  content: '' !important;
+}
 @keyframes spin {
   from {
     transform: rotate(0deg);
