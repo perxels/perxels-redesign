@@ -447,9 +447,8 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                     <Select
                       w="full"
                       focusBorderColor="brand.purple.500"
-                      defaultValue="Nigeria"
+                      defaultValue={form.shipping.country}
                       name="shipping.country"
-                      value={form.shipping.country}
                       onChange={handleChange}
                       required
                     >
@@ -670,6 +669,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                         focusBorderColor="brand.purple.500"
                         type="number"
                         value={+234}
+                        readOnly
                         required
                       />
                       <Input
