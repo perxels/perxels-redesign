@@ -417,7 +417,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                       type="text"
                       placeholder="Full Address"
                       name="shipping.address"
-                      value={form.shipping.address}
+                      value={form.shipping?.address}
                       onChange={handleChange}
                       required
                     />
@@ -427,7 +427,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                         type="text"
                         placeholder="City"
                         name="shipping.city"
-                        value={form.shipping.city}
+                        value={form.shipping?.city}
                         onChange={handleChange}
                         required
                       />
@@ -435,7 +435,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                         focusBorderColor="brand.purple.500"
                         placeholder="State"
                         name="shipping.state"
-                        value={form.shipping.state}
+                        value={form.shipping?.state}
                         onChange={handleChange}
                         required
                       >
@@ -447,7 +447,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                     <Select
                       w="full"
                       focusBorderColor="brand.purple.500"
-                      defaultValue={form.shipping.country}
+                      defaultValue={form.shipping?.country}
                       name="shipping.country"
                       onChange={handleChange}
                       required
@@ -469,7 +469,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                       type="text"
                       placeholder="Optional"
                       name="shipping.delivery_note"
-                      value={form.shipping.delivery_note}
+                      value={form.shipping?.delivery_note}
                       onChange={handleChange}
                     />
                   </FormControl>
@@ -487,7 +487,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                       placeholder="Select region"
                       required
                       name="shipping.shipping_region"
-                      value={form.shipping.shipping_region}
+                      value={form.shipping?.shipping_region}
                       onChange={handleChange}
                     >
                       <option value="Lagos">Lagos</option>
@@ -620,7 +620,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                         type="text"
                         placeholder="First name"
                         name="payment.first_name"
-                        value={form.payment.first_name}
+                        value={form.payment?.first_name}
                         onChange={handleChange}
                         required
                       />
@@ -629,7 +629,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                         type="text"
                         placeholder="Last name"
                         name="payment.last_name"
-                        value={form.payment.last_name}
+                        value={form.payment?.last_name}
                         onChange={handleChange}
                         required
                       />
@@ -650,7 +650,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                       required
                       placeholder="you@example.com"
                       name="payment.email"
-                      value={form.payment.email}
+                      value={form.payment?.email}
                       onChange={handleChange}
                     />
                   </FormControl>
@@ -677,7 +677,7 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                         focusBorderColor="brand.purple.500"
                         type="number"
                         name="payment.phone"
-                        value={form.payment.phone}
+                        value={form.payment?.phone}
                         onChange={handleChange}
                         required
                       />
