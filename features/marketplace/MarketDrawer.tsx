@@ -42,7 +42,7 @@ interface MarketDrawerProps {
   setCart: Dispatch<SetStateAction<cartProductProps[]>>
 }
 
-interface FormState {
+export interface FormState {
   shipping: {
     address: string
     city: string
@@ -75,6 +75,7 @@ const initialFormState: FormState = {
     phone: 0,
   },
 }
+
 
 export const MarketDrawer: React.FC<MarketDrawerProps> = ({
   isOpen,
@@ -856,6 +857,8 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                 email={form.payment.email}
                 amount={calculateTotalPrice(cart) + deliveryFee}
                 setCart={setCart}
+                cart={cart}
+                form={form}
                 setState={setState}
               />
 
