@@ -3,6 +3,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 import { usePaystackPayment } from 'react-paystack' // Assuming you're using react-paystack
 import { cartProductProps } from '../features/marketplace/MarketNav'
 import { FormState } from '../features/marketplace/MarketDrawer'
+import { paystackKey, productScriptUrl } from '../constant'
 
 interface PaystackProps {
   email: string
@@ -27,72 +28,55 @@ const PaystackPaymentButton: React.FC<PaystackProps> = ({
     reference: new Date().getTime().toString(),
     email,
     amount: amount * 100, // Convert amount to kobo for Paystack (N200 = 20000 kobo)
-    publicKey: 'pk_test_ccd9d31670a4e4be4917412334639e338067d4be', // Replace with your test/live public key
+    publicKey: paystackKey, 
   }
-  const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec'
+  const scriptUrl = productScriptUrl
+
   const initializePayment = usePaystackPayment(config)
 
   const handlePayment = async () => {
-    setIsLoading(true) // Set loading state to indicate payment processing
-    // Convert object to FormData
-    const formData = new FormData()
+    setIsLoading(true)
+
 
     try {
       await initializePayment({
         ...config,
         onSuccess: (ref) => {
-          console.log(ref)
-          const formDataObject: any = {
-            ...form.shipping,
-            ...form.payment,
-            status: ref.status,
-            purchase_amount: amount.toLocaleString(),
-            payment_reference: ref.reference,
-            transaction_ref: ref.trans,
-            products: [...cart],
-          }
+          // Loop through each item in the cart
+          for  (let i = 0; i < cart.length; i++) {
+            const item = cart[i]
+            console.log(item)
+            const formData = new FormData()
+            // Prepare formDataObject for the current cart item
+            const formDataObject: any = {
+              ...form.shipping,
+              ...form.payment,
+              status: ref.status,
+              purchase_amount: amount.toLocaleString(),
+              payment_reference: ref.reference,
+              transaction_ref: ref.trans,
+              ...item, // Spread the current cart item data
+            }
 
-          // Append fields from formDataObject
-          for (const key in formDataObject) {
-            const value = formDataObject[key]
-            if (Array.isArray(value)) {
-              // If the value is an array, iterate through each object in the array
-              value.forEach((obj, index) => {
-                // Append each key-value pair from the object with a unique key
-                for (const objKey in obj) {
-                  formData.append(
-                    `Product ${objKey} [${index + 1}]`,
-                    obj[objKey],
-                  )
-                }
-              })
-            } else {
-              // If it's not an array, append the value as usual
+            // Append fields from formDataObject to formData
+            for (const key in formDataObject) {
+              const value = formDataObject[key]
               formData.append(key, value)
             }
-          }
 
-          fetch(scriptUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: formData,
-          })
-            .then(() => {
-              setIsLoading(false)
-              setState(5)
-              localStorage.setItem('cart_items', JSON.stringify([]))
+            // Send formData to server
+           fetch(scriptUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              body: formData,
             })
-            .catch((err) => {
-              setIsLoading(false)
-              alert('Something went wrong, kindly contact our support!')
-            })
+          }
+          setIsLoading(false)
+          setState(5)
+          localStorage.setItem('cart_items', JSON.stringify([]))
         },
         onClose: (ref) => {
-          // Handle payment closure (e.g., show user closed payment)
-          setTimeout(() => {
-            setIsLoading(false)
-          }, 2000)
+          setIsLoading(false)
           alert('Payment closed!')
         },
       })

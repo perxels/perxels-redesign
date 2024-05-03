@@ -1,4 +1,4 @@
-import { Box, HStack, Img, Text, useDisclosure } from '@chakra-ui/react'
+import { Badge, Box, HStack, Img, Text, useDisclosure } from '@chakra-ui/react'
 import { Fragment, useEffect, useState } from 'react'
 import { MainContainer } from '../../layouts'
 import { MarketDrawer } from './MarketDrawer'
@@ -63,9 +63,7 @@ export const MarketNav = ({ productData }: any) => {
 
     if (existingProduct) {
       const updatedCart = cart.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item,
+        item.id === product.id ? { ...item, quantity: product.quantity } : item,
       )
       setCart(updatedCart)
       localStorage.setItem('cart_items', JSON.stringify(updatedCart))
@@ -102,13 +100,32 @@ export const MarketNav = ({ productData }: any) => {
             >
               PERXELS STORE
             </Text>
-            <Img
-              cursor="pointer"
-              src="/assets/icons/cart_icon.svg"
-              alt="cart icon"
-              onClick={onOpen}
-              width="30px"
-            />
+            <Box position="relative" onClick={onOpen}>
+              <Img
+                cursor="pointer"
+                src="/assets/icons/cart_icon.svg"
+                alt="cart icon"
+                width="30px"
+              />
+              {cart.length > 0 && (
+                <Badge
+                  position="absolute"
+                  borderRadius="50%"
+                  w="15px"
+                  h="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  bg="brand.purple.500"
+                  color="white"
+                  bottom="-4px"
+                  fontWeight="400"
+                  right="0"
+                >
+                  {cart.length}
+                </Badge>
+              )}
+            </Box>
           </HStack>
         </MainContainer>
       </Box>

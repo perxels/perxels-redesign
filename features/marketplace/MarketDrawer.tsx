@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Breadcrumb,
   BreadcrumbItem,
@@ -32,6 +33,7 @@ import {
 import { BiChevronRight } from 'react-icons/bi'
 import PaystackPaymentButton from '../../utils/PaymentButton'
 import { deliveryFee } from '../../constant'
+import Link from 'next/link'
 
 interface MarketDrawerProps {
   isOpen: boolean // Required and must be a boolean
@@ -75,7 +77,6 @@ const initialFormState: FormState = {
     phone: 0,
   },
 }
-
 
 export const MarketDrawer: React.FC<MarketDrawerProps> = ({
   isOpen,
@@ -166,12 +167,32 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
               mt={['10px', '10px', '40px', '40px']}
               justifyContent="space-between"
             >
+              <Box position="relative" >
               <Img
                 cursor="pointer"
                 src="/assets/icons/cart_icon.svg"
                 alt="cart icon"
                 width="30px"
               />
+              {cart.length > 0 && (
+                <Badge
+                  position="absolute"
+                  borderRadius="50%"
+                  w="15px"
+                  h="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  bg="brand.purple.500"
+                  color="white"
+                  bottom="-4px"
+                  fontWeight="400"
+                  right="0"
+                >
+                  {cart.length}
+                </Badge>
+              )}
+            </Box>
               <DrawerCloseButton
                 top={['25px', '25px', '50px', '50px']}
                 right="20px"
@@ -203,7 +224,8 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
               fontFamily="Proxima Nova"
               fontWeight="600"
               fontSize="18px"
-              onClick={onClose}
+              as={Link}
+              href="/market-place/collections"
             >
               Continue Shopping
             </Button>
@@ -218,12 +240,33 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
               mt={['10px', '10px', '40px', '40px']}
               justifyContent="space-between"
             >
+             <Box position="relative">
               <Img
                 cursor="pointer"
                 src="/assets/icons/cart_icon.svg"
                 alt="cart icon"
                 width="30px"
               />
+              {cart.length > 0 && (
+                <Badge
+                  position="absolute"
+                  borderRadius="50%"
+                  cursor="pointer"
+                  w="15px"
+                  h="15px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  bg="brand.purple.500"
+                  color="white"
+                  bottom="-4px"
+                  fontWeight="400"
+                  right="0"
+                >
+                  {cart.length}
+                </Badge>
+              )}
+            </Box>
               <DrawerCloseButton
                 top={['25px', '25px', '50px', '50px']}
                 right="20px"
@@ -333,7 +376,8 @@ export const MarketDrawer: React.FC<MarketDrawerProps> = ({
                 fontFamily="Proxima Nova"
                 fontWeight="600"
                 fontSize="18px"
-                onClick={onClose}
+                as={Link}
+                href="/market-place/collections"
               >
                 Continue Shopping
               </Button>

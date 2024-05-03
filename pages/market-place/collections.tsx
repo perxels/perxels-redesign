@@ -4,6 +4,8 @@ import { Box, HStack, Text, VStack } from '@chakra-ui/react'
 import Slider from 'react-slick'
 import MarketCardItem from '../../features/marketplace/MarketCardItem'
 import { marketPlaceProducts } from '../../constant'
+import { IoMdArrowDropleft } from 'react-icons/io'
+import Link from 'next/link'
 
 export const Collections = () => {
   // Remove initialSlide state and reference
@@ -12,14 +14,14 @@ export const Collections = () => {
   // const totalSlides = 3 // Total number of slides
 
   const CustomNextArrow: React.FC = (props) => (
-    <div
+    <Box
       {...props}
       id="custom_collections_arrow"
+      right={['10px', '20px', '20px', '20px']}
+      width={['40px', '50px']}
+      h={['40px', '50px']}
       style={{
         display: 'block',
-        width: '50px',
-        height: '50px',
-        right: '20px',
         // Customize positioning and styling for your next arrow image
         backgroundImage: 'url(/assets/icons/right_collection_arrow.svg)', // Replace with your image path
         backgroundSize: 'contain',
@@ -29,17 +31,17 @@ export const Collections = () => {
   )
 
   const CustomPrevArrow: React.FC = (props) => (
-    <div
+    <Box
       {...props}
       id="custom_collections_arrow"
+      left={['10px', '20px', '20px', '20px']}
+      width={['40px', '50px']}
+      h={['40px', '50px']}
       style={{
         display: 'block',
-        width: '50px',
-        height: '50px',
         // Customize positioning and styling for your prev arrow image
         backgroundImage: 'url(/assets/icons/left_collection_arrow.svg)', // Replace with your image path
         backgroundSize: 'cover',
-        left: '20px',
         zIndex: '1000',
         backgroundRepeat: 'no-repeat',
       }}
@@ -52,8 +54,8 @@ export const Collections = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 2.5, // Display 2.5 screens at a time
-    slidesToScroll: 1.5,
-    // Remove initialSlide prop since it's not used anymore
+    slidesToScroll: 2,
+    centerPadding: '0px 50px',
     nextArrow: <CustomNextArrow />,
     prevArrow: <CustomPrevArrow />,
     responsive: [
@@ -84,7 +86,32 @@ export const Collections = () => {
   return (
     <MainContainer>
       <VStack w="full" overflow="hidden">
-        <HStack mt="50px">
+        <HStack
+          w="full"
+          alignItems="center"
+          justifyContent="center"
+          mt="50px"
+          position="relative"
+        >
+          <Text
+            as={Link}
+            fontSize={['30px', '40px']}
+            display="flex"
+            alignItems="center"
+            cursor="pointer"
+            position="absolute"
+            href="/market-place"
+            left="0"
+          >
+            <IoMdArrowDropleft />{' '}
+            <Text
+              as="span"
+              fontSize="18px"
+              display={['none', 'none', 'block', 'block']}
+            >
+              back
+            </Text>
+          </Text>
           <Text
             as="h1"
             fontSize={['24px', '35px']}
@@ -94,7 +121,7 @@ export const Collections = () => {
             Our Collections
           </Text>
         </HStack>
-        <Box mt="50px" h="580px" w="full">
+        <Box mt="50px" h={['530px', '580px', '580px', '580px']} w="full" >
           <Slider {...settings}>
             {marketPlaceProducts.map((item, i) => (
               <MarketCardItem key={i} item={item} />

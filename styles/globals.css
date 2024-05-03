@@ -127,6 +127,14 @@
 #custom_collections_arrow::before {
   content: '' !important;
 }
+
+.slider-container-main {
+  overflow: hidden;
+}
+
+
+
+
 @keyframes spin {
   from {
     transform: rotate(0deg);

@@ -21,8 +21,8 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
     <Stack
       justifyContent="center"
       alignItems="center"
-      w="400px"
-      h="550px"
+      w={['100%', '400px', '400px', '400px']}
+      h={['500px', '550px', '550px', '550px']}
       borderRadius="12px"
       as={Link}
       href={`/market-place/collections/${item.id}`}
