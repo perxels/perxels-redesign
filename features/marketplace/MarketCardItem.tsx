@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Img, Stack, chakra } from '@chakra-ui/react'
+import { Img, Stack } from '@chakra-ui/react'
 import Link from 'next/link'
 
 interface MarketCardItemProps {
@@ -10,7 +10,7 @@ interface MarketCardItemProps {
     price_th: number
     desc: string
     colors: string[]
-    size: string[]
+    size: number[]
     imgUrl: string
     hoverImage: string // Add hoverImage property to the item object
   }
@@ -21,11 +21,11 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
     <Stack
       justifyContent="center"
       alignItems="center"
-      w="400px"
-      h="550px"
+      w={['100%', '400px', '400px', '400px']}
+      h={['500px', '550px', '550px', '550px']}
       borderRadius="12px"
       as={Link}
-      href="/market-place/collections/product"
+      href={`/market-place/collections/${item.id}`}
       bg="#F5F6F7"
       _hover={{ cursor: 'pointer' }}
       position="relative" // Add relative positioning
@@ -33,9 +33,10 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
       <Img
         src={item.imgUrl}
         alt="Product image"
-        objectFit="cover"
+        objectFit="contain"
         objectPosition="center"
         width="100%"
+        height="100%"
       />
       <Img
         src={item.hoverImage}
@@ -43,6 +44,7 @@ const MarketCardItem: React.FC<MarketCardItemProps> = ({ item }) => {
         objectFit="cover"
         objectPosition="center"
         width="100%"
+        height="100%"
         rounded="12px"
         position="absolute" // Position the hoverImage absolutely
         top="0"
