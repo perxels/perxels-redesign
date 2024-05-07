@@ -10,7 +10,7 @@ import {
   SimpleGrid,
   Text,
   VStack,
-  Flex, 
+  Flex,
   List,
   UnorderedList,
   ListItem,
@@ -28,7 +28,7 @@ const lists: string[] = [
   'You have never designed before.',
   // 'You design but you have issues with alignment, color usage, hierarchy, white space and the basic principles of design',
   'People who know nothing about UIUX design but are willing to learn.',
-  'People residing in Ibadan and its environs'
+  'People residing in Ibadan and its environs',
 ]
 
 export const Basic = () => {
@@ -56,33 +56,38 @@ export const Basic = () => {
       backgroundSize={'cover'}
     >
       <MainContainer bg="none">
-        <SimpleGrid  className="basicGrid"  columns={[1, 1, 1, 2]} gap="2.5rem">
+        <SimpleGrid className="basicGrid" columns={[1, 1, 1, 2]} gap="2.5rem">
           <Center>
             <Box>
               <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.dark.200">
-              Foundational UIUX Class
+                Foundational UIUX Class
               </Heading>
               <Flex
-              bg="rgba(227, 113, 156, 0.3)"
-              rounded="6.25rem"
-              display="inline-flex"
-              padding=".4375rem .875rem"
-              columnGap="1.25rem"
-              mb="0.5rem"
+                bg="rgba(227, 113, 156, 0.3)"
+                rounded="6.25rem"
+                display="inline-flex"
+                padding=".4375rem .875rem"
+                columnGap="1.25rem"
+                mb="0.5rem"
               >
-                <HStack
-                columnGap="5px"
-                alignItems="center"
-                >
+                <HStack columnGap="5px" alignItems="center">
                   <Img src="/assets/icons/masterBasicCalender.svg" alt="" />
-                  <Text fontSize={['0.75rem','.9375rem']} color="brand.dark.200" fontWeight="700">
-                 9th March 2024
+                  <Text
+                    fontSize={['0.75rem', '.9375rem']}
+                    color="brand.dark.200"
+                    fontWeight="700"
+                  >
+                    1st, 8th, 25th June 2024
                   </Text>
                 </HStack>
                 <HStack>
                   <Img src="/assets/icons/masterBasicClock.svg" alt="" />
-                  <Text fontSize={['0.75rem','.9375rem']} color="brand.dark.200" fontWeight="700">
-                  10am
+                  <Text
+                    fontSize={['0.75rem', '.9375rem']}
+                    color="brand.dark.200"
+                    fontWeight="700"
+                  >
+                    12pm
                   </Text>
                 </HStack>
               </Flex>
@@ -114,26 +119,38 @@ export const Basic = () => {
                 color="brand.gray.500"
                 mt="3rem"
               >
-               Please note the following:
+                Please note the following:
               </Heading>
               <UnorderedList>
                 <ListItem>
-                <Text
-                fontSize={['xl', 'xl', '2xl']}
-                color="brand.gray.500"
-                mt="1rem"
-              >
-             This is going to be a physical masterclass and the link to the class will be share via the whatsapp group and email
-              </Text>
+                  <Text
+                    fontSize={['xl', 'xl', '2xl']}
+                    color="brand.gray.500"
+                    mt="1rem"
+                  >
+                    This is going to be a physical training at our head office
+                    in Osapa London, Lekki Expressway.
+                  </Text>
                 </ListItem>
                 <ListItem>
-                <Text
-                fontSize={['xl', 'xl', '2xl']}
-                color="brand.gray.500"
-                mt="1rem"
-              >
-            The training is for beginners and those who just started designing
-              </Text>
+                  <Text
+                    fontSize={['xl', 'xl', '2xl']}
+                    color="brand.gray.500"
+                    mt="1rem"
+                  >
+                    The training is for beginners and those who just starts to
+                    design
+                  </Text>
+                </ListItem>
+                <ListItem>
+                  <Text
+                    fontSize={['xl', 'xl', '2xl']}
+                    color="brand.gray.500"
+                    mt="1rem"
+                  >
+                    You will be assigned to a group and the date of your
+                    training will be communicated to you
+                  </Text>
                 </ListItem>
               </UnorderedList>
               {/* <Text
@@ -158,10 +175,18 @@ export const Basic = () => {
                 mt="1rem"
               >
                 {/* You automatically get 15% discount off Perxels paid training on registering for the masterclass */}
-                At the end of this masterclass, participants would be able to do the following: Design simple landing pages, understand the basics of sizing, hierarchy, alignment, consistency, etc.
+                At the end of this masterclass, participants would be able to do
+                the following: Design simple landing pages, understand the
+                basics of sizing, hierarchy, alignment, consistency, etc.
               </Text>
 
-              <HStack mt="1.875rem" gap={['1rem', '0']} spacing={['0', '2rem']} flexWrap="wrap" rowGap="2rem">
+              <HStack
+                mt="1.875rem"
+                gap={['1rem', '0']}
+                spacing={['0', '2rem']}
+                flexWrap="wrap"
+                rowGap="2rem"
+              >
                 <Button
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
