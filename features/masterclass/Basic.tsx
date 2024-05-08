@@ -77,7 +77,7 @@ export const Basic = () => {
                     color="brand.dark.200"
                     fontWeight="700"
                   >
-                    1st, 8th, 25th June 2024
+                    25th May 2024
                   </Text>
                 </HStack>
                 <HStack>
