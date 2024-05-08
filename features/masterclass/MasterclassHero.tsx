@@ -1,14 +1,14 @@
 import { Box, Center, Heading, Img, Text } from '@chakra-ui/react'
-import React, {useEffect, useRef} from 'react'
+import React, { useEffect, useRef } from 'react'
 import { MainContainer } from '../../layouts'
 import gsap from 'gsap'
 export const MasterclassHero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
-  const tl = useRef<any>(gsap.timeline({paused: true}))
+  const tl = useRef<any>(gsap.timeline({ paused: true }))
   useEffect(() => {
-    let ctx = gsap.context(() =>{
+    let ctx = gsap.context(() => {
       //fade in on start
-      gsap.to(heroRef.current, { 
+      gsap.to(heroRef.current, {
         opacity: 1,
         duration: 3,
         y: 0,
@@ -43,7 +43,7 @@ export const MasterclassHero = () => {
       //   immediateRender: true
       // },  "+=0.25").play()
     })
-     return () => ctx.revert()
+    return () => ctx.revert()
   }, [])
   return (
     <Box
@@ -54,16 +54,15 @@ export const MasterclassHero = () => {
       opacity={0}
     >
       <MainContainer bg="none">
-        <Center  flexDir="column" pt="4rem" >
+        <Center flexDir="column" pt="4rem">
           <Heading
             maxW="810px"
             lineHeight="1.2"
             fontSize={['2rem', '2.5rem', '2.5rem', '4.30rem']}
             textAlign="center"
             className="heroText"
-        
           >
-          Free Physical UIUX Design Masterclass
+            Free Physical UIUX Design Masterclass
           </Heading>
 
           <Text
@@ -74,8 +73,11 @@ export const MasterclassHero = () => {
             mt="1.125rem"
             className="heroText"
           >
-             {/* A  special design masterclass to help you transition into UIUX design */}
-             An exclusive physical training for <b>ONLY WOMEN</b>  based in <b> YABA</b> who are looking to embark on a fulfilling design career.
+            An exclusive physical 1-Day free training for those who are
+            interested in transitioning in UIUX Design
+            {/* An exclusive physical training for <b>ONLY WOMEN</b> based in{' '}
+            <b> YABA</b> who are looking to embark on a fulfilling design
+            career. */}
           </Text>
         </Center>
 
