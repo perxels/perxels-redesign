@@ -354,14 +354,14 @@ export const ClassDetails = ({
                 >
                   Tuition:
                   {" "} {" "}
-                  {
+                  {/* {
                    stateLocation ==="discount"  ?
                   (
                  <Text fontSize=".75rem" as="span" padding=".5rem 1.125rem" rounded="15px" bg="#FDF6F6" color="#E3719C" fontWeight="700">
                  Discounted price
                  </Text>
                  ): null
-                 }
+                 } */}
                 </Text>
                 <Flex
                 // justifyContent="flex-start"
@@ -374,7 +374,8 @@ export const ClassDetails = ({
                 color={stateLocation === "discount" ? "#9C9C9C" : " "}
                 >
                   {tabState === 'virtual' || location !== 'ibadan' ? (
-                    location === 'lagos' && tabState === 'physical' ? '₦210,000' : tuition
+                    location === 'lagos' && tabState === 'physical' ? '₦210,000' : ''
+                    // location === 'lagos' && tabState === 'physical' ? '₦210,000' : tuition
                   ) : physicalTuition}
                 </Heading>
                 {
