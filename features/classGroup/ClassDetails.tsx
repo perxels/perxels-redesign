@@ -15,7 +15,6 @@ import {
   HStack,
   keyframes,
   Flex,
-
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
@@ -23,7 +22,7 @@ import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { ClassGroupDetailsProps } from '../../constant'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import {ImLocation2} from 'react-icons/im'
+import { ImLocation2 } from 'react-icons/im'
 // added class details props
 
 const glow = keyframes`
@@ -53,11 +52,11 @@ export const ClassDetails = ({
   address,
   branchAddress,
   installmentPhysical,
-  classTimePhysical, 
+  classTimePhysical,
   isAddress,
   stateLocation,
   enrolRoute,
-  isPhysical
+  isPhysical,
 }: ClassGroupDetailsProps) => {
   console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
@@ -226,7 +225,7 @@ export const ClassDetails = ({
                 w="full"
                 fontSize={['lg', 'lg', 'lg', '2xl']}
               >
-                {tabState === 'virtual' ?  classTime : classTimePhysical}
+                {tabState === 'virtual' ? classTime : classTimePhysical}
               </Heading>
             </VStack>
             <VStack spacing="5px">
@@ -244,34 +243,39 @@ export const ClassDetails = ({
                 fontSize={['lg', 'lg', 'lg', '2xl']}
                 pr={['1rem', '1rem']}
               >
-                  {tabState === 'virtual' ?  classType ? classType :  "ONLINE"   : "PHYSICAL TRAINING"}
+                {tabState === 'virtual'
+                  ? classType
+                    ? classType
+                    : 'ONLINE'
+                  : 'PHYSICAL TRAINING'}
               </Heading>
             </VStack>
-            {
-              isTab ? (
-                <VStack spacing="5px">
-              <Text
-                w="full"
-                fontSize={['lg', 'lg', 'lg', '2xl']}
-                color="brand.gray.200"
-              >
-                {tabState === 'virtual' ? null : 'Address:'}
-              </Text>
-              <Heading
-                color="brand.dark.200"
-                textTransform="uppercase"
-                w="full"
-                fontSize={['lg', 'lg', 'lg', '2xl']}
-                pr={['1rem', '1rem']}
-              >
-                { tabState === 'physical' && location === 'lagos' ? address :  ( location === 'ibadan' ? branchAddress : null)}
-              </Heading>
-            </VStack>
-              ) : null
-            }
-            {
-              isAddress && (
-                <VStack spacing="5px">
+            {isTab ? (
+              <VStack spacing="5px">
+                <Text
+                  w="full"
+                  fontSize={['lg', 'lg', 'lg', '2xl']}
+                  color="brand.gray.200"
+                >
+                  {tabState === 'virtual' ? null : 'Address:'}
+                </Text>
+                <Heading
+                  color="brand.dark.200"
+                  textTransform="uppercase"
+                  w="full"
+                  fontSize={['lg', 'lg', 'lg', '2xl']}
+                  pr={['1rem', '1rem']}
+                >
+                  {tabState === 'physical' && location === 'lagos'
+                    ? address
+                    : location === 'ibadan'
+                    ? branchAddress
+                    : null}
+                </Heading>
+              </VStack>
+            ) : null}
+            {isAddress && (
+              <VStack spacing="5px">
                 <Text
                   w="full"
                   fontSize={['lg', 'lg', 'lg', '2xl']}
@@ -285,12 +289,11 @@ export const ClassDetails = ({
                   w="full"
                   fontSize={['lg', 'lg', 'lg', '2xl']}
                   pr={['1rem', '1rem']}
-                > 
+                >
                   {address}
                 </Heading>
               </VStack>
-              )
-            }
+            )}
             <VStack spacing="5px">
               <Text
                 w="full"
@@ -299,33 +302,29 @@ export const ClassDetails = ({
               >
                 Installments:
               </Text>
-             {
-              tabState === 'virtual' ? (
-                installments.map((installment) => (
-                  <Heading
-                    key={installment}
-                    color="brand.dark.200"
-                    textTransform="uppercase"
-                    w="full"
-                    fontSize={['lg', 'lg', 'lg', '2xl']}
-                  >
-                    {installment}
-                  </Heading>
-                ))
-              ):(
-                installmentPhysical?.map((installmentPhysical) => (
-                  <Heading
-                    key={installmentPhysical}
-                    color="brand.dark.200"
-                    textTransform="uppercase"
-                    w="full"
-                    fontSize={['lg', 'lg', 'lg', '2xl']}
-                  >
-                    {installmentPhysical}
-                  </Heading>
-                ))
-              )
-             }
+              {tabState === 'virtual'
+                ? installments.map((installment) => (
+                    <Heading
+                      key={installment}
+                      color="brand.dark.200"
+                      textTransform="uppercase"
+                      w="full"
+                      fontSize={['lg', 'lg', 'lg', '2xl']}
+                    >
+                      {installment}
+                    </Heading>
+                  ))
+                : installmentPhysical?.map((installmentPhysical) => (
+                    <Heading
+                      key={installmentPhysical}
+                      color="brand.dark.200"
+                      textTransform="uppercase"
+                      w="full"
+                      fontSize={['lg', 'lg', 'lg', '2xl']}
+                    >
+                      {installmentPhysical}
+                    </Heading>
+                  ))}
             </VStack>
 
             {isShow ||
@@ -352,8 +351,7 @@ export const ClassDetails = ({
                   fontSize={['lg', 'lg', 'lg', '2xl']}
                   color="brand.gray.200"
                 >
-                  Tuition:
-                  {" "} {" "}
+                  Tuition:{' '}
                   {/* {
                    stateLocation ==="discount"  ?
                   (
@@ -364,28 +362,34 @@ export const ClassDetails = ({
                  } */}
                 </Text>
                 <Flex
-                // justifyContent="flex-start"
-                alignItems="flex-start"
-                columnGap="1.1875rem"
-                flexDirection="column"
+                  // justifyContent="flex-start"
+                  alignItems="flex-start"
+                  columnGap="1.1875rem"
+                  flexDirection="column"
                 >
-                <Heading  fontSize={isSponsor || isPhysical ? '20px'  : ['6xl', '6xl', '7xl']}
-                textDecoration={stateLocation === "discount" ? "line-through" : " "}
-                color={stateLocation === "discount" ? "#9C9C9C" : " "}
-                >
-                  {tabState === 'virtual' || location !== 'ibadan' ? (
-                    location === 'lagos' && tabState === 'physical' ? '₦210,000' : ''
-                    // location === 'lagos' && tabState === 'physical' ? '₦210,000' : tuition
-                  ) : physicalTuition}
-                </Heading>
-                {
-                isSponsor || isPhysical ? (<>
-                    <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
-                  {physicalTuition}
-                </Heading>
-                </>
-                ) : null
-              }
+                  <Heading
+                    fontSize={
+                      isSponsor || isPhysical ? '20px' : ['6xl', '6xl', '7xl']
+                    }
+                    textDecoration={
+                      stateLocation === 'discount' ? 'line-through' : ' '
+                    }
+                    color={stateLocation === 'discount' ? '#9C9C9C' : ' '}
+                  >
+                    {tabState === 'virtual' || location !== 'ibadan'
+                      ? // location === 'lagos' && tabState === 'physical' ? '₦210,000' : ''
+                        location === 'lagos' && tabState === 'physical'
+                        ? '₦210,000'
+                        : tuition
+                      : physicalTuition}
+                  </Heading>
+                  {isSponsor || isPhysical ? (
+                    <>
+                      <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
+                        {physicalTuition}
+                      </Heading>
+                    </>
+                  ) : null}
                 </Flex>
               </Flex>
             </GridItem>
@@ -399,7 +403,13 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['none', 'none', 'none', 'inline-block']}
             as={Link}
-            href={isSponsor ? '/sponsorship/signup' : isPhysical ? enrolRoute : '/signup'}
+            href={
+              isSponsor
+                ? '/sponsorship/signup'
+                : isPhysical
+                ? enrolRoute
+                : '/signup'
+            }
           >
             {isSponsor ? 'Apply Now' : 'Enroll For This Plan'}
           </Button>
@@ -445,9 +455,15 @@ export const ClassDetails = ({
             fontSize="2xl"
             display={['inline-block', 'inline-block', 'inline-block', 'none']}
             as={Link}
-            w={"99%"}
+            w={'99%'}
             textAlign="center"
-            href={isSponsor ? '/sponsorship/signup' : isPhysical ? enrolRoute : '/signup'}
+            href={
+              isSponsor
+                ? '/sponsorship/signup'
+                : isPhysical
+                ? enrolRoute
+                : '/signup'
+            }
           >
             {isSponsor ? 'Apply For Scholarship' : 'Enroll For This Plan'}
           </Button>

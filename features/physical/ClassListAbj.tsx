@@ -16,7 +16,7 @@ export const ClassPlanAbj = () => {
       classDur="3 Months"
       classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
-      tuition="₦350,000"
+      tuition=""
       courseOutline={[
         ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
         'It includes everything in the Basic and Advanced class curriculum.',
