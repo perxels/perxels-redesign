@@ -11,7 +11,7 @@ export const AbujaSpace = () => {
         <SectionHeader
         subTitle="Physical Spaces"
         title="Join our Physical Space in Abuja"
-        paragraph="Here are some images of our trainings currently happening in our Wuse II, Abuja space. Join us today!"
+        paragraph="Here are some images of our trainings currently happening at our Central Business District, Abuja space. Join us today!"
         />
 
         <Flex
