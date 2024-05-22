@@ -45,7 +45,7 @@ export const AbujaHero = () => {
         opacity={0}
         ref={headingRef}
         >
-           Wuse II, Abuja
+           Central Business District, Abuja
         </Heading>
         {/* <Text
         color="#FFF"
