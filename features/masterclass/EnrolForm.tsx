@@ -18,11 +18,12 @@ const EnrolForm = () => {
   //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
   // const scriptUrl = "https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec"
 
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbwftTI2bqcYNfUCIHBtiY8r_5nwL-VEsz4lR9pv97ORO-h6YLo7vQ0ksKEm7Oc1ZVA/exec"
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec'
+  // last url const scriptUrl = "https://script.google.com/macros/s/AKfycbwftTI2bqcYNfUCIHBtiY8r_5nwL-VEsz4lR9pv97ORO-h6YLo7vQ0ksKEm7Oc1ZVA/exec"
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
-  const [classVal, setClassValue] = useState<string> ("")
+  const [classVal, setClassValue] = useState<string>('')
   return (
     <>
       <SuccessModal
@@ -45,7 +46,7 @@ const EnrolForm = () => {
           textAlign="left"
           color="brand.dark.100"
         >
-        Please kindly input your information in the boxes below.
+          Please kindly input your information in the boxes below.
         </Heading>
 
         <Formik
@@ -58,8 +59,7 @@ const EnrolForm = () => {
             howdidyouknow: '',
             category: '',
             laptop: '',
-            attend: ''
-           
+            attend: '',
           }}
           validationSchema={Yup.object({
             name: Yup.string().required('Name is required'),
@@ -75,13 +75,12 @@ const EnrolForm = () => {
             reason: Yup.string().required('Reason is required'),
             category: Yup.string().required('Category is required'),
             laptop: Yup.string().required('Laptop is Required'),
-           
           })}
           onSubmit={(values, action) => {
             setLoading(true)
             // setClassValue(values.class)
             console.log(values)
-          
+
             const formData = new FormData()
 
             formData.append('name', values.name as string)
@@ -125,7 +124,6 @@ const EnrolForm = () => {
                 formik.handleSubmit()
               }}
             >
-              
               <Input
                 h="3.5rem"
                 placeholder="Name*"
@@ -156,7 +154,6 @@ const EnrolForm = () => {
                 placeholder="Phone Number*"
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="phone"
-            
                 value={formik.values.phone}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -199,8 +196,7 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-
-<Select
+              <Select
                 h="3.5rem"
                 placeholder="This training is going to be physical, will you be available to attend physically?"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -221,7 +217,7 @@ const EnrolForm = () => {
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </Select>
-              {formik.touched.attend && formik.errors.attend   ? (
+              {formik.touched.attend && formik.errors.attend ? (
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.attend}
                 </Text>
@@ -253,7 +249,6 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-
               <Input
                 h="3.5rem"
                 type="text"
@@ -277,7 +272,7 @@ const EnrolForm = () => {
                   {formik.errors.location}
                 </Text>
               ) : null}
-                <Input
+              <Input
                 h="3.5rem"
                 type="text"
                 placeholder="Why do you want to join the session? *"
@@ -324,9 +319,7 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-   
-
-            {/* <Select
+              {/* <Select
                 h="3.5rem"
                 placeholder="Which date are you attending"
                 _placeholder={{ color: 'brand.dark.200' }}
@@ -376,7 +369,9 @@ const EnrolForm = () => {
                 <option value="LinkedIn">LinkedIn</option>
                 <option value="Instagram">Instagram</option>
                 <option value="WhatsApp">WhatsApp</option>
-                <option value= "Customer Representative">Customer Representative</option>
+                <option value="Customer Representative">
+                  Customer Representative
+                </option>
                 <option value="Friends">Friends</option>
                 <option value="Banner on the road">Banner on the road</option>
               </Select>
@@ -385,7 +380,7 @@ const EnrolForm = () => {
                   {formik.errors.howdidyouknow}
                 </Text>
               ) : null}
-{/* 
+              {/* 
 <Select
                 h="3.5rem"
                 placeholder="What date are you attending?"

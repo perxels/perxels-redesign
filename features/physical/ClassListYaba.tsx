@@ -16,7 +16,7 @@ export const ClassPlanYaba = () => {
       classDur="3 Months"
       classTime="2 times a week."
       installments={['70% On Admission;', '30% after one month.']}
-      tuition="₦250,000"
+      tuition=""
       courseOutline={[
         ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
         'It includes everything in the Basic and Advanced class curriculum.',
@@ -37,7 +37,7 @@ export const ClassPlanYaba = () => {
       isPhysical
       // isSponsor
       stateLocation="discount"
-      physicalTuition='₦200,000'
+      physicalTuition='₦250,000'
     />
     </Box>
     </MainContainer>
