@@ -22,14 +22,14 @@ export const bannerContent: BannerContent = {
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage2.jpg',
   description:
-    'Join us for an Exclusive Q&A session with OLUWASEUN AYENI.  A Senior UI/UX Designer, whose top skills are UX Research, User Experience Design (UED), Interaction Design, and Graphic Design who is passionate about creating intuitive and visually appealing digital experiences as he delves into the intricacies of the Double Diamond UX Process offering invaluable insights that will undoubtedly enrich your design journey.',
+    'Join us for an Exclusive Q&A session with Samuel Olayanju',
   content1:
-    "Don't miss this opportunity to grasp the principles and stages of the Double Diamond UX process.",
+    "This session will focus on helping the audience understand:",
   content2:
-    'The objectives and key activities associated with each stage of the Double Diamond framework.',
+    'the concepts of grouping and framing in the context of decision-making and cognitive psychology;',
   content3:
-    'how to effectively apply divergent and convergent thinking techniques within the Double Diamond process.',
-  content4: '',
+    'different types of grouping techniques and framing effects commonly encountered in various domains.',
+  content4: 'the psychological mechanisms underlying grouping and framing and their influence on perception and judgment.',
   speakerName: 'SAMUEL OLAYUNJU',
   speakerRole: 'Product Designer',
 }
