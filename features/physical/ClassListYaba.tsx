@@ -9,9 +9,37 @@ export const ClassPlanYaba = () => {
   return (
     <MainContainer>
     <Box  id="pricing" />
+    <ClassDetails
+        title="Weekend Class"
+        id="#"
+        classDur="12 Weeks."
+        classTime="2 times a week."
+        installments={['70% On Admission;', '30% after one month.']}
+        tuition="₦210,000"
+        courseOutline={[
+          ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
+          'It includes everything in the Basic and Advanced class curriculum.',
+          'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
+          'Exposure to design tips and tricks - shortcuts and resources.',
+          'Work on complex case studies and projects that will build your problem solving skills',
+          'Direct mentorship with a Senior Product Designer.',
+          'Learn how to collaborate with developers and product managers.',
+          'Certificate of Completion.',
+          'Job search support and guidance + job recommendation and placement when available**',
+          '6 weeks internship placement after completing the training.',
+        ]}
+        classType="Physical Training"
+        address="YABA, LAGOS"
+        isAddress
+        // stateLocation="scholarship"
+        enrolRoute="/signup"
+        stateLocation='discount'
+          isPhysical
+        //   isSponsor
+      />
     <Box py=".75rem" >
     <ClassDetails
-      title="Premium Class"
+      title="Weekday Class"
       id="#"
       classDur="3 Months"
       classTime="2 times a week."
