@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Flex, HStack, Box, Text, Spacer, Icon } from '@chakra-ui/react'
 import { IoGrid } from 'react-icons/io5'
 import { FiPlayCircle } from 'react-icons/fi'
@@ -54,17 +54,20 @@ const SidebarData = [
 ]
 
 export const Sidebar = () => {
+  const [currentRoute, setCurrentRoute] = useState('')
   //get route
-  const currentRoute = typeof window !== 'undefined' ? window.location.pathname : ''
+  useEffect(() => {
+    setCurrentRoute(window.location.pathname)
+  }, [])
 
   return (
     <Box
       pr={['1rem', '2rem']}
       height="100%"
-      py={["10%","0"]}
+      py={['10%', '0']}
       borderRight={['none', '1px solid rgba(26, 26, 26, 0.10)']}
     >
-      <Box mb={["32px","72px"]}>
+      <Box mb={['32px', '72px']}>
         <Text
           fontSize="18px"
           fontWeight="400"
@@ -84,49 +87,57 @@ export const Sidebar = () => {
         </Text>
       </Box>
       <Flex
-        flexDir={["row","column"]}
+        flexDir={['row', 'column']}
         rowGap="32px"
-        columnGap={"17px"}
+        columnGap={'17px'}
         mb="32px"
-        pt={["28px","42px"]}
-        overflowY={["scroll","visible"]}
+        pt={['28px', '42px']}
+        overflowY={['scroll', 'visible']}
         width="100%"
-        borderTop={['none','1px solid rgba(26, 26, 26, 0.10)']}
+        borderTop={['none', '1px solid rgba(26, 26, 26, 0.10)']}
       >
         {SidebarData.map((item, index) => {
           return (
             <HStack
-            key={index}
-            spacing={["0px", "20px"]}
-            as={Link}
-            href={item.path}
-            cursor="pointer"
-            _hover={{
+              key={index}
+              spacing={['0px', '20px']}
+              as={Link}
+              href={item.path}
+              cursor="pointer"
+              _hover={{
                 color: '#FFF',
                 backgroundColor: '#34296B',
                 borderRadius: '8px',
-            }}
-            backgroundColor={currentRoute === item.path ? '#34296B' : ["#F8F8F8", "#FFF"]}
-            color = {currentRoute === item.path ? '#FFF' : '#888888'}
-            p={["8px 16px", "12px"]}
-            transition="ease-in-out 0.3s"
-            borderRadius={["66px", "8px"]}
-            sx={{
+              }}
+              backgroundColor={
+                `${currentRoute}` === `${item.path}`
+                  ? '#34296B'
+                  : ['#F8F8F8', '#FFF']
+              }
+              color={`${currentRoute}` === item.path ? '#FFF' : '#888888'}
+              p={['8px 16px', '12px']}
+              transition="ease-in-out 0.3s"
+              borderRadius={['66px', '8px']}
+              sx={{
                 '@media (max-width: 768px)': {
-                    '&:hover': {
-                        borderRadius: '66px',
-                    },
+                  '&:hover': {
+                    borderRadius: '66px',
+                  },
                 },
-            }}
-            border={["1px solid #ECECEC","none"]}
-            minWidth={["fit-content"]}
-            display={["inline-flex"]}
-            flexWrap="wrap"
-            alignItems="center"
-        >
-            <Icon display={["none", "block"]} fontSize={["16px", '20px']} as={item.icon} />
-            <Text   fontSize={["16px", "20px"]}>{item.title}</Text>
-        </HStack>
+              }}
+              border={['1px solid #ECECEC', 'none']}
+              minWidth={['fit-content']}
+              display={['inline-flex']}
+              flexWrap="wrap"
+              alignItems="center"
+            >
+              <Icon
+                display={['none', 'block']}
+                fontSize={['16px', '20px']}
+                as={item.icon}
+              />
+              <Text fontSize={['16px', '20px']}>{item.title}</Text>
+            </HStack>
           )
         })}
       </Flex>

@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Box, Flex, Heading, Text, Image, ModalHeader, ModalCloseButton, Button, Modal, ModalOverlay, ModalContent, useDisclosure, ModalBody, FormControl, FormLabel, Input, ModalFooter } from "@chakra-ui/react"
+import { Box, Flex, Text, Image, ModalHeader, ModalCloseButton, Button, Modal, ModalOverlay, ModalContent, useDisclosure, ModalBody, FormControl, FormLabel, Input, ModalFooter } from "@chakra-ui/react"
 import { MainContainer } from '../../layouts'
 import {HeroText} from './HeroText'
 export const HeroBook = () => {

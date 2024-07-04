@@ -1,6 +1,27 @@
-import React from 'react'
-import { Box, Text, Heading, Image, Center, Flex } from '@chakra-ui/react'
-export const PdfCards = () => {
+import React, { useEffect, useState } from 'react'
+import {
+  Box,
+  Text,
+  Heading,
+  Image,
+  Center,
+  Flex,
+  useDisclosure,
+} from '@chakra-ui/react'
+import { libraryCardContentProps } from '../../constant'
+import LibraryPdfModal from '../../components/LibraryPdfModal'
+export const PdfCards: React.FC<libraryCardContentProps> = ({
+  bannerImage,
+  mainTitle,
+  subTitle,
+  tag,
+  role,
+  url,
+  data,
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+
   return (
     <Box
       display="flex"
@@ -15,7 +36,11 @@ export const PdfCards = () => {
           width="100%"
           borderRadius={'8px 8px 0px 0px'}
           objectFit={'cover'}
-          src="/assets/images/library/libraryImage1.png"
+          src={
+            bannerImage
+              ? bannerImage
+              : './assets/images/library/libraryImage1.png'
+          }
           alt="libraryCard1"
         />
       </Box>
@@ -35,7 +60,7 @@ export const PdfCards = () => {
             display="inline-flex"
             p="6px 10px"
           >
-            AMA Session
+            {tag}
           </Center>
           <Center
             mb="16px"
@@ -45,30 +70,39 @@ export const PdfCards = () => {
             display="inline-flex"
             p="6px 10px"
             background="#363576"
+            cursor="pointer"
+            onClick={onOpen}
           >
             Download
           </Center>
         </Flex>
 
         <Heading fontSize="24px" lineHeight="120%" fontWeight="600">
-        Laws of UX
+          {mainTitle}
         </Heading>
         <Text
           fontSize="18px"
           color="#1A1A1A"
           // mt="12px"
         >
-         O&apos;reilley
+          {subTitle}
         </Text>
         <Text
           fontSize="14px"
           color="rgba(26, 26, 26, 0.80)"
           // mt="8px"
-        //   fontStyle={'italic'}
+          //   fontStyle={'italic'}
         >
-            Author
+          {role}
         </Text>
       </Box>
+      <LibraryPdfModal
+        isOpen={isOpen}
+        onClose={onClose}
+        userList={data}
+        title={mainTitle}
+        url={url}
+      />
     </Box>
   )
 }
