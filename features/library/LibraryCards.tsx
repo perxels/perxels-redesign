@@ -33,6 +33,7 @@ export const LibraryCards: React.FC<libraryCardContentProps> = ({
       </Box>
       <Box
         borderRadius={'0px 0px 8px 8px'}
+        minW="100%"
         position="relative"
         p="16px 24px"
         bgColor="rgba(246, 246, 246, 0.65);"
