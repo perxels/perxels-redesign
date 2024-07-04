@@ -11,42 +11,42 @@ export interface libraryCardContentProps {
 export const libraryCardContent: libraryCardContentProps[] = [
   {
     bannerImage: '/assets/images/library/mini_banner_1.png',
-    tag: 'AMA Session',
+    tag: 'E-Book',
     mainTitle: 'The ABC of UI/UX Design',
-    subTitle: 'Elvis ObI',
-    role: 'Lead product designer, E - Margination Studios Limited',
-    url:'/assets/files/THE_ABC_OF_UIUX_DESIGN.pdf'
+    subTitle: '',
+    role: 'Learn the essentials of User Interface and User Experience Design with this ebook. Recomended for beginners!',
+    url: '/assets/files/THE_ABC_OF_UIUX_DESIGN.pdf',
   },
   {
     bannerImage: '/assets/images/library/mini_banner_2.png',
-    tag: 'AMA Session',
+    tag: 'E-Book',
     mainTitle: 'The Best UIUX Design School In Nigeria',
-    subTitle: 'Elvis ObI',
-    role: 'Lead product designer, E - Margination Studios Limited',
-    url:'/assets/files/THE_BEST_UIUX _DESIGN_SCHOOL_IN_NIGERIA.pdf'
+    subTitle: '',
+    role: 'Learn about the best UIUX Design school currently in Nigeria. Unlock your potential!',
+    url: '/assets/files/THE_BEST_UIUX _DESIGN_SCHOOL_IN_NIGERIA.pdf',
   },
   {
     bannerImage: '/assets/images/library/mini_banner_3.png',
-    tag: 'AMA Session',
+    tag: 'E-Book',
     mainTitle: '5 Things To Know Before Transitioning Into UIUX Design',
-    subTitle: 'Elvis ObI',
-    role: 'Lead product designer, E - Margination Studios Limited',
-    url:'/assets/files/THINGS_YOU_MUST_KNOW_BEFORE_YOU_TRANSITION_INTO_UIUX_DESIGN.pdf'
+    subTitle: '',
+    role: "Transition smoothly with '5 Things You Must Know Before UIUX Design' – essential insights for aspiring designers",
+    url: '/assets/files/THINGS_YOU_MUST_KNOW_BEFORE_YOU_TRANSITION_INTO_UIUX_DESIGN.pdf',
   },
   {
     bannerImage: '/assets/images/library/mini_banner_4.png',
-    tag: 'AMA Session',
+    tag: 'E-Book',
     mainTitle: 'The Ultimate Figma Interface Handbook',
-    subTitle: 'Elvis ObI',
-    role: 'Lead product designer, E - Margination Studios Limited',
-    url:'/assets/files/THE_ULTIMATE_FIGMA_INTERFACE_HANDBOOK.pdf'
+    subTitle: '',
+    role: "Get Familiar with the Interface of Figma' – your guide to navigating design with ease",
+    url: '/assets/files/THE_ULTIMATE_FIGMA_INTERFACE_HANDBOOK.pdf',
   },
   {
     bannerImage: '/assets/images/library/mini_banner_5.png',
-    tag: 'AMA Session',
+    tag: 'E-Book',
     mainTitle: 'UIUX Design Resume Template',
-    subTitle: 'Elvis ObI',
-    role: 'Lead product designer, E - Margination Studios Limited',
-    url:'/assets/files/THE_ABC_OF_UIUX_DESIGN.pdf'
+    subTitle: '',
+    role: '',
+    url: '/assets/files/THE_ABC_OF_UIUX_DESIGN.pdf',
   },
 ]
