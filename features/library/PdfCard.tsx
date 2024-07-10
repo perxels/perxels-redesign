@@ -18,9 +18,10 @@ export const PdfCards: React.FC<libraryCardContentProps> = ({
   role,
   url,
   data,
+  dataChanged,
+  setDataChanged,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
 
   return (
     <Box
@@ -102,6 +103,8 @@ export const PdfCards: React.FC<libraryCardContentProps> = ({
         userList={data}
         title={mainTitle}
         url={url}
+        dataChanged={dataChanged}
+        setDataChanged={setDataChanged}
       />
     </Box>
   )

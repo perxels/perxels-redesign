@@ -4,13 +4,19 @@ import { SectionHeader } from '../../components'
 import { ClassGroupContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import { ClassCard } from './ClassCard'
-import {OnlineClassPlan, PhysicalClassPlan} from './ClassPlan'
+import { OnlineClassPlan, PhysicalClassPlan } from './ClassPlan'
 import gsap from 'gsap'
 
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
-export const OurClassGroup = ({ title }: { title?: string }) => {
+export const OurClassGroup = ({
+  title,
+  library,
+}: {
+  title?: string
+  library?: Boolean
+}) => {
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.from('.class-group-card', {
@@ -31,7 +37,13 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
   }, [])
 
   return (
-    <Box mt={['3.5rem', '3.75rem', '0']} mb={['3.75rem', '3.75rem', '7.5rem']} className="class-group-wrapper">
+    <Box
+      mt={
+        library ? ['1rem', '1rem', '0', '0'] : ['3.5rem', '3.75rem', '0', '0']
+      }
+      mb={['3.75rem', '3.75rem', '7.5rem']}
+      className="class-group-wrapper"
+    >
       <MainContainer>
         <SectionHeader
           subTitle={title || 'Our CLass Groups'}
@@ -39,10 +51,9 @@ export const OurClassGroup = ({ title }: { title?: string }) => {
           paragraph="Our class groups are designed to accommodate your current level of design and unique learning process."
         />
 
-
         <Flex flexDir="column" rowGap="30px">
-        <OnlineClassPlan/>
-        <PhysicalClassPlan/>
+          <OnlineClassPlan />
+          <PhysicalClassPlan />
         </Flex>
         {/* <SimpleGrid
           mb={['3.75rem', '3.75rem', '7rem']}

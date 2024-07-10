@@ -17,6 +17,8 @@ import { libraryCardContent } from '../../constant'
 export const PdfCardLayout = () => {
   const [data, setData] = useState<string[][] | null>(null)
   const [dataLoading, setDataLoading] = useState(false)
+  const [dataChanged, setDataChanged] = useState(0)
+
   useEffect(() => {
     const fetchData = async () => {
       setDataLoading(true)
@@ -39,7 +41,7 @@ export const PdfCardLayout = () => {
     }
 
     fetchData()
-  }, [])
+  }, [dataChanged])
   return (
     <Box>
       <SimpleGrid py="10%" columns={[1, 2, 2]} spacing="32px">
@@ -65,6 +67,8 @@ export const PdfCardLayout = () => {
                   role={item.role}
                   url={item.url}
                   data={data}
+                  dataChanged={dataChanged}
+                  setDataChanged={setDataChanged}
                 />
               )
             })}
