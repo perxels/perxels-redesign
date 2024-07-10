@@ -10,16 +10,32 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
+  Text,
 } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
+import { generateOTP, sendOTPEmail } from '../utils/email'
 
-const LibraryPdfModal = ({ isOpen, onClose, url, userList, title }: any) => {
+const LibraryPdfModal = ({
+  isOpen,
+  onClose,
+  url,
+  userList,
+  title,
+  dataChanged,
+  setDataChanged,
+}: any) => {
   const initialRef = useRef<HTMLInputElement>(null)
   const finalRef = useRef<HTMLInputElement>(null)
   const [email, setEmail] = useState('')
   const [fullName, setFullName] = useState('')
+  const [whatYouDo, setWhatYouDo] = useState('')
+  const [isOtp, setIsOtp] = useState(false)
+  const [otp, setOtp] = useState('')
+  const [enteredOtp, setEnteredOtp] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  const trimmedMail = email.trim().toLowerCase()
+  const trimmedName = fullName.trim()
 
   useEffect(() => {
     const userExist = localStorage.getItem('userLibraryActivity')
@@ -27,10 +43,12 @@ const LibraryPdfModal = ({ isOpen, onClose, url, userList, title }: any) => {
       const parsedUser = JSON.parse(userExist)
       setEmail(parsedUser.email)
       setFullName(parsedUser.fullName)
+      setWhatYouDo(parsedUser.whatYouDo)
     }
-  }, [])
+  }, [isOpen])
 
   const handlePdfDownload = (pdfUrl: string) => {
+    setIsLoading(true)
     const url = pdfUrl // Replace with your PDF file path
     fetch(url)
       .then((response) => response.blob())
@@ -43,29 +61,59 @@ const LibraryPdfModal = ({ isOpen, onClose, url, userList, title }: any) => {
         a.click()
         a.remove()
         onClose()
+        setIsLoading(false)
+        const userExist = localStorage.getItem('userLibraryActivity')
+        if (userExist) {
+          const parsedUser = JSON.parse(userExist)
+          if (parsedUser.email != trimmedMail) {
+            setDataChanged(dataChanged + 1)
+          }
+        } else {
+          setDataChanged(dataChanged + 1)
+        }
+        localStorage.setItem(
+          'userLibraryActivity',
+          JSON.stringify({
+            email: trimmedMail,
+            fullName: trimmedName,
+            whatYouDo,
+          }),
+        )
       })
-      .catch((error) => console.error('Error downloading PDF:', error))
+      .catch((error) => {
+        setIsLoading(false)
+        console.error('Error downloading PDF:', error)
+      })
   }
 
-  const handleValidate = () => {
-    const trimmedMail = email.trim().toLowerCase()
-    const trimmedName = fullName.trim()
-
-    localStorage.setItem(
-      'userLibraryActivity',
-      JSON.stringify({ email: trimmedMail, fullName: trimmedName }),
-    )
+  const handleValidate = async () => {
+    if (!email || !fullName || !whatYouDo) {
+      return alert('Kindly Fill All Inputs!')
+    }
 
     if (userList.includes(trimmedMail)) {
       return handlePdfDownload(url)
+    } else {
+      setIsOtp(true)
+      const generatedOtp = generateOTP()
+      setOtp(generatedOtp)
+      setIsLoading(true)
+      setEnteredOtp('')
+      await sendOTPEmail(email, fullName, generatedOtp)
+      setIsLoading(false)
     }
+  }
 
+  const recordUser = () => {
+    setIsOtp(false)
     setIsLoading(true)
     const formData = new FormData()
     //current date and time
     formData.append('fullName', trimmedName)
     formData.append('email', trimmedMail)
+    formData.append('what_you_do', whatYouDo.trim())
     formData.append('downloadDate', new Date().toLocaleString())
+    formData.append('downloaded_pdf', title)
 
     //continue form submission
     fetch(
@@ -92,6 +140,14 @@ const LibraryPdfModal = ({ isOpen, onClose, url, userList, title }: any) => {
       })
   }
 
+  const verifyOtp = () => {
+    if (otp === enteredOtp.trim()) {
+      return recordUser()
+    } else {
+      alert('Invalid OTP')
+    }
+  }
+
   return (
     <Modal
       initialFocusRef={initialRef}
@@ -104,39 +160,72 @@ const LibraryPdfModal = ({ isOpen, onClose, url, userList, title }: any) => {
         <ModalHeader>Signup to Download</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-          <FormControl>
-            <FormLabel>Full Name</FormLabel>
-            <Input
-              ref={initialRef}
-              focusBorderColor="blue"
-              onChange={(e) => setFullName(e.target.value)}
-              value={fullName}
-              placeholder="Full name"
-            />
-          </FormControl>
+          {isOtp ? (
+            <>
+              <Text mb={8}>An Otp has been sent to {email}</Text>
+              <FormControl>
+                <FormLabel>Enter OTP </FormLabel>
+                <Input
+                  ref={initialRef}
+                  focusBorderColor="blue"
+                  onChange={(e) => setEnteredOtp(e.target.value)}
+                  value={enteredOtp}
+                  placeholder="enter otp"
+                />
+              </FormControl>
+            </>
+          ) : (
+            <>
+              <FormControl>
+                <FormLabel>Full Name</FormLabel>
+                <Input
+                  ref={initialRef}
+                  focusBorderColor="blue"
+                  onChange={(e) => setFullName(e.target.value)}
+                  value={fullName}
+                  placeholder="Full name"
+                />
+              </FormControl>
 
-          <FormControl mt={4}>
-            <FormLabel>Email</FormLabel>
-            <Input
-              focusBorderColor="blue"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              placeholder="email address"
-            />
-          </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Email</FormLabel>
+                <Input
+                  focusBorderColor="blue"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  placeholder="email address"
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>What do you do?</FormLabel>
+                <Input
+                  focusBorderColor="blue"
+                  onChange={(e) => setWhatYouDo(e.target.value)}
+                  value={whatYouDo}
+                  placeholder="e.g: Brand Designer"
+                />
+              </FormControl>
+            </>
+          )}
         </ModalBody>
 
         <ModalFooter>
           <Button
             isLoading={isLoading}
-            loadingText="Downloading.."
+            loadingText={isOtp ? 'Sending..' : 'Downloading..'}
             colorScheme="blue"
             mr={3}
-            onClick={handleValidate}
+            onClick={isOtp ? verifyOtp : handleValidate}
           >
-            Download
+            {isOtp ? 'Verify' : 'Next'}
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button
+            variant="outline"
+            _hover={{ backgroundColor: 'white', color: '#34296B' }}
+            onClick={isOtp ? () => setIsOtp(false) : onClose}
+          >
+            {isOtp ? 'Back' : 'Cancel'}
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

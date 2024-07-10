@@ -93,8 +93,19 @@ export const Sidebar = () => {
         mb="32px"
         pt={['28px', '42px']}
         overflowY={['scroll', 'visible']}
+        overflowX="auto"
         width="100%"
         borderTop={['none', '1px solid rgba(26, 26, 26, 0.10)']}
+        sx={{
+          '@media (max-width: 768px)': {
+            '-webkit-overflow-scrolling': 'touch', // For smooth scrolling on mobile
+            '&::-webkit-scrollbar': {
+              display: 'none', // Hide scrollbar for Webkit browsers (Chrome, Safari)
+            },
+            '-ms-overflow-style': 'none', // Hide scrollbar for Internet Explorer and Edge
+            'scrollbar-width': 'none', // Hide scrollbar for Firefox
+          },
+        }}
       >
         {SidebarData.map((item, index) => {
           return (
@@ -105,9 +116,8 @@ export const Sidebar = () => {
               href={item.path}
               cursor="pointer"
               _hover={{
-                color: '#FFF',
-                backgroundColor: '#34296B',
-                borderRadius: '8px',
+                color:
+                  `${currentRoute}` === `${item.path}` ? 'white' : '#34296B',
               }}
               backgroundColor={
                 `${currentRoute}` === `${item.path}`
@@ -141,6 +151,8 @@ export const Sidebar = () => {
           )
         })}
       </Flex>
+
+
     </Box>
   )
 }

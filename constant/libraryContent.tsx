@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export interface libraryCardContentProps {
   bannerImage?: string
   url?: string
@@ -6,6 +8,8 @@ export interface libraryCardContentProps {
   subTitle: string
   role: string
   data?: string[][] | null
+  dataChanged?: Number
+  setDataChanged?: Dispatch<SetStateAction<number>>
 }
 
 export const libraryCardContent: libraryCardContentProps[] = [
