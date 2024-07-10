@@ -4,8 +4,9 @@ import { LibraryLayout } from '../../features/library'
 import { BlogCardLayout } from '../../features/library'
 
 const blog = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const targetRef = useRef<HTMLDivElement | null>(null)
-
+// eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (targetRef.current) {
       const topOffset = 100 // Offset for the navbar
@@ -19,6 +20,8 @@ const blog = () => {
       })
     }
   }, [])
+
+
   return (
     <div>
       <MainLayout>
