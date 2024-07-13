@@ -62,8 +62,13 @@ export const ClassDetails = ({
   const [tabState, setTabState] = useState('virtual')
   const [location, setLocation] = useState('lagos')
   const glowAnimation = `${glow} 2s ease-in-out infinite`
+  const router = useRouter()
+  const currentPath = router.pathname
   return (
-    <SimpleGrid id={id} columns={[1, 1, 1, 12]}>
+    <SimpleGrid
+      id={id}
+      columns={currentPath.includes('/library/courses') ? 1 : [1, 1, 1, 12]}
+    >
       <GridItem colSpan={[1, 1, 1, 4]}>
         <Box
           px={['0.75rem', '0.75rem', '0.75rem', '1.875rem']}

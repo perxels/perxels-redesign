@@ -6,19 +6,20 @@ import { PdfCardLayout } from '../../features/library'
 const pdf = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const targetRef = useRef<HTMLDivElement | null>(null)
-// eslint-disable-next-line react-hooks/rules-of-hooks
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (targetRef.current) {
-      const topOffset = 100; // Offset for the navbar
-      const elementPosition = targetRef.current.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - topOffset;
+      const topOffset = 100 // Offset for the navbar
+      const elementPosition =
+        targetRef.current.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - topOffset
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth',
-      });
+        behavior: 'instant',
+      })
     }
-  }, []);
+  }, [])
   return (
     <div>
       <MainLayout>

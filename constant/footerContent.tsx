@@ -70,15 +70,15 @@ export const links = [
     links: [
       {
         name: 'Basic Class',
-        url: '/enrol#basic-class',
+        url: '/online#basic-class',
       },
       {
         name: 'Advanced Class',
-        url: '/enrol#advanced-class',
+        url: '/online#advanced-class',
       },
       {
         name: 'Premium Class',
-        url: '/enrol#premium-class',
+        url: '/online#premium-class',
       },
       {
         name: 'Private Class',
