@@ -15,7 +15,7 @@ const videos = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth',
+        
       });
     }
   }, []);

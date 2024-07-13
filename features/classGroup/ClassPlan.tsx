@@ -64,7 +64,7 @@ export const OnlineClassPlan = ({ sm }: any) => {
           fontSize=".9375rem"
           mt={['1.6875rem', '1.875rem']}
           as={Link}
-          href="/online"
+          href={sm ? '/library/courses/online' : '/online'}
         >
           View Online Class Plans
         </Button>
@@ -139,7 +139,7 @@ export const PhysicalClassPlan = ({ sm }: any) => {
           color="#34296B"
           background="#FFF"
           as={Link}
-          href="/physical"
+          href={sm ? '/library/courses/physical' : '/physical'}
         >
           View Physical Class Plans
         </Button>

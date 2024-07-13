@@ -47,7 +47,7 @@ const SidebarData = [
   },
   {
     title: 'Join our community',
-    path: '/about',
+    path: 'https://chat.whatsapp.com/IF3mIjoz6jZ4o1Ni6oynwU',
     icon: FaWhatsapp,
     // cName: 'nav-text',
   },
@@ -151,8 +151,6 @@ export const Sidebar = () => {
           )
         })}
       </Flex>
-
-
     </Box>
   )
 }
