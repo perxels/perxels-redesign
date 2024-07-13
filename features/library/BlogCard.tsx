@@ -23,9 +23,8 @@ export const BlogCard = ({
     >
       <Box maxHeight="253px" width="100%" position="relative">
         <Image
-          height="100%"
           width="100%"
-          minH="208px"
+          height="208px"
           borderRadius={'8px 8px 0px 0px'}
           objectFit={'cover'}
           src={image}
