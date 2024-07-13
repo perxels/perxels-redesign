@@ -1,5 +1,13 @@
 import React from 'react'
-import { Heading, Text, Image, Box } from '@chakra-ui/react'
+import {
+  Heading,
+  Text,
+  Image,
+  Box,
+  List,
+  ListItem,
+  UnorderedList,
+} from '@chakra-ui/react'
 
 export const BlogContentItem = ({ BlogContentData }: any) => {
   return (
@@ -7,14 +15,37 @@ export const BlogContentItem = ({ BlogContentData }: any) => {
       <Box>
         {BlogContentData.map((item: any, i: any) => {
           return item.type === 'image' ? (
-            <Image key={i} src={item.content} alt="" mb="37px" />
+            <Image
+              key={i}
+              width="100%"
+              maxH="600px"
+              src={item.content}
+              objectFit="cover"
+              alt="image"
+              mb="37px"
+            />
           ) : item.type === 'heading' ? (
             <Heading key={i} fontSize={['25px', '35px']} mb="37px">
               {' '}
               {item.content}
             </Heading>
+          ) : item.type === 'subheading' ? (
+            <Heading key={i} fontSize={['20px', '22px']} my="40px">
+              {' '}
+              {item.content}
+            </Heading>
+          ) : item.type === 'list' ? (
+            <UnorderedList spacing={4} my="20px">
+              {item.content.map((inn: any, i: any) => {
+                return (
+                  <ListItem fontSize="18px" color="black">
+                    {inn}
+                  </ListItem>
+                )
+              })}
+            </UnorderedList>
           ) : (
-            <Text key={i} fontSize="20px" color="#434343" mb="30px">
+            <Text key={i} fontSize="20px" color="black" mb="20px">
               {item.content}
             </Text>
           )
