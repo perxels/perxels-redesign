@@ -1,7 +1,7 @@
 import React from 'react'
 import { Heading, Text, Image, Box } from '@chakra-ui/react'
 
-export const BlogContent = ({ BlogContentData }: any) => {
+export const BlogContentItem = ({ BlogContentData }: any) => {
   return (
     <Box>
       <Box>

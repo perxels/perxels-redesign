@@ -6,7 +6,7 @@ import { PhysCardLayout } from '../../../features/physical'
 import { useRouter } from 'next/router'
 import { IoIosArrowBack } from 'react-icons/io'
 
-const physical = () => {
+const Physical = () => {
   const router = useRouter()
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const targetRef = useRef<HTMLDivElement | null>(null)
@@ -20,7 +20,7 @@ const physical = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'instant',
+        
       })
     }
   }, [])
@@ -53,4 +53,4 @@ const physical = () => {
   )
 }
 
-export default physical
+export default Physical

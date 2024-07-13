@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { MainLayout } from '../../../layouts'
 import { LibraryLayout } from '../../../features/library'
-import { BlogContent } from '../../../features/library'
+import { BlogContentItem } from '../../../features/library'
 import { useRouter } from 'next/router'
 import {
   blogContentProps,
   blogContentDataArray,
 } from '../../../constant/blogContent'
 
-const blogContent = () => {
+const BlogContent = () => {
   const router = useRouter()
   const { blogId } = router.query
   const [blogContentData, setBlogContentData] = useState([])
@@ -54,7 +54,7 @@ const blogContent = () => {
     
           window.scrollTo({
             top: offsetPosition,
-            behavior: 'instant',
+            
           })
         }
       }, [])
@@ -64,7 +64,7 @@ const blogContent = () => {
       <MainLayout>
         <LibraryLayout>
         <div ref={targetRef}>
-          <BlogContent BlogContentData={blogContentData} />
+          <BlogContentItem BlogContentData={blogContentData} />
           </div>
         </LibraryLayout>
       </MainLayout>
@@ -72,4 +72,4 @@ const blogContent = () => {
   )
 }
 
-export default blogContent
+export default BlogContent

@@ -21,7 +21,7 @@ const courses = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'instant',
+        
       });
     }
   }, []);

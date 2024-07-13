@@ -16,7 +16,7 @@ const blog = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'instant',
+        
       })
     }
   }, [])

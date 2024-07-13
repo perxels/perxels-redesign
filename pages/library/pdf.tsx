@@ -16,7 +16,7 @@ const pdf = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'instant',
+        
       })
     }
   }, [])

@@ -6,7 +6,7 @@ import { ClassLists } from '../../../features/classGroup'
 import { useRouter } from 'next/router'
 import { IoIosArrowBack } from 'react-icons/io'
 
-const online = () => {
+const Online = () => {
   const router = useRouter()
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const targetRef = useRef<HTMLDivElement | null>(null)
@@ -20,7 +20,7 @@ const online = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'instant',
+        
       })
     }
   }, [])
@@ -51,4 +51,4 @@ const online = () => {
   )
 }
 
-export default online
+export default Online
