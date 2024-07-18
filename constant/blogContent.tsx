@@ -132,16 +132,86 @@ export const blogContentDataArray: blogContentProps[] = [
           'Charging your clients appropriately as a UI/UX designer in Nigeria requires a balance of understanding your value, choosing the right pricing model, and effective communication. By considering these factors and regularly reviewing your rates, you can ensure that you are compensated fairly while providing value to your clients. Remember, your rates not only reflect your skills and experience but also help establish your reputation in the market. Tailoring your approach to the Nigerian context can help you navigate local market conditions and meet the specific needs of your clients.',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content: 'This article was written by Perxels Design School. ',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content:
           "Thank you for reading our insights on starting UI/UX design. At Perxels Design School, we equip you with the skills and confidence to excel. Whether you're new or enhancing your skills, we're here to support you. Join us to transform your passion for design into a thriving career.",
       },
       {
+        type: 'footer',
+        content: 'Stay creative, stay curious, and keep designing!',
+      },
+    ],
+  },
+  {
+    id: 103,
+    title: 'The Best UIUX Design School',
+    writer: 'Perxels',
+    duration: '7 mins read',
+    image: '/assets/images/blogs/best_school/img1.jpg',
+    blog: [
+      {
+        type: 'heading',
+        content: 'The Best UIUX Design School In Nigeria',
+      },
+      {
         type: 'paragraph',
+        content:
+          'Perxels Design School is a trailblazing institution in the field of UIUX education, revolutionizing the way design enthusiasts acquire knowledge and skills. Founded in 2020, Perxels swiftly established itself as the go-to UIUX design school in Nigeria, offering comprehensive programs that cater to both virtual and physical learners.',
+      },
+      { type: 'image', content: '/assets/images/blogs/best_school/img1.jpg' },
+      {
+        type: 'paragraph',
+        content:
+          'Perxels Design School (https://www.perxels.com/) takes pride in its carefully curated class plans, ensuring that students receive a holistic education in UIUX design. The school offers three distinct courses to cater to different skill levels and learning objectives: the Basic class, Advanced class, and Premium class. You can check perxels.com/enrol',
+      },
+      {
+        type: 'paragraph',
+        content:
+          'The Basic class provides a comprehensive introduction to UI design, while the Advanced class focuses on UX principles and techniques. For those seeking a comprehensive learning experience or looking to refine their UIUX skills, the Premium class offers an all-encompassing curriculum. With Perxels, even beginners can grasp complex design concepts and embark on a rewarding UIUX journey. You can check perxels.com/enrolThe students are introduced to a wide range of UIUX terms and concepts. They delve into topics such as user research, wireframing, prototyping, information architecture, interaction design, visual design, and usability testing. These comprehensive lessons equip students with a deep understanding of the UIUX design process,enabling them to create engaging and user-centric digital experiences. ',
+      },
+      { type: 'image', content: '/assets/images/blogs/best_school/img2.jpg' },
+      {
+        type: 'paragraph',
+        content:
+          'With its origins as a virtual school, Perxels Design School recognized the importance of accessibility and inclusivity in design education. Leveraging the power of the internet, Perxels offers virtual classes that allow students from all over Nigeria, and even beyond, to participate in their programs. No matter the location, aspiring designers can access world-class UIUX education from the comfort of their own home. However, for those who prefer a physical learning environment, Perxels has also established physical operations to cater to their needs. The flexibility offered by Perxels ensures that distance is no longer a barrier to pursuing a design education.',
+      },
+      { type: 'image', content: '/assets/images/blogs/best_school/img3.jpg' },
+      {
+        type: 'paragraph',
+        content:
+          'At Perxels Design School (Check perxels.com) , theory meets practice through a unique hands-on learning experience. Students have essential UIUX skills. This practical approach enables students to develop a deep understanding of UIUX principles and gain confidence in their abilities. By immersing themselves in actual design projects, students at Perxels graduate with the mastery needed to thrive in the competitive design industry.',
+      },
+      {
+        type: 'paragraph',
+        content:
+          'Furthermore, Perxels recognizes that being a successful UIUX designer extends beyond technical proficiency. To prepare students for the corporate world, the school emphasizes the development of soft skills. These skills include effective communication, collaboration, problem-solving, and critical thinking. By cultivating these essential attributes, Perxels equips its graduates with the tools necessary to excel in both their design careers and professional interactions.',
+      },
+      { type: 'image', content: '/assets/images/blogs/best_school/img4.png' },
+      {
+        type: 'paragraph',
+        content:
+          'Perxels Design School has established itself as the leading name in UIUX design education in Nigeria. With its commitment to excellence and a track record of nurturing talented designers, Perxels has trained and mentored a significant number of UIUX professionals across the country. The success stories of Perxels alumni stand as a testament to the school’s dedication to producing top-tier design talent.',
+      },
+      {
+        type: 'paragraph',
+        content:
+          'When it comes to comprehensive UIUX design education in Nigeria, Perxels Design School is unmatched. Its virtual and physical learning options, carefully curated class plans, and commitment to fostering design talent have solidified its position as the best design school in the country.',
+      },
+      {
+        type: 'footer',
+        content: 'This article was written by Perxels Design School. ',
+      },
+      {
+        type: 'footer',
+        content:
+          "Thank you for reading our insights on starting UI/UX design. At Perxels Design School, we equip you with the skills and confidence to excel. Whether you're new or enhancing your skills, we're here to support you. Join us to transform your passion for design into a thriving career.",
+      },
+      {
+        type: 'footer',
         content: 'Stay creative, stay curious, and keep designing!',
       },
     ],
@@ -272,16 +342,16 @@ export const blogContentDataArray: blogContentProps[] = [
           'Charging your clients appropriately as a UI/UX designer in Nigeria requires a balance of understanding your value, choosing the right pricing model, and effective communication. By considering these factors and regularly reviewing your rates, you can ensure that you are compensated fairly while providing value to your clients. Remember, your rates not only reflect your skills and experience but also help establish your reputation in the market. Tailoring your approach to the Nigerian context can help you navigate local market conditions and meet the specific needs of your clients.',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content: 'This article was written by Perxels Design School. ',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content:
           "Thank you for reading our insights on starting UI/UX design. At Perxels Design School, we equip you with the skills and confidence to excel. Whether you're new or enhancing your skills, we're here to support you. Join us to transform your passion for design into a thriving career.",
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content: 'Stay creative, stay curious, and keep designing!',
       },
     ],
@@ -432,86 +502,16 @@ export const blogContentDataArray: blogContentProps[] = [
           'Beyond the competition itself, the Design Challenge fostered collaboration and unity among designers, creating a community driven by a shared passion for design excellence. The event will be remembered not only for the impressive designs but also for the lasting connections and memories formed.As the sun set on the Grande Finale, the legacy of the Perxels Design Challenge lives on. We hope it continues to inspire designers to push their creative boundaries, connect with fellow professionals, and contribute to the ever-evolving landscape of UIUX design. The challenge served as a testament to the transformative power of design and the remarkable talents of Nigerian designers.',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content: 'This article was written by Perxels Design School. ',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content:
           "Thank you for reading our insights on starting UI/UX design. At Perxels Design School, we equip you with the skills and confidence to excel. Whether you're new or enhancing your skills, we're here to support you. Join us to transform your passion for design into a thriving career.",
       },
       {
-        type: 'paragraph',
-        content: 'Stay creative, stay curious, and keep designing!',
-      },
-    ],
-  },
-  {
-    id: 103,
-    title: 'The Best UIUX Design School',
-    writer: 'Perxels',
-    duration: '7 mins read',
-    image: '/assets/images/blogs/best_school/img1.jpg',
-    blog: [
-      {
-        type: 'heading',
-        content: 'The Best UIUX Design School In Nigeria',
-      },
-      {
-        type: 'paragraph',
-        content:
-          'Perxels Design School is a trailblazing institution in the field of UIUX education, revolutionizing the way design enthusiasts acquire knowledge and skills. Founded in 2020, Perxels swiftly established itself as the go-to UIUX design school in Nigeria, offering comprehensive programs that cater to both virtual and physical learners.',
-      },
-      { type: 'image', content: '/assets/images/blogs/best_school/img1.jpg' },
-      {
-        type: 'paragraph',
-        content:
-          'Perxels Design School (https://www.perxels.com/) takes pride in its carefully curated class plans, ensuring that students receive a holistic education in UIUX design. The school offers three distinct courses to cater to different skill levels and learning objectives: the Basic class, Advanced class, and Premium class. You can check perxels.com/enrol',
-      },
-      {
-        type: 'paragraph',
-        content:
-          'The Basic class provides a comprehensive introduction to UI design, while the Advanced class focuses on UX principles and techniques. For those seeking a comprehensive learning experience or looking to refine their UIUX skills, the Premium class offers an all-encompassing curriculum. With Perxels, even beginners can grasp complex design concepts and embark on a rewarding UIUX journey. You can check perxels.com/enrolThe students are introduced to a wide range of UIUX terms and concepts. They delve into topics such as user research, wireframing, prototyping, information architecture, interaction design, visual design, and usability testing. These comprehensive lessons equip students with a deep understanding of the UIUX design process,enabling them to create engaging and user-centric digital experiences. ',
-      },
-      { type: 'image', content: '/assets/images/blogs/best_school/img2.jpg' },
-      {
-        type: 'paragraph',
-        content:
-          'With its origins as a virtual school, Perxels Design School recognized the importance of accessibility and inclusivity in design education. Leveraging the power of the internet, Perxels offers virtual classes that allow students from all over Nigeria, and even beyond, to participate in their programs. No matter the location, aspiring designers can access world-class UIUX education from the comfort of their own home. However, for those who prefer a physical learning environment, Perxels has also established physical operations to cater to their needs. The flexibility offered by Perxels ensures that distance is no longer a barrier to pursuing a design education.',
-      },
-      { type: 'image', content: '/assets/images/blogs/best_school/img3.jpg' },
-      {
-        type: 'paragraph',
-        content:
-          'At Perxels Design School (Check perxels.com) , theory meets practice through a unique hands-on learning experience. Students have essential UIUX skills. This practical approach enables students to develop a deep understanding of UIUX principles and gain confidence in their abilities. By immersing themselves in actual design projects, students at Perxels graduate with the mastery needed to thrive in the competitive design industry.',
-      },
-      {
-        type: 'paragraph',
-        content:
-          'Furthermore, Perxels recognizes that being a successful UIUX designer extends beyond technical proficiency. To prepare students for the corporate world, the school emphasizes the development of soft skills. These skills include effective communication, collaboration, problem-solving, and critical thinking. By cultivating these essential attributes, Perxels equips its graduates with the tools necessary to excel in both their design careers and professional interactions.',
-      },
-      { type: 'image', content: '/assets/images/blogs/best_school/img4.png' },
-      {
-        type: 'paragraph',
-        content:
-          'Perxels Design School has established itself as the leading name in UIUX design education in Nigeria. With its commitment to excellence and a track record of nurturing talented designers, Perxels has trained and mentored a significant number of UIUX professionals across the country. The success stories of Perxels alumni stand as a testament to the school’s dedication to producing top-tier design talent.',
-      },
-      {
-        type: 'paragraph',
-        content:
-          'When it comes to comprehensive UIUX design education in Nigeria, Perxels Design School is unmatched. Its virtual and physical learning options, carefully curated class plans, and commitment to fostering design talent have solidified its position as the best design school in the country.',
-      },
-      {
-        type: 'paragraph',
-        content: 'This article was written by Perxels Design School. ',
-      },
-      {
-        type: 'paragraph',
-        content:
-          "Thank you for reading our insights on starting UI/UX design. At Perxels Design School, we equip you with the skills and confidence to excel. Whether you're new or enhancing your skills, we're here to support you. Join us to transform your passion for design into a thriving career.",
-      },
-      {
-        type: 'paragraph',
+        type: 'footer',
         content: 'Stay creative, stay curious, and keep designing!',
       },
     ],
@@ -612,16 +612,16 @@ export const blogContentDataArray: blogContentProps[] = [
           'Starting a UI/UX design career is rewarding, offering creativity and problem-solving opportunities. Each lesson learned has improved my skills. I hope these insights guide and set realistic expectations for new designers. Success comes from using the right tools, structured learning, ongoing research, and real-world experience.',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content: 'This article was written by Perxels Design School. ',
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content:
           "Thank you for reading our insights on starting UI/UX design. At Perxels Design School, we equip you with the skills and confidence to excel. Whether you're new or enhancing your skills, we're here to support you. Join us to transform your passion for design into a thriving career.",
       },
       {
-        type: 'paragraph',
+        type: 'footer',
         content: 'Stay creative, stay curious, and keep designing!',
       },
     ],

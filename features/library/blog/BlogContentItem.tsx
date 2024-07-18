@@ -44,6 +44,16 @@ export const BlogContentItem = ({ BlogContentData }: any) => {
                 )
               })}
             </UnorderedList>
+          ) : item.type === 'footer' ? (
+            <Text
+              key={i}
+              fontStyle="italic"
+              fontSize="20px"
+              color="black"
+              mb="20px"
+            >
+              {item.content}
+            </Text>
           ) : (
             <Text key={i} fontSize="20px" color="black" mb="20px">
               {item.content}

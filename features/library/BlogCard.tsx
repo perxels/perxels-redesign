@@ -36,6 +36,7 @@ export const BlogCard = ({
       <Box
         borderRadius={'0px 0px 8px 8px'}
         position="relative"
+        w="full"
         p="16px 24px"
         bgColor="rgba(246, 246, 246, 0.65);"
       >
