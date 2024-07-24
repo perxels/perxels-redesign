@@ -47,7 +47,7 @@ export default function Home() {
   }
 
   // Example usage:
-  const targetDate = '2024-07-21' // Target date
+  const targetDate = '2024-08-04' // Target date
   const targetHour = 8 // Target hour
   const targetMinute = 30 // Target minute
   const targetPeriod = 'PM' // Target period (AM/PM)

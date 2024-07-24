@@ -16,21 +16,21 @@ interface BannerContent {
 
 export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
-  subTitle:
-    'User-Centric Solutions in Digital Transformation: Strategies and Challenge',
+  subTitle: 'What is Product-Market Fit',
   time: '7pm-8pm',
-  date: '21st July, 2024',
+  date: '4th August, 2024',
   location: 'GOOGLE MEET',
-  bannerImage: '/assets/images/banner/bannerImage.jpeg',
+  bannerImage: '/assets/images/banner/bannerImage.png',
   description:
-    'Join us for an Exclusive Q&A session with Samuel Olumoyeke. Samuel is a Senior UX/UI Designer at CtrlChain, a digital freight forward firm specializing in simplifying and automating logistics management. With a BSc. in Mathematics Education from the University of Lagos (Unilag), he has successfully combined his analytical skills and creative talent to design intuitive, user-friendly digital solutions. His role at CtrlChain involves enhancing the company’s service delivery through innovative and engaging user experiences offering invaluable insights that will undoubtedly enrich your design journey.',
-  content1: 'Don’t miss this opportunity to grasp:',
+    'Join us for an Exclusive Q&A session with Emmanuel Odoemelam. Emmanuel is a digital product designer with over 5 years of experience in the product space. He excels in understanding intricate user workflows, identifying pain points, and translating them into visually appealing designs that deliver exceptional user experiences and drive substantial business growth offering invaluable insights that will undoubtedly enrich your design journey.',
+  content1:
+    'the concept of Product-Market Fit (PMF) and its significance in the success of a product or service.',
   content2:
-    'the importance of user-centric solutions in the context of digital transformation.',
+    'the key components and characteristics of a product or service that indicate the achievement of Product-Market Fit.',
   content3:
-    'Identify key strategies for implementing user-centric approaches during digital transformation initiatives.',
+    'the role of market research and customer feedback in assessing and achieving Product-Market Fit.',
   content4:
-    'the challenges and barriers associated with integrating user-centric solutions into digital transformation efforts.',
-  speakerName: 'Samuel Olumoyeke',
-  speakerRole: 'Senior UX/UI Designer',
+    'how to identify and prioritize target markets and customer segments based on their needs, preferences, and pain points',
+  speakerName: 'Emmanuel Odoemelam',
+  speakerRole: 'Senior Product Designer',
 }
