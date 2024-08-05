@@ -18,7 +18,7 @@ export const bannerContent: BannerContent = {
   mainTitle: 'DESIGN DIGEST SESSION: ',
   subTitle: 'What is Product-Market Fit',
   time: '7pm-8pm',
-  date: '4th August, 2024',
+  date: '11th August, 2024',
   location: 'GOOGLE MEET',
   bannerImage: '/assets/images/banner/bannerImage.png',
   description:
