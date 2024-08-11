@@ -7,10 +7,20 @@ import {
   EventTwitter,
 } from '../features/events'
 import { PastSpeakers } from '../features/speakers'
-const events = () => {
+import { useActiveBanner } from '../hooks/useActiveBanner'
+import { Box, Spinner } from '@chakra-ui/react'
+const Events = () => {
+  const { banner, loading } = useActiveBanner()
   return (
     <MainLayout>
-      <EventHero />
+      {loading ? (
+        <Box textAlign="center" p={5}>
+          <Spinner size="xl" />
+        </Box>
+      ) : (
+        <>{banner && <EventHero data={banner} />}</>
+      )}
+
       <EventCommunity />
       <EventPlayback />
       <PastSpeakers />
@@ -19,4 +29,4 @@ const events = () => {
   )
 }
 
-export default events
+export default Events

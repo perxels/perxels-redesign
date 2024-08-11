@@ -24,6 +24,7 @@
     "emailjs-com": "^3.2.0",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
+    "firebase": "^10.12.5",
     "formik": "^2.2.9",
     "framer-motion": "^6",
     "gsap": "^3.11.4",
