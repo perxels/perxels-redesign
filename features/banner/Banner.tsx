@@ -12,13 +12,12 @@ import {
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { IoLocationOutline } from 'react-icons/io5'
-import { bannerContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import Link from 'next/link'
-import gsap from 'gsap'
-export const Banner = () => {
-  let boxRef = useRef(null)
+import { formatDate, formatTime } from '../../utils/banner'
+export const Banner = ({ data }: any) => {
   const [visibility, setVisibility] = React.useState(false)
+
   useEffect(() => {
     const timeOut = setTimeout(() => {
       setVisibility(true)
@@ -65,14 +64,10 @@ export const Banner = () => {
             <Flex
               columnGap={'6.5rem'}
               flexDirection={['column', 'column', 'row', 'row']}
-              alignItems={["flex-start", "flex-start", "center", "center"]}
+              alignItems={['flex-start', 'flex-start', 'center', 'center']}
             >
               <Box boxSize={['7.3125rem']} mb="1rem">
-                <Img
-                  src={bannerContent.bannerImage}
-                  alt="Banner"
-                  rounded={'100%'}
-                />
+                <Img src={data.bannerImage} alt="Banner" rounded={'100%'} />
               </Box>
 
               <Box
@@ -85,17 +80,17 @@ export const Banner = () => {
                   color="brand.white"
                 >
                   {/* AMA SESSION:  */}
-                  {bannerContent.mainTitle}
+                  {data.mainTitle}
                 </Heading>
                 <Heading
                   fontSize={['1.40625rem', '1.4rem', '4xl', '4xl']}
                   // maxW={["22rem","27.6875rem"]}
-                  maxW={["22rem","30.6875rem"]}
+                  maxW={['22rem', '30.6875rem']}
                   fontWeight="700"
                   color="brand.white"
                   lineHeight={'110%'}
                 >
-                  {bannerContent.subTitle}
+                  {data.subTitle}
                 </Heading>
                 <Flex
                   columnGap={['0.7825rem', '0.7825rem', '1.39rem', '1.39rem']}
@@ -127,7 +122,7 @@ export const Banner = () => {
                       ]}
                       fontWeight={'bold'}
                     >
-                      {bannerContent.time}
+                      {formatTime(data.startTime)} - {formatTime(data.endTime)}
                     </Text>
                   </Box>
                   <Box
@@ -156,7 +151,7 @@ export const Banner = () => {
                       ]}
                       fontWeight={'bold'}
                     >
-                      {bannerContent.date}
+                      {formatDate(data.endDate)}
                     </Text>
                   </Box>
                   <Box
@@ -185,17 +180,14 @@ export const Banner = () => {
                       ]}
                       fontWeight={'bold'}
                     >
-                      {bannerContent.location}
+                      {data.location}
                     </Text>
                   </Box>
                 </Flex>
               </Box>
             </Flex>
 
-            <Box 
-            mt={['1rem', '1rem', '0rem', '0rem']}
-            
-            >
+            <Box mt={['1rem', '1rem', '0rem', '0rem']}>
               <Link href="/event">
                 <Button
                   variant={'link'}

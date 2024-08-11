@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react'
-import { Box, Flex, Heading, Text, Button, Grid, Img, List, OrderedList,ListItem } from '@chakra-ui/react'
-import { bannerContent } from '../../constant'
+import { Box, Flex, Heading, Text, Button, Grid, Img } from '@chakra-ui/react'
+// import { data } from '../../constant'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { EventForm } from './'
 import { MainContainer } from '../../layouts'
 
 import gsap from 'gsap'
+import { formatDate, formatTime } from '../../utils/banner'
 
-export const EventHero = () => {
+export const EventHero = ({ data }: any) => {
   const mainRef = useRef<HTMLDivElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }))
 
@@ -50,9 +51,6 @@ export const EventHero = () => {
               mb={{ base: 4, md: 7 }}
             >
               <Text>DESIGN DIGEST SESSION</Text>
-              {/* <Text>AMA SESSION</Text> */} 
-              {/* <Text>PANEL SESSION</Text> */}
-              {/* <Text>LIVE DESIGN SESSION</Text>  */}
             </Button>
             <Heading
               fontSize={{ base: '6xl', md: '7xl', lg: '8xl' }}
@@ -61,8 +59,7 @@ export const EventHero = () => {
               mb={{ base: 4, md: 4 }}
               className="ama-main-title"
             >
-              {/* {bannerContent.mainTitle} */}
-              {" "}{bannerContent.subTitle}
+              {/* {data.mainTitle} */} {data.subTitle}
             </Heading>
             <Flex
               className="ama-other-content"
@@ -85,7 +82,7 @@ export const EventHero = () => {
                   fontSize={{ base: '0.7rem', lg: '1.295rem' }}
                   fontWeight={'bold'}
                 >
-                  {bannerContent.time}
+                  {formatTime(data.startTime)} - {formatTime(data.endTime)}
                 </Text>
               </Box>
               <Box
@@ -104,7 +101,7 @@ export const EventHero = () => {
                   fontSize={{ base: '0.7rem', lg: '1.295rem' }}
                   fontWeight={'bold'}
                 >
-                  {bannerContent.date}
+                  {formatDate(data.endDate)}
                 </Text>
               </Box>
               <Box
@@ -123,7 +120,7 @@ export const EventHero = () => {
                   fontSize={{ base: '0.7rem', lg: '1.295rem' }}
                   fontWeight={'bold'}
                 >
-                  {bannerContent.location}
+                  {data.location}
                 </Text>
               </Box>
             </Flex>
@@ -145,19 +142,18 @@ export const EventHero = () => {
                 {/* Panelists: */}
                 Facilitator
               </Text>
-              <Flex 
-              mb="3rem"
-              flexDir={["row","row"]}
-              rowGap={"3rem"}
-               alignItems={'center'}
-               columnGap={"1rem"} 
-              // alignItems="flex-start"
+              <Flex
+                mb="3rem"
+                flexDir={['row', 'row']}
+                rowGap={'3rem'}
+                alignItems={'center'}
+                columnGap={'1rem'}
+                // alignItems="flex-start"
               >
-               
                 <Box boxSize={{ base: '5.1875rem', lg: '7.5rem' }}>
                   <Img
                     borderRadius={'50%'}
-                    src={bannerContent.bannerImage}
+                    src={data.bannerImage}
                     alt="speakerImg"
                   />
                 </Box>
@@ -167,13 +163,13 @@ export const EventHero = () => {
                     fontWeight={'bold'}
                     color={'brand.dark.100'}
                   >
-                    {bannerContent.speakerName}
+                    {data.speakerName}
                   </Text>
                   <Text
                     fontSize={{ base: '0.806875rem', lg: '1.25rem' }}
                     color="#5F6368"
                   >
-                    {bannerContent.speakerRole}
+                    {data.speakerRole}
                   </Text>
                 </Box>
               </Flex>
@@ -195,38 +191,38 @@ export const EventHero = () => {
                 color="brand.dark.200"
                 lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
               >
-                {bannerContent.description}
+                {data.description}
               </Text>
-                <Text
-                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                color="brand.dark.200"
-                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-              >
-                {bannerContent.content1}
-              </Text>
-             
               <Text
                 fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
                 color="brand.dark.200"
                 lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
               >
-                {bannerContent.content2}
+                {data.content1}
               </Text>
 
-                <Text
+              <Text
                 fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
                 color="brand.dark.200"
                 lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
               >
-                {bannerContent.content3}
+                {data.content2}
+              </Text>
+
+              <Text
+                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                color="brand.dark.200"
+                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+              >
+                {data.content3}
               </Text>
               <Text
                 fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
                 color="brand.dark.200"
                 lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
               >
-                {bannerContent.content4}
-              </Text>     
+                {data.content4}
+              </Text>
             </Box>
           </Box>
           <Box>
