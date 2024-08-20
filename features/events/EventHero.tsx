@@ -1,5 +1,15 @@
 import React, { useEffect, useRef } from 'react'
-import { Box, Flex, Heading, Text, Button, Grid, Img } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Button,
+  Grid,
+  Img,
+  UnorderedList,
+  ListItem,
+} from '@chakra-ui/react'
 // import { data } from '../../constant'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
@@ -194,35 +204,64 @@ export const EventHero = ({ data }: any) => {
                 {data.description}
               </Text>
               <Text
+                mt="20px"
                 fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
                 color="brand.dark.200"
                 lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+                fontWeight="bold"
               >
-                {data.content1}
+                Don't miss this opportunity to grasp:
               </Text>
-
-              <Text
-                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                color="brand.dark.200"
-                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-              >
-                {data.content2}
-              </Text>
-
-              <Text
-                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                color="brand.dark.200"
-                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-              >
-                {data.content3}
-              </Text>
-              <Text
-                fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
-                color="brand.dark.200"
-                lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
-              >
-                {data.content4}
-              </Text>
+              <UnorderedList>
+                <ListItem>
+                  {' '}
+                  <Text
+                    mt="20px"
+                    fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                    color="brand.dark.200"
+                    lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+                  >
+                    {data.content1}
+                  </Text>
+                </ListItem>
+                {data.content2 && (
+                  <ListItem>
+                    <Text
+                      mt="10px"
+                      fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                      color="brand.dark.200"
+                      lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+                    >
+                      {data.content2}
+                    </Text>
+                  </ListItem>
+                )}
+                {data.content3 && (
+                  <ListItem>
+                    <Text
+                      mt="10px"
+                      fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                      color="brand.dark.200"
+                      lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+                    >
+                      {data.content3}
+                    </Text>
+                  </ListItem>
+                )}
+                {data.content4 && (
+                  <ListItem>
+                    {' '}
+                    <Text
+                      mt="10px"
+                      fontSize={{ base: '0.941875rem', lg: '1.306875rem' }}
+                      color="brand.dark.200"
+                      lineHeight={{ base: '1.626875rem', lg: '2.2575rem' }}
+                    >
+                      {data.content4}
+                    </Text>
+                  </ListItem>
+                )}
+              </UnorderedList>
             </Box>
           </Box>
           <Box>

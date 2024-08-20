@@ -31,11 +31,11 @@ export const ClassPlan = () => {
           'Job search support and guidance + job recommendation and placement when available**',
           '6 weeks internship placement after completing the training.',
         ]}
-        classType= "Physical Training"
-        address= "RING ROAD, IBADAN OYO STATE"
+        classType="Physical Training"
+        address="Palms mall, ringroad, Ibadan"
         isAddress
         stateLocation="scholarship"
-        enrolRoute='/ibadan/signup'
+        enrolRoute="/ibadan/signup"
         isPhysical
         physicalTuition="₦140,000"
       />
