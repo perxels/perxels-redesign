@@ -22,30 +22,32 @@ export const IbadanHero = () => {
     return () => ctx.revert()
   }, [])
 
-
   return (
     <Box
-    background={[`url(/assets/images/class-group/ibadanMobile.png) no-repeat center center`,`url(/assets/images/class-group/ibadanDesktop.png) no-repeat center center`]}
-    minHeight={["28.75rem","25rem"]}
-    backgroundSize="cover"
-    opacity={0}
-    ref={heroRef}
+      background={[
+        `url(/assets/images/class-group/ibadanMobile.png) no-repeat center center`,
+        `url(/assets/images/class-group/ibadanDesktop.png) no-repeat center center`,
+      ]}
+      minHeight={['28.75rem', '25rem']}
+      backgroundSize="cover"
+      opacity={0}
+      ref={heroRef}
     >
-        <Center
+      <Center
         flexDir="column"
         justifyContent="center"
         alignItems="center"
-        minHeight={["28.75rem","25rem"]}
-        >
+        minHeight={['28.75rem', '25rem']}
+      >
         <Heading
-        color="#FFFFFF"
-        fontSize="2.8125rem"
-        fontWeight="800"
-        textAlign="center"
-        opacity={0}
-        ref={headingRef}
+          color="#FFFFFF"
+          fontSize="2.8125rem"
+          fontWeight="800"
+          textAlign="center"
+          opacity={0}
+          ref={headingRef}
         >
-           Ring Road, Ibadan
+          Palms Mall, Ibadan
         </Heading>
         {/* <Text
         color="#FFF"
@@ -56,7 +58,7 @@ export const IbadanHero = () => {
         >
         VIEW ON GOOGLE MAPS
         </Text> */}
-        </Center>
+      </Center>
     </Box>
   )
 }
