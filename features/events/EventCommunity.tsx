@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { Box, Text, Heading, Button } from '@chakra-ui/react'
+import { Box, Text, Heading, Button, Link } from '@chakra-ui/react'
 import { AiOutlineRightCircle } from 'react-icons/ai'
 import { MainContainer } from '../../layouts'
 
 import gsap from 'gsap'
 
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+
 gsap.registerPlugin(ScrollTrigger)
 
 export const EventCommunity = () => {
@@ -62,11 +63,15 @@ export const EventCommunity = () => {
               Join our free communities made up of designers passionate about
               Design and Tech and leveraging it to solve problems.
             </Text>
+         
             <Button
               background={'transparent'}
               border={'1px solid #FDE85C'}
               color={'brand.yellow.300'}
               mt={'1.25rem'}
+              as={Link}
+              href="https://chat.whatsapp.com/IF3mIjoz6jZ4o1Ni6oynwU"
+              target="_blank"
             >
               Join Now
               <Text ml="0.6875rem">
