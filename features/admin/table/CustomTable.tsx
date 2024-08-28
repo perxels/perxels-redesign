@@ -74,23 +74,22 @@ const CustomTable = ({
           roundedTop="15px"
           variant="simple"
         >
-          <Thead height={'70px'} roundedTop="15px" background="brand.purple.500">
+          <Thead
+            height={'70px'}
+            roundedTop="15px"
+            background="brand.purple.500"
+          >
             <Tr>
-              <Th color="white" fontSize="18px" fontFamily="Poppins">
+              <Th color="white" fontSize="15px">
                 #
               </Th>
               {columns.map((column: any) => (
-                <Th
-                  color="white"
-                  fontSize="18px"
-                  fontFamily="Poppins"
-                  key={column.accessor}
-                >
+                <Th color="white" fontSize="15px" key={column.accessor}>
                   {column.Header}
                 </Th>
               ))}
               {showActions && (
-                <Th color="white" fontSize="18px" fontFamily="Poppins">
+                <Th color="white" fontSize="15px">
                   Actions
                 </Th>
               )}
@@ -101,7 +100,7 @@ const CustomTable = ({
               <Tr h="40px">
                 <Td colSpan={columns.length + 2}>
                   <Center>
-                    <Spinner size="xl" />
+                    <Spinner size="md" />
                   </Center>
                 </Td>
               </Tr>
@@ -126,7 +125,7 @@ const CustomTable = ({
                 <Tr key={rowIndex} minH="40px">
                   <Td>{start + rowIndex + 1}</Td>
                   {columns.map((column: any) => (
-                    <Td key={column.accessor}>
+                    <Td fontSize="13px" key={column.accessor}>
                       {row[column.accessor] || 'Not Applicable'}
                     </Td>
                   ))}

@@ -8,11 +8,12 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { SuccessModal } from '../../components'
+
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { auth, signInWithEmailAndPassword } from '../../firebaseConfig' // Update the path as needed
+import { auth, signInWithEmailAndPassword } from '../../../firebaseConfig' // Update the path as needed
 import { useRouter } from 'next/router'
+import { SuccessModal } from '../../../components'
 
 const LoginForm = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -72,7 +73,7 @@ const LoginForm = () => {
                 actions.resetForm()
                 onOpen()
                 setTimeout(() => {
-                  router.push('/admin/dashboard')
+                  router.push('/admin/overview')
                 }, 1000)
               } else {
                 alert('Something went wrong, please try again')

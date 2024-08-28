@@ -28,7 +28,7 @@ import {
   limit,
   getDocs,
 } from 'firebase/firestore'
-import { db, storage } from '../../firebaseConfig'
+import { db, storage } from '../../../firebaseConfig'
 
 interface Banner {
   id?: string
@@ -122,7 +122,8 @@ const CreateBannerModal = ({
                 // Handle image upload
                 let bannerImageUrl = ''
                 if (image) {
-                  const imageRef = ref(storage, `banners/${image.name}`)
+                  const uniqueName = `${Date.now()}_${image.name}`
+                  const imageRef = ref(storage, `banners/${uniqueName}`)
                   await uploadBytes(imageRef, image)
                   bannerImageUrl = await getDownloadURL(imageRef)
                 }

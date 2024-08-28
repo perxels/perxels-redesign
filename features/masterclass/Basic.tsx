@@ -21,17 +21,19 @@ import { ListWrapper } from '../../components'
 import { MainContainer } from '../../layouts'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
+import { MasterClass } from '../../utils/types'
+import { formatDate, formatTime } from '../../utils'
 gsap.registerPlugin(ScrollTrigger)
 
-const lists: string[] = [
-  'Beginners and those transitioning into UIUX design.',
-  'You have never designed before.',
-  // 'You design but you have issues with alignment, color usage, hierarchy, white space and the basic principles of design',
-  'People who know nothing about UIUX design but are willing to learn.',
-  'People residing in Ibadan and its environs',
-]
-
-export const Basic = () => {
+export const Basic = ({
+  title,
+  dateTime,
+  content1,
+  content2,
+  content3,
+  importantInfo,
+  image,
+}: MasterClass) => {
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.from('.basicGrid', {
@@ -60,7 +62,7 @@ export const Basic = () => {
           <Center>
             <Box>
               <Heading fontSize={['6xl', '6xl', '7xl']} color="brand.dark.200">
-                Foundational UIUX Class
+                {title}
               </Heading>
               <Flex
                 bg="rgba(227, 113, 156, 0.3)"
@@ -77,7 +79,7 @@ export const Basic = () => {
                     color="brand.dark.200"
                     fontWeight="700"
                   >
-                    25th May 2024
+                    {formatDate(dateTime)}
                   </Text>
                 </HStack>
                 <HStack>
@@ -87,7 +89,7 @@ export const Basic = () => {
                     color="brand.dark.200"
                     fontWeight="700"
                   >
-                    12pm
+                    {formatTime(dateTime)}
                   </Text>
                 </HStack>
               </Flex>
@@ -128,8 +130,7 @@ export const Basic = () => {
                     color="brand.gray.500"
                     mt="1rem"
                   >
-                    This is going to be a physical training at our head office
-                    in Osapa London, Lekki Expressway.
+                    {content1}
                   </Text>
                 </ListItem>
                 <ListItem>
@@ -138,8 +139,7 @@ export const Basic = () => {
                     color="brand.gray.500"
                     mt="1rem"
                   >
-                    The training is for beginners and those who just starts to
-                    design
+                    {content2}
                   </Text>
                 </ListItem>
                 <ListItem>
@@ -148,8 +148,7 @@ export const Basic = () => {
                     color="brand.gray.500"
                     mt="1rem"
                   >
-                    You will be assigned to a group and the date of your
-                    training will be communicated to you
+                    {content3}
                   </Text>
                 </ListItem>
               </UnorderedList>
@@ -175,9 +174,7 @@ export const Basic = () => {
                 mt="1rem"
               >
                 {/* You automatically get 15% discount off Perxels paid training on registering for the masterclass */}
-                At the end of this masterclass, participants would be able to do
-                the following: Design simple landing pages, understand the
-                basics of sizing, hierarchy, alignment, consistency, etc.
+                {importantInfo}
               </Text>
 
               <HStack
@@ -209,7 +206,7 @@ export const Basic = () => {
             </Box>
           </Center>
 
-          <Img src="/assets/images/masterclass/basic.jpg" />
+          <Img src={image} />
         </SimpleGrid>
       </MainContainer>
     </Box>

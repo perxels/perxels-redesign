@@ -1,0 +1,35 @@
+import { useEffect, useState } from 'react'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../firebaseConfig'
+import { MasterClass } from '../utils/types'
+
+
+
+
+export const useFetchMasterClass = () => {
+  const [classes, setClasses] = useState<MasterClass[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+
+  const fetchMasterClass = async () => {
+    setLoading(true)
+    try {
+        const querySnapshot = await getDocs(collection(db, 'masterClasses'))
+        const classesData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as MasterClass[]
+        setClasses(classesData)
+    } catch (error) {
+      console.error('Error fetching classes:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+
+    fetchMasterClass()
+  }, [])
+
+  return { classes, loading, refetchClasses:fetchMasterClass }
+}
