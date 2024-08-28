@@ -2,7 +2,7 @@ import { Box, Flex, Img, Link, SimpleGrid } from '@chakra-ui/react'
 import gsap from 'gsap'
 import React, { useEffect, useRef } from 'react'
 import { Logo } from '../../components'
-import LoginForm from '../../features/admin/LoginForm'
+import LoginForm from '../../features/admin/forms/LoginForm'
 
 const AdminPage = () => {
   const mainRef = useRef<HTMLDivElement>(null)

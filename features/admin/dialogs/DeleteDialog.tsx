@@ -43,7 +43,7 @@ const DeleteDialog: React.FC<DeleteDialogProps> = ({
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
+            <Button variant="outline" ref={cancelRef} onClick={onClose}>
               Cancel
             </Button>
             <Button

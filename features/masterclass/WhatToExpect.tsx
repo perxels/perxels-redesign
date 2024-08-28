@@ -3,9 +3,12 @@ import React from 'react'
 import { SectionHeader } from '../../components'
 import { MainContainer } from '../../layouts'
 import { Basic } from './Basic'
-import { Intermediate } from './Intermediate'
+import { useFetchMasterClass } from '../../hooks/useMasterClass'
+// import { Intermediate } from './Intermediate'
 
 export const WhatToExpect = () => {
+  const { classes } = useFetchMasterClass()
+
   return (
     <Box mb="3rem">
       <MainContainer>
@@ -19,7 +22,9 @@ export const WhatToExpect = () => {
           />
         </Box>
       </MainContainer>
-      <Basic />
+      {classes?.map((item, i) => {
+        return <Basic {...item} key={i} />
+      })}
       {/* <Intermediate /> */}
     </Box>
   )

@@ -56,7 +56,7 @@ export const AdmissionProcess = () => {
           ))}
         </SimpleGrid>
         <Box px={["2%","14%"]} py="5%">
-        <Box
+        {/* <Box
         >
           <SimpleGrid columns={[1, 1, 2, 2]} spacing="3.125rem">
             <Box   backgroundColor={"#FDE85C"} display="flex" alignItems="center" flexDir="column" rowGap={["2rem","2.125rem"]}   rounded=".3125rem"
@@ -84,7 +84,7 @@ export const AdmissionProcess = () => {
               </HStack>
             </Box>
             </SimpleGrid>
-        </Box>
+        </Box> */}
         </Box>
       </MainContainer>
     </Box>

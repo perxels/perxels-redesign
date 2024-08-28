@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import AdminLayout from '../../features/admin/AdminLayout'
+import AdminLayout from '../../features/admin/layout/AdminLayout'
 import { Text, useDisclosure } from '@chakra-ui/react'
-import CustomTable from '../../features/admin/CustomTable'
-import CreateBannerModal from '../../features/admin/CreateBannerModal'
-import FloatingButton from '../../features/admin/FloatingButton'
+import CustomTable from '../../features/admin/table/CustomTable'
+import CreateBannerModal from '../../features/admin/modals/CreateBannerModal'
+import FloatingButton from '../../features/admin/utils/FloatingButton'
 import { MdCreateNewFolder } from 'react-icons/md'
-import DeleteDialog from '../../features/admin/DeleteDialog'
+import DeleteDialog from '../../features/admin/dialogs/DeleteDialog'
 import { db, storage } from '../../firebaseConfig' // Ensure this import path is correct
 import { doc, deleteDoc } from 'firebase/firestore'
 import { ref, deleteObject } from 'firebase/storage'
@@ -30,7 +30,7 @@ interface Banner {
   endTime: string
 }
 
-const AdminDashboard = () => {
+const AdminBanners = () => {
   const { banners, loading, refetchBanners } = useFetchBanner()
   const [currentBanner, setCurrentBanner] = useState<Banner | null>(null)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -138,4 +138,4 @@ const AdminDashboard = () => {
   )
 }
 
-export default AdminDashboard
+export default AdminBanners
