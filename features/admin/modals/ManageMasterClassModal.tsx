@@ -13,6 +13,7 @@ import {
   Textarea,
   VStack,
   Image,
+  Select,
 } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -28,6 +29,7 @@ interface MasterClass {
   content2?: string
   content3?: string
   importantInfo: string
+  entries: string
   image: string
 }
 
@@ -55,11 +57,13 @@ const ManageMasterClassModal: React.FC<ManageMasterClassModalProps> = ({
       content2: '',
       content3: '',
       importantInfo: '',
+      entries: '',
       image: '',
     },
     validationSchema: Yup.object({
       title: Yup.string().required('Title is required'),
       dateTime: Yup.string().required('Date and time are required'),
+      entries: Yup.string().required('Select an entry choice!'),
       importantInfo: Yup.string().required('Important information is required'),
     }),
     onSubmit: async (values) => {
@@ -105,6 +109,7 @@ const ManageMasterClassModal: React.FC<ManageMasterClassModalProps> = ({
         content1: masterClassToEdit.content1 || '',
         content2: masterClassToEdit.content2 || '',
         content3: masterClassToEdit.content3 || '',
+        entries: masterClassToEdit.entries,
         importantInfo: masterClassToEdit.importantInfo,
         image: masterClassToEdit.image,
       })
@@ -175,6 +180,19 @@ const ManageMasterClassModal: React.FC<ManageMasterClassModalProps> = ({
                 onBlur={formik.handleBlur}
                 placeholder="Enter content 3"
               />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Response Status</FormLabel>
+              <Select
+                name="entries"
+                value={formik.values.entries}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                defaultValue="choose response status"
+              >
+                <option value="receiving">Receiving</option>
+                <option value="notreceiving">Not Receiving</option>
+              </Select>
             </FormControl>
 
             <FormControl isRequired>

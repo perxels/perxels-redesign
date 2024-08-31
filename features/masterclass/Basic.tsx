@@ -32,6 +32,7 @@ export const Basic = ({
   content2,
   content3,
   importantInfo,
+  entries,
   image,
 }: MasterClass) => {
   useEffect(() => {
@@ -188,7 +189,8 @@ export const Basic = ({
                   px={['1.25rem', '1.5rem', '2.5rem']}
                   h={['3.5rem', '3.5rem', '3.875rem']}
                   as={'a'}
-                  href="/masterclass/register"
+                  isDisabled={entries === 'receiving' ? false : true}
+                  href={entries === 'receiving' ? '/masterclass/register' : '#'}
                 >
                   Join this Class
                 </Button>

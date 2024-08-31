@@ -2,7 +2,7 @@ import { Box, HStack, Image, Text } from '@chakra-ui/react'
 import React from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
-const Topbar = ({ setNavState, user }: any) => {
+const Topbar = ({ setNavState, user, title }: any) => {
   return (
     <HStack
       w="full"
@@ -17,7 +17,7 @@ const Topbar = ({ setNavState, user }: any) => {
           <GiHamburgerMenu onClick={() => setNavState(true)} />
         </Box>
         <Text as="h1" fontSize="1.2rem">
-          Dashboard
+          {title}
         </Text>
       </HStack>
       <HStack alignItems="center" justifyContent="center">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../firebaseConfig'
-import { MasterClass } from '../utils/types'
+import { MasterClass, MasterClassHero } from '../utils/types'
 
 
 
@@ -32,4 +32,33 @@ export const useFetchMasterClass = () => {
   }, [])
 
   return { classes, loading, refetchClasses:fetchMasterClass }
+}
+
+
+export const useFetchMasterclassHero = () => {
+  const [heroData, setHeroData] = useState<MasterClassHero[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+
+  const fetchMasterClassHero = async () => {
+    setLoading(true)
+    try {
+        const querySnapshot = await getDocs(collection(db, 'masterClassesHero'))
+        const heroData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as MasterClassHero[]
+        setHeroData(heroData)
+    } catch (error) {
+      console.error('Error fetching hero Data:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+
+    fetchMasterClassHero()
+  }, [])
+
+  return {heroData, loading, refetchHero:fetchMasterClassHero }
 }

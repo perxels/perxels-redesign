@@ -9,5 +9,11 @@ export interface MasterClass {
     content2?: string
     content3?: string
     importantInfo: string
+    entries:string
     image: string
+  }
+  export interface MasterClassHero {
+    id: string
+    title: string
+    desc: string
   }

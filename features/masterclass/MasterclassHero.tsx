@@ -2,9 +2,15 @@ import { Box, Center, Heading, Img, Text } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import { MainContainer } from '../../layouts'
 import gsap from 'gsap'
+import { useFetchMasterclassHero } from '../../hooks/useMasterClass'
 export const MasterclassHero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }))
+  const {
+    heroData,
+    loading: heroLoader,
+    refetchHero,
+  } = useFetchMasterclassHero()
   useEffect(() => {
     let ctx = gsap.context(() => {
       //fade in on start
@@ -62,7 +68,7 @@ export const MasterclassHero = () => {
             textAlign="center"
             className="heroText"
           >
-            Free Physical UIUX Design Masterclass
+            {heroData[0]?.title}
           </Heading>
 
           <Text
@@ -73,11 +79,7 @@ export const MasterclassHero = () => {
             mt="1.125rem"
             className="heroText"
           >
-            An exclusive physical 1-Day free training for those who are
-            interested in transitioning in UIUX Design
-            {/* An exclusive physical training for <b>ONLY WOMEN</b> based in{' '}
-            <b> YABA</b> who are looking to embark on a fulfilling design
-            career. */}
+            {heroData[0]?.desc}
           </Text>
         </Center>
 

@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 const AdminOverview = () => {
   return (
-    <AdminLayout>
+    <AdminLayout title="Overview">
       <HStack mt="10px" alignItems="center">
         <Text as="h1" fontSize="1.8rem">
           Welcome, Admin
