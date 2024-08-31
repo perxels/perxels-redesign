@@ -122,7 +122,7 @@ export const classGroupDetails = [
     classTime: '2-3 times a week.',
     classType: 'Live Virtual Training.',
     installments: ['70% On Admission,', '30% after one month.'],
-    tuition: '₦50,000',
+    tuition: '₦60,000',
     stateLocation: '',
     courseOutline: [
       'For beginners to learn the fundamentals of design; focus is majorly on UI (User Interface) design.',
