@@ -202,11 +202,11 @@ const EnrolForm = () => {
               >
                 <option value="Basic Class">Basic Class</option>
                 <option value="Advanced Class">Advanced Class</option>
-                <option value="Premium (Virtual) Class">
-                  Premium Class
+                <option value="Premium Virtual Class">
+                 Premium Virtual Class
                 </option>
-                <option value="Physical Class (Lagos)">
-                  Physical Class (Lagos)
+                <option value="Physical Class (Lekki)">
+                  Physical Class (Lekki)
                 </option>
                 <option value="Physical Class (YABA)">
                   Physical Class (YABA)
