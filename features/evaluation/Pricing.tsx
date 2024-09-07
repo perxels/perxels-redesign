@@ -29,7 +29,7 @@ export const Pricing = () => {
                     />
                     <Box>
                         <Heading fontSize={["2.625rem","4.5rem"]}>
-                        ₦50,000
+                        ₦100,000
                         </Heading>
                     </Box>
                 </Flex>
