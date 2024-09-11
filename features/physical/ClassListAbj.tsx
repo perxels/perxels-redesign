@@ -30,7 +30,7 @@ export const ClassPlanAbj = () => {
         '6 weeks internship placement after completing the training.',
       ]}
       classType="Physical Training"
-      address="Central Business District, Abuja"
+      address="Novare Shared Office, Zone 5 Dalaba St, Wuse, Abuja"
       isAddress
       // stateLocation="scholarship"
       enrolRoute="/signup"

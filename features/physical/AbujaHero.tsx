@@ -45,7 +45,7 @@ export const AbujaHero = () => {
         opacity={0}
         ref={headingRef}
         >
-           Central Business District, Abuja
+          Federal Capital Territory, Abuja
         </Heading>
         {/* <Text
         color="#FFF"
