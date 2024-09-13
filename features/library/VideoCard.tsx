@@ -1,9 +1,11 @@
-`use client`
-import React from 'react'
+;`use client`
+import React, { useState } from 'react'
 import { Box, Text, Heading, Image, Center, Flex } from '@chakra-ui/react'
-import { GoDotFill } from "react-icons/go";
+import { GoDotFill } from 'react-icons/go'
+import VideoPlayer from './VideoPlayer'
 
 export const VideoCard = () => {
+  const [isPlaying, setIsPlaying] = useState(false)
   return (
     <Box
       display="flex"
@@ -13,23 +15,32 @@ export const VideoCard = () => {
       borderRadius="10px"
     >
       <Box maxHeight="253px" width="100%" position="relative">
-        <Image
-          height="100%"
-          width="100%"
-          borderRadius={'8px 8px 0px 0px'}
-          objectFit={'cover'}
-          src="/assets/images/library/videoImage.png"
-          alt="libraryCard1"
-        />
+        {isPlaying ? (
+          <VideoPlayer/>
+        ) : (
+          <Image
+            height="100%"
+            width="100%"
+            borderRadius={'8px 8px 0px 0px'}
+            objectFit={'cover'}
+            src="/assets/images/library/videoImage.png"
+            alt="libraryCard1"
+          />
+        )}
+
         {/* <Center postion="absolute"> */}
-        <Image
-          src="/assets/images/library/playIcon.svg"
-          alt="playIcon"
-          position="absolute"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-        />
+        {!isPlaying && (
+          <Image
+            src="/assets/images/library/playIcon.svg"
+            alt="playIcon"
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            cursor="pointer"
+            onClick={() => setIsPlaying(true)}
+          />
+        )}
         {/* </Center> */}
       </Box>
       <Box
@@ -62,22 +73,27 @@ export const VideoCard = () => {
           </Center>
         </Flex>
         <Heading fontSize="22px" lineHeight="120%" fontWeight="700">
-        Data Representation for designers of all Levels 
+          Data Representation for designers of all Levels
         </Heading>
         <Flex mt="18px" columnGap="22px" alignItems="center">
-            <Flex alignItems="center"  columnGap="12px">
-                <Image src="/assets/images/library/authorImage.png" alt="authorImage" borderRadius="50%" />
-                <Text fontSize="14px" color="#1A1A1A"> Perxels </Text>
-            </Flex>
-            <Text fontSize="14px">
-                85 views
+          <Flex alignItems="center" columnGap="12px">
+            <Image
+              src="/assets/images/library/authorImage.png"
+              alt="authorImage"
+              borderRadius="50%"
+            />
+            <Text fontSize="14px" color="#1A1A1A">
+              {' '}
+              Perxels{' '}
             </Text>
-            <Flex alignItems="center">
-                <GoDotFill color="#1A1A1A" />
-                <Text fontSize="14px" color="#1A1A1A" >
-                    2 days ago
-                </Text>
-            </Flex>
+          </Flex>
+          <Text fontSize="14px">85 views</Text>
+          <Flex alignItems="center">
+            <GoDotFill color="#1A1A1A" />
+            <Text fontSize="14px" color="#1A1A1A">
+              2 days ago
+            </Text>
+          </Flex>
         </Flex>
       </Box>
     </Box>
