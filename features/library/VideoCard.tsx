@@ -3,8 +3,17 @@ import React, { useState } from 'react'
 import { Box, Text, Heading, Image, Center, Flex } from '@chakra-ui/react'
 import { GoDotFill } from 'react-icons/go'
 import VideoPlayer from './VideoPlayer'
+import { Video } from '../../utils/types'
 
-export const VideoCard = () => {
+export const VideoCard = ({
+  id,
+  videoTitle,
+  imageUrl,
+  videoSession,
+  author,
+  datePosted,
+  videoUrl,
+}: Video) => {
   const [isPlaying, setIsPlaying] = useState(false)
   return (
     <Box
@@ -16,14 +25,14 @@ export const VideoCard = () => {
     >
       <Box maxHeight="253px" width="100%" position="relative">
         {isPlaying ? (
-          <VideoPlayer/>
+          <VideoPlayer videoUrl={videoUrl} />
         ) : (
           <Image
             height="100%"
             width="100%"
             borderRadius={'8px 8px 0px 0px'}
             objectFit={'cover'}
-            src="/assets/images/library/videoImage.png"
+            src={imageUrl || '/assets/images/library/videoImage.png'}
             alt="libraryCard1"
           />
         )}
@@ -73,7 +82,7 @@ export const VideoCard = () => {
           </Center>
         </Flex>
         <Heading fontSize="22px" lineHeight="120%" fontWeight="700">
-          Data Representation for designers of all Levels
+          {videoTitle}
         </Heading>
         <Flex mt="18px" columnGap="22px" alignItems="center">
           <Flex alignItems="center" columnGap="12px">
@@ -87,7 +96,7 @@ export const VideoCard = () => {
               Perxels{' '}
             </Text>
           </Flex>
-          <Text fontSize="14px">85 views</Text>
+          {/* <Text fontSize="14px">85 views</Text> */}
           <Flex alignItems="center">
             <GoDotFill color="#1A1A1A" />
             <Text fontSize="14px" color="#1A1A1A">

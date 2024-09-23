@@ -122,7 +122,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             cursor="pointer"
             py="10px"
             as={Link}
-            href="/admin/masterclass"
+            href="/admin/library"
             bg={isActive('/admin/library') ? 'white' : 'transperant'}
             color={isActive('/admin/library') ? 'black' : 'white'}
             _hover={{ borderLeft: '3px solid white' }}

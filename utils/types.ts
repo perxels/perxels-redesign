@@ -17,3 +17,13 @@ export interface MasterClass {
     title: string
     desc: string
   }
+
+  export interface Video {
+    id?: string;
+    videoTitle: string;
+    videoSession: string;
+    author: string;
+    datePosted: string;
+    videoUrl: string;
+    imageUrl?: string;
+  }
