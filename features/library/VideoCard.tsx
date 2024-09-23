@@ -3,8 +3,18 @@ import React, { useState } from 'react'
 import { Box, Text, Heading, Image, Center, Flex } from '@chakra-ui/react'
 import { GoDotFill } from 'react-icons/go'
 import VideoPlayer from './VideoPlayer'
+import { Video } from '../../utils/types'
+import moment from 'moment'
 
-export const VideoCard = () => {
+export const VideoCard = ({
+  id,
+  videoTitle,
+  imageUrl,
+  videoSession,
+  author,
+  datePosted,
+  videoUrl,
+}: Video) => {
   const [isPlaying, setIsPlaying] = useState(false)
   return (
     <Box
@@ -14,18 +24,20 @@ export const VideoCard = () => {
       alignItems="flex-start"
       borderRadius="10px"
     >
-      <Box maxHeight="253px" width="100%" position="relative">
+      <Box maxHeight="250px" width="100%" position="relative">
         {isPlaying ? (
-          <VideoPlayer/>
+          <VideoPlayer videoUrl={videoUrl} />
         ) : (
-          <Image
-            height="100%"
-            width="100%"
-            borderRadius={'8px 8px 0px 0px'}
-            objectFit={'cover'}
-            src="/assets/images/library/videoImage.png"
-            alt="libraryCard1"
-          />
+          <Box w="full" height="240px">
+            <Image
+              height="100%"
+              width="100%"
+              borderRadius={'8px 8px 0px 0px'}
+              objectFit={'cover'}
+              src={imageUrl || '/assets/images/library/videoImage.png'}
+              alt="library image"
+            />
+          </Box>
         )}
 
         {/* <Center postion="absolute"> */}
@@ -69,11 +81,11 @@ export const VideoCard = () => {
             display="inline-flex"
             p="6px 10px"
           >
-            Live Design Session
+            {videoSession}
           </Center>
         </Flex>
         <Heading fontSize="22px" lineHeight="120%" fontWeight="700">
-          Data Representation for designers of all Levels
+          {videoTitle}
         </Heading>
         <Flex mt="18px" columnGap="22px" alignItems="center">
           <Flex alignItems="center" columnGap="12px">
@@ -83,15 +95,14 @@ export const VideoCard = () => {
               borderRadius="50%"
             />
             <Text fontSize="14px" color="#1A1A1A">
-              {' '}
-              Perxels{' '}
+              {author}
             </Text>
           </Flex>
-          <Text fontSize="14px">85 views</Text>
+          {/* <Text fontSize="14px">85 views</Text> */}
           <Flex alignItems="center">
             <GoDotFill color="#1A1A1A" />
             <Text fontSize="14px" color="#1A1A1A">
-              2 days ago
+              {moment(datePosted).fromNow()}
             </Text>
           </Flex>
         </Flex>
