@@ -49,10 +49,10 @@ const AdminVideoPage = () => {
     try {
       if (currentVideo.id) {
         // Delete video document from Firestore
-        await deleteDoc(doc(db, 'libryvideos', currentVideo.id))
+        await deleteDoc(doc(db, 'libraryVideos', currentVideo.id))
 
         // Delete video file from Firebase Storage if it exists
-        if (currentVideo.videoUrl) {
+        if (currentVideo.videoUrl.includes('firebasestorage')) {
           const videoRef = ref(storage, currentVideo.videoUrl)
           await deleteObject(videoRef)
         }
