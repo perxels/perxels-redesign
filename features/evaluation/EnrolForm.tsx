@@ -11,7 +11,7 @@ import {
   useClipboard,
   Icon,
   SimpleGrid,
-  Flex
+  Flex,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { SuccessModal } from '../../components'
@@ -20,16 +20,16 @@ import * as Yup from 'yup'
 import { IoCopyOutline, IoLogoTwitter, IoLogoWhatsapp } from 'react-icons/io5'
 import { TwitterShareButton, WhatsappShareButton } from 'next-share'
 
-
 const EnrolForm = () => {
   // const scriptUrl =
   //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbwkdIngf-2iAPwhv6I0ap3Vmlg52LvrS_DSUaZ-n8HGBgdUEfMu5BpfHe7pSmfa0aP-AA/exec"
+  const scriptUrl =
+    'https://script.google.com/macros/s/AKfycbwkdIngf-2iAPwhv6I0ap3Vmlg52LvrS_DSUaZ-n8HGBgdUEfMu5BpfHe7pSmfa0aP-AA/exec'
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
-  const [classVal, setClassValue] = useState<string> ("")
-  const { onCopy, value, setValue } = useClipboard("https://perxels.com/exam");
+  const [classVal, setClassValue] = useState<string>('')
+  const { onCopy, value, setValue } = useClipboard('https://perxels.com/exam')
 
   return (
     <>
@@ -57,11 +57,9 @@ const EnrolForm = () => {
           textAlign="center"
           color="brand.dark.100"
         >
-      Register now to Claim this Offer
+          Register now to Claim this Offer
         </Heading>
-        <Text>
-        Register now to Claim this Offer
-        </Text>
+        <Text>Register now to Claim this Offer</Text>
 
         <Formik
           initialValues={{
@@ -86,20 +84,20 @@ const EnrolForm = () => {
             // ),
             // reason: Yup.string().required('Reason is required'),
             experience: Yup.string().required('Experience is required'),
-            portfolio: Yup.string().matches(
-              /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-              'Enter correct url!'
-          ).required('Portfolio is required'),
-            linkedin: Yup.string().matches(
-              /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-              'Enter correct url!'
-          ).required('Linkedin is required'),
+            portfolio: Yup.string().required(
+              'Portfolio or Figma Link is required',
+            ),
+            linkedin: Yup.string().required('Linkedin Link is required'),
             // category: Yup.string().required('Category is required'),
           })}
+          // To Match an Input to this link
+          // .matches(
+          //   /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+          //   'Enter correct url!',
+          // )
           onSubmit={(values, action) => {
             setLoading(true)
-        
-          
+
             const formData = new FormData()
 
             formData.append('name', values.name as string)
@@ -142,7 +140,6 @@ const EnrolForm = () => {
                 formik.handleSubmit()
               }}
             >
-              
               <Input
                 h="3.5rem"
                 placeholder="Name*"
@@ -214,7 +211,7 @@ const EnrolForm = () => {
                   {formik.errors.email}
                 </Text>
               ) : null}
-     
+
               <Input
                 h="3.5rem"
                 type="text"
@@ -239,10 +236,6 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-
-              
-            
-             
               {/* <Select
                 h="3.5rem"
                 placeholder="How did you get to know about Perxels?"
@@ -273,12 +266,10 @@ const EnrolForm = () => {
                 </Text>
               ) : null} */}
 
-
-
-<Input
+              <Input
                 h="3.5rem"
                 type="text"
-                placeholder="Portfolio Link"
+                placeholder="Portfolio Link (or Figma Link)"
                 _placeholder={{ color: 'brand.dark.200' }}
                 name="portfolio"
                 value={formik.values.portfolio}
@@ -299,7 +290,7 @@ const EnrolForm = () => {
                 </Text>
               ) : null}
 
-<Input
+              <Input
                 h="3.5rem"
                 type="text"
                 placeholder="Linkedin Profile Link"
@@ -317,7 +308,7 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               />
-              {formik.touched.linkedin && formik.errors.linkedin? (
+              {formik.touched.linkedin && formik.errors.linkedin ? (
                 <Text color="red.500" fontSize="sm">
                   {formik.errors.linkedin}
                 </Text>
@@ -349,7 +340,7 @@ const EnrolForm = () => {
             justifyContent="space-between"
             px="1.2rem"
           >
-            <Input 
+            <Input
               fontSize="md"
               value={value}
               bg="none"
@@ -362,55 +353,59 @@ const EnrolForm = () => {
             />
 
             <Box onClick={onCopy} cursor="pointer">
-              <Icon as={IoCopyOutline} fontSize="1.5rem" color="brand.purple.500" />
+              <Icon
+                as={IoCopyOutline}
+                fontSize="1.5rem"
+                color="brand.purple.500"
+              />
             </Box>
           </Flex>
 
           <SimpleGrid w="full" columns={2} gap="0.75rem">
-             <Box w="full">
-               <WhatsappShareButton
-                 url={'https://perxels.com/exam'}
-                 title={'Get Full Evaluation on your skills'}
-                 separator=":: "
-                 style={{ width: '100%' }}
-               >
-                 <Button
-                   w="100%"
-                   h="3.5rem"
-                   leftIcon={<Icon as={IoLogoWhatsapp} fontSize="3xl" />}
-                   variant="outline"
-                 >
-                   <Text
-                     ml={{ base: '0.35rem', lg: '0.75rem' }}
-                     fontSize={{ base: '1rem', lg: '1rem' }}
-                   >
-                     Share
-                   </Text>
-                 </Button>
-               </WhatsappShareButton>
-             </Box>
-             <Box w="full">
-               <TwitterShareButton
-                  url={'https://perxels.com/exam'}
-                  title={'Get Full Evaluation on your skills'}
-                 style={{ width: '100%' }}
-               >
-                 <Button
-                   w="full"
-                   h="3.5rem"
-                   leftIcon={<Icon as={IoLogoTwitter} fontSize="3xl" />}
-                   variant="outline"
-                 >
-                   <Text
-                     ml={{ base: '0.35rem', lg: '0.75rem' }}
-                     fontSize={{ base: '1rem', lg: '1rem' }}
-                   >
-                     Tweet
-                   </Text>
-                 </Button>
-               </TwitterShareButton>
-             </Box>
-           </SimpleGrid>
+            <Box w="full">
+              <WhatsappShareButton
+                url={'https://perxels.com/exam'}
+                title={'Get Full Evaluation on your skills'}
+                separator=":: "
+                style={{ width: '100%' }}
+              >
+                <Button
+                  w="100%"
+                  h="3.5rem"
+                  leftIcon={<Icon as={IoLogoWhatsapp} fontSize="3xl" />}
+                  variant="outline"
+                >
+                  <Text
+                    ml={{ base: '0.35rem', lg: '0.75rem' }}
+                    fontSize={{ base: '1rem', lg: '1rem' }}
+                  >
+                    Share
+                  </Text>
+                </Button>
+              </WhatsappShareButton>
+            </Box>
+            <Box w="full">
+              <TwitterShareButton
+                url={'https://perxels.com/exam'}
+                title={'Get Full Evaluation on your skills'}
+                style={{ width: '100%' }}
+              >
+                <Button
+                  w="full"
+                  h="3.5rem"
+                  leftIcon={<Icon as={IoLogoTwitter} fontSize="3xl" />}
+                  variant="outline"
+                >
+                  <Text
+                    ml={{ base: '0.35rem', lg: '0.75rem' }}
+                    fontSize={{ base: '1rem', lg: '1rem' }}
+                  >
+                    Tweet
+                  </Text>
+                </Button>
+              </TwitterShareButton>
+            </Box>
+          </SimpleGrid>
         </VStack>
       </Box>
     </>
