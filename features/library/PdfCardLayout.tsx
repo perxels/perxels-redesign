@@ -14,10 +14,12 @@ import {
 import { PdfCards } from './PdfCard'
 import { LibraryAd } from './LibraryAd'
 import { libraryCardContent } from '../../constant'
+import { useFetchPdfs } from '../../hooks/usePdfs'
 export const PdfCardLayout = () => {
   const [data, setData] = useState<string[][] | null>(null)
   const [dataLoading, setDataLoading] = useState(false)
   const [dataChanged, setDataChanged] = useState(0)
+  const { pdfs, loading } = useFetchPdfs() // Fetch PDFs
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +47,7 @@ export const PdfCardLayout = () => {
   return (
     <Box>
       <SimpleGrid py="10%" columns={[1, 2, 2]} spacing="32px">
-        {dataLoading ? (
+        {dataLoading || loading ? (
           <Stack w="full" alignItems="center" justifyContent="center">
             <CircularProgress
               isIndeterminate
@@ -56,12 +58,12 @@ export const PdfCardLayout = () => {
           </Stack>
         ) : (
           <>
-            {libraryCardContent.map((item, i) => {
+            {pdfs.map((item, i) => {
               return (
                 <PdfCards
                   key={i}
                   bannerImage={item.bannerImage}
-                  tag={item.tag}
+                  tag="E-Book"
                   mainTitle={item.mainTitle}
                   subTitle={item.subTitle}
                   role={item.role}

@@ -5,7 +5,7 @@ export interface libraryCardContentProps {
   url?: string
   tag: string
   mainTitle: string
-  subTitle: string
+  subTitle?: string
   role: string
   data?: string[][] | null
   dataChanged?: Number

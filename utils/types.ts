@@ -27,3 +27,12 @@ export interface MasterClass {
     videoUrl: string;
     imageUrl?: string;
   }
+  export interface PDFDocument {
+    id: string;            // Unique ID of the PDF document in Firestore
+    mainTitle: string;      // Main title of the PDF
+    subTitle?: string;      // Optional subtitle for additional description
+    role: string;           // Role or category of the PDF (e.g., subject, topic)
+    url: string;            // URL of the PDF file (stored in Firebase Storage)
+    bannerImage?: string;   // Optional URL for a banner or thumbnail image
+    datePosted?: string;    // Optional date the PDF was posted
+  }
