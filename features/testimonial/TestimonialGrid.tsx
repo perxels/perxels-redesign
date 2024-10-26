@@ -8,14 +8,13 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
-import { TestimonialCardProps } from '../../constant'
-
 import { TestimonialCard } from './TestimonialCard'
+import { Testimonial } from '../../utils/types'
 
 interface TestimonialGridProps {
-  testimonialContent: TestimonialCardProps[]
-  isTestimonial?: boolean;
-  columns?: number[];
+  testimonialContent: Testimonial[]
+  isTestimonial?: boolean
+  columns?: number[]
 }
 
 export const TestimonialGrid = ({
@@ -89,14 +88,12 @@ export const TestimonialGrid = ({
         pb={['1.5rem', '3.75rem']}
         ref={testimonialRef}
       >
-        {trimmedContent?.map(({ name, title, content, imgUrl, id }) => (
+        {trimmedContent?.map(({ name, role, testimony, imageUrl }) => (
           <TestimonialCard
-            key={id}
-            id={id}
             name={name}
-            title={title}
-            content={content}
-            imgUrl={imgUrl}
+            role={role}
+            testimony={testimony}
+            imageUrl={imageUrl}
           />
         ))}
       </SimpleGrid>

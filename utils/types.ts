@@ -36,3 +36,12 @@ export interface MasterClass {
     bannerImage?: string;   // Optional URL for a banner or thumbnail image
     datePosted?: string;    // Optional date the PDF was posted
   }
+
+  export interface Testimonial {
+    id?: string // Optional since it will be assigned by Firebase
+    name: string
+    role: string
+    testimony: string
+    imageUrl?: string // Optional in case no image is uploaded
+  }
+  

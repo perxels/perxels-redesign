@@ -33,6 +33,7 @@ import ManageMasterClassHero from '../../features/admin/modals/ManageMasterClass
 import { Testimonial } from '../../features/designChallenge/Testimonial'
 import AdminVideoPage from '../../components/AdminVideoPage'
 import AdminPdfPage from '../../components/AdminPDFPage'
+import AdminTestimonialPage from '../../components/AdminTestimonialPage'
 
 const AdminMasterClasses = () => {
   const [currentClass, setCurrentClass] = useState<MasterClass | null>(null)
@@ -132,7 +133,7 @@ const AdminMasterClasses = () => {
             </Box>
           </TabPanel>
           <TabPanel>
-            <h1>Testimonial</h1>
+            <AdminTestimonialPage />
           </TabPanel>
           <TabPanel>
             <h1>Blog</h1>
