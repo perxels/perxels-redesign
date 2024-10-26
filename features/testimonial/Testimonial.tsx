@@ -8,6 +8,7 @@ import { MobileTestimonialSlider } from '../testimonyhero/MobileTestimonialSlide
 import { TestimonialGrid } from './TestimonialGrid'
 import { TestimonialSlider } from './TestimonialSlider'
 import { TestimonyVideo } from './TestimonyVideo'
+import { TestimonialGrid2 } from './TestimonialGrid2'
 export const Testimonial = () => {
   return (
     <MainContainer>
@@ -22,7 +23,7 @@ export const Testimonial = () => {
       <Box display={['block', 'block', 'block', 'none']}>
         <MobileTestimonialSlider />
       </Box>
-      <TestimonialGrid testimonialContent={testimonialContent} />
+      <TestimonialGrid2 testimonialContent={testimonialContent} />
     </MainContainer>
   )
 }
