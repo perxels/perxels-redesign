@@ -4,10 +4,9 @@ import { SectionHeader } from '../../components'
 import { testimonialContent } from '../../constant'
 import { MainContainer } from '../../layouts'
 import { MobileTestimonialSlider } from '../testimonyhero/MobileTestimonialSliderSch'
-
-import { TestimonialGrid } from './TestimonialGrid'
 import { TestimonialSlider } from './TestimonialSliderSch'
 import { TestimonyVideo } from './TestimonyVideoSch'
+import { TestimonialGrid2 } from './TestimonialGrid2'
 export const TestimonialSch = () => {
   return (
     <MainContainer>
@@ -22,7 +21,7 @@ export const TestimonialSch = () => {
       <Box display={['block', 'block', 'block', 'none']}>
         <MobileTestimonialSlider />
       </Box>
-      <TestimonialGrid testimonialContent={testimonialContent} />
+      <TestimonialGrid2 testimonialContent={testimonialContent} />
     </MainContainer>
   )
 }

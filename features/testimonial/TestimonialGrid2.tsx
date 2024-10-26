@@ -10,14 +10,16 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import { TestimonialCard } from './TestimonialCard'
 import { Testimonial } from '../../utils/types'
+import { TestimonialCardProps } from '../../constant'
+import { TestimonialCard2 } from './TestimonialCard2'
 
 interface TestimonialGridProps {
-  testimonialContent: Testimonial[]
+  testimonialContent: TestimonialCardProps[]
   isTestimonial?: boolean
   columns?: number[]
 }
 
-export const TestimonialGrid = ({
+export const TestimonialGrid2 = ({
   testimonialContent,
   isTestimonial,
   columns,
@@ -88,15 +90,24 @@ export const TestimonialGrid = ({
         pb={['1.5rem', '3.75rem']}
         ref={testimonialRef}
       >
-        {trimmedContent?.map(({ name, role, testimony, imageUrl }) => (
-          <TestimonialCard
+        {trimmedContent?.map(({ name, title, content, imgUrl, id }) => (
+          <TestimonialCard2
+            key={id}
+            id={id}
             name={name}
-            role={role}
-            testimony={testimony}
-            imageUrl={imageUrl}
+            title={title}
+            content={content}
+            imgUrl={imgUrl}
           />
         ))}
       </SimpleGrid>
+      {/* name: string
+  title: string
+  content?: string
+  imgUrl: string
+  smallImgUrl?: string
+  id: number
+  video?: string */}
 
       <Flex
         display={['flex', 'none']}

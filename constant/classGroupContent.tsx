@@ -25,7 +25,7 @@ export interface ClassGroupDetailsProps {
   isAddress?: boolean
   stateLocation?: string
   enrolRoute?: any
-  isPhysical?: boolean,
+  isPhysical?: boolean
 }
 
 export interface StudentWorkProps {
@@ -144,7 +144,7 @@ export const classGroupDetails = [
     classTime: '2-3 times a week.',
     classType: 'Live Virtual Training.',
     installments: ['70% On Admission,', '30% after one month.'],
-    tuition: '₦100,000',
+    tuition: '₦150,000',
     courseOutline: [
       'For intermediate designers who have experience designing interface design looking to expand their design skills; this class is focused on UX (User Experience) design.',
       'What is UX design: why is it important to users and business. Learn different approaches to design thinking and how you can implement it.',

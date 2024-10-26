@@ -32,6 +32,8 @@ import { BiEdit } from 'react-icons/bi'
 import ManageMasterClassHero from '../../features/admin/modals/ManageMasterClassHero'
 import { Testimonial } from '../../features/designChallenge/Testimonial'
 import AdminVideoPage from '../../components/AdminVideoPage'
+import AdminPdfPage from '../../components/AdminPDFPage'
+import AdminTestimonialPage from '../../components/AdminTestimonialPage'
 
 const AdminMasterClasses = () => {
   const [currentClass, setCurrentClass] = useState<MasterClass | null>(null)
@@ -126,10 +128,12 @@ const AdminMasterClasses = () => {
             </Box>
           </TabPanel>
           <TabPanel>
-            <h1>PDF</h1>
+            <Box w="full" mt="10px">
+              <AdminPdfPage />
+            </Box>
           </TabPanel>
           <TabPanel>
-            <h1>Testimonial</h1>
+            <AdminTestimonialPage />
           </TabPanel>
           <TabPanel>
             <h1>Blog</h1>
