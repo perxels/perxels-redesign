@@ -15,7 +15,7 @@ export const ClassPlanYaba = () => {
         classDur="12 Weeks."
         classTime="2 times a week."
         installments={['70% On Admission;', '30% after one month.']}
-        tuition=""
+        tuition="210,000"
         courseOutline={[
           ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
           'It includes everything in the Basic and Advanced class curriculum.',
@@ -35,8 +35,9 @@ export const ClassPlanYaba = () => {
         enrolRoute="/signup"
         stateLocation="discount"
         isPhysical
-        physicalTuition="₦210,000"
-        //   isSponsor
+        physicalTuition="₦180,000"
+        // physicalTuition="₦210,000"
+          // isSponsor
       />
       <Box py=".75rem">
         <ClassDetails
@@ -45,7 +46,7 @@ export const ClassPlanYaba = () => {
           classDur="3 Months"
           classTime="2 times a week."
           installments={['70% On Admission;', '30% after one month.']}
-          tuition=""
+          tuition="250,000"
           courseOutline={[
             ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
             'It includes everything in the Basic and Advanced class curriculum.',
@@ -66,7 +67,8 @@ export const ClassPlanYaba = () => {
           isPhysical
           // isSponsor
           stateLocation="discount"
-          physicalTuition="₦250,000"
+          physicalTuition="₦220,000"
+          // physicalTuition="₦250,000"
         />
       </Box>
     </MainContainer>
