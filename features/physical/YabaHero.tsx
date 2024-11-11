@@ -47,7 +47,7 @@ export const YabaHero = () => {
           opacity={0}
           ref={headingRef}
         >
-          15% discount for Yaba Students
+          Yaba
         </Heading>
         {/* <Text
         color="#FFF"

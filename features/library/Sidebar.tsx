@@ -4,17 +4,17 @@ import { IoGrid } from 'react-icons/io5'
 import { FiPlayCircle } from 'react-icons/fi'
 import { BsFiletypePdf } from 'react-icons/bs'
 import { IoChatbubblesOutline } from 'react-icons/io5'
-import { BiMessageSquareDetail } from 'react-icons/bi'
+import { BiMailSend, BiMessageSquareDetail, BiPhoneCall } from 'react-icons/bi'
 import { SlGraduation } from 'react-icons/sl'
 import { FaWhatsapp } from 'react-icons/fa'
 import Link from 'next/link'
 const SidebarData = [
-  {
-    title: 'All',
-    path: '/library',
-    icon: IoGrid,
-    // cName: 'nav-text',
-  },
+  // {
+  //   title: 'All',
+  //   path: '/library',
+  //   icon: IoGrid,
+  //   // cName: 'nav-text',
+  // },
   {
     title: 'Videos',
     path: '/library/videos',
@@ -49,6 +49,18 @@ const SidebarData = [
     title: 'Join our community',
     path: 'https://chat.whatsapp.com/IF3mIjoz6jZ4o1Ni6oynwU',
     icon: FaWhatsapp,
+    // cName: 'nav-text',
+  },
+  {
+    title: 'Give us a call',
+    path: 'https://chat.whatsapp.com/IF3mIjoz6jZ4o1Ni6oynwU',
+    icon: BiPhoneCall,
+    // cName: 'nav-text',
+  },
+  {
+    title: 'Send us a mail',
+    path: 'https://chat.whatsapp.com/IF3mIjoz6jZ4o1Ni6oynwU',
+    icon: BiMailSend,
     // cName: 'nav-text',
   },
 ]

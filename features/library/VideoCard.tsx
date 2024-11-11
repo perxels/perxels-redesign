@@ -26,7 +26,7 @@ export const VideoCard = ({
     >
       <Box maxHeight="250px" width="100%" position="relative">
         {isPlaying ? (
-          <VideoPlayer videoUrl={videoUrl} />
+          <VideoPlayer videoUrl={videoUrl} onEnd={() => setIsPlaying(false)} />
         ) : (
           <Box w="full" height="240px">
             <Image

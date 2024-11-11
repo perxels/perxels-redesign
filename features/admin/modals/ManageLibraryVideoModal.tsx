@@ -191,7 +191,7 @@ const ManageLibraryVideoModal: React.FC<ManageVideoModalProps> = ({
               </FormControl>
             )}
             <FormControl isRequired>
-              <FormLabel>Video Imaage</FormLabel>
+              <FormLabel>Video Imaage (431 X 253)</FormLabel>
               <Input
                 type="file"
                 accept="image/*"
