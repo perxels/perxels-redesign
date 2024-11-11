@@ -17,7 +17,15 @@ export const TestimonialCard2 = ({
       rounded="11.4px"
     >
       <Flex gap="0.5rem" alignItems="center">
-        <Img src={imgUrl} alt={name} width="78px" height="78px" />
+        <Img
+          src={imgUrl}
+          alt={name}
+          width="75px"
+          height="75px"
+          objectFit="cover"
+          objectPosition="center"
+          rounded="50%"
+        />
         <VStack spacing="0.25rem">
           <Text
             w="full"

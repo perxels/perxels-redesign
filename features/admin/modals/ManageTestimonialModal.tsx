@@ -100,7 +100,9 @@ const ManageTestimonialModal: React.FC<ManageTestimonialModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{testimonialToEdit ? 'Edit Testimonial' : 'Create Testimonial'}</ModalHeader>
+        <ModalHeader>
+          {testimonialToEdit ? 'Edit Testimonial' : 'Create Testimonial'}
+        </ModalHeader>
         <ModalBody>
           <VStack spacing={4}>
             <FormControl isRequired>
@@ -137,14 +139,17 @@ const ManageTestimonialModal: React.FC<ManageTestimonialModalProps> = ({
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Upload Image</FormLabel>
+              <FormLabel>Upload Image (75 X 75)</FormLabel>
               <Input
                 type="file"
                 accept="image/*"
                 onChange={(event) => {
                   if (event.currentTarget.files) {
                     setImageFile(event.currentTarget.files[0])
-                    formik.setFieldValue('imageUrl', event.currentTarget.files[0])
+                    formik.setFieldValue(
+                      'imageUrl',
+                      event.currentTarget.files[0],
+                    )
                   }
                 }}
                 onBlur={formik.handleBlur}

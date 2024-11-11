@@ -26,7 +26,7 @@ export const VideoCard = ({
     >
       <Box maxHeight="250px" width="100%" position="relative">
         {isPlaying ? (
-          <VideoPlayer videoUrl={videoUrl} />
+          <VideoPlayer videoUrl={videoUrl} onEnd={() => setIsPlaying(false)} />
         ) : (
           <Box w="full" height="240px">
             <Image
@@ -59,7 +59,10 @@ export const VideoCard = ({
         borderRadius={'0px 0px 8px 8px'}
         position="relative"
         p="16px 24px"
-        bgColor="rgba(246, 246, 246, 0.65);"
+        // bgColor="red"
+        w="full"
+        minH="180px"
+        bgColor="rgba(246, 246, 246, 0.65)"
       >
         <Flex columnGap="8px">
           <Center
@@ -84,8 +87,13 @@ export const VideoCard = ({
             {videoSession}
           </Center>
         </Flex>
-        <Heading fontSize="22px" lineHeight="120%" fontWeight="700">
-          {videoTitle}
+        <Heading
+          fontSize="22px"
+          lineHeight="120%"
+          noOfLines={2}
+          fontWeight="700"
+        >
+          {videoTitle}{' '}
         </Heading>
         <Flex mt="18px" columnGap="22px" alignItems="center">
           <Flex alignItems="center" columnGap="12px">

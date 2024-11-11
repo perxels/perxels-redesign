@@ -260,7 +260,7 @@ const CreateBannerModal = ({
                 </FormControl>
 
                 <FormControl mb={4}>
-                  <FormLabel>Banner Image</FormLabel>
+                  <FormLabel>Banner Image (481 X 481)</FormLabel>
                   <Input
                     type="file"
                     accept="image/*"

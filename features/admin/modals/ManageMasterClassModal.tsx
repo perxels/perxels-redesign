@@ -207,7 +207,7 @@ const ManageMasterClassModal: React.FC<ManageMasterClassModalProps> = ({
             </FormControl>
 
             <FormControl>
-              <FormLabel>Image</FormLabel>
+              <FormLabel>Image (414 X 621)</FormLabel>
               <Input
                 type="file"
                 accept="image/*"

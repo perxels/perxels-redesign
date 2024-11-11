@@ -155,7 +155,7 @@ const ManageLibraryPDFModal: React.FC<ManagePDFModalProps> = ({
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Banner Image</FormLabel>
+              <FormLabel>Banner Image (1750 X 900)</FormLabel>
               <Input
                 type="file"
                 accept="image/*"
