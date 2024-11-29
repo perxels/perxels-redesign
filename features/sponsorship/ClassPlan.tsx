@@ -25,7 +25,7 @@ export const  ClassPlan = ({isApply}: classInt) => {
       subTitle="Class Plan"
     />
 
-    <ClassDetails
+    {/* <ClassDetails
       title="Basic Class"
       id="#"
       classDur="7 Weeks."
@@ -51,44 +51,17 @@ export const  ClassPlan = ({isApply}: classInt) => {
       enrolRoute={isApply === true ? '/apply/signup' :'/sponsorship/signup'}
       // isPhysical
       isSponsor
-    />
+    /> */}
 
 <Box mt="60px" />
 
 <ClassDetails
-      title="Premium Class"
-      id="#"
-      classDur="3 months."
-      classTime="2 times a week."
-      installments={['80% On Admission;', '20% after one month.']}
-      tuition="₦200,000"
-      physicalTuition="₦150,000"
-      courseOutline={[
-        'For women who is starting out in UIUX design and want to elevate from beginner to professional level',
-        'It includes everything in the Basic and Advanced class curriculum.',
-        'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
-        'Exposure to design tips and tricks - shortcuts and resources.',
-        'Work on complex case studies and projects that will build your problem solving skills.',
-        'Direct mentorship with a Senior Product Designer.',
-        'Learn how to collaborate with developers and product managers.',
-        'Certificate of Completion.',
-        'Job search support and guidance + job recommendation and placement when available**',
-        '6 weeks internship placement after completing the training.',
-      ]}
-      classType= "Live Virtual Training."
-      stateLocation="discount"
-      enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
-      // isPhysical
-      isSponsor
-    />
-<Box mt="60px" />
-      <ClassDetails
       title="Physical Class"
       id="#"
-      classDur="3 Months."
-      classTime="2 times a week."
-      installments={['80% On Admission;', '20% after one month.']}
-      tuition="₦250,000"
+      classDur="3 months + 6 weeks internship "
+      classTime="Weekend/Weekday."
+      installments={['50% On Admission;', '50% after one month.']}
+      tuition="₦300,000"
       physicalTuition="₦200,000"
       courseOutline={[
         'For women who is starting out in UIUX design and want to elevate from beginner to professional level',
@@ -102,10 +75,39 @@ export const  ClassPlan = ({isApply}: classInt) => {
         'Job search support and guidance + job recommendation and placement when available**',
         '6 weeks internship placement after completing the training.',
       ]}
-      classType= "Physical Training"
-      address= "LEKKI, IBADAN, ABUJA"
-      isAddress
+        address= "YABA, LEKKI, IBADAN, ABUJA"
+      classType= "Physical Training."
       stateLocation="discount"
+      enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
+      // isPhysical
+      isSponsor
+    />
+<Box mt="60px" />
+      <ClassDetails
+      title="Online Class"
+      id="#"
+      classDur="3 Months + 6 weeks internship"
+      classTime="2 times a week."
+      installments={['50% On Admission;', '50% after one month.']}
+      tuition=""
+      physicalTuition="₦180,000"
+      
+      courseOutline={[
+        'For women who is starting out in UIUX design and want to elevate from beginner to professional level',
+        'It includes everything in the Basic and Advanced class curriculum.',
+        'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
+        'Exposure to design tips and tricks - shortcuts and resources.',
+        'Work on complex case studies and projects that will build your problem solving skills.',
+        'Direct mentorship with a Senior Product Designer.',
+        'Learn how to collaborate with developers and product managers.',
+        'Certificate of Completion.',
+        'Job search support and guidance + job recommendation and placement when available**',
+        '6 weeks internship placement after completing the training.',
+      ]}
+      classType= "Online Training"
+      // address= "LEKKI, IBADAN, ABUJA"
+      // isAddress
+      // stateLocation="discount"
       enrolRoute={isApply ? '/apply/signup' :'/sponsorship/signup'}
       isPhysical
       isSponsor

@@ -69,7 +69,7 @@ export const SponsorHero = () => {
               px="10px"
               py="2px"
             >
-             International Women’s Day
+          Annual Sponsorship
             </Box>
             <HStack spacing="4px">
               <Box
@@ -105,7 +105,7 @@ export const SponsorHero = () => {
             className="desc"
             opacity={0}
           >
-             Perxels is offering a 20% tuition fee discount to all women.
+             LOBAXTIMI is Offering 30% Off Tuition Fees for the January 2025 Cohort!
           </Heading>
           <Text
             fontSize={['lg', 'lg', 'lg', 'xl']}
@@ -115,7 +115,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-           We are offering a 20% discount on all our classes for women who want to start a career in UIUX Design.
+       Perxels, in collaboration with Loba and Timi, is offering a 30% discount for anyone looking to kickstart their career in UI/UX design!
           </Text>
 
           <Button
