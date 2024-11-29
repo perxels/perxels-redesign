@@ -305,14 +305,29 @@ const RegisterForm = ({isApply}: registerInt) => {
                   outline: 'none',
                 }}
               >
-                <option
+                 <option value="Premium Virtual Class">
+                 Premium Virtual Class
+                </option>
+                <option value="Physical Class (Lekki)">
+                  Physical Class (Lekki)
+                </option>
+                <option value="Physical Class (YABA)">
+                  Physical Class (YABA)
+                </option>
+                <option value="Physical Class (Ibadan)">
+                  Physical Class (Ibadan)
+                </option>
+                <option value="Physical Class (Abuja)">
+                  Physical Class (Abuja)
+                </option>
+                {/* <option
                   value="Basic Class to learn the FUNDAMENTALS of UIUX design in 7
                   weeks"
                 >
                   Basic Class to learn the FUNDAMENTALS of UIUX design in 7
                   weeks 
-                </option>
-                <option
+                </option> */}
+                {/* <option
                   value="Premium class for beginners to learn everything in UIUX design
                   from basic to PROFESSIONAL level in 3 months"
                 >
@@ -325,7 +340,7 @@ const RegisterForm = ({isApply}: registerInt) => {
                 >
                   Physical Class for beginners to learn UIUX design
                   from basic to PROFESSIONAL level for 3 months in our Lekki, Ibadan, Abuja Workspace
-                </option>
+                </option> */}
               </Select>
               {formik.touched.class && formik.errors.class ? (
                 <Text color="red.500" fontSize="sm">
@@ -359,7 +374,7 @@ const RegisterForm = ({isApply}: registerInt) => {
 
                 <Box>
                   <Text mb="1rem">
-                  *This scholarship offers a 20% discount on tuition, would you be able to pay the remaining 80%?
+                  *This scholarship offers a 30% discount on tuition, would you be able to pay the remaining 70%?
                   </Text>
                   <Select
                 h="3.5rem"

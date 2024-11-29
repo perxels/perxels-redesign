@@ -20,14 +20,14 @@ export const InstructionBox = () => {
           </Text>
           <HStack mt={["-0.5rem","0px"]}>
             <Icon as={MdOutlineTimer}  fontSize="1rem" />
-            <Text fontSize="1.125rem" fontWeight="700" color="#383084">
-            1:00pm 
+            <Text fontSize="1rem" fontWeight="700" color="#383084">
+            12:00PM
             </Text>
           </HStack>
           <HStack  mt={["-0.5rem","0px"]}>
             <Icon as={IoCalendarClearOutline}  fontSize="1rem" />
-            <Text fontSize="1.125rem" fontWeight="700" color="#383084">
-            March 1st, 2024
+            <Text fontSize="1rem" fontWeight="700" color="#383084">
+            December 1st, 2024
             </Text>
           </HStack>
         </VStack>
@@ -44,14 +44,14 @@ export const InstructionBox = () => {
           </Text>
           <HStack mt={["-0.5rem","0px"]}>
             <Icon as={MdOutlineTimer} fontSize="1rem" />
-            <Text fontSize="1.125rem" fontWeight="700" color="#383084">
-              6pm
+            <Text fontSize="1rem" fontWeight="700" color="#383084">
+              11pm
             </Text>
           </HStack>
           <HStack  mt={["-0.5rem","0px"]}>
             <Icon as={IoCalendarClearOutline}  fontSize="1rem"/>
-            <Text fontSize="1.125rem" fontWeight="700" color="#383084">
-            March 20th, 2024
+            <Text fontSize="1rem" fontWeight="700" color="#383084">
+            December 20th, 2024
             </Text>
           </HStack>
         </VStack>
