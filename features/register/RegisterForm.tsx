@@ -32,13 +32,13 @@ const RegisterForm = ({isApply}: registerInt) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState(false)
 
-  const { onCopy, value, setValue } = useClipboard("https://perxels.com/scholarship");
+  const { onCopy, value, setValue } = useClipboard("https://perxels.com/sponorship");
 
-  const scriptUrlApply="https://script.google.com/macros/s/AKfycbxUIlH3eoxZ_8iY2BQp4VxSd_JvaNJkmtjTtCwTAB9UDrAiY9l93ymcOSuxQljwK50dNg/exec"
+  // const scriptUrlApply="https://script.google.com/macros/s/AKfycbxUIlH3eoxZ_8iY2BQp4VxSd_JvaNJkmtjTtCwTAB9UDrAiY9l93ymcOSuxQljwK50dNg/exec"
   const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbzElDzlPDTpufKIge395gGbj68amRNIOy_SPWqm69CZc0ydxc4bVj8nC0jqzVY9RzO9Fg/exec'
+    'https://script.google.com/macros/s/AKfycbwoSKtp0rqkYGNtJD7F4OUSKO31FM9mxAHkJfPkYifG62-uNMg4EvblwA5v_AFPeuBb/exec'
 
-    const actualUrl =  isApply ? scriptUrlApply :scriptUrl
+    // const actualUrl =  isApply ? scriptUrlApply : scriptUrl
     
 
   return (
@@ -126,7 +126,7 @@ const RegisterForm = ({isApply}: registerInt) => {
             formData.append('created_at', new Date().toLocaleString())
 
             //continue form submission
-            fetch(actualUrl, {
+            fetch(scriptUrl, {
               method: 'POST',
               body: formData,
             }).then((response) => {
