@@ -8,10 +8,13 @@ import {
   ListIcon,
 } from '@chakra-ui/react'
 import Link from 'next/link'
+import { GiGraduateCap } from 'react-icons/gi'
 import { IoMdClose } from 'react-icons/io'
 import { IoExitOutline } from 'react-icons/io5'
 import {
+  MdClass,
   MdEventAvailable,
+  MdLibraryBooks,
   MdOutlineContactSupport,
   MdSchool,
   MdSummarize,
@@ -110,7 +113,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             color={isActive('/admin/masterclass') ? 'black' : 'white'}
             _hover={{ borderLeft: '3px solid white' }}
           >
-            <ListIcon as={MdSchool} color="inherit" />
+            <ListIcon as={MdClass} color="inherit" />
             Master Class
           </ListItem>
           <ListItem
@@ -127,8 +130,25 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             color={isActive('/admin/library') ? 'black' : 'white'}
             _hover={{ borderLeft: '3px solid white' }}
           >
-            <ListIcon as={MdSchool} color="inherit" />
+            <ListIcon as={MdLibraryBooks} color="inherit" />
             Library
+          </ListItem>
+          <ListItem
+            display="flex"
+            alignItems="center"
+            fontSize={['13px', '13px', '15px', '15px']}
+            fontWeight="700"
+            pl="20px"
+            cursor="pointer"
+            py="10px"
+            as={Link}
+            href="/admin/sponsorship"
+            bg={isActive('/admin/sponsorship') ? 'white' : 'transperant'}
+            color={isActive('/admin/sponsorship') ? 'black' : 'white'}
+            _hover={{ borderLeft: '3px solid white' }}
+          >
+            <ListIcon as={GiGraduateCap} color="inherit" />
+            Sponsorship
           </ListItem>
         </List>
       </Box>

@@ -45,3 +45,11 @@ export interface MasterClass {
     imageUrl?: string // Optional in case no image is uploaded
   }
   
+  export interface Blog {
+    id?: string; // Optional because it may not exist for new blogs
+    title: string;
+    writer: string;
+    image?: string;
+    blog: string; // The main blog content (HTML string from ReactQuill)
+  }
+  

@@ -1,16 +1,10 @@
 import React, { useState } from 'react'
 import AdminLayout from '../../features/admin/layout/AdminLayout'
 import {
-  Box,
   Button,
   HStack,
   IconButton,
   Spinner,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Text,
   useDisclosure,
   VStack,
@@ -30,11 +24,6 @@ import {
 } from '../../hooks/useMasterClass'
 import { BiEdit } from 'react-icons/bi'
 import ManageMasterClassHero from '../../features/admin/modals/ManageMasterClassHero'
-import { Testimonial } from '../../features/designChallenge/Testimonial'
-import AdminVideoPage from '../../components/AdminVideoPage'
-import AdminPdfPage from '../../components/AdminPDFPage'
-import AdminTestimonialPage from '../../components/AdminTestimonialPage'
-import AdminBlogPage from '../../components/AdminBlogPage'
 
 const AdminMasterClasses = () => {
   const [currentClass, setCurrentClass] = useState<MasterClass | null>(null)
@@ -106,41 +95,100 @@ const AdminMasterClasses = () => {
   }
 
   return (
-    <AdminLayout title="Library">
-      <Tabs
-        variant="soft-rounded"
-        colorScheme="purple"
-        //   index={changeState}
-        //   onChange={(index) => setChangeState(index)}
+    <AdminLayout title="Sponsorship">
+      <VStack
+        bg="#f4d06f"
+        px="20px"
+        shadow="md"
+        mb="20px"
+        rounded="md"
+        py="20px"
+        alignItems="flex-start"
       >
-        <TabList
-          overflowX="auto" // Enable horizontal scrolling
-          whiteSpace="nowrap"
+        <HStack
+          mb="10px"
+          pb="10px"
+          borderBottom="1px solid black"
+          w="full"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          <Tab>Videos</Tab>
-          <Tab>PDF</Tab>
-          <Tab>Testimonial</Tab>
-          <Tab>Blogs</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <Box w="full" mt="10px">
-              <AdminVideoPage />
-            </Box>
-          </TabPanel>
-          <TabPanel>
-            <Box w="full" mt="10px">
-              <AdminPdfPage />
-            </Box>
-          </TabPanel>
-          <TabPanel>
-            <AdminTestimonialPage />
-          </TabPanel>
-          <TabPanel>
-           <AdminBlogPage/>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+          <Text as="h1" maxW="70%" color="black">
+            Hero Section :
+          </Text>
+          <Button
+            size="sm"
+            color="black"
+            px="10px"
+            bg="white"
+            rounded="md"
+            _hover={{ bg: 'black', color: 'white' }}
+            aria-label="edit"
+            rightIcon={<BiEdit />}
+            onClick={() => {
+              const currentData = heroData[0]
+              setCurrentHero(currentData)
+              onHeroOpen()
+            }}
+            isDisabled={heroData.length > 0 ? false : true}
+          >
+            edit
+          </Button>
+        </HStack>
+        {heroLoader ? (
+          <VStack w="full" h="60px" alignItems="center" justifyContent="center">
+            <Spinner size="md" />
+          </VStack>
+        ) : (
+          <>
+            <Text as="h1" color="#333333">
+              {heroData[0]?.title}
+            </Text>
+            <Text as="p" mb="10px" color="#333333">
+              {heroData[0]?.desc}
+            </Text>
+          </>
+        )}
+      </VStack>
+      <CustomTable
+        data={classes}
+        columns={[
+          { Header: 'Title', accessor: 'title' },
+          { Header: 'Date & Time', accessor: 'dateTime' },
+          { Header: 'Response Status', accessor: 'entries' },
+        ]}
+        pageSize={8}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        isLoading={loading} // You can set loading state appropriately
+      />
+      <FloatingButton
+        icon={<MdCreateNewFolder size="24" />}
+        title="Add Master Class"
+        onClick={() => {
+          setCurrentClass(null)
+          onOpen()
+        }}
+      />
+      <ManageMasterClassModal
+        isOpen={isOpen}
+        onClose={onClose}
+        refetchClasses={refetchClasses}
+        masterClassToEdit={currentClass}
+      />
+      <ManageMasterClassHero
+        isOpen={isHeroOpen}
+        onClose={onHeroClose}
+        refetchHero={refetchHero}
+        masterClassHeroToEdit={currentHero}
+      />
+      <DeleteDialog
+        title="Master Class"
+        isOpen={isDeleteOpen}
+        onClose={onDeleteClose}
+        isLoading={deleteLoader}
+        handleDelete={deleteMasterClass}
+      />
     </AdminLayout>
   )
 }

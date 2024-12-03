@@ -75,6 +75,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, onEnd }) => {
       controls
       width="100%"
       height="250px"
+      style={{borderRadius:'10px'}}
       onEnded={onEnd} // onEnd callback for non-YouTube videos
     />
   );
