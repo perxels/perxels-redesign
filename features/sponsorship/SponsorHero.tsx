@@ -40,18 +40,7 @@ export const SponsorHero = ({heroData}:any) => {
 
     return () => ctx.revert()
   }, [])
-  // heroData.map((hero) => (
-  //   <VStack
-  //     key={hero.id}
-  //     align="start"
-  //     borderWidth="1px"
-  //     borderRadius="lg"
-  //     p={4}
-  //     mb={4}
-  //     spacing={4}
-  //   >
-  //     <Text color="black">
-  //       <strong>Event Title:</strong> {hero.}
+
   return (
     <MainContainer>
       <SimpleGrid
@@ -97,18 +86,6 @@ export const SponsorHero = ({heroData}:any) => {
               <Icon as={IoMdArrowForward} />
             </HStack>
           </HStack>
-
-          {/* <Heading
-            fontSize={['6xl', '6xl', '6xl', '8xl']}
-            maxW={['350px', '350px', '350px', '550px']}
-            fontWeight="700"
-            mt="1.25rem"
-            color="brand.dark.300"
-            className="desc"
-            opacity={0}
-          >
-          Get 25% Discount Off From June Tuition Fees
-          </Heading> */}
           <Heading
             fontSize={['6xl', '6xl', '6xl', '8xl']}
             maxW={['350px', '350px', '350px', '550px']}

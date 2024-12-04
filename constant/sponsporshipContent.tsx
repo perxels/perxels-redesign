@@ -31,7 +31,7 @@ export const instructions: InstructionProps[] = [
     id: 4,
     title: 'Class Types',
     description:
-      'This scholarship caters to the Basic, Premium, and Physical class plans',
+      'This sponsorship cater for Virtual and Physical classes only',
     image: './assets/images/sponsorship/laptop-internet.svg',
   },
   // {
@@ -44,7 +44,7 @@ export const instructions: InstructionProps[] = [
   {
     id: 6,
     title: 'Equality Opportunity',
-    description: 'Open to women all around the world from different backgrounds as a gateway to kickstart their journey in UIUX design.',
+    description: 'Both male and female can apply for this sponsorship',
     image: './assets/images/sponsorship/social-interaction.svg',
   },
 ]
