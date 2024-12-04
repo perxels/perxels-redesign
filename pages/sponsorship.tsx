@@ -7,7 +7,7 @@ import { Spinner, Text, VStack } from '@chakra-ui/react'
 import { useSponsorshipHero } from '../hooks/useSponsorship'
 import { IoReload } from 'react-icons/io5'
 
-const sponsorship = () => {
+const SponsorshipPage = () => {
   const {heroData,isLoading,refetchHero} = useSponsorshipHero()
 
   if(isLoading){
@@ -34,4 +34,4 @@ const sponsorship = () => {
   )
 }
 
-export default sponsorship
+export default SponsorshipPage
