@@ -53,3 +53,34 @@ export interface MasterClass {
     blog: string; // The main blog content (HTML string from ReactQuill)
   }
   
+  export interface ApplicationCriteria {
+    title: string;
+    paragraph: string;
+  }
+  
+  export interface SponsorshipHero {
+    id: string;
+    eventTitle: string;
+    mainTitle: string;
+    paragraph: string;
+    applicationCriteria: ApplicationCriteria[];
+    applicationOpeningTime: string;
+    applicationOpeningDate: string;
+    applicationClosingTime: string;
+    applicationClosingDate: string;
+  }
+  
+  export interface ClassDetails {
+    id: string;
+    title: string;
+    classDur: string;
+    classTime: string;
+    installments: string[];
+    tuition?: string;
+    physicalTuition?: string;
+    courseOutline: string[];
+    classType: string;
+    stateLocation: string;
+    enrolRoute: string;
+    isSponsor?: boolean;
+  }

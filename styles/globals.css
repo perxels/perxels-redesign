@@ -177,6 +177,12 @@ video {
   margin-bottom: 20px;
   color: black;
 }
+.blog_content a {
+  text-decoration: underline;
+}
+.blog_content a:hover {
+  color: red;
+}
 
 @media screen and (max-width: 900px) {
   .blog_content h1 {

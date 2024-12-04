@@ -15,7 +15,8 @@ import React, { useEffect, useRef } from 'react'
 import { IoMdArrowForward } from 'react-icons/io'
 import { MainContainer } from '../../layouts'
 
-export const SponsorHero = () => {
+export const SponsorHero = ({heroData}:any) => {
+
   const tl = useRef<any>(gsap.timeline({ paused: true }))
   const heroRef = useRef<HTMLDivElement>(null)
 
@@ -39,6 +40,18 @@ export const SponsorHero = () => {
 
     return () => ctx.revert()
   }, [])
+  // heroData.map((hero) => (
+  //   <VStack
+  //     key={hero.id}
+  //     align="start"
+  //     borderWidth="1px"
+  //     borderRadius="lg"
+  //     p={4}
+  //     mb={4}
+  //     spacing={4}
+  //   >
+  //     <Text color="black">
+  //       <strong>Event Title:</strong> {hero.}
   return (
     <MainContainer>
       <SimpleGrid
@@ -69,7 +82,7 @@ export const SponsorHero = () => {
               px="10px"
               py="2px"
             >
-             International Women’s Day
+            {heroData[0]?.eventTitle}
             </Box>
             <HStack spacing="4px">
               <Box
@@ -105,7 +118,7 @@ export const SponsorHero = () => {
             className="desc"
             opacity={0}
           >
-             Perxels is offering a 20% tuition fee discount to all women.
+          {heroData[0]?.mainTitle}
           </Heading>
           <Text
             fontSize={['lg', 'lg', 'lg', 'xl']}
@@ -115,7 +128,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-           We are offering a 20% discount on all our classes for women who want to start a career in UIUX Design.
+           {heroData[0]?.paragraph}
           </Text>
 
           <Button
