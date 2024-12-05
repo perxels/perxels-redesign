@@ -3,12 +3,12 @@ import React from 'react'
 import { Box, Text, Heading, Image, Center, Flex } from '@chakra-ui/react'
 import { GoDotFill } from 'react-icons/go'
 import { blogContentProps } from '../../constant/blogContent'
+import Link from 'next/link'
 
 export const BlogCard = ({
   id,
   title,
   writer,
-  duration,
   image,
 }: blogContentProps) => {
   return (
@@ -18,7 +18,7 @@ export const BlogCard = ({
       flexDir="column"
       alignItems="flex-start"
       borderRadius="10px"
-      as="a"
+      as={Link}
       href={`/library/blog/${id}`}
     >
       <Box maxHeight="253px" width="100%" position="relative">
@@ -40,7 +40,7 @@ export const BlogCard = ({
         p="16px 24px"
         bgColor="rgba(246, 246, 246, 0.65);"
       >
-        <Heading fontSize="22px" lineHeight="120%" fontWeight="700">
+        <Heading fontSize="22px" lineHeight="120%" noOfLines={2} fontWeight="700">
           {title}
         </Heading>
         <Flex mt="18px" columnGap="22px" alignItems="center">
@@ -58,7 +58,7 @@ export const BlogCard = ({
           <Flex alignItems="center">
             <GoDotFill color="#1A1A1A" />
             <Text fontSize="14px" color="#1A1A1A">
-              {duration}
+              7 mins
             </Text>
           </Flex>
         </Flex>

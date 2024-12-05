@@ -3,45 +3,31 @@ import { MainLayout } from '../../../layouts'
 import { LibraryLayout } from '../../../features/library'
 import { BlogContentItem } from '../../../features/library'
 import { useRouter } from 'next/router'
-import {
-  blogContentProps,
-  blogContentDataArray,
-} from '../../../constant/blogContent'
+import { Blog } from '../../../utils/types'
+import { getSingleBlog } from '../../../hooks/useBlogs'
+import Head from 'next/head'
 
 const BlogContent = () => {
-  const router = useRouter()
-  const { blogId } = router.query
-  const [blogContentData, setBlogContentData] = useState([])
-
-  function findObjectById(
-    array: blogContentProps[],
-    id: number,
-  ): blogContentProps | null {
-    for (let obj of array) {
-      if (obj.id === id) {
-        return obj
-      }
-    }
-    return null // Return null if ID doesn't belong to any object
-  }
+  const router = useRouter();
+  const { blogId } = router.query;
+  const [blog, setBlog] = useState<Blog | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (typeof blogId === 'string') {
-      const id = parseInt(blogId) // Convert string to number
-      if (!isNaN(id)) {
-        const blog = findObjectById(blogContentDataArray, id)
-        if (blog) {
-          // Handle the found blog
-          setBlogContentData(blog.blog)
-        } else {
-          alert(`Blog with ID ${id} not found`)
-        }
-      } else {
-        alert(`Invalid Blog url`)
-      }
-    }
-  }, [blogId])
+      const fetchBlog = async () => {
+        const blogData = await getSingleBlog(blogId);
+        setBlog(blogData);
+        setLoading(false);
+      };
 
+      fetchBlog();
+    } else {
+      setLoading(false); // Set loading to false if blogId is invalid
+    }
+  }, [blogId]);
+
+  
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const targetRef = useRef<HTMLDivElement | null>(null)
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -64,7 +50,17 @@ const BlogContent = () => {
       <MainLayout>
         <LibraryLayout>
         <div ref={targetRef}>
-          <BlogContentItem BlogContentData={blogContentData} />
+       {blog && <Head>
+        <title>{blog.title}</title>
+        <meta name="description" content={`Read the blog "${blog.title}" by ${blog.writer}.`} />
+        <meta property="og:title" content={blog.title} />
+        <meta property="og:description" content={`Read the blog "${blog.title}" by ${blog.writer}.`} />
+        <meta property="og:image" content={blog.image || '/default-image.jpg'} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${blogId}`} />
+        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${blogId}`} />
+      </Head>}
+        {loading ? <div>Loading...</div> : !blog ? <div>Blog not found</div> : <BlogContentItem blog={blog.blog}/>    }
           </div>
         </LibraryLayout>
       </MainLayout>

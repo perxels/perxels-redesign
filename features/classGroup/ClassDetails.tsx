@@ -59,7 +59,7 @@ export const ClassDetails = ({
   enrolRoute,
   isPhysical,
 }: ClassGroupDetailsProps) => {
-  console.log('isSponsor', isSponsor)
+  // console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
   const [location, setLocation] = useState('lagos')
   const glowAnimation = `${glow} 2s ease-in-out infinite`
@@ -93,97 +93,6 @@ export const ClassDetails = ({
           </Heading>
         </Box>
 
-        {/* {isTab ? (
-          <Box px={['0.75rem', '1.875rem']} py="1rem">
-            <HStack
-              backgroundColor={'#F6F7FD'}
-              w="full"
-              borderRadius={'5px'}
-              px="0.625rem"
-              py="0.6875rem"
-            >
-              <Button
-                w="50%"
-                padding="1.375rem 2rem"
-                background={tabState === 'virtual' ? '#383084' : '#F6F7FD'}
-                color={tabState === 'virtual' ? '#F6F7FD' : '#383084'}
-                borderRadius={'5px'}
-                onClick={() => {setTabState('virtual'); setLocation('lagos')}}
-                cursor="pointer"
-                fontWeight={'700'}
-                textAlign="center"
-                fontSize={'0.9375rem'}
-                _hover={{
-                  background: '#383084',
-                  color: '#F6F7FD',
-                }}
-                h="62px"
-                animation={tabState === 'physical' ? glowAnimation : 'none'}
-              >
-              ONLINE
-              </Button>
-              <Button
-                w="50%"
-                padding="1.375rem 2rem"
-                background={tabState === 'physical' ? '#383084' : '#F6F7FD'}
-                color={tabState === 'physical' ? '#F6F7FD' : '#383084'}
-                borderRadius={'5px'}
-                onClick={() => {setTabState('physical'); setLocation('lagos')}}
-                cursor="pointer"
-                fontWeight={'700'}
-                textAlign="center"
-                fontSize={'0.9375rem'}
-                _hover={{
-                  background: tabState === 'physical' ? '#383084' : '#F6F7FD',
-                  color: tabState === 'physical' ? '#F6F7FD' : '#383084',
-                }}
-                h="62px"
-                animation={tabState === 'virtual' ? glowAnimation : 'none'}
-              >
-              PHYSICAL
-              </Button>
-            </HStack>
-          </Box>
-        ) : null} */}
-        {/* {
-          tabState === 'physical' ? (
-              <HStack px={['0.75rem', '1.875rem']} gap="0">
-                <Button leftIcon={location === "lagos" ?<Img src="./assets/icons/gpsfilled.svg"  alt="" /> : <Img src="./assets/icons/gpsunfilled.svg" alt="" />}
-                  bg= {location === "lagos" ? "transparent" : "transparent"}
-                 fontWeight={location==="lagos" ? "600" : "400"}
-                 color={location ==="lagos" ? "#383084": "#434343"}
-                 _hover={{
-                  background: 'rgba(115, 230, 255, 0.25)',
-                  color: '#000'
-                 }}
-                 borderBottom={location === "lagos" ? "1.8px solid #434343" : "0.9px solid rgba(0, 0, 0, 0.25)"}
-                 cursor="pointer"
-                 fontSize="18px"
-                 onClick={() => setLocation("lagos")}
-                 rounded="0"
-                 >
-                  Lagos
-                </Button>
-                <Button
-                leftIcon={location === "ibadan" ?  <Img src="./assets/icons/gpsfilled.svg" alt="" />  :<Img src="./assets/icons/gpsunfilled.svg"  alt="" />} 
-                bg=  {location === "ibadan" ? "transparent" : "transparent"}
-                fontWeight={location==="ibadan" ? "600" : "400"}
-                color="#000000"
-                _hover={{
-                 background: 'rgba(115, 230, 255, 0.25)',
-                 color: '#000'
-                }}
-                borderBottom={location === "ibadan" ? "1.8px solid #434343" :  "0.9px solid rgba(0, 0, 0, 0.25)"}
-                cursor="pointer"
-                fontSize="18px"
-                 rounded="0"
-                onClick={() => setLocation("ibadan")}
-                >
-                 Ibadan
-                </Button>
-              </HStack>
-          ) : null
-        } */}
 
         <Box
           px={['.75rem', '.75rem', '.75rem', '1.875rem']}
@@ -280,7 +189,7 @@ export const ClassDetails = ({
                 </Heading>
               </VStack>
             ) : null}
-            {isAddress && (
+            {address && (
               <VStack spacing="5px">
                 <Text
                   w="full"
@@ -375,12 +284,10 @@ export const ClassDetails = ({
                 >
                   <Heading
                     fontSize={
-                      isSponsor || isPhysical ? '20px' : ['6xl', '6xl', '7xl']
+                      isSponsor || physicalTuition ? '20px' : ['6xl', '6xl', '7xl']
                     }
-                    textDecoration={
-                      stateLocation === 'discount' ? 'line-through' : ' '
-                    }
-                    color={stateLocation === 'discount' ? '#9C9C9C' : ' '}
+                    textDecoration={physicalTuition  ? 'line-through' : ' '}
+                    color={stateLocation === 'discount' || physicalTuition ? '#9C9C9C' : ' '}
                   >
                     {tabState === 'virtual' || location !== 'ibadan'
                       ? // location === 'lagos' && tabState === 'physical' ? '₦210,000' : ''
@@ -389,7 +296,7 @@ export const ClassDetails = ({
                         : tuition
                       : physicalTuition}
                   </Heading>
-                  {isSponsor || isPhysical ? (
+                  {isSponsor || physicalTuition ? (
                     <>
                       <Heading w="full" fontSize={['6xl', '6xl', '7xl']}>
                         {physicalTuition}

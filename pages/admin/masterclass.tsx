@@ -98,11 +98,10 @@ const AdminMasterClasses = () => {
     <AdminLayout title="Master Class">
       <VStack
         bg="#f4d06f"
-        px="20px"
+        p="20px"
         shadow="md"
         mb="20px"
         rounded="md"
-        py="20px"
         alignItems="flex-start"
       >
         <HStack
