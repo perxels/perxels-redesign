@@ -59,7 +59,7 @@ export const ClassDetails = ({
   enrolRoute,
   isPhysical,
 }: ClassGroupDetailsProps) => {
-  console.log('isSponsor', isSponsor)
+  // console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
   const [location, setLocation] = useState('lagos')
   const glowAnimation = `${glow} 2s ease-in-out infinite`
