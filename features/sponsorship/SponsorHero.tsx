@@ -105,7 +105,7 @@ export const SponsorHero = () => {
             className="desc"
             opacity={0}
           >
-             LOBAXTIMI is Offering 30% Off Tuition Fees for the January 2025 Cohort!
+             LOBAXTIMI is Offering30% Off Tuition Fees for the January 2025 Cohort!
           </Heading>
           <Text
             fontSize={['lg', 'lg', 'lg', 'xl']}
@@ -126,7 +126,7 @@ export const SponsorHero = () => {
             maxW="212px"
             mt="2rem"
             as={Link}
-            href="/scholarship#instructions"
+            href="/sponsorship#instructions"
           >
             Apply Now
           </Button>
