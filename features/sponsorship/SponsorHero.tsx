@@ -15,7 +15,8 @@ import React, { useEffect, useRef } from 'react'
 import { IoMdArrowForward } from 'react-icons/io'
 import { MainContainer } from '../../layouts'
 
-export const SponsorHero = () => {
+export const SponsorHero = ({heroData}:any) => {
+
   const tl = useRef<any>(gsap.timeline({ paused: true }))
   const heroRef = useRef<HTMLDivElement>(null)
 
@@ -39,6 +40,7 @@ export const SponsorHero = () => {
 
     return () => ctx.revert()
   }, [])
+
   return (
     <MainContainer>
       <SimpleGrid
@@ -69,7 +71,7 @@ export const SponsorHero = () => {
               px="10px"
               py="2px"
             >
-          Annual Sponsorship
+            {heroData[0]?.eventTitle}
             </Box>
             <HStack spacing="4px">
               <Box
@@ -84,18 +86,6 @@ export const SponsorHero = () => {
               <Icon as={IoMdArrowForward} />
             </HStack>
           </HStack>
-
-          {/* <Heading
-            fontSize={['6xl', '6xl', '6xl', '8xl']}
-            maxW={['350px', '350px', '350px', '550px']}
-            fontWeight="700"
-            mt="1.25rem"
-            color="brand.dark.300"
-            className="desc"
-            opacity={0}
-          >
-          Get 25% Discount Off From June Tuition Fees
-          </Heading> */}
           <Heading
             fontSize={['6xl', '6xl', '6xl', '8xl']}
             maxW={['350px', '350px', '350px', '550px']}
@@ -105,7 +95,7 @@ export const SponsorHero = () => {
             className="desc"
             opacity={0}
           >
-             LOBAXTIMI is Offering30% Off Tuition Fees for the January 2025 Cohort!
+          {heroData[0]?.mainTitle}
           </Heading>
           <Text
             fontSize={['lg', 'lg', 'lg', 'xl']}
@@ -115,7 +105,7 @@ export const SponsorHero = () => {
             className="full-desc"
             opacity={0}
           >
-       Perxels, in collaboration with Loba and Timi, is offering a 30% discount for anyone looking to kickstart their career in UI/UX design!
+           {heroData[0]?.paragraph}
           </Text>
 
           <Button

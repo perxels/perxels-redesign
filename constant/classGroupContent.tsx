@@ -12,7 +12,7 @@ export interface ClassGroupDetailsProps {
   classTime: string
   classType?: string
   installments: string[]
-  tuition: string
+  tuition?: string
   courseOutline: string[]
   isShow?: boolean
   isSponsor?: boolean

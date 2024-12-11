@@ -1,13 +1,12 @@
 export interface blogContentProps {
-  id: number
+  id?: string
   title: string
   writer: string
-  duration: string
-  image: string
+  image?: string
   blog?: any
 }
 
-export const blogContentDataArray: blogContentProps[] = [
+export const blogContentDataArray = [
   {
     id: 100,
     title: 'How to charge your clients as a UIUX Designer',

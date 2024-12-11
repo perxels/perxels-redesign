@@ -34,6 +34,7 @@ import { Testimonial } from '../../features/designChallenge/Testimonial'
 import AdminVideoPage from '../../components/AdminVideoPage'
 import AdminPdfPage from '../../components/AdminPDFPage'
 import AdminTestimonialPage from '../../components/AdminTestimonialPage'
+import AdminBlogPage from '../../components/AdminBlogPage'
 
 const AdminMasterClasses = () => {
   const [currentClass, setCurrentClass] = useState<MasterClass | null>(null)
@@ -136,7 +137,7 @@ const AdminMasterClasses = () => {
             <AdminTestimonialPage />
           </TabPanel>
           <TabPanel>
-            <h1>Blog</h1>
+           <AdminBlogPage/>
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -2,7 +2,8 @@ import React from 'react'
 import { Box, Flex, VStack, HStack, Text, Image, Icon } from '@chakra-ui/react'
 import { MdOutlineTimer } from 'react-icons/md'
 import { IoCalendarClearOutline } from 'react-icons/io5'
-export const InstructionBox = () => {
+import moment from 'moment'
+export const InstructionBox = ({heroData}:any) => {
   return (
     <Box display="flex" flexDir={["row", "column"]} background="#FDE85C" p={['35px 49px 33px 30px','17px 34px 18px 33px']} maxWidth={["510px"]} mt="3rem" columnGap="12px">
       <Box mt={["0.5rem","0rem"]} ml={["0rem","2.875rem"]} mb="1rem">
@@ -20,14 +21,14 @@ export const InstructionBox = () => {
           </Text>
           <HStack mt={["-0.5rem","0px"]}>
             <Icon as={MdOutlineTimer}  fontSize="1rem" />
-            <Text fontSize="1rem" fontWeight="700" color="#383084">
-            12:00PM
+            <Text fontSize="1.125rem" fontWeight="700" color="#383084">
+            {moment(heroData.applicationOpeningTime, 'HH:mm').format('h:mm a')} 
             </Text>
           </HStack>
           <HStack  mt={["-0.5rem","0px"]}>
             <Icon as={IoCalendarClearOutline}  fontSize="1rem" />
             <Text fontSize="1rem" fontWeight="700" color="#383084">
-            December 1st, 2024
+            {moment(heroData.applicationOpeningDate).format('MMMM Do, YYYY')}
             </Text>
           </HStack>
         </VStack>
@@ -38,20 +39,20 @@ export const InstructionBox = () => {
           borderLeft="none"
           mt={["0rem","1rem"]}
         />
-        <VStack alignItems="flex-start">
+        <VStack alignItems="flex-start" spacing={0}>
           <Text color="#383084" fontSize=".875rem">
             Application closes
           </Text>
           <HStack mt={["-0.5rem","0px"]}>
             <Icon as={MdOutlineTimer} fontSize="1rem" />
-            <Text fontSize="1rem" fontWeight="700" color="#383084">
-              11pm
+            <Text fontSize="1.125rem" fontWeight="700" color="#383084">
+            {moment(heroData.applicationClosingTime, 'HH:mm').format('h:mm a')}
             </Text>
           </HStack>
           <HStack  mt={["-0.5rem","0px"]}>
             <Icon as={IoCalendarClearOutline}  fontSize="1rem"/>
             <Text fontSize="1rem" fontWeight="700" color="#383084">
-            December 20th, 2024
+            {moment(heroData.applicationClosingDate).format('MMMM Do, YYYY')}
             </Text>
           </HStack>
         </VStack>

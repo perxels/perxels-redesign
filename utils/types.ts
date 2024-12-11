@@ -45,3 +45,42 @@ export interface MasterClass {
     imageUrl?: string // Optional in case no image is uploaded
   }
   
+  export interface Blog {
+    id?: string; // Optional because it may not exist for new blogs
+    title: string;
+    writer: string;
+    image?: string;
+    blog: string; // The main blog content (HTML string from ReactQuill)
+  }
+  
+  export interface ApplicationCriteria {
+    title: string;
+    paragraph: string;
+  }
+  
+  export interface SponsorshipHero {
+    id: string;
+    eventTitle: string;
+    mainTitle: string;
+    paragraph: string;
+    applicationCriteria: ApplicationCriteria[];
+    applicationOpeningTime: string;
+    applicationOpeningDate: string;
+    applicationClosingTime: string;
+    applicationClosingDate: string;
+  }
+  
+  export interface ClassDetails {
+    id: string;
+    title: string;
+    classDur: string;
+    classTime: string;
+    installments: string[];
+    tuition?: string;
+    physicalTuition?: string;
+    courseOutline: string[];
+    classType: string;
+    stateLocation: string;
+    enrolRoute: string;
+    isSponsor?: boolean;
+  }

@@ -11,10 +11,11 @@ import {
 import React from 'react'
 import { BsCheckCircle } from 'react-icons/bs'
 import { SectionHeader } from '../../components'
-import { instructions } from '../../constant'
+// import { instructions } from '../../constant'
 import { MainContainer } from '../../layouts'
 import {InstructionBox} from './InstructionBox'
-export const Instructions = () => {
+import { ApplicationCriteria } from '../../utils/types'
+export const Instructions = ({heroData}:any) => {
   return (
     <Box
       bg="brand.purple.500"
@@ -65,8 +66,8 @@ export const Instructions = () => {
 
             <GridItem>
               <SimpleGrid columns={[1, 1, 1, 2]} gap="3rem">
-                {instructions.map(({ id, title, description, image }) => (
-                  <GridItem w="full" key={id}>
+                {heroData?.applicationCriteria?.map(({title, paragraph,}:ApplicationCriteria,i:number) => (
+                  <GridItem w="full" key={i}>
                     <Grid gap="1rem" templateColumns="1.5rem 1fr">
                       <Icon
                         as={BsCheckCircle}
@@ -87,7 +88,7 @@ export const Instructions = () => {
                           fontSize={['lg']}
                           mt="1rem"
                         >
-                          {description}
+                          {paragraph}
                         </Text>
                       </Box>
                     </Grid>
@@ -96,7 +97,7 @@ export const Instructions = () => {
                 ))}
               </SimpleGrid>
               <Box px={["10%","0"]}>
-              <InstructionBox/>
+              <InstructionBox heroData={heroData}/>
               </Box>
             </GridItem>
 
