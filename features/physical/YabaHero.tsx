@@ -3,7 +3,7 @@ import { Box, Heading, Image, Flex, Text, Center } from '@chakra-ui/react'
 import Link from 'next/link'
 import { MainContainer } from '../../layouts'
 import gsap from 'gsap'
-export const YabaHero = () => {
+export const YabaHero = ({title="Yaba"}:any) => {
   const heroRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
 
@@ -41,13 +41,14 @@ export const YabaHero = () => {
       >
         <Heading
           color="#FFFFFF"
-          fontSize="2.8125rem"
+          fontSize={["1.8rem","1.8rem","2.8125rem","2.8125rem"]}
+          maxW='80%'
           fontWeight="800"
           textAlign="center"
           opacity={0}
           ref={headingRef}
         >
-          Yaba
+          {title}
         </Heading>
         {/* <Text
         color="#FFF"
