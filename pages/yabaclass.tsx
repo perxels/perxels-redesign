@@ -3,7 +3,7 @@ import {YabaHero, YabaSpace, StudentJob, ClassPlanYaba, OtherPhysCardLayout, Mar
 import {LeaningTools, StudentWorkWrapper} from '../features/classGroup'
 import { Testimonial } from '../features/testimonial'
 import { MainContainer, MainLayout } from '../layouts'
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Flex, Heading, Image } from '@chakra-ui/react'
 import { SectionHeader } from '../components'
 import { YabaFeatsContent } from '../constant'
 import { YabaFeats } from '../features/yaba/YabaFeatures'
@@ -41,6 +41,17 @@ training that equips you with the tools, techniques, and mentorship
         </MainContainer>
     </Box>
         <MarqueeComp/>
+        <Heading
+        color={'brand.purple.500'}
+        textAlign="center"
+        fontSize={['2rem', '2rem', '7xl']}
+        maxW={'auto'}
+        m="0 auto"
+        mb="1rem"
+        mt="1.25rem"
+      >
+        Why Choose Perxels Yaba Center?
+      </Heading>
         <MainContainer>
              <Box id="pricing" />
              <ClassDetails
