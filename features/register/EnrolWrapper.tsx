@@ -4,8 +4,9 @@ import React, { useEffect, useRef } from 'react'
 import { Logo } from '../../components'
 import EnrolForm from './EnrolForm'
 import SideImage from './SideImage'
+import YabaEnrollForm from './YabaEnrollForm'
 
-export const EnrolWrapper = () => {
+export const EnrolWrapper = ({isYaba= false}:any) => {
   const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export const EnrolWrapper = () => {
         <Logo />
       </Box>
       <SideImage />
-      <EnrolForm />
-    </SimpleGrid>
+      {isYaba ? <YabaEnrollForm/>: <EnrolForm />}
+    </SimpleGrid> 
   )
 }
