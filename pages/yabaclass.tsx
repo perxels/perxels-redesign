@@ -65,7 +65,7 @@ const yaba = () => {
           bg="brand.purple.500"
           color="white"
           as="a"
-          href="/signup"
+          href="/yabaclass/signup"
           _hover={{ bg: 'brand.yellow.500', color: 'brand.purple.500' }}
           variant="outline"
           borderColor="brand.white"
@@ -98,7 +98,7 @@ const yaba = () => {
           address="4th Floor of Cashcraft Building, 270 MURITALA MUHAMMED WAY, ALAGOMEJI, Yaba."
           isAddress
           // stateLocation="scholarship"
-          enrolRoute="/signup"
+          enrolRoute="/yabaclass/signup"
           stateLocation="discount"
           isPhysical
           // physicalTuition="₦180,000"
@@ -129,7 +129,7 @@ const yaba = () => {
             address="4th Floor of Cashcraft Building, 270 MURITALA MUHAMMED WAY, ALAGOMEJI, Yaba."
             isAddress
             // stateLocation="scholarship"
-            enrolRoute="/signup"
+            enrolRoute="/yabaclass/signup"
             isPhysical
             // isSponsor
             stateLocation="discount"
@@ -158,7 +158,7 @@ const yaba = () => {
           <Text as='p' pb='1.5rem' fontWeight='semibold' >
             Ready to take the next step?
           </Text>
-          <HStack alignItems='center' gap='30px' flexWrap='wrap'>
+          <HStack alignItems='center' justifyContent='center' w='full' gap='30px' flexWrap='wrap'>
           <Button
           h="3.75rem"
           w="12.75rem"
@@ -166,7 +166,7 @@ const yaba = () => {
           bg="brand.purple.500"
           color="white"
           as="a"
-          href="/signup"
+          href="/yabaclass/signup"
           variant="outline"
           borderColor="brand.white"
         >
@@ -181,7 +181,7 @@ const yaba = () => {
           as="a"
           _hover={{ bg:"brand.yellow.500",
             color:"brand.purple.500"}}
-          href="/signup"
+          href="/yabaclass/signup"
           variant="outline"
           borderColor="brand.white"
         >
