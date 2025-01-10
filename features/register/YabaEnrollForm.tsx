@@ -200,25 +200,12 @@ import {
                     outline: 'none',
                   }}
                 >
-                  <option value="Basic Class">Basic Class</option>
-                  <option value="Advanced Class">Advanced Class</option>
-                  <option value="Premium Virtual Class">
-                   Premium Virtual Class
+                  <option value="Yaba (Weekend)">
+                    Yaba Weekend
                   </option>
-                  <option value="Physical Class (Lekki)">
-                    Physical Class (Lekki)
+                  <option value="Yaba (Weekday)">
+                    Yaba Weekday
                   </option>
-                  <option value="Physical Class (YABA)">
-                    Physical Class (YABA)
-                  </option>
-                  <option value="Physical Class (Ibadan)">
-                    Physical Class (Ibadan)
-                  </option>
-                  <option value="Physical Class (Abuja)">
-                    Physical Class (Abuja)
-                  </option>
-                  <option value="International Class">International Class</option>
-                  <option value="Private Class">Private Class</option>
                 </Select>
                 {formik.touched.class && formik.errors.class ? (
                   <Text color="red.500" fontSize="sm">
