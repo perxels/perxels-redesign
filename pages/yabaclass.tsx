@@ -8,8 +8,85 @@ import { SectionHeader } from '../components'
 import { YabaFeats } from '../features/yaba/YabaFeatures'
 import { ClassDetails } from '../features/classGroup/ClassDetails'
 import { YabaSubSection } from '../features/yaba/YabaSubSection'
+import Head from 'next/head'
+import Script from 'next/script'
 const yaba = () => {
   return (
+    <>
+    {/* Facebook Pixel Code */}
+    <Script
+        id="facebook-pixel"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '309688088029898'); 
+            fbq('track', 'PageView');
+          `,
+        }}
+      />
+      {/* NoScript Fallback */}
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style={{ display: 'none' }}
+          alt=""
+          src="https://www.facebook.com/tr?id=309688088029898&ev=PageView&noscript=1"
+        />
+      </noscript>
+
+
+    {/* LinkedIn Tracking Script */}
+    <Script
+        id="linkedin-partner-id"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            _linkedin_partner_id = "7932145";
+            window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+            window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+          `,
+        }}
+      />
+      <Script
+        id="linkedin-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(l) {
+              if (!l) {
+                window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+                window.lintrk.q = [];
+              }
+              var s = document.getElementsByTagName("script")[0];
+              var b = document.createElement("script");
+              b.type = "text/javascript";
+              b.async = true;
+              b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+              s.parentNode.insertBefore(b, s);
+            })(window.lintrk);
+          `,
+        }}
+      />
+      {/* NoScript Fallback */}
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style={{ display: 'none' }}
+          alt=""
+          src="https://px.ads.linkedin.com/collect/?pid=7932145&fmt=gif"
+        />
+      </noscript>
+
     <MainLayout>
       <YabaHero title="Welcome to Perxels Yaba: Your Gateway to World-Class UI/UX Design Training" />
       <Box py={['3.3rem', '6.25rem']}>
@@ -18,25 +95,25 @@ const yaba = () => {
             subTitle="Physical Spaces"
             title=""
             paragraph="Are you ready to transform your passion for design into a thriving career? At Perxels Yaba Center, we provide industry-leading UI/UX design training that equips you with the tools, techniques, and mentorship you need to excel in today’s competitive tech landscape."
-          />
+            />
 
           <Flex
             columnGap="1.25rem"
             flexDir={['column', 'row']}
             rowGap="1.25rem"
-          >
+            >
             <Box>
               <Image
                 display={['none', 'block']}
                 src={'/assets/images/class-group/YabaSpace1.png'}
                 objectFit="cover"
                 alt=""
-              />
+                />
               <Image
                 display={['block', 'none']}
                 src={'/assets/images/class-group/YabaSpace1.png'}
                 alt=""
-              />
+                />
             </Box>
             <Box>
               <Image src="/assets/images/class-group/YabaSpace2.png" alt="" />
@@ -69,7 +146,7 @@ const yaba = () => {
           _hover={{ bg: 'brand.yellow.500', color: 'brand.purple.500' }}
           variant="outline"
           borderColor="brand.white"
-        >
+          >
           Enroll Now
         </Button>
       </VStack>
@@ -104,7 +181,7 @@ const yaba = () => {
           // physicalTuition="₦180,000"
           physicalTuition="₦200,000"
           // isSponsor
-        />
+          />
         <Box py=".75rem">
           <ClassDetails
             title="Weekday Class"
@@ -135,7 +212,7 @@ const yaba = () => {
             stateLocation="discount"
             // physicalTuition="₦220,000"
             physicalTuition="₦200,000"
-          />
+            />
         </Box>
       </MainContainer>
       <YabaFeats />
@@ -152,7 +229,7 @@ const yaba = () => {
             m="0 auto"
             mb="1rem"
             mt="1.25rem"
-          >
+            >
             Limited Slots Available - <br /> Enroll Today!
           </Heading>
           <Text as='p' pb='1.5rem' fontWeight='semibold' >
@@ -181,16 +258,17 @@ const yaba = () => {
           as="a"
           _hover={{ bg:"brand.yellow.500",
             color:"brand.purple.500"}}
-          href="/yabaclass/signup"
-          variant="outline"
-          borderColor="brand.white"
-        >
+            href="/yabaclass/signup"
+            variant="outline"
+            borderColor="brand.white"
+            >
          Chat with rep
         </Button>
           </HStack>
         </VStack>
       </VStack>
     </MainLayout>
+          </>
   )
 }
 
