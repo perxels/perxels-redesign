@@ -256,9 +256,11 @@ const yaba = () => {
           bg="brand.yellow.500"
           color="brand.purple.500"
           as="a"
+          
           _hover={{ bg:"brand.yellow.500",
             color:"brand.purple.500"}}
-            href="/yabaclass/signup"
+            href="https://wa.me/+2347079807449"
+            target='_blank'
             variant="outline"
             borderColor="brand.white"
             >
