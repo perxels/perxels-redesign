@@ -24,7 +24,9 @@ const enrol = () => {
         }}
       />
       {/* NoScript Fallback */}
-      <noscript>
+      <noscript
+        dangerouslySetInnerHTML={{
+          __html: `
         <img
           height="1"
           width="1"
@@ -32,7 +34,9 @@ const enrol = () => {
           alt=""
           src="https://www.facebook.com/tr?id=309688088029898&ev=PageView&noscript=1"
         />
-      </noscript>
+        `,
+        }}
+      />
 
 
     {/* LinkedIn Tracking Script */}

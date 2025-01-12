@@ -13,8 +13,7 @@ import Script from 'next/script'
 const yaba = () => {
   return (
     <>
-    {/* Facebook Pixel Code */}
-    <Script
+   <Script
         id="facebook-pixel"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -33,7 +32,9 @@ const yaba = () => {
         }}
       />
       {/* NoScript Fallback */}
-      <noscript>
+      <noscript
+        dangerouslySetInnerHTML={{
+          __html: `
         <img
           height="1"
           width="1"
@@ -41,8 +42,9 @@ const yaba = () => {
           alt=""
           src="https://www.facebook.com/tr?id=309688088029898&ev=PageView&noscript=1"
         />
-      </noscript>
-
+        `,
+        }}
+      />
 
     {/* LinkedIn Tracking Script */}
     <Script
