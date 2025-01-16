@@ -1,7 +1,7 @@
 import React, { useEffect }  from 'react'
 import {EventCard} from './EventCard'
 import {Box, Text, Heading, Image, Center, SimpleGrid, Button} from '@chakra-ui/react'
-import { InfoContent } from '../../constant'
+import { InfoContent,Info2Content } from '../../constant'
 import {MainContainer} from '../../layouts'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
@@ -30,12 +30,33 @@ export const EventInfo = () => {
             A retreat to help our Alumnis get Jobs
             </Heading>
             <Text fontSize={["1rem","24px"]} fontWeight="400" w={["100%","70%"]} lineHeight="133%"  mt="1.15rem">
-            This retreat aims to empower our alumni with insights into the current job market landscape and effective strategies to secure employment in 2024.
+            This retreat aims to empower our alumni with insights into the current job market and effective strategies for securing employment in 2025.
             </Text>
         </Box>
+        <Heading fontSize={["1.3rem","35px"]} mt={5} color="#34296B" fontWeight="900" width={["90%","60%"]} >
+            Day One
+            </Heading>
         <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} spacing="26px" mt="2.625rem" className="section-grid">
                     {
                 InfoContent.map((item, index) => (
+                    <EventCard
+                        key={index}
+                        title={item.title}
+                        iconSrc={item.iconSrc}
+                        content={item.content}
+                        fontSize={item.fontSize}
+                        bgColor={item.bgColor}
+                        marginT={item.marginT}
+                    />
+                ))
+            }
+        </SimpleGrid>
+        <Heading fontSize={["1.3rem","35px"]} mt="30px" color="#34296B" fontWeight="900" width={["90%","60%"]} >
+            Day Two
+            </Heading>
+        <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} spacing="26px" mt="2.625rem" className="section-grid">
+                    {
+                Info2Content.map((item, index) => (
                     <EventCard
                         key={index}
                         title={item.title}

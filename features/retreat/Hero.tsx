@@ -36,7 +36,7 @@ export const Hero = () => {
         opacity={0}
         backgroundColor="#DEDAF1" display="inline-flex" px="29px" py="14px" rounded="31.25rem">
             <Text color="#34296B" fontSize="12px" fontWeight="700">
-            PERXELS ALUMNI RETREAT 2.0
+            PERXELS ALUMNI RETREAT 3.0
             </Text>
         </Center>
         <Heading
@@ -49,7 +49,7 @@ export const Hero = () => {
         ref={descRef}
         opacity={0}
         >
-        Navigating the UIUX Job Market in 2024
+       Empowering Designers For Future Job
         </Heading>
         <Image  src="assets/icons/leftRet.png" alt="" position="absolute" left="5%" bottom="10%" display={["none", "block"]} />
         <Image zIndex="5" src="assets/icons/centerRet.svg" alt="" position="absolute" bottom={["13%","45%"]} right={["40%","50%"]} />
