@@ -41,8 +41,8 @@ export const Expectation = () => {
     <ExpectationCard bgImage="/assets/images/retreat/expect2.png" description="Vision Board" />
     </Flex>
     <Flex  rowGap="1.5rem" flexDir={["column","row"]}  columnGap="1.5rem" className="section-flex">
-    <ExpectationCard bgImage="/assets/images/retreat/expect3.png" description="Panel Session" />
-    <ExpectationCard bgImage="/assets/images/retreat/expect4.png" description="Mock Interview" />
+    <ExpectationCard bgImage="/assets/images/retreat/expect3.png" description="Access to opportunities" />
+    <ExpectationCard bgImage="/assets/images/retreat/expect4.png" description="Interview Role Play" />
     <ExpectationCard bgImage="/assets/images/retreat/expect5.png" description="CV Evaluation" />
     </Flex>
     </Box>
