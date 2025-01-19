@@ -24,7 +24,7 @@ export const SpeakerData: SpeakerInterface[] = [
     description:
       'Abiodun Fiwa has spent a good time of her life using her skills and career experiences to train and mentor aspiring UIUX designers to grow and thrive in the industry. She is a design facilitator with over 7 years of experience organizing design meetups and boot camps. She is also a FigmaAfrica Ambassador. <br/> Fiwa believes that this days business environment is changing at a fast pace. Tough business problems require technical skills and soft skills to create sustainable solutions. And that is why she takes delight in mentoring aspiring designers to take time to practice, improve and explore different ways of solving problems through a design thinking approach.',
     image: 'assets/images/retreat/fiwa_image.jpg',
-    role: 'Speaker',
+    role: 'Topic',
     topic: 'Vision Board',
   },
   {

@@ -82,12 +82,23 @@ export const SpeakerMobile = () => {
                   fontWeight="700"
                   fontSize="1.125rem"
                   lineHeight="170%"
+                  mt='20px'
                   mb=".6875rem"
                   
                 >
                   {item.name}
                 </Text>
               </Box>
+              <Box backgroundColor={"#060022"} w='full' my='20px' p="20px" rounded="1.6875rem" display="inline-flex" flexDir="column" >
+                <Text color="#FFF">
+                   {item?.role}
+                </Text>
+                <Heading color="#FFF" fontSize="22px" fontWeight="900" >
+                    {
+                       parse(item.topic)
+                    }
+                </Heading>
+            </Box>
               <Text
                 mb="1.5625rem"
                 fontSize="1.125rem"
@@ -96,28 +107,16 @@ export const SpeakerMobile = () => {
               >
                 {parse(item.description)}
               </Text>
-
-        
-
-              <Box backgroundColor={"#060022"} padding="20px 
-              36px" rounded="1.6875rem" display="inline-flex" flexDir="column" mt="25px" >
-                <Text color="#FFF">
-                   {item?.role}
-                </Text>
-                <Heading color="#FFF" fontSize="25px" fontWeight="900" >
-                    {
-                       parse(item.topic)
-                    }
-                </Heading>
-            </Box>
+             
             </Box>
           </Box>
         ))}
       </Slider>
-      <Box display="flex">
+      {/* <Box display="flex"> */}
         <Box 
         position="absolute"
-        bottom="10%"
+        top="21.2rem"
+        left='13px'
         >
           <Text color="#060022" fontSize="30px" fontWeight={400}>
             <BsArrowLeftCircle onClick={previous} />
@@ -125,14 +124,14 @@ export const SpeakerMobile = () => {
         </Box>
         <Box
          position="absolute"
-         bottom="10%"
-         right="0"
+         top="21.2rem"
+         right="0px"
         >
           <Text color="#060022" fontSize="30px" >
             <BsArrowRightCircle onClick={next} />
           </Text>
         </Box>
       </Box>
-    </Box>
+    // </Box>
   );
 };
