@@ -52,12 +52,12 @@ export const ClassPlanIb = () => {
 
       <Box py=".75rem">
         <ClassDetails
-          title="Premium Class"
+          title="Weekend Class"
           id="#"
           classDur="3 Months"
           classTime="2 times a week."
           installments={['70% On Admission;', '30% after one month.']}
-          tuition="₦180,000"
+          tuition="₦200,000"
           courseOutline={[
             ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
             'It includes everything in the Basic and Advanced class curriculum.',
@@ -71,7 +71,37 @@ export const ClassPlanIb = () => {
             '6 weeks internship placement after completing the training.',
           ]}
           classType="Physical Training"
-          address="Palms mall, ringroad, Ibadan"
+          address="Sunrise Supermarket Bond Mall, Ringroad, Ibadan."
+          isAddress
+          // stateLocation="scholarship"
+          enrolRoute="/signup"
+          //   isPhysical
+          //   isSponsor
+          stateLocation="ibadan"
+        />
+      </Box>
+      <Box py=".75rem">
+        <ClassDetails
+          title="Weekday Class"
+          id="#"
+          classDur="3 Months"
+          classTime="2 times a week."
+          installments={['70% On Admission;', '30% after one month.']}
+          tuition="₦200,000"
+          courseOutline={[
+            ' For anyone who wants to learn everything in UIUX design from beginner to professional level.',
+            'It includes everything in the Basic and Advanced class curriculum.',
+            'Learn how to use PRO design tools like Miro, Notion, Adobe illustrator, Figjam etc',
+            'Exposure to design tips and tricks - shortcuts and resources.',
+            'Work on complex case studies and projects that will build your problem solving skills',
+            'Direct mentorship with a Senior Product Designer.',
+            'Learn how to collaborate with developers and product managers.',
+            'Certificate of Completion.',
+            'Job search support and guidance + job recommendation and placement when available**',
+            '6 weeks internship placement after completing the training.',
+          ]}
+          classType="Physical Training"
+          address="Sunrise Supermarket Bond Mall, Ringroad, Ibadan."
           isAddress
           // stateLocation="scholarship"
           enrolRoute="/signup"

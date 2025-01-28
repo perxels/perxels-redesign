@@ -47,7 +47,7 @@ export const IbadanHero = () => {
           opacity={0}
           ref={headingRef}
         >
-          Palms Mall, Ibadan
+          Sunrise Supermarket Bond Mall, Ringroad, Ibadan.
         </Heading>
         {/* <Text
         color="#FFF"
