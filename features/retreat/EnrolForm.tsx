@@ -330,7 +330,7 @@ const EnrolForm = () => {
                     w="full"
                     type="submit"
                     as='a'
-                    href='https://chat.whatsapp.com/L7eumYzNnu4JIfnyvJCHF5'
+                    href='https://chat.whatsapp.com/ERIkLJUSXfuK5YRlGEI4C4'
                   >
                   Click to join the whatsapp group
                 </Button>

@@ -117,16 +117,13 @@ export const Speaker = () => {
           <Text fontSize="30px" fontWeight="700" color="#282828" >
             {SpeakerData[speaker]?.name}
           </Text>
-          <Text fontSize="22px" fontWeight="400" w="100%" lineHeight="214%">
-            {parse(SpeakerData[speaker]?.description)}
-          </Text>
           <Box
             backgroundColor={'#060022'}
             padding="20px 36px"
             rounded="1.6875rem"
             display="inline-flex"
             flexDir="column"
-            mt="45px"
+            my="20px"
             // w={["95%"]}
           >
             <Text color="#FFF">{SpeakerData[speaker]?.role}</Text>
@@ -134,6 +131,10 @@ export const Speaker = () => {
               {parse(SpeakerData[speaker]?.topic)}
             </Heading>
           </Box>
+          <Text fontSize="22px" fontWeight="400" w="100%" lineHeight="214%">
+            {parse(SpeakerData[speaker]?.description)}
+          </Text>
+         
         </Box>
       </Flex>
 

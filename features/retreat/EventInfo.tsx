@@ -68,8 +68,8 @@ export const EventInfo = () => {
                 </VStack>
             </HStack>
             <VStack alignItems={['center','flex-start']} justifyContent='center'  mt="3rem" gap='10px' spacing={0}>
-            <Text as='span' fontSize='20px' fontWeight='600'>ACCESS FEE OF ₦5000</Text>
-            <Button  as='a' href="/retreat/register"  backgroundColor="#34296B" color="#fff" fontSize="1.25rem" fontWeight="700" w={["100%", "30%"]} h="3rem" borderRadius="4px" >
+            <Text as='span' fontSize='30px' fontWeight='600'>ACCESS FEE OF ₦5000</Text>
+            <Button  as='a' href="/retreat/register"  backgroundColor="#34296B" color="#fff" fontSize="1.25rem" fontWeight="700" w={["100%", "43%"]} h="3rem" borderRadius="4px" >
             Register Now
             </Button>
             </VStack>
