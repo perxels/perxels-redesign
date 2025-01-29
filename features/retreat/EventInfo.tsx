@@ -1,6 +1,6 @@
 import React, { useEffect }  from 'react'
 import {EventCard} from './EventCard'
-import {Box, Text, Heading, Image, Center, SimpleGrid, Button, HStack, VStack} from '@chakra-ui/react'
+import {Box, Text, Heading, Image, Center, SimpleGrid, Button, HStack, VStack, Stack} from '@chakra-ui/react'
 import { InfoContent,Info2Content } from '../../constant'
 import {MainContainer} from '../../layouts'
 import gsap from 'gsap'
@@ -67,9 +67,12 @@ export const EventInfo = () => {
                    </VStack>
                 </VStack>
             </HStack>
-            <VStack alignItems={['center','flex-start']} justifyContent='center'  mt="3rem" gap='10px' spacing={0}>
-            <Text as='span' fontSize='30px' fontWeight='600'>ACCESS FEE OF ₦5000</Text>
-            <Button  as='a' href="/retreat/register"  backgroundColor="#34296B" color="#fff" fontSize="1.25rem" fontWeight="700" w={["100%", "43%"]} h="3rem" borderRadius="4px" >
+            <VStack alignItems={['center','flex-start']} justifyContent='center'  mt="2rem" gap='10px' spacing={0}>
+            <HStack alignItems='center' w={['full','470px']} gap='20px' justifyContent='center' bg='#FFFCDF' >
+            <Text as='span' fontSize='23px' fontWeight='600'>ACCESS FEE:</Text>
+            <Text as='span' fontSize='45px' fontWeight='900'>₦10,000</Text>
+            </HStack>
+            <Button  as='a' href="/retreat/register"  backgroundColor="#34296B" color="#fff" fontSize="1.25rem" fontWeight="700" w={['full','470px']} h="3rem" borderRadius="4px" >
             Register Now
             </Button>
             </VStack>
