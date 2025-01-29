@@ -65,7 +65,7 @@ const EnrolForm = () => {
               textAlign="left"
               color="brand.dark.100"
             >
-              The retreat cost: ₦5000
+              The retreat cost: ₦10,000
             </Heading>
             <Text textAlign="left">Fill the form, pay and join the whatsapp group
             </Text>

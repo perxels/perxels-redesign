@@ -88,7 +88,7 @@ export const Speaker = () => {
               <Box
                 // width={speaker === index ? '371px' : '10%'}
                 key={index}
-                height="400px"
+                height="600px"
                 position="relative"
                 onMouseOver={() => setSpeaker(index)}
                 style={{
