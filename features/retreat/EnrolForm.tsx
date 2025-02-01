@@ -21,10 +21,8 @@ import { IoCopyOutline, IoLogoTwitter, IoLogoWhatsapp } from 'react-icons/io5'
 import { TwitterShareButton, WhatsappShareButton } from 'next-share'
 
 const EnrolForm = () => {
-  // const scriptUrl =
-  //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
   const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbyqxYzmTBDjpvDZpXLpnJiqX5nB8ynWeJ3bLNmgRzz-ZTjzBmxvNIa_yN55RbLo7VC1DA/exec'
+    'https://script.google.com/macros/s/AKfycbwQkHXlNKynztMKiSTc3eQw7DPZuZ5iQT9vonzSZK-SwoJhn-yejLG8psFlX6w0RetW/exec'
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
@@ -111,17 +109,22 @@ const EnrolForm = () => {
               fetch(scriptUrl, {
                 method: 'POST',
                 body: formData,
-              }).then((response) => {
-                if (response.status === 201 || 200) {
-                  action.resetForm()
-                  setFormSection('paymentSect')
-                  setLoading(false)
-                  // onOpen()
-                } else {
-                  setLoading(false)
-                  alert('Something went wrong, please try again')
-                }
               })
+                .then((response) => {
+                  if (response.status === 201 || 200) {
+                    action.resetForm()
+                    setFormSection('paymentSect')
+                    setLoading(false)
+                    // onOpen()
+                  } else {
+                    setLoading(false)
+                    alert('Something went wrong, please try again')
+                  }
+                })
+                .catch((error) => {
+                  console.log(error)
+                  setLoading(false)
+                })
             }}
           >
             {(formik) => (
@@ -262,12 +265,7 @@ const EnrolForm = () => {
                   </Text>
                 ) : null}
 
-                <Button
-                  h="3.688rem"
-                  w="full"
-                  type="submit"
-                  isLoading={formik.isSubmitting}
-                >
+                <Button h="3.688rem" w="full" type="submit" isLoading={loading}>
                   Submit and join the whatsapp group
                 </Button>
               </VStack>
