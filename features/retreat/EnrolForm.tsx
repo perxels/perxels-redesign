@@ -40,6 +40,7 @@ const EnrolForm = () => {
         title={`Thank you for your submission!`}
         description="Our representative will call you within the next 24 hours."
         buttonTitle="Go back Home"
+        buttonHref="https://chat.whatsapp.com/ERIkLJUSXfuK5YRlGEI4C4"
       />
      
 
