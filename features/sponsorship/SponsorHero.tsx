@@ -116,7 +116,7 @@ export const SponsorHero = ({heroData}:any) => {
             maxW="212px"
             mt="2rem"
             as={Link}
-            href="/scholarship#instructions"
+            href="/sponsorship#instructions"
           >
             Apply Now
           </Button>

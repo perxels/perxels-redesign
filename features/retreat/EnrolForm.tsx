@@ -36,7 +36,8 @@ const EnrolForm = () => {
         onClose={onClose}
         title={`Thank you for your submission!`}
         description="Our representative will call you within the next 24 hours."
-        buttonTitle="Go back Home"
+        buttonTitle="Join retreat whatsapp group"
+        buttonHref="https://chat.whatsapp.com/ERIkLJUSXfuK5YRlGEI4C4"
       />
 
       {formSection === 'formSect' ? (
