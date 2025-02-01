@@ -25,7 +25,8 @@ import { TwitterShareButton, WhatsappShareButton } from 'next-share'
 const EnrolForm = () => {
   // const scriptUrl =
   //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbyqxYzmTBDjpvDZpXLpnJiqX5nB8ynWeJ3bLNmgRzz-ZTjzBmxvNIa_yN55RbLo7VC1DA/exec"
+  //const scriptUrl = "https://script.google.com/macros/s/AKfycbyqxYzmTBDjpvDZpXLpnJiqX5nB8ynWeJ3bLNmgRzz-ZTjzBmxvNIa_yN55RbLo7VC1DA/exec"
+   cont scruptUrl = "https://script.google.com/macros/s/AKfycbycyswCqp2LVH3oZ66FzAx5Gp6rGTl_FpK18Wp2cN1sorU7YfdtTxT3UTgzHiJVLXpC/exec"
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
   const [loading, setLoading] = useState(false)
