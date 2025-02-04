@@ -20,8 +20,6 @@ import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../../../firebaseConfig' // Assuming you've set up Firebase
 import { MasterClassHero } from '../../../utils/types'
 
-
-
 interface ManageMasterClassHeroModalProps {
   isOpen: boolean
   onClose: () => void
@@ -41,10 +39,14 @@ const ManageMasterClassHero: React.FC<ManageMasterClassHeroModalProps> = ({
     initialValues: {
       title: '',
       desc: '',
+      expect_title: '',
+      expect_desc: '',
     },
     validationSchema: Yup.object({
       title: Yup.string().required('Title is required'),
       desc: Yup.string().required('Description information is required'),
+      expect_title: Yup.string().required('What to expect title is required'),
+      expect_desc: Yup.string().required('What to expect desc is required'),
     }),
     onSubmit: async (values) => {
       try {
@@ -81,6 +83,8 @@ const ManageMasterClassHero: React.FC<ManageMasterClassHeroModalProps> = ({
       formik.setValues({
         title: masterClassHeroToEdit.title,
         desc: masterClassHeroToEdit.desc,
+        expect_title: masterClassHeroToEdit.expect_title,
+        expect_desc: masterClassHeroToEdit.expect_desc,
       })
     } else {
       formik.resetForm()
@@ -113,6 +117,27 @@ const ManageMasterClassHero: React.FC<ManageMasterClassHeroModalProps> = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 placeholder="Enter Description"
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>What to expect: Title</FormLabel>
+              <Input
+                name="expect_title"
+                value={formik.values.expect_title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="Enter what to expect title"
+              />
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>What to expect: Desc</FormLabel>
+              <Textarea
+                name="expect_desc"
+                value={formik.values.expect_desc}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder="Enter what to expect description"
               />
             </FormControl>
           </VStack>

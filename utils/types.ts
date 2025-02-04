@@ -16,6 +16,8 @@ export interface MasterClass {
     id: string
     title: string
     desc: string
+    expect_title:string
+    expect_desc:string
   }
 
   export interface Video {

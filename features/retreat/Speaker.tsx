@@ -30,29 +30,11 @@ export const SpeakerData: SpeakerInterface[] = [
   {
     name: 'Onuoha Anayor Daniel - Technical Recruiter',
     description:
-      "Anayor is a competent and assured person who is also a self-starter with the commitment and drive necessary to succeed in a hectic HR department. Have worked as an HR professional for around 5 years. He has a solid background in HR processes and procedures and a track record of collaborating with senior HR advisors and managers at startups in the FinTech, manufacturing, healthcare, and technology sectors. <br/> His expertise has primarily been in recruitment, talent management, performance management, workplace policy writing, and other areas. <br/> Anayor is an HR expert who believes that everyone has a better version of themselves hidden inside. He has chosen to help others find this version of themselves in order to improve performance. <br/> Some of his core competencies include; to name a few, technical/non-technical recruitment, talent onboarding, employer branding, workforce management, talent development, workplace diversity, and emotional intelligence. <br/> Recruitment tools and technologies: Github sourcing, Boolean search, Google Xray sourcing, LinkedIn headhunting, Networking, etc.",
+      'Anayor is a competent and assured person who is also a self-starter with the commitment and drive necessary to succeed in a hectic HR department. Have worked as an HR professional for around 5 years. He has a solid background in HR processes and procedures and a track record of collaborating with senior HR advisors and managers at startups in the FinTech, manufacturing, healthcare, and technology sectors. His expertise has primarily been in recruitment, talent management, performance management, workplace policy writing, and other areas. Anayor is an HR expert who believes that everyone has a better version of themselves hidden inside. He has chosen to help others find this version of themselves to improve performance.',
     image: 'assets/images/retreat/speaker3.jpeg',
     role: 'Topic',
     topic: 'The Designer’s Guide to Acing CVs and Interviews.',
   },
-  // {
-  //   name: 'Dan Praise, Designer',
-  //   description:
-  //     "Daniel has a robust background in marketing, he brings extensive expertise in Content Marketing, Brand Marketing, and Design customized to fuel sustainable growth strategies. His experience spans across diverse industries and markets, allowing him to harness the power of compelling content, strategic brand positioning, and impactful design to drive tangible business growth. He has honed his skills in crafting narratives that resonate with audiences while implementing innovative branding strategies that elevate a company's visibility and market presence.",
-  //   image: 'assets/images/retreat/speaker4.jpeg',
-  //   role: 'Panel Topic',
-  //   topic: 'Strategies for secu-<br/>ring Employment',
-  // },
- 
-
-  // {
-  //   name: 'Onuoha, Anayor Daniel, Technical Recruiter',
-  //   description:
-  //     'Anayor, a seasoned HR professional who has excelled in various HR domains, particularly recruitment, talent management, and performance evaluation. He has collaborated with senior advisors and managers across FinTech, manufacturing, healthcare, and technology sectors.<br/>An expert in unlocking individual potential, Anayor believes in maximizing performance by helping individuals discover their best selves. His competencies span technical and non-technical recruitment, talent onboarding, employer branding, workforce management, talent development, workplace diversity, and emotional intelligence.',
-  //   image: 'assets/images/retreat/speaker3.png',
-  //   role: 'Panel Speaker',
-  //   topic: 'Strategies for secu-<br/>ring Employment',
-  // },
 ]
 
 export const Speaker = () => {
@@ -61,8 +43,8 @@ export const Speaker = () => {
   const handleNext = () => {
     if (speaker === SpeakerData.length - 1) {
       setSpeaker(0)
-    }else{
-        setSpeaker(speaker + 1)
+    } else {
+      setSpeaker(speaker + 1)
     }
   }
 
@@ -92,8 +74,8 @@ export const Speaker = () => {
                 position="relative"
                 onMouseOver={() => setSpeaker(index)}
                 style={{
-                    width: speaker === index ? '371px' : '10%',
-                    transition: 'width 0.5s ease', // Add transition
+                  width: speaker === index ? '371px' : '10%',
+                  transition: 'width 0.5s ease', // Add transition
                 }}
               >
                 <Image
@@ -104,7 +86,7 @@ export const Speaker = () => {
                   objectFit="cover"
                   objectPosition={'top center'}
                   style={{
-                    transition: 'opacity 0.5s ease', 
+                    transition: 'opacity 0.5s ease',
                   }}
                 />
               </Box>
@@ -113,8 +95,8 @@ export const Speaker = () => {
         </Box>
 
         {/* {Text container} */}
-        <Box width={"100%"} style={{ transition: 'opacity 0.5s ease' }}>
-          <Text fontSize="30px" fontWeight="700" color="#282828" >
+        <Box width={'100%'} style={{ transition: 'opacity 0.5s ease' }}>
+          <Text fontSize="30px" fontWeight="700" color="#282828">
             {SpeakerData[speaker]?.name}
           </Text>
           <Box
@@ -134,7 +116,6 @@ export const Speaker = () => {
           <Text fontSize="22px" fontWeight="400" w="100%" lineHeight="214%">
             {parse(SpeakerData[speaker]?.description)}
           </Text>
-         
         </Box>
       </Flex>
 

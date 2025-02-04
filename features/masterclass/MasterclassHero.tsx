@@ -6,11 +6,7 @@ import { useFetchMasterclassHero } from '../../hooks/useMasterClass'
 export const MasterclassHero = () => {
   const heroRef = useRef<HTMLDivElement>(null)
   const tl = useRef<any>(gsap.timeline({ paused: true }))
-  const {
-    heroData,
-    loading: heroLoader,
-    refetchHero,
-  } = useFetchMasterclassHero()
+  const { heroData } = useFetchMasterclassHero()
   useEffect(() => {
     let ctx = gsap.context(() => {
       //fade in on start

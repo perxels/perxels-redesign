@@ -308,13 +308,13 @@ const EnrolForm = () => {
               Pay to this account number
             </Heading>
             <Heading fontSize="40px" color="#34296B" fontWeight="700">
-              0775531140
+              7759070019
             </Heading>
             <Heading fontSize="38px" color="#000" fontWeight="700">
-              GTBANK
+              FCMB
             </Heading>
             <Heading fontSize="1.3625rem" color="#000" fontWeight="700">
-              ThePerxels Service
+              OKUNADE ABIODUN
             </Heading>
           </Box>
           <Button
