@@ -146,6 +146,16 @@ const AdminMasterClasses = () => {
             <Text as="p" mb="10px" color="#333333">
               {heroData[0]?.desc}
             </Text>
+
+            <Text as="h1" maxW="70%" color="black">
+              What to expect:
+            </Text>
+            <Text as="h1" color="#333333">
+              {heroData[0]?.expect_title}
+            </Text>
+            <Text as="p" mb="10px" color="#333333">
+              {heroData[0]?.expect_desc}
+            </Text>
           </>
         )}
       </VStack>
