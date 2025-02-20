@@ -20,7 +20,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import dynamic from 'next/dynamic';
 import { db, storage } from '../../../firebaseConfig';
 import { Blog } from '../../../utils/types';
-
+//@ts-expect-error: Quill is not compatible with SSR
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 
@@ -172,6 +172,7 @@ const ManageBlogModal: React.FC<ManageBlogModalProps> = ({
           <FormControl mb={4}>
             <FormLabel>Blog</FormLabel>
             <ReactQuill
+              //@ts-expect-error: Quill is not compatible with SSR
               value={blog}
               onChange={setBlog}
               modules={quillModules}
