@@ -26,6 +26,7 @@ export interface ClassGroupDetailsProps {
   stateLocation?: string
   enrolRoute?: any
   isPhysical?: boolean
+  isTitleSmall?: boolean
 }
 
 export interface StudentWorkProps {

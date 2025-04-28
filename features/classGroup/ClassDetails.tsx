@@ -58,6 +58,7 @@ export const ClassDetails = ({
   stateLocation,
   enrolRoute,
   isPhysical,
+  isTitleSmall
 }: ClassGroupDetailsProps) => {
   // console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
@@ -79,7 +80,7 @@ export const ClassDetails = ({
         >
           <Heading
             as="span"
-            fontSize={['2rem', '2rem', '2rem', '2.8rem']}
+            fontSize={isTitleSmall ? ['2rem', '2rem', '2rem', '2.5rem'] : ['2rem', '2rem', '2rem', '2.8rem']}
             color="white"
             pos="relative"
           >
