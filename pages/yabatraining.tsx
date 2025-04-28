@@ -158,7 +158,7 @@ const Tutorial = () => {
             bg="brand.purple.500"
             color="white"
             as="a"
-            href="/yabaclass/signup"
+            href="/yabatraining/signup"
             _hover={{ bg: 'brand.yellow.500', color: 'brand.purple.500' }}
             variant="outline"
             borderColor="brand.white"
