@@ -5,8 +5,9 @@ import { Logo } from '../../components'
 import EnrolForm from './EnrolForm'
 import SideImage from './SideImage'
 import YabaEnrollForm from './YabaEnrollForm'
+import YabaTutorialEnrollForm from './YabaTutorialEnrollForm'
 
-export const EnrolWrapper = ({isYaba= false}:any) => {
+export const EnrolWrapper = ({isYaba= false, isYabaTutorial = false}:any) => {
   const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export const EnrolWrapper = ({isYaba= false}:any) => {
         <Logo />
       </Box>
       <SideImage />
-      {isYaba ? <YabaEnrollForm/>: <EnrolForm />}
+      {isYaba ? <YabaEnrollForm/>: isYabaTutorial ? <YabaTutorialEnrollForm /> : <EnrolForm />}
     </SimpleGrid> 
   )
 }
