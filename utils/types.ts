@@ -28,6 +28,7 @@ export interface MasterClass {
     datePosted: string;
     videoUrl: string;
     imageUrl?: string;
+    order?: number;
   }
   export interface PDFDocument {
     id: string;            // Unique ID of the PDF document in Firestore
