@@ -16,7 +16,7 @@ import {
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc, getDocs } from 'firebase/firestore'
 import { storage, db } from '../../../firebaseConfig' // Assuming you've set up Firebase
 import { Video } from '../../../utils/types'
 
@@ -48,6 +48,7 @@ const ManageLibraryVideoModal: React.FC<ManageVideoModalProps> = ({
       datePosted: '',
       videoUrl: '',
       imageUrl: '',
+      order: 0,
     },
     validationSchema: Yup.object({
       videoTitle: Yup.string().required('Video title is required'),
@@ -79,8 +80,9 @@ const ManageLibraryVideoModal: React.FC<ManageVideoModalProps> = ({
           ...values,
           videoUrl,
           imageUrl,
-          author: 'Perxels', // You can update this as needed
+          author: 'Perxels',
           datePosted: new Date().toISOString(),
+          order: videoToEdit ? values.order : (await getDocs(collection(db, 'libraryVideos'))).size,
         }
 
         if (videoToEdit) {
@@ -110,6 +112,7 @@ const ManageLibraryVideoModal: React.FC<ManageVideoModalProps> = ({
         datePosted: videoToEdit.datePosted,
         videoUrl: videoToEdit.videoUrl,
         imageUrl: videoToEdit.imageUrl || '',
+        order: videoToEdit.order || 0,
       })
     } else {
       formik.resetForm()

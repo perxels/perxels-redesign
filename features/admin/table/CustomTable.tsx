@@ -42,7 +42,7 @@ const CustomTable = ({
         ),
       )
       setFilteredData(filtered)
-      setCurrentPage(0) // Reset to the first page when a new search is made
+      setCurrentPage(0)
     } else {
       setFilteredData(data)
     }
@@ -126,7 +126,11 @@ const CustomTable = ({
                   <Td>{start + rowIndex + 1}</Td>
                   {columns.map((column: any) => (
                     <Td fontSize="13px" key={column.accessor}>
-                      {row[column.accessor] || 'Not Applicable'}
+                      {column.Cell ? (
+                        <column.Cell row={{ original: row }} />
+                      ) : (
+                        row[column.accessor] || 'Not Applicable'
+                      )}
                     </Td>
                   ))}
                   {showActions && (
