@@ -192,7 +192,7 @@ const Tutorial = () => {
             address="4th Floor of Cashcraft Building, 270 MURITALA MUHAMMED WAY, ALAGOMEJI, Yaba."
             isAddress
             // stateLocation="scholarship"
-            enrolRoute="/yabaclass/signup"
+            enrolRoute="/yabatraining/signup"
             stateLocation="discount"
             isPhysical
             // physicalTuition="₦180,000"
@@ -266,7 +266,7 @@ const Tutorial = () => {
                 bg="brand.purple.500"
                 color="white"
                 as="a"
-                href="/yabaclass/signup"
+                href="/yabatraining/signup"
                 variant="outline"
                 borderColor="brand.white"
               >
