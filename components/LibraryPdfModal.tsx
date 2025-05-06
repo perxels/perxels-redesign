@@ -194,7 +194,7 @@ const LibraryPdfModal = ({
         <ModalBody pb={6}>
           {isOtp ? (
             <>
-              <Text mb={8}>An Otp has been sent to {email}</Text>
+              <Text mb={8}>An OTP has been sent to {email}</Text>
               <FormControl>
                 <FormLabel>Enter OTP </FormLabel>
                 <Input

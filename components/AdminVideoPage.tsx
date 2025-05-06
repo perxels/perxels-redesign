@@ -5,22 +5,17 @@ import {
   MdArrowUpward,
   MdArrowDownward,
 } from 'react-icons/md'
-import {
-  doc,
-  deleteDoc,
-  updateDoc,
-  getDocs,
-  collection,
-} from 'firebase/firestore'
+import { doc, deleteDoc, updateDoc, writeBatch } from 'firebase/firestore'
 import { ref, deleteObject } from 'firebase/storage'
 import { Video } from '../utils/types' // Assuming you have a Video type defined in utils/types
 import { db, storage } from '../firebaseConfig'
 import DeleteDialog from '../features/admin/dialogs/DeleteDialog'
 import FloatingButton from '../features/admin/utils/FloatingButton'
-import CustomTable from '../features/admin/table/CustomTable'
 import ManageLibraryVideoModal from '../features/admin/modals/ManageLibraryVideoModal'
 import { useFetchVideos } from '../hooks/useVideos'
 import { Spinner, Button } from '@chakra-ui/react'
+import DraggableTable from '../features/admin/table/DraggableTable'
+import { formatDate } from '../utils'
 
 const AdminVideoPage = () => {
   const [currentVideo, setCurrentVideo] = useState<Video | null>(null) // Updated to currentVideo
@@ -33,7 +28,7 @@ const AdminVideoPage = () => {
     onClose: onDeleteClose,
     onOpen: onDeleteOpen,
   } = useDisclosure()
-  const { videos, loading, refetchVideos } = useFetchVideos() // Fetch videos instead of master classes
+  const { videos, loading, refetchVideos } = useFetchVideos();
 
   const handleEdit = (row: any) => {
     const video: Video = {
@@ -51,11 +46,15 @@ const AdminVideoPage = () => {
   }
 
   // Sort videos by order
-  const sortedVideos = useMemo(() => [...videos].sort((a, b) => {
-    const orderA = a.order ?? videos.indexOf(a)
-    const orderB = b.order ?? videos.indexOf(b)
-    return orderA - orderB
-  }), [videos])
+  const sortedVideos = useMemo(
+    () =>
+      [...videos].sort((a, b) => {
+        const orderA = a.order ?? videos.indexOf(a)
+        const orderB = b.order ?? videos.indexOf(b)
+        return orderA - orderB
+      }),
+    [videos],
+  )
 
   const handleDelete = (row: any) => {
     setCurrentVideo(row)
@@ -90,9 +89,9 @@ const AdminVideoPage = () => {
     if (!row.id) return
     setMovingVideoId(row.id)
     if ((row?.order ?? 1) < sortedVideos.length - 1) {
-      const nextVideo = sortedVideos[((row?.order ?? 1) - 1) + 1]
+      const nextVideo = sortedVideos[(row?.order ?? 1) - 1 + 1]
       const currentOrder = row.order || 1
-      const nextOrder = nextVideo.order || 1 + 1;
+      const nextOrder = nextVideo.order || 1 + 1
 
       try {
         await updateDoc(doc(db, 'libraryVideos', row.id), { order: nextOrder })
@@ -105,6 +104,30 @@ const AdminVideoPage = () => {
       } finally {
         setMovingVideoId(null)
       }
+    }
+  }
+
+  const handleDragEnd = async (newData: any) => {
+    setMovingVideoId(newData[0].id)
+    try {
+      const batch = writeBatch(db)
+
+      newData.forEach((video: any) => {
+        if (!video.id) {
+          console.error('Video missing ID:', video)
+          return
+        }
+
+        const videoRef = doc(db, 'libraryVideos', video.id)
+        batch.update(videoRef, { order: video.order })
+      })
+      await batch.commit()
+      refetchVideos()
+      return true
+    } catch (error) {
+      console.error('Failed to move video:', error)
+    } finally {
+      setMovingVideoId(null)
     }
   }
 
@@ -141,13 +164,20 @@ const AdminVideoPage = () => {
 
   return (
     <>
-      <CustomTable
+      <DraggableTable
         data={sortedVideos}
         columns={[
           { Header: 'Title', accessor: 'videoTitle' },
           { Header: 'Session', accessor: 'videoSession' },
           { Header: 'Author', accessor: 'author' },
-          { Header: 'Date Posted', accessor: 'datePosted' },
+          { 
+            Header: 'Date Posted', 
+            accessor: 'datePosted',
+            // Custom cell renderer for dates
+            Cell: ({ row }: any) => {
+              return formatDate(row.original.datePosted);
+            }
+          },
           {
             Header: 'Order',
             accessor: 'order',
@@ -207,6 +237,8 @@ const AdminVideoPage = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         isLoading={loading}
+        onReorder={handleDragEnd}
+        isPaginate={false}
         // onDragEnd={handleDragEnd}
       />
       <FloatingButton

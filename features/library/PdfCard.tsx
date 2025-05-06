@@ -89,7 +89,7 @@ export const PdfCards: React.FC<libraryCardContentProps> = ({
           {subTitle}
         </Text>
         <Text
-          fontSize="14px"
+          fontSize="18px"
           color="rgba(26, 26, 26, 0.80)"
           // mt="8px"
           //   fontStyle={'italic'}
