@@ -4,7 +4,6 @@ import { Box, Text, Heading, Image, Center, Flex } from '@chakra-ui/react'
 import { GoDotFill } from 'react-icons/go'
 import { blogContentProps } from '../../constant/blogContent'
 import Link from 'next/link'
-import { useReadingTime } from 'react-hook-reading-time'
 
 export const BlogCard = ({
   id,
@@ -13,7 +12,13 @@ export const BlogCard = ({
   image,
   blog,
 }: blogContentProps) => {
-  const { text } = useReadingTime(blog)
+  function estimateReadingTime(text = '') {
+    const wordsPerMinute = 275
+    const wordCount = text.trim().split(/\s+/).length
+    const minutes = Math.ceil(wordCount / wordsPerMinute)
+    return minutes <= 1 ? '1 min read' : `${minutes} min read`
+  }
+
   return (
     <Box
       display="flex"
@@ -66,7 +71,7 @@ export const BlogCard = ({
           <Flex alignItems="center">
             <GoDotFill color="#1A1A1A" />
             <Text fontSize="14px" color="#1A1A1A">
-              {text}
+              {estimateReadingTime(blog)}
             </Text>
           </Flex>
         </Flex>
