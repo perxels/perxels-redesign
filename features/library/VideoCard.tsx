@@ -72,7 +72,7 @@ export const VideoCard = ({
             backgroundColor="#339966"
             border="1px solid #E8E8E8"
             display="inline-flex"
-            p="6px 16px"
+            p="4px 16px"
           >
             NEW
           </Center>

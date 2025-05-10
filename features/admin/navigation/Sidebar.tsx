@@ -6,7 +6,9 @@ import {
   List,
   ListItem,
   ListIcon,
+  useToast,
 } from '@chakra-ui/react'
+import { signOut } from 'firebase/auth'
 import Link from 'next/link'
 import { GiGraduateCap } from 'react-icons/gi'
 import { IoMdClose } from 'react-icons/io'
@@ -19,15 +21,35 @@ import {
   MdSchool,
   MdSummarize,
 } from 'react-icons/md'
+import { auth } from '../../../firebaseConfig'
+import { useRouter } from 'next/router'
 
 const AdminSidebar = ({ navState, setNavState }: any) => {
   const width = navState ? '250px' : '0px'
+
+  const toast = useToast()
+
+  const router = useRouter()
 
   function isActive(path: string) {
     if (window.location.href.includes(path)) {
       return true
     } else {
       false
+    }
+  }
+
+  async function logoutUser() {
+    try {
+      await signOut(auth)
+
+      router.push('/admin')
+    } catch (error: any) {
+      toast({
+        title: error.message,
+        status: 'error',
+        isClosable: true,
+      })
     }
   }
 
@@ -182,6 +204,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             py="10px"
             color={'red'}
             _hover={{ borderLeft: '3px solid red' }}
+            onClick={logoutUser}
           >
             <ListIcon as={IoExitOutline} color="inherit" />
             Logout

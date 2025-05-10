@@ -10,7 +10,15 @@ export const BlogCard = ({
   title,
   writer,
   image,
+  blog,
 }: blogContentProps) => {
+  function estimateReadingTime(text = '') {
+    const wordsPerMinute = 275
+    const wordCount = text.trim().split(/\s+/).length
+    const minutes = Math.ceil(wordCount / wordsPerMinute)
+    return minutes <= 1 ? '1 min read' : `${minutes} min read`
+  }
+
   return (
     <Box
       display="flex"
@@ -40,7 +48,12 @@ export const BlogCard = ({
         p="16px 24px"
         bgColor="rgba(246, 246, 246, 0.65);"
       >
-        <Heading fontSize="22px" lineHeight="120%" noOfLines={2} fontWeight="700">
+        <Heading
+          fontSize="22px"
+          lineHeight="120%"
+          noOfLines={2}
+          fontWeight="700"
+        >
           {title}
         </Heading>
         <Flex mt="18px" columnGap="22px" alignItems="center">
@@ -58,7 +71,7 @@ export const BlogCard = ({
           <Flex alignItems="center">
             <GoDotFill color="#1A1A1A" />
             <Text fontSize="14px" color="#1A1A1A">
-              7 mins
+              {estimateReadingTime(blog)}
             </Text>
           </Flex>
         </Flex>

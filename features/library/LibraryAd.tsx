@@ -1,18 +1,57 @@
 import React from 'react'
-import { Box, Heading, Text, Image, Flex, Button } from '@chakra-ui/react'
-import { BiChevronRightCircle } from "react-icons/bi";
+import { Box, Text, Image, Link, Center, Spinner } from '@chakra-ui/react'
+import { useAdvertisements } from '../../hooks/useAdvertisement'
+import Slider from 'react-slick'
 
 export const LibraryAd = () => {
+  const { advertisements, loading } = useAdvertisements()
+
+  const settings = {
+    dots: false,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    cssEase: 'linear',
+    responsive: [
+      {
+        breakpoint: 1460,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+    ],
+  }
+
+  if (loading) return (
+    <Center h={40} w="100%">
+      <Spinner size="lg" />
+    </Center>
+  )
+
   return (
-    <Box
-    my={["82px","5%"]}
-    >
-        <Box>
-            <Text fontSize={["16px","18px"]} color="#1A1A1A" mb={["24px"]} >
-            ADVERTISMENT
-            </Text>
-        </Box>
-      <Box
+    <Box my={['82px', '5%']}>
+      <Box>
+        <Text fontSize={['16px', '18px']} color="#1A1A1A" mb={['24px']}>
+          ADVERTISMENT
+        </Text>
+      </Box>
+
+      <Box pos="relative" overflow="hidden">
+        <Slider {...settings}>
+          {advertisements.map(({ link, name, imageUrl, openAnotherTab }) => (
+            <Link href={link} key={name} target={openAnotherTab ? "_blank" : "_self"}>
+              <Image draggable={false} src={imageUrl} alt={name} width="100%" height="auto" />
+            </Link>
+          ))}
+        </Slider>
+      </Box>
+      {/* <Box
         background="url('./assets/images/library/libraryAd.png') no-repeat center center"
         height={["262px","345px"]}
         backgroundSize="cover"
@@ -52,7 +91,7 @@ export const LibraryAd = () => {
           Enroll now
         </Button>
         </Flex>
-      </Box>
+      </Box> */}
     </Box>
   )
 }

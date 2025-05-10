@@ -87,3 +87,22 @@ export interface MasterClass {
     enrolRoute: string;
     isSponsor?: boolean;
   }
+
+  export interface Advertisement {
+    id: string;
+    createdAt: string;
+    imageUrl: string;
+    link: string;
+    name: string;
+    openAnotherTab: boolean;
+  }
+
+  export interface User {
+    id: string;
+    createdAt: Date | string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    levelOfDesign: string;
+    role: string;
+  }

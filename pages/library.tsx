@@ -1,20 +1,30 @@
-"use client";
+'use client'
 
-import { useRouter } from 'next/router';
+import { onAuthStateChanged } from 'firebase/auth'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { auth } from '../firebaseConfig'
 
 const Library = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  if (typeof window !== 'undefined') {
-    router.push('/library/videos');
-    return null; // Prevents the rest of the component from rendering
-  }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('user', user)
+      if (!user) {
+        router.push('/library/login') // redirect to login if not authenticated
+      } else {
+        router.push('/library/videos')
+      }
+    })
 
-  return null; // Ensures that nothing renders on the server-side
-};
+    return () => unsubscribe() // cleanup
+  }, [])
 
-export default Library;
+  return null // Ensures that nothing renders on the server-side
+}
 
+export default Library
 
 // "use client";
 

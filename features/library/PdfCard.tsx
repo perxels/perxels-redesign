@@ -7,6 +7,7 @@ import {
   Center,
   Flex,
   useDisclosure,
+  Button,
 } from '@chakra-ui/react'
 import { libraryCardContentProps } from '../../constant'
 import LibraryPdfModal from '../../components/LibraryPdfModal'
@@ -22,6 +23,47 @@ export const PdfCards: React.FC<libraryCardContentProps> = ({
   setDataChanged,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handlePdfDownload = (pdfUrl: string) => {
+    setIsLoading(true)
+    const url = pdfUrl // Replace with your PDF file path
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]))
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${mainTitle}.pdf` // Set desired file name here
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+        onClose()
+        setIsLoading(false)
+        // const userExist = localStorage.getItem('userLibraryActivity')
+        // if (userExist) {
+        //   const parsedUser = JSON.parse(userExist)
+        //   if (parsedUser.email != trimmedMail) {
+        //     setDataChanged(dataChanged + 1)
+        //   }
+        // } else {
+        //   setDataChanged(dataChanged + 1)
+        // }
+        // localStorage.setItem(
+        //   'userLibraryActivity',
+        //   JSON.stringify({
+        //     email: trimmedMail,
+        //     fullName: trimmedName,
+        //     whatYouDo,
+        //   }),
+        // )
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        console.error('Error downloading PDF:', error)
+      })
+  }
 
   return (
     <Box
@@ -64,6 +106,7 @@ export const PdfCards: React.FC<libraryCardContentProps> = ({
             {tag}
           </Center>
           <Center
+            as={Button}
             mb="16px"
             borderRadius={'16px'}
             color="#FFFFFF"
@@ -72,7 +115,8 @@ export const PdfCards: React.FC<libraryCardContentProps> = ({
             p="6px 10px"
             background="#363576"
             cursor="pointer"
-            onClick={onOpen}
+            onClick={() => handlePdfDownload(url ?? "")}
+            isLoading={isLoading}
           >
             Download
           </Center>

@@ -2,10 +2,28 @@ import React, { useEffect, useRef } from 'react'
 import { MainLayout } from '../../layouts'
 import { LibraryLayout } from '../../features/library'
 import { PdfCardLayout } from '../../features/library'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../../firebaseConfig'
+import { useRouter } from 'next/router'
+import { LibraryAd } from '../../features/library/LibraryAd'
 
-const pdf = () => {
+const Pdf = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const targetRef = useRef<HTMLDivElement | null>(null)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('user', user)
+      if (!user) {
+        router.push('/library/login') // redirect to login if not authenticated
+      }
+    })
+
+    return () => unsubscribe() // cleanup
+  }, [])
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (targetRef.current) {
@@ -16,7 +34,6 @@ const pdf = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        
       })
     }
   }, [])
@@ -27,10 +44,11 @@ const pdf = () => {
           <div ref={targetRef}>
             <PdfCardLayout />
           </div>
+          <LibraryAd />
         </LibraryLayout>
       </MainLayout>
     </div>
   )
 }
 
-export default pdf
+export default Pdf

@@ -6,19 +6,24 @@ import {
   Text,
   VStack,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { auth, signInWithEmailAndPassword } from '../../../firebaseConfig' // Update the path as needed
+import { auth, db, signInWithEmailAndPassword } from '../../../firebaseConfig' // Update the path as needed
 import { useRouter } from 'next/router'
 import { SuccessModal } from '../../../components'
+import { doc, getDoc } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const LoginForm = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  const toast = useToast()
 
   return (
     <>
@@ -69,20 +74,44 @@ const LoginForm = () => {
                 values.email,
                 values.password,
               )
-              if (response) {
+
+              const user = response.user
+
+              const userDocRef = doc(db, 'users', user.uid)
+              const userDoc = await getDoc(userDocRef)
+
+              if (!userDoc.exists()) {
+                console.error('User data not found.')
+                return
+              }
+
+              const userData = userDoc.data()
+              const role = userData.role
+
+              if (role === "admin") {
                 actions.resetForm()
                 onOpen()
                 setTimeout(() => {
                   router.push('/admin/overview')
                 }, 1000)
               } else {
-                alert('Something went wrong, please try again')
+                toast({
+                  title: "User does not have access to this page",
+                  status: "error",
+                  isClosable: true
+                })
+                // alert('Something went wrong, please try again')
               }
             } catch (error) {
               console.error('Error signing in or submitting form:', error)
-              alert(
-                'An error occurred. Please check your credentials and try again.',
-              )
+              toast({
+                title: "An error occurred. Please check your credentials and try again.",
+                status: "error",
+                isClosable: true
+              })
+              // alert(
+              //   'An error occurred. Please check your credentials and try again.',
+              // )
             } finally {
               setLoading(false)
             }

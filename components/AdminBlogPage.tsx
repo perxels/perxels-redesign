@@ -21,7 +21,6 @@ const AdminBlogPage = () => {
   } = useDisclosure();
   const { blogs, loading, refetchBlogs } = useFetchBlogs();
 
-  console.log(blogs)
   const handleEdit = (row: any) => {
     const blog: Blog = {
       id: row.id,

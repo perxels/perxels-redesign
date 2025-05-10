@@ -1,10 +1,10 @@
 import { Button } from '@chakra-ui/react'
 import React from 'react'
 
-const FloatingButton = ({ title, icon, onClick, ...props }: any) => {
+const FloatingButton = ({ title, icon, onClick, maxWidth="200px", ...props }: any) => {
   return (
     <Button
-      maxWidth="200px"
+      maxWidth={maxWidth}
       onClick={onClick}
       rounded="15px"
       px="20px"
