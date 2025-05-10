@@ -35,6 +35,8 @@ import AdminVideoPage from '../../components/AdminVideoPage'
 import AdminPdfPage from '../../components/AdminPDFPage'
 import AdminTestimonialPage from '../../components/AdminTestimonialPage'
 import AdminBlogPage from '../../components/AdminBlogPage'
+import AdminAdvertisementPage from '../../components/AdminAdvertisementPage'
+import AdminUsersPage from '../../components/AdminUsersPage'
 
 const AdminMasterClasses = () => {
   const [currentClass, setCurrentClass] = useState<MasterClass | null>(null)
@@ -51,12 +53,7 @@ const AdminMasterClasses = () => {
     onClose: onDeleteClose,
     onOpen: onDeleteOpen,
   } = useDisclosure()
-  const { classes, loading, refetchClasses } = useFetchMasterClass()
-  const {
-    heroData,
-    loading: heroLoader,
-    refetchHero,
-  } = useFetchMasterclassHero()
+  const { refetchClasses } = useFetchMasterClass()
 
   const handleEdit = (row: any) => {
     const masterClass: MasterClass = {
@@ -121,6 +118,8 @@ const AdminMasterClasses = () => {
           <Tab>PDF</Tab>
           <Tab>Testimonial</Tab>
           <Tab>Blogs</Tab>
+          <Tab>Advertisements</Tab>
+          <Tab>Users</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -138,6 +137,12 @@ const AdminMasterClasses = () => {
           </TabPanel>
           <TabPanel>
            <AdminBlogPage/>
+          </TabPanel>
+          <TabPanel>
+           <AdminAdvertisementPage />
+          </TabPanel>
+          <TabPanel>
+           <AdminUsersPage />
           </TabPanel>
         </TabPanels>
       </Tabs>

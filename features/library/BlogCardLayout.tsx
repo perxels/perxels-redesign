@@ -5,10 +5,11 @@ import { BlogCard } from './BlogCard'
 import { LibraryAd } from './LibraryAd'
 import { useFetchBlogs } from '../../hooks/useBlogs'
 export const BlogCardLayout = () => {
-  const { blogs, loading, refetchBlogs } = useFetchBlogs();
+  const { blogs, loading, refetchBlogs } = useFetchBlogs()
+
   return (
     <Box>
-       {loading ? (
+      {loading ? (
         <Stack w="full" alignItems="center" justifyContent="center">
           <CircularProgress
             isIndeterminate
@@ -19,32 +20,27 @@ export const BlogCardLayout = () => {
         </Stack>
       ) : (
         <>
-         <SimpleGrid py="10%" columns={[1, 2, 2]} spacing="32px">
-        {blogs.map((item, i) => {
-          return (
-            <BlogCard
-              key={i}
-              id={item.id}
-              title={item.title}
-              writer={item.writer}
-              // duration={item.duration}
-              image={item.image}
-            />
-          )
-        })}
-      </SimpleGrid>
+          <SimpleGrid py="10%" columns={[1, 2, 2]} spacing="32px">
+            {blogs.map((item, i) => {
+              return (
+                <BlogCard
+                  key={i}
+                  id={item.id}
+                  title={item.title}
+                  writer={item.writer}
+                  blog={item.blog}
+                  // duration={item.duration}
+                  image={item.image}
+                />
+              )
+            })}
+          </SimpleGrid>
         </>
       )}
-    
+
       <Box>
         <LibraryAd />
       </Box>
-      {/* <SimpleGrid py="10%" columns={[1, 2, 2]} spacing="32px">
-            <BlogCard/>
-            <BlogCard/>
-            <BlogCard/>
-            <BlogCard/>
-        </SimpleGrid> */}
     </Box>
   )
 }

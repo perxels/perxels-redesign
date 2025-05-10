@@ -23,24 +23,27 @@ export const Hero = () => {
 `
 
   return (
-    <MainContainer>
+    <>
       <Box py={['5%', '5%']}>
         <Box
           background="url('/assets/images/library/heroBg.png') no-repeat center center"
-          height="431px"
+          height={["320px", "431px"]}
           backgroundSize="cover"
           padding={['0 5%', '0 21%']}
+          rounded="lg"
         >
           <Center
             h="100%"
             flexDir="column"
             alignItems={['flex-start', 'center', 'center']}
+            justifyContent={"center"}
+            gap={4}
           >
             <Center
               alignItems={['flex-start', 'center', 'center']}
               background="#DFDFDF"
-              padding="8px 16px"
-              rounded="8px"
+              padding={["6px 16px", "8px 16px"]}
+              rounded={["full", "full"]}
             >
               <Text fontSize={['12px', '1rem']}>
                 WELCOME TO PERXELS LIBRARY
@@ -49,9 +52,9 @@ export const Hero = () => {
             <Heading
               display={['none', 'block', 'block']}
               as="h1"
-              fontSize={['42px', '3rem']}
+              fontSize={['2rem', '3rem']}
               color="white"
-              fontWeight={'600'}
+              fontWeight={[700, '600']}
               textAlign={['left', 'center']}
             >
               Unleash your 🎨 creativity through our free 📚 resources
@@ -80,6 +83,6 @@ export const Hero = () => {
         {' '}
         <CgChevronDoubleDownO />
       </VStack>
-    </MainContainer>
+    </>
   )
 }
