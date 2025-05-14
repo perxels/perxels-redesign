@@ -38,6 +38,7 @@ export interface MasterClass {
     url: string;            // URL of the PDF file (stored in Firebase Storage)
     bannerImage?: string;   // Optional URL for a banner or thumbnail image
     datePosted?: string;    // Optional date the PDF was posted
+    order?: number;
   }
 
   export interface Testimonial {
@@ -46,6 +47,7 @@ export interface MasterClass {
     role: string
     testimony: string
     imageUrl?: string // Optional in case no image is uploaded
+    order?: number;
   }
   
   export interface Blog {
@@ -54,6 +56,7 @@ export interface MasterClass {
     writer: string;
     image?: string;
     blog: string; // The main blog content (HTML string from ReactQuill)
+    order?: number;
   }
   
   export interface ApplicationCriteria {

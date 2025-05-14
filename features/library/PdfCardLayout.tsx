@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   SimpleGrid,
   Box,
@@ -15,11 +15,27 @@ import { PdfCards } from './PdfCard'
 import { LibraryAd } from './LibraryAd'
 import { libraryCardContent } from '../../constant'
 import { useFetchPdfs } from '../../hooks/usePdfs'
+import { PDFDocument } from '../../utils/types'
 export const PdfCardLayout = () => {
   const [data, setData] = useState<string[][] | null>(null)
   const [dataLoading, setDataLoading] = useState(false)
   const [dataChanged, setDataChanged] = useState(0)
   const { pdfs, loading } = useFetchPdfs() // Fetch PDFs
+
+  const sortedByOrder = useMemo(() => {
+    // Create a copy of the videos array to avoid mutating the original
+    return [...pdfs].sort((a: PDFDocument, b: PDFDocument) => {
+      // If both videos have order, sort by order
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order
+      }
+      // If only one has order, put the one with order first
+      if (a.order !== undefined) return -1
+      if (b.order !== undefined) return 1
+      // If neither has order, maintain original order
+      return 0
+    })
+  }, [pdfs])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +74,7 @@ export const PdfCardLayout = () => {
           </Stack>
         ) : (
           <>
-            {pdfs.map((item, i) => {
+            {sortedByOrder.map((item, i) => {
               return (
                 <PdfCards
                   key={i}

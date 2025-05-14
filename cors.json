@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["https://perxels.com", "https://www.perxels.com"],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]
