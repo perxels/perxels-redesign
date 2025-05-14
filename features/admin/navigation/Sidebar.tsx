@@ -7,6 +7,9 @@ import {
   ListItem,
   ListIcon,
   useToast,
+  Center,
+  theme,
+  Icon,
 } from '@chakra-ui/react'
 import { signOut } from 'firebase/auth'
 import Link from 'next/link'
@@ -23,9 +26,16 @@ import {
 } from 'react-icons/md'
 import { auth } from '../../../firebaseConfig'
 import { useRouter } from 'next/router'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { useMemo, useState } from 'react'
 
 const AdminSidebar = ({ navState, setNavState }: any) => {
-  const width = navState ? '250px' : '0px'
+  
+  const [minimize, setMinimize] = useState(false)
+  
+  const width = useMemo(() => {
+    return navState ? '250px' : '0px'
+  }, [navState])
 
   const toast = useToast()
 
@@ -58,10 +68,10 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
       h="100vh"
       bg="brand.purple.500"
       justifyContent="space-between"
-      w={[width, width, '250px', '250px']}
+      w={[width, width, minimize ? '70px' : '250px', minimize ? '70px' : '250px']}
       position={navState ? 'fixed' : 'static'}
       transition="0.3s ease"
-      overflowX="hidden"
+      // overflowX="hidden"
       top={'0px'}
       bottom={'0px'}
       color="white"
@@ -70,7 +80,23 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
       shadow="md"
       borderTopRightRadius="20px"
       borderBottomRightRadius="20px"
+      pos="relative"
     >
+      <Center
+        pos="absolute"
+        bgColor="white"
+        w={7}
+        rounded="full"
+        h={7}
+        top={14}
+        right={-3}
+        borderColor={theme.colors.gray[100]}
+        borderWidth={1}
+        cursor="pointer"
+        onClick={() => setMinimize((prev) => !prev)}
+      >
+        <Icon color={theme.colors.black} as={minimize ? FaChevronRight : FaChevronLeft} />
+      </Center>
       <Box w="100%">
         <HStack
           alignItems="center"
@@ -80,7 +106,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
           justifyContent="space-between"
         >
           <Text as="span" textAlign="left">
-            Perxels Admin
+            {minimize ? "Admin" : "Perxels Admin"}
           </Text>
           <Box color="white" display={['block', 'block', 'none', 'none']}>
             <IoMdClose onClick={() => setNavState(false)} />
@@ -102,7 +128,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             _hover={{ borderLeft: '3px solid white' }}
           >
             <ListIcon as={MdSummarize} color="inherit" />
-            Overview
+            {!minimize ? "Overview" : null}
           </ListItem>
           <ListItem
             display="flex"
@@ -119,7 +145,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             color={isActive('/admin/banners') ? 'black' : 'white'}
           >
             <ListIcon as={MdEventAvailable} color="inherit" />
-            Event Banners
+            {!minimize ? "Event Banners" : null}
           </ListItem>
           <ListItem
             display="flex"
@@ -136,7 +162,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             _hover={{ borderLeft: '3px solid white' }}
           >
             <ListIcon as={MdClass} color="inherit" />
-            Master Class
+            {!minimize ? "Master Class" : null}
           </ListItem>
           <ListItem
             display="flex"
@@ -153,7 +179,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             _hover={{ borderLeft: '3px solid white' }}
           >
             <ListIcon as={MdLibraryBooks} color="inherit" />
-            Library
+            {!minimize ? "Library" : null}
           </ListItem>
           <ListItem
             display="flex"
@@ -170,7 +196,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             _hover={{ borderLeft: '3px solid white' }}
           >
             <ListIcon as={GiGraduateCap} color="inherit" />
-            Sponsorship
+            {!minimize ? "Sponsorship" : null}
           </ListItem>
         </List>
       </Box>
@@ -192,7 +218,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             _hover={{ borderLeft: '3px solid white' }}
           >
             <ListIcon as={MdOutlineContactSupport} color="inherit" />
-            Support
+            {!minimize ? "Support" : null}
           </ListItem>
           <ListItem
             display="flex"
@@ -207,7 +233,7 @@ const AdminSidebar = ({ navState, setNavState }: any) => {
             onClick={logoutUser}
           >
             <ListIcon as={IoExitOutline} color="inherit" />
-            Logout
+            {!minimize ? "Logout" : null}
           </ListItem>
         </List>
       </Box>

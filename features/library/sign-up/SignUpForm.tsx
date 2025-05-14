@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   HStack,
   Icon,
   Input,
@@ -16,6 +17,7 @@ import * as Yup from 'yup'
 import { doc, setDoc } from 'firebase/firestore'
 import { auth, db } from '../../../firebaseConfig'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+import Link from 'next/link'
 
 export const SignUpForm = () => {
   const [loading, setLoading] = useState(false)
@@ -85,10 +87,17 @@ export const SignUpForm = () => {
             })
           } catch (error: any) {
             console.error('Error signing up:', error.message)
-            toast({
-              title: 'Something went wrong',
-              status: 'error',
-            })
+            if(error.message === 'Firebase: Error (auth/email-already-in-use).') {
+              toast({
+                title: 'An account with this email may already exist. Please log in or use a different email.',
+                status: 'error',
+              })
+            } else {
+              toast({
+                title: 'Something went wrong',
+                status: 'error',
+              })
+            }
           } finally {
             setLoading(false)
           }
@@ -248,7 +257,6 @@ export const SignUpForm = () => {
                 >
                   <option value="Beginner">Beginner</option>
                   <option value="Intermediate">Intermediate</option>
-                  <option value="Advanced">Advanced</option>
                 </Select>
                 {formik.touched.level_of_design &&
                 formik.errors.level_of_design ? (
@@ -346,6 +354,13 @@ export const SignUpForm = () => {
             >
               Get Started
             </Button>
+
+            <Center gap={1}>
+              <Text fontSize="">Already have an account? </Text>
+              <Link href="/library/login">
+                <Text fontWeight={600}>Login</Text>
+              </Link>
+            </Center>
           </VStack>
         )}
       </Formik>
