@@ -6,6 +6,7 @@ import {
   Icon,
   Input,
   Text,
+  useToast,
   VStack,
 } from '@chakra-ui/react'
 import {
@@ -23,6 +24,8 @@ import { FiEye, FiEyeOff } from 'react-icons/fi'
 export const LoginForm = () => {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+
+  const toast = useToast();
 
   const router = useRouter()
 
@@ -60,13 +63,20 @@ export const LoginForm = () => {
             }
 
             const userData = userDoc.data()
-            // const role = userData.role;
+            const role = userData.role;
 
-            if (userData) {
+            if (userData && role === "admin") {
               router.push('/library')
+            } else {
+              toast({
+                title: "Coming Soon"
+              })
             }
           } catch (error: any) {
             console.error('Error signing up:', error.message)
+            toast({
+              title: error?.message || ""
+            })
           } finally {
             setLoading(false)
           }
