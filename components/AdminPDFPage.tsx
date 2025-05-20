@@ -146,6 +146,8 @@ const AdminPdfPage = () => {
     try {
       const batch = writeBatch(db)
 
+      console.log(newData);
+
       newData.forEach((video: any) => {
         if (!video.id) {
           console.error('Video missing ID:', video)
