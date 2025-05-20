@@ -33,7 +33,7 @@ const SidebarData = [
     // cName: 'nav-text',
   },
   {
-    title: 'PDF',
+    title: 'Ebooks',
     path: '/library/pdf',
     icon: BsFiletypePdf,
     type: 'link',
