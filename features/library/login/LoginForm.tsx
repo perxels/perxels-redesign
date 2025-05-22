@@ -9,9 +9,7 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react'
-import {
-  signInWithEmailAndPassword,
-} from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
 import * as Yup from 'yup'
@@ -25,7 +23,7 @@ export const LoginForm = () => {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  const toast = useToast();
+  const toast = useToast()
 
   const router = useRouter()
 
@@ -63,19 +61,19 @@ export const LoginForm = () => {
             }
 
             const userData = userDoc.data()
-            const role = userData.role;
+            // const role = userData.role;
 
-            if (userData && role === "admin") {
+            if (userData) {
               router.push('/library')
             } else {
               toast({
-                title: "Coming Soon"
+                title: 'Unauthorized',
               })
             }
           } catch (error: any) {
             console.error('Error signing up:', error.message)
             toast({
-              title: error?.message || ""
+              title: error?.message || '',
             })
           } finally {
             setLoading(false)
@@ -138,7 +136,7 @@ export const LoginForm = () => {
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     borderColor={
                       formik.touched.password && formik.errors.password
                         ? 'red.500'
