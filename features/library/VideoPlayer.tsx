@@ -13,6 +13,7 @@ function convertToEmbedUrl(sharedUrl: string): string {
 interface VideoPlayerProps {
   videoUrl: string;
   onEnd?: () => void;
+  height?: string | number;
 }
 
 // Extend the Window interface for YouTube types
@@ -23,7 +24,7 @@ declare global {
   }
 }
 
-const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, onEnd }) => {
+const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, onEnd, height = '250px' }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   useEffect(() => {
@@ -58,13 +59,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, onEnd }) => {
       <iframe
         ref={iframeRef}
         width="100%"
-        height="250px"
+        height={height}
         src={embedUrl}
         title="YouTube video player"
         frameBorder={0}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
+        style={{ display: 'block' }}
       />
     );
   }
@@ -74,8 +76,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, onEnd }) => {
       url={videoUrl}
       controls
       width="100%"
-      height="250px"
-      style={{borderRadius:'10px'}}
+      height={height}
+      style={{ borderRadius: '10px', display: 'block' }}
       onEnded={onEnd} // onEnd callback for non-YouTube videos
     />
   );

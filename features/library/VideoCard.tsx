@@ -5,6 +5,7 @@ import { GoDotFill } from 'react-icons/go'
 import VideoPlayer from './VideoPlayer'
 import { Video } from '../../utils/types'
 import moment from 'moment'
+import { useRouter } from 'next/navigation'
 
 export const VideoCard = ({
   id,
@@ -16,6 +17,7 @@ export const VideoCard = ({
   videoUrl,
 }: Video) => {
   const [isPlaying, setIsPlaying] = useState(false)
+  const router = useRouter()
   return (
     <Box
       display="flex"
@@ -23,6 +25,8 @@ export const VideoCard = ({
       flexDir="column"
       alignItems="flex-start"
       borderRadius="10px"
+      cursor="pointer"
+      onClick={() => router.push(`/library/videos/${id}`)}
     >
       <Box maxHeight="250px" width="100%" position="relative">
         {isPlaying ? (
@@ -50,7 +54,7 @@ export const VideoCard = ({
             left="50%"
             transform="translate(-50%, -50%)"
             cursor="pointer"
-            onClick={() => setIsPlaying(true)}
+            // onClick={() => setIsPlaying(true)}
           />
         )}
         {/* </Center> */}

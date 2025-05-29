@@ -18,10 +18,12 @@ import { doc, setDoc } from 'firebase/firestore'
 import { auth, db } from '../../../firebaseConfig'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export const SignUpForm = () => {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
 
   const toast = useToast()
 
@@ -68,6 +70,8 @@ export const SignUpForm = () => {
           setLoading(true)
 
           try {
+            // Create user with email and password
+            // This automatically signs in the user as well
             const response = await createUserWithEmailAndPassword(
               auth,
               values.email,
@@ -76,6 +80,7 @@ export const SignUpForm = () => {
 
             const user = response.user
 
+            // Save additional user data to Firestore
             await setDoc(doc(db, 'users', user.uid), {
               email: user.email,
               role: 'user',
@@ -85,17 +90,34 @@ export const SignUpForm = () => {
               levelOfDesign: values.level_of_design,
               createdAt: new Date(),
             })
+            
+            // Show success message
+            toast({
+              title: 'Account created successfully!',
+              description: 'Welcome to Perxels Library',
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+            })
+            
+            // Redirect to library page
+            router.push('/library')
           } catch (error: any) {
             console.error('Error signing up:', error.message)
             if(error.message === 'Firebase: Error (auth/email-already-in-use).') {
               toast({
                 title: 'An account with this email may already exist. Please log in or use a different email.',
                 status: 'error',
+                duration: 5000,
+                isClosable: true,
               })
             } else {
               toast({
                 title: 'Something went wrong',
+                description: error.message || 'Failed to create account',
                 status: 'error',
+                duration: 5000,
+                isClosable: true,
               })
             }
           } finally {
