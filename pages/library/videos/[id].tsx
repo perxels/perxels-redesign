@@ -444,7 +444,7 @@ const SingleVideoDetail = () => {
           </VStack>
 
           {/* Video Comments and reply */}
-          <Box mt={8} width="100%">
+          <Box mt={2} width="100%">
             <Divider mb={6} />
             <VideoComments videoId={id as string} />
           </Box>
