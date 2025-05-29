@@ -165,6 +165,10 @@ export const LoginForm = () => {
               </Box>
             </HStack>
 
+            <HStack justifyContent="flex-end" w="full" fontSize="small">
+              <Link href="/library/forgot-password">Forgot Password?</Link>
+            </HStack>
+
             <Button
               h="3.688rem"
               w="full"
