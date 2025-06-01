@@ -4,16 +4,10 @@ import React, { useEffect, useMemo, useState } from 'react'
 import {
   SimpleGrid,
   Box,
-  Text,
-  Image,
-  Flex,
-  Button,
   Stack,
   CircularProgress,
 } from '@chakra-ui/react'
 import { PdfCards } from './PdfCard'
-import { LibraryAd } from './LibraryAd'
-import { libraryCardContent } from '../../constant'
 import { useFetchPdfs } from '../../hooks/usePdfs'
 import { PDFDocument } from '../../utils/types'
 export const PdfCardLayout = () => {
@@ -87,6 +81,7 @@ export const PdfCardLayout = () => {
                   data={data}
                   dataChanged={dataChanged}
                   setDataChanged={setDataChanged}
+                  id={item.id}
                 />
               )
             })}
