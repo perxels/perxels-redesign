@@ -1,37 +1,31 @@
 import { useEffect, useState } from 'react'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, onSnapshot } from 'firebase/firestore'
 import { db } from '../firebaseConfig'
 import { PDFDocument } from '../utils/types'
-
-
-
 
 export const useFetchPdfs = () => {
   const [pdfs, setPdfs] = useState<PDFDocument[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
-  const fetchPdfs = async () => {
-    setLoading(true)
-    try {
-        const querySnapshot = await getDocs(collection(db, 'libraryPDFs'))
-        const pdfsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as PDFDocument[]
-        setPdfs(pdfsData)
-    } catch (error) {
-      console.error('Error fetching classes:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
+    setLoading(true)
+    const unsubscribe = onSnapshot(collection(db, 'libraryPDFs'), (querySnapshot) => {
+      const pdfsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as PDFDocument[]
+      setPdfs(pdfsData)
+      setLoading(false)
+    }, (error) => {
+      console.error('Error fetching PDFs:', error)
+      setLoading(false)
+    })
 
-    fetchPdfs()
+    // Cleanup subscription on unmount
+    return () => unsubscribe()
   }, [])
 
-  return { pdfs, loading, refetchPdfs:fetchPdfs }
+  return { pdfs, loading }
 }
 
 

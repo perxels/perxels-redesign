@@ -7,6 +7,8 @@ import {
   arrayUnion,
   arrayRemove,
   setDoc,
+  collection,
+  getDocs,
 } from 'firebase/firestore'
 import { db, auth } from '../../../firebaseConfig'
 import { Video } from '../../../utils/types'
@@ -28,6 +30,8 @@ import {
   useToast,
   IconButton,
   Tooltip,
+  SimpleGrid,
+  GridItem,
 } from '@chakra-ui/react'
 import {
   AiOutlineLike,
@@ -49,6 +53,7 @@ const SingleVideoDetail = () => {
   const router = useRouter()
   const { id } = router.query
   const [video, setVideo] = useState<VideoWithInteractions | null>(null)
+  const [nextVideo, setNextVideo] = useState<VideoWithInteractions | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [isPlaying, setIsPlaying] = useState(false)
@@ -196,13 +201,14 @@ const SingleVideoDetail = () => {
     }
   }
 
-  // Fetch video data
+  // Fetch video data and next video
   useEffect(() => {
-    const fetchVideo = async () => {
+    const fetchVideos = async () => {
       if (!id) return
 
       setLoading(true)
       try {
+        // Fetch current video
         const videoRef = doc(db, 'libraryVideos', id as string)
         const videoSnap = await getDoc(videoRef)
 
@@ -225,6 +231,30 @@ const SingleVideoDetail = () => {
             const userId = auth.currentUser.uid
             setUserLiked(likes.includes(userId))
             setUserDisliked(dislikes.includes(userId))
+          }
+
+          // Fetch all videos to find next video
+          const videosRef = collection(db, 'libraryVideos')
+          const videosSnap = await getDocs(videosRef)
+          const allVideos = videosSnap.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          })) as VideoWithInteractions[]
+
+          // Sort videos by order
+          const sortedVideos = allVideos.sort((a, b) => {
+            if (a.order === undefined && b.order === undefined) return 0
+            if (a.order === undefined) return 1
+            if (b.order === undefined) return -1
+            return a.order - b.order
+          })
+
+          // Find current video index
+          const currentIndex = sortedVideos.findIndex(v => v.id === id)
+          
+          // Get next video if exists
+          if (currentIndex !== -1 && currentIndex < sortedVideos.length - 1) {
+            setNextVideo(sortedVideos[currentIndex + 1])
           }
         } else {
           setError('Video not found')
@@ -251,11 +281,17 @@ const SingleVideoDetail = () => {
       }
     }
 
-    fetchVideo()
+    fetchVideos()
   }, [id, toast])
 
   const handleBackToVideos = () => {
     router.push('/library/videos')
+  }
+
+  const handleNextVideo = () => {
+    if (nextVideo) {
+      router.push(`/library/videos/${nextVideo.id}`)
+    }
   }
 
   if (loading) {
@@ -401,7 +437,7 @@ const SingleVideoDetail = () => {
                     onClick={handleLike}
                     isLoading={interactionLoading}
                     variant="ghost"
-                     bg="transparent"
+                    bg="transparent"
                     colorScheme={userLiked ? 'primary' : 'gray'}
                   />
                 </Tooltip>
@@ -426,9 +462,6 @@ const SingleVideoDetail = () => {
                     colorScheme={userDisliked ? 'primary' : 'gray'}
                   />
                 </Tooltip>
-                {/* <Text fontWeight="bold" minW="30px">
-                  {dislikeCount > 0 ? dislikeCount : ''}
-                </Text> */}
               </HStack>
             </HStack>
 
@@ -448,6 +481,70 @@ const SingleVideoDetail = () => {
             <Divider mb={6} />
             <VideoComments videoId={id as string} />
           </Box>
+
+          {/* Next Video Section */}
+          {nextVideo && (
+            <Box mt={8}>
+              <Divider mb={6} />
+              <VStack align="stretch" spacing={4}>
+                <Heading size="md">Next Video</Heading>
+                <Box
+                  as="button"
+                  onClick={handleNextVideo}
+                  cursor="pointer"
+                  _hover={{ transform: 'scale(1.02)' }}
+                  transition="transform 0.2s"
+                >
+                  <SimpleGrid columns={[4]} spacing={4}>
+                    <GridItem colSpan={[2, 1]}>
+                    <Box
+                      position="relative"
+                      width="100%"
+                      paddingBottom="56.25%"
+                      borderRadius="md"
+                      overflow="hidden"
+                    >
+                      <Image
+                        src={nextVideo.imageUrl || '/assets/images/library/videoImage.png'}
+                        alt={nextVideo.videoTitle}
+                        position="absolute"
+                        top="0"
+                        left="0"
+                        width="100%"
+                        height="100%"
+                        objectFit="cover"
+                      />
+                      <Center
+                        position="absolute"
+                        top="0"
+                        left="0"
+                        width="100%"
+                        height="100%"
+                        bg="rgba(0,0,0,0.3)"
+                      >
+                        <Image
+                          src="/assets/images/library/playIcon.svg"
+                          alt="Play"
+                          width="60px"
+                          height="60px"
+                        />
+                      </Center>
+                    </Box>
+                    </GridItem>
+                    <GridItem colSpan={[2, 3]}>
+                      <VStack align="flex-start" spacing={2}>
+                        <Heading textAlign="left" size="md">{nextVideo.videoTitle}</Heading>
+                        <Text color="gray.600">By {nextVideo.author}</Text>
+                        <Text color="gray.500">
+                          {moment(nextVideo.datePosted).format('MMMM D, YYYY')}
+                        </Text>
+                      </VStack>
+                    </GridItem>
+                  </SimpleGrid>
+                </Box>
+              </VStack>
+            </Box>
+          )}
         </VStack>
       </LibraryLayout>
     </MainLayout>
