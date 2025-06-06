@@ -18,7 +18,8 @@ const EnrolForm = () => {
   //   'https://script.google.com/macros/s/AKfycbwAZGaK5T6mfK1wOv99PwLlUdcM_Jli58wtDbX8zn8BFsdxQSYSRuLuDP4TtKATdmj0/exec'
   // const scriptUrl = "https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec"
 
-  const scriptUrl = 'https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec'
+  // const scriptUrl = 'https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec'
+  const scriptUrl = 'https://script.google.com/macros/s/AKfycbwHFgcgDUyRqBfNryJ4Kw3uYtdmARvIbn2-cUUivkFJP228-rrNKs_L-qzkxsMuVABO6Q/exec'
   // last url const scriptUrl = "https://script.google.com/macros/s/AKfycbwftTI2bqcYNfUCIHBtiY8r_5nwL-VEsz4lR9pv97ORO-h6YLo7vQ0ksKEm7Oc1ZVA/exec"
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [errorBorder, setErrorBorder] = useState()
@@ -32,7 +33,7 @@ const EnrolForm = () => {
         title={`Thank you for your registering for the ${classVal} Masterclass!`}
         description="Join the Class by clicking on the button."
         buttonTitle="Join Class"
-        buttonHref={'https://chat.whatsapp.com/BgpYOD3GgHgHGHH2acAzPX'}
+        buttonHref={'https://chat.whatsapp.com/Ld1w49nc7xq4tgeKNhGd2l'}
       />
       <Box
         className="enrol-form"
