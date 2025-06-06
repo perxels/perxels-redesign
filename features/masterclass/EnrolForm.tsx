@@ -198,7 +198,7 @@ const EnrolForm = () => {
 
               <Select
                 h="3.5rem"
-                placeholder="This training is going to be physical, will you be available to attend physically?"
+                placeholder="How would you like to attend?"
                 _placeholder={{ color: 'brand.dark.200' }}
                 color="brand.dark.200"
                 name="attend"
@@ -214,8 +214,8 @@ const EnrolForm = () => {
                   outline: 'none',
                 }}
               >
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="online">Online</option>
+                <option value="onsite (physical)">onsite (physical)</option>
               </Select>
               {formik.touched.attend && formik.errors.attend ? (
                 <Text color="red.500" fontSize="sm">

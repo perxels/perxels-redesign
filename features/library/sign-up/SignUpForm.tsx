@@ -294,7 +294,7 @@ export const SignUpForm = () => {
                 <Text fontSize="small" color="brand.dark.50">
                   PASSWORD
                 </Text>
-                <Box>
+                <Box pos="relative">
                   <Input
                     h={['3rem', '3.5rem']}
                     placeholder="PASSWORD"
