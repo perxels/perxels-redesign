@@ -77,8 +77,6 @@ const EnrolForm = () => {
           onSubmit={(values, action) => {
             setLoading(true)
 
-            console.log(values)
-
             const formData = new FormData()
 
             formData.append('name', values.name as string)

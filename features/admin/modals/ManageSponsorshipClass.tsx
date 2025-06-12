@@ -111,12 +111,10 @@ const ManageSponsorshipClass: React.FC<ManageSponsorshipClassProps> = ({
         // Update an existing class
         const classRef = doc(db, 'sponsorshipClasses', classToEdit.id)
         await updateDoc(classRef, { ...classData })
-        console.log('Class updated successfully')
       } else {
         // Add a new class
         const classCollectionRef = collection(db, 'sponsorshipClasses')
         await addDoc(classCollectionRef, classData)
-        console.log('Class added successfully')
       }
       refetchClasses()
       onClose()

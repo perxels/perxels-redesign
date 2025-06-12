@@ -75,7 +75,6 @@ const YabaEnrollForm = () => {
           })}
           onSubmit={(values, action) => {
             setLoading(true)
-            console.log(values)
             const formData = new FormData()
             formData.append('name', values.name as string)
             formData.append('phone', values.phone as string)

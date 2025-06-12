@@ -105,8 +105,6 @@ const RegisterForm = ({isApply}: registerInt) => {
           onSubmit={(values, action) => {
             setLoading(true)
 
-            console.log(values)
-
             const formData = new FormData()
 
             formData.append('firstname', values.firstname as string)

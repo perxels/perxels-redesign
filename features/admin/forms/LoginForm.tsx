@@ -86,14 +86,23 @@ const LoginForm = () => {
               }
 
               const userData = userDoc.data()
+
+              if (!userData) {
+                console.error('User data not found.')
+                toast({
+                  title: "User does not have access to this page",
+                  status: "error",
+                  isClosable: true
+                })
+                return
+              }
+
               const role = userData.role
 
               if (role === "admin") {
+                router.push('/admin/overview')
                 actions.resetForm()
                 onOpen()
-                setTimeout(() => {
-                  router.push('/admin/overview')
-                }, 1000)
               } else {
                 toast({
                   title: "User does not have access to this page",

@@ -51,7 +51,6 @@ export const EventForm = () => {
     //current date and time
     formData.append('date', new Date().toLocaleString())
     // const data = Object.fromEntries(formData)
-    // console.log(data)
   
   }
 
@@ -81,7 +80,6 @@ export const EventForm = () => {
           perxelsStudent: Yup.string().required('Are you a Perxels Student? Kindly Answer'),
         })}
         onSubmit ={(values, action) => {
-          console.log(values)
             const formData = new FormData()
 
             formData.append('name', values.name as string)
