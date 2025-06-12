@@ -62,7 +62,6 @@ const ManageBlogModal: React.FC<ManageBlogModalProps> = ({
       setTitle(blogToEdit.title || '');
       setWriter(blogToEdit.writer || '');
       setBlog(blogToEdit.blog || '');
-      console.log(blogToEdit)
     } else {
       setTitle('');
       setWriter('');

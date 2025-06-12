@@ -80,7 +80,6 @@ const EnrolForm = () => {
           onSubmit={(values, action) => {
             setLoading(true)
             // setClassValue(values.class)
-            console.log(values)
 
             const formData = new FormData()
 

@@ -100,7 +100,6 @@ export const FormComp = () => {
             onSubmit={(values, action) => {
 
               const formData = new FormData()
-              console.log(values, "values")
               formData.append('name', values.name as string)
               // formData.append('email', values.email as string)
               formData.append('phone', values.phone as string)
@@ -111,15 +110,12 @@ export const FormComp = () => {
               // formData.append('teamnum', values.teamnum as string)
               formData.append('created_at', new Date().toLocaleString())
 
-              console.log(formData, "formData")
-
               fetch(scriptUrl,
                 {
                   method: 'POST',
                   body: formData
                 })
                 .then((response) => {
-                  console.log(formData, "formData")
                   if (response.status === 201 || 200) {
                     onOpen()
                     action.resetForm()

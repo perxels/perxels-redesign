@@ -59,11 +59,9 @@ export const getSingleBlog = async (id: string): Promise<Blog | null> => {
     if (blogSnapshot.exists()) {
       return { id: blogSnapshot.id, ...blogSnapshot.data() } as Blog;
     } else {
-      console.log(`Blog with ID ${id} does not exist.`);
       return null;
     }
   } catch (error) {
-    console.log('Error fetching blog:', error);
     return null;
   }
 };

@@ -4,8 +4,9 @@ import withAuth from '../utils/withAuth'
 import Topbar from '../navigation/Topbar'
 import AdminSidebar from '../navigation/Sidebar'
 import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
+import { auth, db } from '../../../firebaseConfig'
 import { useRouter } from 'next/router'
+import { doc, getDoc } from 'firebase/firestore'
 
 const AdminLayout = ({ children, user, title }: any) => {
   const [navState, setNavState] = useState(false);
@@ -13,9 +14,25 @@ const AdminLayout = ({ children, user, title }: any) => {
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         router.push('/admin'); // redirect to login if not authenticated
+      }
+
+      // can you get the user data from the database
+      const userDocRef = doc(db, 'users', user?.uid ?? '')
+      const userDoc = await getDoc(userDocRef)
+
+      if (!userDoc.exists()) {
+        router.push('/admin');
+        return
+      }
+
+      const userData = userDoc.data()
+
+      if (userData?.role !== "admin") {
+        router.push('/admin');
+        return
       }
     });
   

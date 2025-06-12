@@ -45,7 +45,6 @@ const PaystackPaymentButton: React.FC<PaystackProps> = ({
           // Loop through each item in the cart
           for  (let i = 0; i < cart.length; i++) {
             const item = cart[i]
-            console.log(item)
             const formData = new FormData()
             // Prepare formDataObject for the current cart item
             const formDataObject: any = {

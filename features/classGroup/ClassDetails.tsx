@@ -60,7 +60,6 @@ export const ClassDetails = ({
   isPhysical,
   isTitleSmall
 }: ClassGroupDetailsProps) => {
-  // console.log('isSponsor', isSponsor)
   const [tabState, setTabState] = useState('virtual')
   const [location, setLocation] = useState('lagos')
   const glowAnimation = `${glow} 2s ease-in-out infinite`

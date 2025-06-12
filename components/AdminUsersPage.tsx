@@ -7,8 +7,6 @@ import { Badge } from '@chakra-ui/react'
 const AdminUsersPage = () => {
   const { users, loading, refetchUsers } = useUsers()
 
-  console.log('users', users)
-
   return (
     <>
       <CustomTable

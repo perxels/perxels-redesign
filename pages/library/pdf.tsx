@@ -15,7 +15,6 @@ const Pdf = () => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log('user', user)
       if (!user) {
         router.push('/library/login') // redirect to login if not authenticated
       }

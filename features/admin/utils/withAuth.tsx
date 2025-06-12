@@ -12,7 +12,7 @@ interface WithAuthProps {
 const withAuth = <P extends WithAuthProps>(
   WrappedComponent: ComponentType<P>,
 ): ComponentType<Omit<P, 'user'>> => {
-  return (props: Omit<P, 'user'>): ReactElement => {
+  const WithAuthComponent = (props: Omit<P, 'user'>): ReactElement => {
     const [loading, setLoading] = useState<boolean>(true)
     const [user, setUser] = useState<User | null>(null)
     const router = useRouter()
@@ -40,6 +40,9 @@ const withAuth = <P extends WithAuthProps>(
 
     return <WrappedComponent user={user} {...(props as P)} />
   }
+
+  WithAuthComponent.displayName = `WithAuth(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`
+  return WithAuthComponent
 }
 
 export default withAuth
