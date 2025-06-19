@@ -13,7 +13,7 @@ import DeleteDialog from '../features/admin/dialogs/DeleteDialog'
 import FloatingButton from '../features/admin/utils/FloatingButton'
 import ManageLibraryVideoModal from '../features/admin/modals/ManageLibraryVideoModal'
 import { useFetchVideos } from '../hooks/useVideos'
-import { Spinner, Button } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/react'
 import DraggableTable from '../features/admin/table/DraggableTable'
 import { formatDate } from '../utils'
 
