@@ -19,12 +19,12 @@ import { auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router'
 
 const SidebarData = [
-  // {
-  //   title: 'All',
-  //   path: '/library',
-  //   icon: IoGrid,
-  //   // cName: 'nav-text',
-  // },
+  {
+    title: 'Masterclass',
+    path: '/library/masterclass',
+    icon: FiPlayCircle,
+    // cName: 'nav-text',
+  },
   {
     title: 'Videos',
     path: '/library/videos',
