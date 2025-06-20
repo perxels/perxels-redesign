@@ -1,13 +1,13 @@
 import { Box, Heading, HStack, Image, Text } from '@chakra-ui/react'
 import React from 'react'
-import { IoChevronBack } from 'react-icons/io5'
-import { SignUpForm } from './SignUpForm'
-import Link from 'next/link'
+// import { IoChevronBack } from 'react-icons/io5'
+// import { SignUpForm } from './SignUpForm'
+// import Link from 'next/link'
 
 export const SignUpWrapper = () => {
   return (
     <HStack flexDir={["column", "row"]} w="100%" h="100%" spacing={0}>
-      <Box display={["block", "none"]} pos="sticky" top={0} zIndex={10}>
+      {/* <Box display={["block", "none"]} pos="sticky" top={0} zIndex={10}>
         <Image src="/assets/images/library/auth-image-mobile.jpg" width="100%" height="auto" alt="auth image" />
       </Box>
       <Box w="100%" h={["auto", "100%"]} bg="white" px={[6, '5.375rem']} py={[8, '4rem']} pb={[12, 0]}>
@@ -67,7 +67,7 @@ export const SignUpWrapper = () => {
             BE A PART OF AWESOMENESS
           </Heading>
         </Box>
-      </Box>
+      </Box> */}
     </HStack>
   )
 }
