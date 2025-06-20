@@ -29,6 +29,7 @@ import {
   getDoc,
   getDocs,
   collection,
+  increment,
 } from 'firebase/firestore'
 import { db } from '../../../firebaseConfig'
 import { MainLayout } from '../../../layouts'
@@ -52,6 +53,8 @@ const SingleMasterclassDetail = () => {
   const [userLiked, setUserLiked] = useState(false)
   const [userDisliked, setUserDisliked] = useState(false)
   const [interactionLoading, setInteractionLoading] = useState(false)
+  const [viewCount, setViewCount] = useState(0)
+  const [hasViewedInSession, setHasViewedInSession] = useState(false)
   const toast = useToast()
 
   const targetRef = useRef<HTMLDivElement | null>(null)
@@ -79,6 +82,22 @@ const SingleMasterclassDetail = () => {
       })
     }
   }, [])
+
+  const handlePlayVideo = async () => {
+    if (!hasViewedInSession && id) {
+      try {
+        const masterclassRef = doc(db, 'adminMasterClasses', id as string)
+        await updateDoc(masterclassRef, {
+          views: increment(1),
+        })
+        setViewCount((prev) => prev + 1)
+        setHasViewedInSession(true)
+      } catch (error) {
+        console.error('Error updating view count:', error)
+      }
+    }
+    setIsPlaying(true)
+  }
 
   const handleLike = async () => {
     if (!auth.currentUser || !masterclass || !id) {
@@ -216,6 +235,9 @@ const SingleMasterclassDetail = () => {
           setLikeCount(likes.length)
           setDislikeCount(dislikes.length)
 
+          // Set view count
+          setViewCount(masterclassData.views || 0)
+
           // Check if current user has liked or disliked
           if (auth.currentUser) {
             const userId = auth.currentUser.uid
@@ -347,7 +369,7 @@ const SingleMasterclassDetail = () => {
                       src="/assets/images/library/playIcon.svg"
                       alt="Play"
                       cursor="pointer"
-                      onClick={() => setIsPlaying(true)}
+                      onClick={handlePlayVideo}
                       width="80px"
                       height="80px"
                     />
@@ -434,6 +456,8 @@ const SingleMasterclassDetail = () => {
               <Text fontWeight="bold">By Perxels</Text>
               <Text>•</Text>
               <Text>{moment(masterclass.datePosted).format('MMMM D, YYYY')}</Text>
+              <Text>•</Text>
+              <Text>{viewCount} {viewCount === 1 ? 'view' : 'views'}</Text>
             </HStack>
           </VStack>
 
