@@ -13,7 +13,7 @@ const Library = () => {
       if (!user) {
         router.push('/library/login') // redirect to login if not authenticated
       } else {
-        router.push('/library/videos')
+        router.push('/library/masterclass')
       }
     })
 
