@@ -179,12 +179,12 @@ export const LoginForm = () => {
               Login
             </Button>
 
-            <Center gap={1}>
+            {/* <Center gap={1}>
               <Text fontSize="">Not having an account? </Text>
               <Link href="/library/sign-up">
                 <Text fontWeight={600}>Create an account</Text>
               </Link>
-            </Center>
+            </Center> */}
           </VStack>
         )}
       </Formik>
