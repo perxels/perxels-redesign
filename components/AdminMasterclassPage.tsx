@@ -169,6 +169,13 @@ const AdminMasterclassPage = () => {
             accessor: 'secondTag',
           },
           {
+            Header: 'Views',
+            accessor: 'views',
+            Cell: ({ row }: any) => {
+              return row.original.views || 0
+            },
+          },
+          {
             Header: 'Date Posted',
             accessor: 'datePosted',
             Cell: ({ row }: any) => {

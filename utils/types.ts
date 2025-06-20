@@ -40,6 +40,7 @@ export interface AdminMasterClass {
   order: number
   firstTag: string
   secondTag: string
+  views?: number
 }
 
 export interface PDFDocument {
