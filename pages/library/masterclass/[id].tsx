@@ -55,14 +55,29 @@ const SingleMasterclassDetail = () => {
   const [interactionLoading, setInteractionLoading] = useState(false)
   const [viewCount, setViewCount] = useState(0)
   const [hasViewedInSession, setHasViewedInSession] = useState(false)
+  const [userRole, setUserRole] = useState<string | null>(null)
   const toast = useToast()
 
   const targetRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
         router.push('/library/login') // redirect to login if not authenticated
+        return
+      }
+
+      // Get user role from Firestore
+      try {
+        const userDocRef = doc(db, 'users', user.uid)
+        const userDoc = await getDoc(userDocRef)
+        
+        if (userDoc.exists()) {
+          const userData = userDoc.data()
+          setUserRole(userData?.role || null)
+        }
+      } catch (error) {
+        console.error('Error fetching user role:', error)
       }
     })
 
@@ -84,7 +99,8 @@ const SingleMasterclassDetail = () => {
   }, [])
 
   const handlePlayVideo = async () => {
-    if (!hasViewedInSession && id) {
+    // Only increment view count for non-admin users
+    if (!hasViewedInSession && id && userRole !== 'admin') {
       try {
         const masterclassRef = doc(db, 'adminMasterClasses', id as string)
         await updateDoc(masterclassRef, {
@@ -95,6 +111,8 @@ const SingleMasterclassDetail = () => {
       } catch (error) {
         console.error('Error updating view count:', error)
       }
+    } else if (userRole === 'admin' && !hasViewedInSession) {
+      setHasViewedInSession(true)
     }
     setIsPlaying(true)
   }
