@@ -19,6 +19,7 @@ import { auth, db } from '../../../firebaseConfig'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { handleFirebaseAuthError } from '../../../lib/utils/auth.utils'
 
 export const SignUpForm = () => {
   const [loading, setLoading] = useState(false)
@@ -103,23 +104,16 @@ export const SignUpForm = () => {
             // Redirect to library page
             router.push('/library')
           } catch (error: any) {
-            console.error('Error signing up:', error.message)
-            if(error.message === 'Firebase: Error (auth/email-already-in-use).') {
-              toast({
-                title: 'An account with this email may already exist. Please log in or use a different email.',
-                status: 'error',
-                duration: 5000,
-                isClosable: true,
-              })
-            } else {
-              toast({
-                title: 'Something went wrong',
-                description: error.message || 'Failed to create account',
-                status: 'error',
-                duration: 5000,
-                isClosable: true,
-              })
-            }
+            console.error('Error signing up:', error)
+            const { message } = handleFirebaseAuthError(error)
+            
+            toast({
+              title: 'Account Creation Failed',
+              description: message,
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+            })
           } finally {
             setLoading(false)
           }

@@ -13,7 +13,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
-import { generateOTP, sendOTPEmail } from '../utils/email'
+// Removed old email imports - now using API routes
 import axios from 'axios'
 
 const LibraryPdfModal = ({
@@ -31,7 +31,6 @@ const LibraryPdfModal = ({
   const [fullName, setFullName] = useState('')
   const [whatYouDo, setWhatYouDo] = useState('')
   const [isOtp, setIsOtp] = useState(false)
-  const [otp, setOtp] = useState('')
   const [enteredOtp, setEnteredOtp] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -127,11 +126,29 @@ const LibraryPdfModal = ({
       return handlePdfDownload(url)
     } else {
       setIsOtp(true)
-      const generatedOtp = generateOTP()
-      setOtp(generatedOtp)
       setIsLoading(true)
       setEnteredOtp('')
-      await sendOTPEmail(email, fullName, generatedOtp)
+      
+      // Use API route to send OTP (API generates and stores the OTP)
+      try {
+        const response = await fetch('/api/send-otp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: trimmedMail }),
+        })
+        
+        const result = await response.json()
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to send OTP')
+        }
+      } catch (error) {
+        console.error('Failed to send OTP:', error)
+        alert('Failed to send verification code. Please try again.')
+        setIsOtp(false)
+      }
+      
       setIsLoading(false)
     }
   }
@@ -172,11 +189,39 @@ const LibraryPdfModal = ({
       })
   }
 
-  const verifyOtp = () => {
-    if (otp === enteredOtp.trim()) {
-      return recordUser()
-    } else {
-      alert('Invalid OTP')
+  const verifyOtp = async () => {
+    if (!enteredOtp.trim()) {
+      alert('Please enter the OTP')
+      return
+    }
+
+    setIsLoading(true)
+    
+    try {
+      // Use API route to verify OTP
+      const response = await fetch('/api/verify-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email: trimmedMail, 
+          otp: enteredOtp.trim() 
+        }),
+      })
+      
+      const result = await response.json()
+      if (!result.success) {
+        throw new Error(result.error || 'Invalid OTP')
+      }
+      
+      // OTP verified successfully, proceed with user registration
+      recordUser()
+    } catch (error) {
+      console.error('OTP verification failed:', error)
+      alert(error instanceof Error ? error.message : 'Invalid OTP')
+    } finally {
+      setIsLoading(false)
     }
   }
 

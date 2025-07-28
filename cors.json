@@ -1,7 +1,20 @@
 [
   {
-    "origin": ["https://perxels.com", "https://www.perxels.com"],
-    "method": ["GET"],
+    "origin": [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://portal-9f489.web.app",
+      "https://portal-9f489.firebaseapp.com",
+      "https://perxels.com",
+      "https://www.perxels.com"
+    ],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+    "responseHeader": [
+      "Content-Type",
+      "Content-Length",
+      "Cache-Control",
+      "ETag"
+    ],
     "maxAgeSeconds": 3600
   }
 ]

@@ -23,11 +23,8 @@ import { TwitterShareButton, WhatsappShareButton } from 'next-share'
 const EnrolForm = () => {
   const scriptUrl =
     'https://script.google.com/macros/s/AKfycbwQkHXlNKynztMKiSTc3eQw7DPZuZ5iQT9vonzSZK-SwoJhn-yejLG8psFlX6w0RetW/exec'
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [errorBorder, setErrorBorder] = useState()
+  const { isOpen, onClose } = useDisclosure()
   const [loading, setLoading] = useState(false)
-  const [classVal, setClassValue] = useState<string>('')
-  const { onCopy, value, setValue } = useClipboard('https://perxels.com/exam')
   const [formSection, setFormSection] = useState<string>('formSect')
   return (
     <>
@@ -123,7 +120,6 @@ const EnrolForm = () => {
                   }
                 })
                 .catch((error) => {
-                  console.log(error)
                   setLoading(false)
                 })
             }}
