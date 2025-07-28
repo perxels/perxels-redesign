@@ -8,7 +8,7 @@ export const GrowthInfoFormWrapper = () => {
     <Box w="100%" h="full">
       <Heading
         as="h1"
-        fontSize="7xl"
+        fontSize={["5xl", "7xl"]}
         fontFamily="Proxima Nova"
         fontWeight="bold"
         color="brand.dark.100"

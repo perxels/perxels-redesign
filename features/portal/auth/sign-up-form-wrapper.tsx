@@ -6,7 +6,7 @@ import { SignUpForm } from './sign-up-form'
 export const SignUpFormWrapper = () => {
   return (
     <Box w="100%" h="full">
-        <Heading as="h1" fontSize="7xl" fontFamily="Proxima Nova" fontWeight="bold" color="brand.dark.100">
+        <Heading as="h1" fontSize={["5xl", "7xl"]} fontFamily="Proxima Nova" fontWeight="bold" color="brand.dark.100">
             Let&apos;s get you started.
         </Heading>
 

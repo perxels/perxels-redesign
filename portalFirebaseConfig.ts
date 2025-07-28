@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -32,5 +32,12 @@ if (typeof window !== "undefined") {
 const portalAuth = getAuth(portalApp);
 const portalDb = getFirestore(portalApp);
 const portalStorage = getStorage(portalApp);
+
+// Set auth persistence to keep users logged in
+if (typeof window !== 'undefined') {
+  setPersistence(portalAuth, browserLocalPersistence).catch((error) => {
+    console.error('Failed to set auth persistence:', error);
+  });
+}
 
 export { portalAuth, portalDb, portalStorage, signInWithEmailAndPassword };

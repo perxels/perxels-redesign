@@ -1,0 +1,180 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { portalDb } from '../../portalFirebaseConfig'
+import { sendPaymentReminderEmail } from '../../lib/utils/email.utils'
+
+interface SendPaymentRemindersRequest {
+  filters?: {
+    branch?: string
+    classType?: string
+    classPlan?: string
+  }
+}
+
+interface SendPaymentRemindersResponse {
+  success: boolean
+  message: string
+  data?: {
+    totalStudents: number
+    emailsSent: number
+    failedEmails: string[]
+  }
+  error?: string
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<SendPaymentRemindersResponse>,
+) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({
+      success: false,
+      message: 'Method not allowed',
+      error: 'Method not allowed',
+    })
+  }
+
+  try {
+    const { filters } = req.body as SendPaymentRemindersRequest
+
+    console.log('📧 Starting bulk payment reminder process...', { filters })
+
+    // Get all students with school fee info
+    const usersQuery = query(
+      collection(portalDb, 'users'),
+      where('role', '==', 'student')
+    )
+    
+    const snapshot = await getDocs(usersQuery)
+    const debtors: Array<{
+      id: string
+      email: string
+      fullName: string
+      branch?: string
+      schoolFeeInfo: any
+    }> = []
+
+    // Filter debtors based on school fee info and filters
+    snapshot.forEach(doc => {
+      const data = doc.data()
+      const fee = data.schoolFeeInfo
+      
+      if (!fee) return
+      
+      const totalFee = fee.totalSchoolFee || 0
+      const totalApproved = fee.totalApproved || 0
+      const outstandingAmount = totalFee - totalApproved
+      
+      // Only include debtors (those with outstanding balance)
+      if (outstandingAmount > 0) {
+        // Apply filters if provided
+        if (filters) {
+          if (filters.branch && filters.branch !== 'all' && data.branch) {
+            if (data.branch.toLowerCase() !== filters.branch.toLowerCase()) {
+              return
+            }
+          }
+          
+          if (filters.classPlan && fee.classPlan) {
+            if (fee.classPlan.toLowerCase() !== filters.classPlan.toLowerCase()) {
+              return
+            }
+          }
+          
+          // Note: classType filter would need to be implemented based on your data structure
+          // This might be cohort or another field
+        }
+        
+        debtors.push({
+          id: doc.id,
+          email: data.email || '',
+          fullName: data.fullName || 'Student',
+          branch: data.branch,
+          schoolFeeInfo: fee,
+        })
+      }
+    })
+
+    console.log(`📧 Found ${debtors.length} debtors to send reminders to`)
+
+    if (debtors.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: 'No debtors found matching the criteria',
+        data: {
+          totalStudents: 0,
+          emailsSent: 0,
+          failedEmails: [],
+        },
+      })
+    }
+
+    // Send payment reminder emails
+    const failedEmails: string[] = []
+    let emailsSent = 0
+
+    for (const debtor of debtors) {
+      try {
+        const fee = debtor.schoolFeeInfo
+        const totalFee = fee.totalSchoolFee || 0
+        const totalApproved = fee.totalApproved || 0
+        const outstandingAmount = totalFee - totalApproved
+
+        if (!debtor.email || !debtor.email.includes('@')) {
+          console.warn(`⚠️ Skipping debtor ${debtor.fullName} - invalid email: ${debtor.email}`)
+          failedEmails.push(`${debtor.fullName} (${debtor.email})`)
+          continue
+        }
+
+        console.log(`📧 Sending reminder to ${debtor.fullName} (${debtor.email})`)
+
+        const emailResult = await sendPaymentReminderEmail(
+          debtor.email,
+          debtor.fullName,
+          fee.cohort || 'N/A',
+          fee.classPlan || 'N/A',
+          totalFee,
+          totalApproved,
+          outstandingAmount,
+          {
+            appName: 'Perxels Portal',
+          }
+        )
+
+        if (emailResult.success) {
+          emailsSent++
+          console.log(`✅ Reminder sent successfully to ${debtor.fullName}`)
+        } else {
+          console.error(`❌ Failed to send reminder to ${debtor.fullName}:`, emailResult.error)
+          failedEmails.push(`${debtor.fullName} (${debtor.email})`)
+        }
+
+        // Add a small delay to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 100))
+      } catch (error) {
+        console.error(`❌ Error sending reminder to ${debtor.fullName}:`, error)
+        failedEmails.push(`${debtor.fullName} (${debtor.email})`)
+      }
+    }
+
+    console.log(`📧 Bulk reminder process completed: ${emailsSent}/${debtors.length} emails sent`)
+
+    return res.status(200).json({
+      success: true,
+      message: `Payment reminders sent successfully. ${emailsSent} out of ${debtors.length} emails were sent.`,
+      data: {
+        totalStudents: debtors.length,
+        emailsSent,
+        failedEmails,
+      },
+    })
+
+  } catch (error: any) {
+    console.error('❌ Send payment reminders API error:', error)
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to send payment reminders',
+      error: error?.message || 'Failed to send payment reminders',
+    })
+  }
+} 
