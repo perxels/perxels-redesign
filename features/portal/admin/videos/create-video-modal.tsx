@@ -181,13 +181,12 @@ export const CreateVideoModal: React.FC<CreateVideoModalProps> = ({
       // Create the video with the final image URL
       await createVideo({
         title: values.title,
-        description: values.description,
+        videoSession: values.videoSession,
         videoUrl: values.videoUrl,
         videoImage: finalImageUrl,
-        requirements: values.requirements,
+        author: values.author,
         isActive: values.isActive,
-        createdBy: user?.email || 'Unknown',
-        datePosted: new Date(),
+        createdBy: user?.uid || 'Unknown',
       })
 
       toast({
