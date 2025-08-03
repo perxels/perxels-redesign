@@ -455,7 +455,7 @@ export const SchoolFeeInfoForm = () => {
                     {values.schoolFee && parseInt(values.schoolFee) > 0 && (
                       <Box mt={2}>
                         <Text fontSize="xs" color="gray.600" mb={1}>
-                          Suggested amounts:
+                          Suggested amount paid:
                         </Text>
                         <Wrap spacing={1}>
                           {getPaymentSuggestions(

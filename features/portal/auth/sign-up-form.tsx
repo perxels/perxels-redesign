@@ -62,7 +62,7 @@ const formSchema = Yup.object().shape({
     .required('Password is required')
     .min(8, 'Password must be at least 8 characters')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/,
       'Password must contain: uppercase letter, lowercase letter, number, and special character',
     ),
 
@@ -278,11 +278,13 @@ export function SignUpForm() {
                       bgColor: 'yellow.50',
                     }}
                   >
-                    {branchOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
+                    {branchOptions
+                      .filter((option) => option.value !== 'all')
+                      .map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
                   </Select>
                   {formik.touched.branch && formik.errors.branch && (
                     <Text color="red.500" fontSize="sm" mt={1}>
@@ -342,12 +344,12 @@ export function SignUpForm() {
                     <Text
                       fontSize="xs"
                       color={
-                        /[@$!%*?&]/.test(formik.values.password)
+                        /[@$!%*?&.]/.test(formik.values.password)
                           ? 'green.500'
                           : 'gray.400'
                       }
                     >
-                      ✓ One special character (@$!%*?&)
+                      ✓ One special character (@$!%*?&.)
                     </Text>
                   </VStack>
                 </Box>

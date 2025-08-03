@@ -8,7 +8,6 @@ import {
   VStack,
   HStack,
   SimpleGrid,
-  Badge,
   useToast,
   Modal,
   ModalOverlay,
@@ -19,14 +18,10 @@ import {
   ModalCloseButton,
   useDisclosure,
   Spinner,
-  Alert,
-  AlertIcon,
   FormControl,
   FormLabel,
-  IconButton,
-  Tooltip,
 } from '@chakra-ui/react'
-import { FiPlus, FiPlay, FiClock, FiKey, FiLock } from 'react-icons/fi'
+import { FiLock } from 'react-icons/fi'
 import { PortalVideo } from '../../../../types/video.types'
 import { getAllVideosWithAccessStatus, grantVideoAccess } from '../../../../lib/utils/video.utils'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
@@ -176,12 +171,6 @@ export const VideoLibrary = () => {
               <Text fontSize="sm" color="gray.500">Locked</Text>
               <Text fontSize="2xl" fontWeight="bold" color="orange.600">
                 {stats.lockedVideos}
-              </Text>
-            </Box>
-            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-              <Text fontSize="sm" color="gray.500">Categories</Text>
-              <Text fontSize="2xl" fontWeight="bold" color="blue.600">
-                {stats.categories}
               </Text>
             </Box>
           </HStack>

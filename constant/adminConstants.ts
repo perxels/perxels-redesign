@@ -15,6 +15,7 @@ export const classPlans = [
   'Lagos Yaba Weekday Class',
   'Ibadan Weekday Physical Class',
   'Ibadan Weekend Physical Class',
+  'International Class',
 ]
 
 export const paymentStatusOptions = [

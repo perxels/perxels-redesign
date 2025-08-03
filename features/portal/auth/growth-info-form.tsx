@@ -218,7 +218,7 @@ export const GrowthInfoForm = () => {
 
                 <AuthInput
                   name="classOutcome"
-                  placeholder="What are you looking foeward to?"
+                  placeholder="What are you looking forward to?"
                 />
 
                 <Box w="full">
@@ -272,7 +272,7 @@ export const GrowthInfoForm = () => {
 
                 <VStack w="full" alignItems="flex-start" gap="4">
                   <FormControl>
-                    <FormLabel>Profile Picture</FormLabel>
+                    <FormLabel>Profile Picture (Optional)</FormLabel>
                     <EnhancedImageUpload
                       value={pictureFile ? URL.createObjectURL(pictureFile) : undefined}
                       onChange={(file) => {
@@ -286,7 +286,7 @@ export const GrowthInfoForm = () => {
                       acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
                       aspectRatio={{ width: 1, height: 1 }}
                       minDimensions={{ width: 200, height: 200 }}
-                      uploadText="Drop profile picture here or click to upload"
+                      uploadText="Drop profile picture here or click to upload (optional)"
                       previewText="PROFILE"
                     />
                   </FormControl>
