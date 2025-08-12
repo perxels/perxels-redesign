@@ -22,27 +22,37 @@ import {
   FormLabel,
 } from '@chakra-ui/react'
 import { FiLock } from 'react-icons/fi'
+import { MdSchool } from 'react-icons/md'
 import { PortalVideo } from '../../../../types/video.types'
-import { getAllVideosWithAccessStatus, grantVideoAccess } from '../../../../lib/utils/video.utils'
+import {
+  getAllVideosWithAccessStatus,
+  grantVideoAccess,
+} from '../../../../lib/utils/video.utils'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { VideoCard } from './video-card'
 
 export const VideoLibrary = () => {
   const router = useRouter()
-  const [videos, setVideos] = useState<Array<PortalVideo & { hasAccess: boolean }>>([])
+  const [videos, setVideos] = useState<
+    Array<PortalVideo & { hasAccess: boolean }>
+  >([])
   const [loading, setLoading] = useState(true)
   const [accessCode, setAccessCode] = useState('')
   const [grantingAccess, setGrantingAccess] = useState(false)
   const [videoToUnlock, setVideoToUnlock] = useState<PortalVideo | null>(null)
-  
-  const { isOpen: isCodeModalOpen, onOpen: onCodeModalOpen, onClose: onCodeModalClose } = useDisclosure()
-  
+
+  const {
+    isOpen: isCodeModalOpen,
+    onOpen: onCodeModalOpen,
+    onClose: onCodeModalClose,
+  } = useDisclosure()
+
   const { user } = usePortalAuth()
   const toast = useToast()
 
   const fetchVideos = async () => {
     if (!user?.uid) return
-    
+
     try {
       setLoading(true)
       const videoData = await getAllVideosWithAccessStatus(user.uid)
@@ -131,10 +141,11 @@ export const VideoLibrary = () => {
 
   const getStats = () => {
     const totalVideos = videos.length
-    const unlockedVideos = videos.filter(v => v.hasAccess).length
+    const unlockedVideos = videos.filter((v) => v.hasAccess).length
     const lockedVideos = totalVideos - unlockedVideos
-    const categories = new Set(videos.map(v => v.category).filter(Boolean)).size
-    
+    const categories = new Set(videos.map((v) => v.category).filter(Boolean))
+      .size
+
     return { totalVideos, unlockedVideos, lockedVideos, categories }
   }
 
@@ -154,26 +165,44 @@ export const VideoLibrary = () => {
       <VStack spacing={6} align="stretch">
         {/* Stats */}
         {videos.length > 0 && (
-          <HStack spacing={6}>
-            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-              <Text fontSize="sm" color="gray.500">Total Videos</Text>
-              <Text fontSize="2xl" fontWeight="bold" color="purple.600">
-                {stats.totalVideos}
-              </Text>
-            </Box>
-            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-              <Text fontSize="sm" color="gray.500">Unlocked</Text>
-              <Text fontSize="2xl" fontWeight="bold" color="green.600">
-                {stats.unlockedVideos}
-              </Text>
-            </Box>
-            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-              <Text fontSize="sm" color="gray.500">Locked</Text>
-              <Text fontSize="2xl" fontWeight="bold" color="orange.600">
-                {stats.lockedVideos}
-              </Text>
-            </Box>
-          </HStack>
+          <VStack spacing={4} align="stretch">
+            <HStack spacing={6} flexWrap="wrap">
+              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
+                <Text fontSize="sm" color="gray.500">
+                  Total Videos
+                </Text>
+                <Text fontSize="2xl" fontWeight="bold" color="purple.600">
+                  {stats.totalVideos}
+                </Text>
+              </Box>
+              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
+                <Text fontSize="sm" color="gray.500">
+                  Unlocked
+                </Text>
+                <Text fontSize="2xl" fontWeight="bold" color="green.600">
+                  {stats.unlockedVideos}
+                </Text>
+              </Box>
+              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
+                <Text fontSize="sm" color="gray.500">
+                  Locked
+                </Text>
+                <Text fontSize="2xl" fontWeight="bold" color="orange.600">
+                  {stats.lockedVideos}
+                </Text>
+              </Box>
+
+              <Button
+                colorScheme="purple"
+                size="lg"
+                onClick={() => router.push('/portal/dashboard/syllabus')}
+                leftIcon={<MdSchool />}
+                ml={{ base: 0, md: 8 }}
+              >
+                View Syllabus
+              </Button>
+            </HStack>
+          </VStack>
         )}
 
         {/* Video Grid */}
@@ -206,7 +235,9 @@ export const VideoLibrary = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            {videoToUnlock ? `Unlock: ${videoToUnlock.title}` : 'Enter Access Code'}
+            {videoToUnlock
+              ? `Unlock: ${videoToUnlock.title}`
+              : 'Enter Access Code'}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -246,7 +277,6 @@ export const VideoLibrary = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-
     </Box>
   )
-} 
+}

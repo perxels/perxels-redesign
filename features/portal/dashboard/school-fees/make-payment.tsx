@@ -11,13 +11,6 @@ import {
   Text,
   Heading,
   VStack,
-  FormControl,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  FormErrorMessage,
   Box,
   Input,
   FormLabel,
@@ -28,7 +21,7 @@ import {
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { formatNaira, parseNaira } from '../../auth/school-fee-info-form'
+import { CurrencyInput } from '../../../../components/CurrencyInput'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { useToast } from '@chakra-ui/react'
 import { getPaymentSuggestions } from '../../../../types/school-fee.types'
@@ -288,162 +281,31 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
             await handleSubmit(e);
           }}>
             <VStack>
-              <FormControl
+              <CurrencyInput
+                name="amountPaid"
+                value={values.amountPaid}
+                onChange={(value) => setFieldValue('amountPaid', value)}
+                onBlur={() => handleBlur('amountPaid')}
+                placeholder="How much have you paid?"
+                label="Amount Paid"
                 isInvalid={touched.amountPaid && !!errors.amountPaid}
-              >
-                <NumberInput
-                  value={
-                    values.amountPaid === 0
-                      ? ''
-                      : formatNaira(values.amountPaid.toString())
-                  }
-                  onChange={(valueString) => {
-                    const parsedValue = parseNaira(valueString)
-                    setFieldValue('amountPaid', parsedValue)
-                  }}
-                  onBlur={() => handleBlur('amountPaid')}
-                  min={0}
-                >
-                  <NumberInputField
-                    h="3.5rem"
-                    placeholder="How much have you paid?"
-                    _placeholder={{ color: 'brand.dark.200' }}
-                    borderWidth={1}
-                    borderColor={
-                      touched.amountPaid && errors.amountPaid
-                        ? 'red.500'
-                        : 'yellow.300'
-                    }
-                    bgColor="yellow.50"
-                    _focus={{
-                      borderColor:
-                        touched.amountPaid && errors.amountPaid
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _focusVisible={{
-                      outline: 'none',
-                    }}
-                    _active={{
-                      borderColor:
-                        touched.amountPaid && errors.amountPaid
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _hover={{
-                      borderColor:
-                        touched.amountPaid && errors.amountPaid
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                  />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-                {touched.amountPaid && errors.amountPaid && (
-                  <FormErrorMessage>{errors.amountPaid}</FormErrorMessage>
-                )}
+                errorMessage={touched.amountPaid && errors.amountPaid}
+                variant="yellow"
+                isRequired
+              />
 
-                {/* Payment suggestions */}
-                {schoolFeeInfo?.totalSchoolFee && (
-                  <Box mt={2}>
-                    <Text fontSize="xs" color="gray.600" mb={1}>
-                      Suggested amounts:
-                    </Text>
-                    <Wrap spacing={1}>
-                      {getPaymentSuggestions(
-                        schoolFeeInfo.totalSchoolFee || 0,
-                        schoolFeeInfo.totalApproved || 0
-                      )
-                        .slice(0, Math.max(0, 3 - (schoolFeeInfo.payments?.length || 0)))
-                        .map((amount) => (
-                          <WrapItem key={amount}>
-                            <Badge
-                              colorScheme="yellow"
-                              cursor="pointer"
-                              fontSize="xs"
-                              px={2}
-                              py={1}
-                              onClick={() =>
-                                setFieldValue('amountPaid', amount.toString())
-                              }
-                              _hover={{ bg: 'yellow.200' }}
-                            >
-                              ₦{amount.toLocaleString()}
-                            </Badge>
-                          </WrapItem>
-                        ))}
-                    </Wrap>
-                  </Box>
-                )}
-              </FormControl>
-
-              <FormControl
+              <CurrencyInput
+                name="amountOwed"
+                value={values.amountOwed}
+                onChange={(value) => setFieldValue('amountOwed', value)}
+                onBlur={() => handleBlur('amountOwed')}
+                placeholder="How much are you owing?"
+                label="Amount Owed"
                 isInvalid={touched.amountOwed && !!errors.amountOwed}
-              >
-                <NumberInput
-                  value={
-                    values.amountOwed === 0
-                      ? ''
-                      : formatNaira(values.amountOwed.toString())
-                  }
-                  onChange={(valueString) => {
-                    const parsedValue = parseNaira(valueString)
-                    setFieldValue('amountOwed', parsedValue)
-                  }}
-                  onBlur={() => handleBlur('amountOwed')}
-                  min={0}
-                >
-                  <NumberInputField
-                    h="3.5rem"
-                    placeholder="How much are you owing?"
-                    _placeholder={{ color: 'brand.dark.200' }}
-                    borderWidth={1}
-                    borderColor={
-                      touched.amountOwed && errors.amountOwed
-                        ? 'red.500'
-                        : 'yellow.300'
-                    }
-                    bgColor="yellow.50"
-                    _focus={{
-                      borderColor:
-                        touched.amountOwed && errors.amountOwed
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _focusVisible={{
-                      outline: 'none',
-                    }}
-                    _active={{
-                      borderColor:
-                        touched.amountOwed && errors.amountOwed
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _hover={{
-                      borderColor:
-                        touched.amountOwed && errors.amountOwed
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                  />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-                {touched.amountOwed && errors.amountOwed && (
-                  <FormErrorMessage>{errors.amountOwed}</FormErrorMessage>
-                )}
-              </FormControl>
+                errorMessage={touched.amountOwed && errors.amountOwed}
+                variant="yellow"
+                isRequired
+              />
 
               <VStack w="full" alignItems="flex-start" gap="8">
                 <Input
@@ -512,7 +374,31 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
                 )}
               </VStack>
 
-              <HStack justifyContent="flex-start" w="full" mt={10}>
+              {/* Date and Time Display */}
+              <Box w="full" textAlign="right" mt={4}>
+                <HStack gap={4} align="end" justifyContent="flex-end">
+                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                    Date: {new Date().toLocaleDateString('en-US', {
+                      weekday: 'short',
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </Text>
+                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                    |
+                  </Text>
+                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                    Time: {new Date().toLocaleTimeString('en-US', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+                  </Text>
+                </HStack>
+              </Box>
+
+              <HStack justifyContent="flex-start" w="full" mt={6}>
                 <Button
                   h="3.5rem"
                   type="submit"

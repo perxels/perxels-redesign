@@ -389,7 +389,7 @@ export async function sendStudentHtmlEmail(
   try {
     const resend = getResendClient()
     const fromEmail = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
-    
+
     const emailData: any = {
       from: fromEmail,
       to: [to],
@@ -399,7 +399,7 @@ export async function sendStudentHtmlEmail(
 
     // Add attachments if provided
     if (options.attachments && options.attachments.length > 0) {
-      emailData.attachments = options.attachments.map(attachment => ({
+      emailData.attachments = options.attachments.map((attachment) => ({
         filename: attachment.filename,
         content: attachment.content,
         contentType: attachment.contentType,
@@ -407,7 +407,7 @@ export async function sendStudentHtmlEmail(
     }
 
     const result = await resend.emails.send(emailData)
-    
+
     if (result.error) {
       console.error('❌ Student HTML email error:', result.error)
       return {
@@ -444,13 +444,13 @@ export async function sendEmailWithAttachments(
   try {
     const resend = getResendClient()
     const fromEmail = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
-    
+
     const emailData: any = {
       from: fromEmail,
       to: Array.isArray(to) ? to : [to],
       subject,
       html,
-      attachments: attachments.map(attachment => ({
+      attachments: attachments.map((attachment) => ({
         filename: attachment.filename,
         content: attachment.content,
         contentType: attachment.contentType,
@@ -458,7 +458,7 @@ export async function sendEmailWithAttachments(
     }
 
     const result = await resend.emails.send(emailData)
-    
+
     if (result.error) {
       console.error('❌ Email with attachments error:', result.error)
       return {
@@ -467,7 +467,7 @@ export async function sendEmailWithAttachments(
         error: result.error.message || JSON.stringify(result.error),
       }
     }
-    
+
     return {
       success: true,
       emailId: result.data?.id,
@@ -497,9 +497,9 @@ export async function sendPaymentReceiptEmail(
 ): Promise<EmailResponse> {
   try {
     const { appName = DEFAULT_APP_NAME } = options
-    
+
     const subject = `Payment Receipt - ₦${amount.toLocaleString()} - ${cohort}`
-    
+
     const html = `
       <div style="background: #E9E8F9; border-radius: 0; padding: 32px 24px; max-width: 600px; margin: 0 auto; font-family: 'Inter', Arial, sans-serif;">
         <h2 style="font-size: 1.2rem; font-weight: bold; margin: 0 0 24px 0; letter-spacing: 0.5px; color: #333333;">PAYMENT RECEIPT</h2>
@@ -540,7 +540,7 @@ export async function sendPaymentReceiptEmail(
       subject,
       html,
       [receiptAttachment],
-      options
+      options,
     )
   } catch (error) {
     console.error('❌ Send payment receipt email error:', error)
@@ -564,9 +564,9 @@ export async function sendCertificateEmail(
 ): Promise<EmailResponse> {
   try {
     const { appName = DEFAULT_APP_NAME } = options
-    
+
     const subject = `Your Certificate - ${courseName}`
-    
+
     const html = `
       <div style="background: #E9E8F9; border-radius: 0; padding: 32px 24px; max-width: 600px; margin: 0 auto; font-family: 'Inter', Arial, sans-serif;">
         <h2 style="font-size: 1.2rem; font-weight: bold; margin: 0 0 24px 0; letter-spacing: 0.5px; color: #333333;">🎉 CONGRATULATIONS!</h2>
@@ -604,7 +604,7 @@ export async function sendCertificateEmail(
       subject,
       html,
       [certificateAttachment],
-      options
+      options,
     )
   } catch (error) {
     console.error('❌ Send certificate email error:', error)
@@ -628,9 +628,9 @@ export async function sendCourseMaterialsEmail(
 ): Promise<EmailResponse> {
   try {
     const { appName = DEFAULT_APP_NAME } = options
-    
+
     const subject = `Course Materials - ${courseName}`
-    
+
     const html = `
       <div style="background: #E9E8F9; border-radius: 0; padding: 32px 24px; max-width: 600px; margin: 0 auto; font-family: 'Inter', Arial, sans-serif;">
         <h2 style="font-size: 1.2rem; font-weight: bold; margin: 0 0 24px 0; letter-spacing: 0.5px; color: #333333;">📚 COURSE MATERIALS</h2>
@@ -641,7 +641,9 @@ export async function sendCourseMaterialsEmail(
           <div style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 20px 0;">
             <h3 style="margin: 0 0 15px 0; color: #333; font-size: 1.1rem;">Materials Included:</h3>
             <ul style="margin: 0; padding-left: 20px;">
-              ${materials.map(material => `<li>${material.filename}</li>`).join('')}
+              ${materials
+                .map((material) => `<li>${material.filename}</li>`)
+                .join('')}
             </ul>
           </div>
           
@@ -653,13 +655,7 @@ export async function sendCourseMaterialsEmail(
       </div>
     `
 
-    return await sendEmailWithAttachments(
-      to,
-      subject,
-      html,
-      materials,
-      options
-    )
+    return await sendEmailWithAttachments(to, subject, html, materials, options)
   } catch (error) {
     console.error('❌ Send course materials email error:', error)
     return {
@@ -931,7 +927,7 @@ export async function sendPaymentReminderEmail(
 export function createAttachmentFromBuffer(
   filename: string,
   buffer: Buffer,
-  contentType?: string
+  contentType?: string,
 ): EmailAttachment {
   return {
     filename,
@@ -946,7 +942,7 @@ export function createAttachmentFromBuffer(
 export function createAttachmentFromBase64(
   filename: string,
   base64Content: string,
-  contentType?: string
+  contentType?: string,
 ): EmailAttachment {
   return {
     filename,
@@ -960,7 +956,7 @@ export function createAttachmentFromBase64(
  */
 export function createPdfAttachment(
   filename: string,
-  content: Buffer | string
+  content: Buffer | string,
 ): EmailAttachment {
   return {
     filename,
@@ -975,7 +971,7 @@ export function createPdfAttachment(
 export function createImageAttachment(
   filename: string,
   content: Buffer | string,
-  imageType: 'png' | 'jpg' | 'jpeg' | 'gif' | 'webp' = 'png'
+  imageType: 'png' | 'jpg' | 'jpeg' | 'gif' | 'webp' = 'png',
 ): EmailAttachment {
   const contentType = `image/${imageType}`
   return {
@@ -991,7 +987,7 @@ export function createImageAttachment(
 export function createDocumentAttachment(
   filename: string,
   content: Buffer | string,
-  documentType: 'doc' | 'docx' | 'pdf' | 'txt' | 'rtf' = 'pdf'
+  documentType: 'doc' | 'docx' | 'pdf' | 'txt' | 'rtf' = 'pdf',
 ): EmailAttachment {
   const contentTypeMap = {
     doc: 'application/msword',
@@ -1000,7 +996,7 @@ export function createDocumentAttachment(
     txt: 'text/plain',
     rtf: 'application/rtf',
   }
-  
+
   return {
     filename,
     content,
@@ -1015,13 +1011,13 @@ export const ONBOARDING_FILES = [
   {
     filename: 'how_to_onboard_on_slack.pdf',
     displayName: 'How_to_Onboard_on_Slack.pdf',
-    description: 'Slack onboarding guide'
+    description: 'Slack onboarding guide',
   },
   {
     filename: 'how_to_sign_up_on_figma.pdf',
     displayName: 'How_to_Sign_Up_on_Figma.pdf',
-    description: 'Figma signup guide'
-  }
+    description: 'Figma signup guide',
+  },
 ] as const
 
 /**
@@ -1029,18 +1025,24 @@ export const ONBOARDING_FILES = [
  */
 export function createOnboardingPdfAttachments(): EmailAttachment[] {
   const attachments: EmailAttachment[] = []
-  
+
   try {
     for (const file of ONBOARDING_FILES) {
-      const pdfPath = join(process.cwd(), 'public', 'assets', 'files', file.filename)
+      const pdfPath = join(
+        process.cwd(),
+        'public',
+        'assets',
+        'files',
+        file.filename,
+      )
       const pdfBuffer = readFileSync(pdfPath)
       attachments.push({
         filename: file.displayName,
         content: pdfBuffer,
-        contentType: 'application/pdf'
+        contentType: 'application/pdf',
       })
     }
-    
+
     return attachments
   } catch (error) {
     console.error('Error reading onboarding PDFs:', error)
@@ -1069,24 +1071,28 @@ export async function sendAdmissionEmail(
       to,
       studentName,
       cohort,
-      options
+      options,
     })
-    
+
     const resend = getResendClient()
-    
+
     // Create the admission HTML content
     const htmlContent = generateAdmittedHtml(studentName, cohort)
     console.log('📧 Generated admission HTML content')
-    
+
     // Create the PDF attachments
     console.log('📎 Creating PDF attachments...')
     const pdfAttachments = createOnboardingPdfAttachments()
     console.log('📎 PDF attachments created:', pdfAttachments.length, 'files')
-    
+
+    // Resolve from email (prefer explicit option, then env, then default testing address)
+    const fromEmail =
+      options.from || process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
+
     // Send email with attachments
-    console.log('📤 Sending admission email via Resend...')
+    console.log('📤 Sending admission email via Resend...', { from: fromEmail })
     const result = await resend.emails.send({
-      from: options.from || DEFAULT_FROM_EMAIL,
+      from: fromEmail,
       to: [to],
       subject: options.subject || 'You have been admitted into Perxels',
       html: htmlContent,
@@ -1096,7 +1102,7 @@ export async function sendAdmissionEmail(
     console.log('📥 Resend result:', {
       success: !result.error,
       error: result.error,
-      emailId: result.data?.id
+      emailId: result.data?.id,
     })
 
     if (result.error) {
@@ -1123,4 +1129,3 @@ export async function sendAdmissionEmail(
     }
   }
 }
-

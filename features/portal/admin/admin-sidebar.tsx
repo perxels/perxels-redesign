@@ -1,7 +1,8 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Text, Badge } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { useAdminNotifications } from '../../../hooks/useAdminNotifications'
 
 const sidebarItems = [
   {
@@ -21,17 +22,19 @@ const sidebarItems = [
   },
   {
     label: 'Videos',
-    icon: '/assets/icons/graph.svg',
+    icon: '/assets/icons/video.svg',
     href: '/portal/admin/videos',
   },
   {
     label: 'Notifications',
-    icon: '/assets/icons/graph.svg',
+    icon: '/assets/icons/notification.svg',
     href: '/portal/admin/notifications',
   },
 ]
 
 export const AdminSidebar = () => {
+  const { unreadCount } = useAdminNotifications()
+
   return (
     <Box
       h="100vh"
@@ -54,8 +57,29 @@ export const AdminSidebar = () => {
             justifyContent="center"
             gap="1rem"
             p="1rem"
+            position="relative"
           >
-            <Image src={item.icon} alt={item.label} width={48} height={48} />
+            <Box position="relative">
+              <Image src={item.icon} alt={item.label} width={48} height={48} />
+              {item.label === 'Notifications' && unreadCount > 0 && (
+                <Badge
+                  position="absolute"
+                  top="-8px"
+                  right="-8px"
+                  colorScheme="red"
+                  borderRadius="full"
+                  minW="20px"
+                  h="20px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize="12px"
+                  fontWeight="bold"
+                >
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </Badge>
+              )}
+            </Box>
             <Text
               fontSize="1.25rem"
               fontWeight="medium"

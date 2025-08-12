@@ -329,22 +329,27 @@ const AttendancePage = () => {
                     w="full"
                     gap={{ base: 4, md: 12 }}
                   >
-                    <Text
-                      fontSize={{ base: '2xl', md: '3xl', lg: '48px' }}
-                      fontWeight="bold"
-                      color="#333"
-                      letterSpacing="0.02em"
-                      minW="180px"
-                      textAlign="center"
-                      textTransform="uppercase"
-                    >
-                      {timeDisplay}
-                    </Text>
+                    <VStack>
+                      <label style={{ fontSize: '16px' }}>Time</label>
+                      <Text
+                        fontSize={{ base: '2xl', md: '3xl', lg: '48px' }}
+                        fontWeight="bold"
+                        color="#333"
+                        letterSpacing="0.02em"
+                        minW="180px"
+                        textAlign="center"
+                        textTransform="uppercase"
+                      >
+                        {timeDisplay}
+                      </Text>
+                    </VStack>
                     <Box
                       h={{ base: '40px', md: '60px' }}
                       borderLeft="2px solid #222"
                       mx={{ base: 2, md: 6 }}
                     />
+                    <VStack>
+                      <label style={{ fontSize: '16px' }}>Date</label>
                     <Text
                       fontSize={{ base: '2xl', md: '3xl', lg: '48px' }}
                       fontWeight="bold"
@@ -355,6 +360,7 @@ const AttendancePage = () => {
                     >
                       {dateDisplay}
                     </Text>
+                    </VStack>
                   </Box>
                   <Button
                     bg="#363576"

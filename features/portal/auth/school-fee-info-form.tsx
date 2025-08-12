@@ -6,36 +6,38 @@ import {
   Button,
   FormLabel,
   HStack,
-  Input,
   Select,
   SimpleGrid,
   VStack,
-  useToast,
-  Text,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  FormControl,
-  FormErrorMessage,
-  Badge,
-  Wrap,
-  WrapItem,
+  useToast
 } from '@chakra-ui/react'
+import { CurrencyInput } from '../../../components/CurrencyInput'
 import { AuthInput } from './auth-input'
-import { portalAuth, portalDb } from '../../../portalFirebaseConfig'
+import { portalDb } from '../../../portalFirebaseConfig'
 import { useRouter } from 'next/navigation'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
-import { getPaymentSuggestions } from '../../../types/school-fee.types'
 import { classPlans } from '../../../constant/adminConstants'
 import { EnhancedImageUpload } from '../../../components/EnhancedImageUpload'
-import { doc, updateDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
-import { PaymentInstallment, SchoolFeeInfo } from '../../../types/school-fee.types'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
+import { SchoolFeeInfo } from '../../../types/school-fee.types'
 
 // Currency formatting functions for Naira
-export const formatNaira = (val: string) => (val ? `₦${val}` : '')
-export const parseNaira = (val: string) => val.replace(/^₦/, '')
+export const formatNaira = (val: string) => {
+  if (!val) return ''
+  // Remove any existing commas and format with new ones
+  const cleanValue = val.toString().replace(/,/g, '')
+  const numberValue = parseInt(cleanValue)
+  if (isNaN(numberValue)) return ''
+
+  // Format with comma separators
+  const formattedValue = numberValue.toLocaleString('en-NG')
+  return `₦${formattedValue}`
+}
+
+export const parseNaira = (val: string) => {
+  // Remove ₦ symbol and commas, return clean number string
+  return val.replace(/^₦/, '').replace(/,/g, '')
+}
 
 interface SchoolFeeFormValues {
   cohort: string
@@ -53,8 +55,6 @@ interface SchoolFeeInfoData {
   paymentReceiptUrl: string
 }
 
-
-
 const formSchema = Yup.object().shape({
   cohort: Yup.string().required('Cohort is required'),
   classPlan: Yup.string()
@@ -62,19 +62,23 @@ const formSchema = Yup.object().shape({
     .oneOf(classPlans, 'Please select a valid class plan'),
   schoolFee: Yup.string()
     .required('School fee is required')
-    .matches(/^\d+$/, 'School fee must be a valid number')
-    .test('min-value', 'School fee must be greater than 0', (value) => {
-      return value ? parseInt(value) > 0 : false
+    .test('valid-number', 'School fee must be a valid number', (value) => {
+      if (!value) return false
+      // Remove any non-digit characters (₦, commas, spaces, etc.)
+      const cleanValue = value.toString().replace(/[^\d]/g, '')
+      const numValue = parseInt(cleanValue)
+      return !isNaN(numValue) && numValue > 0
     }),
   amountPaid: Yup.string()
     .required('Amount paid is required')
-    .matches(/^\d+$/, 'Amount paid must be a valid number')
-    .test('min-value', 'Amount paid must be greater than 0', (value) => {
-      return value ? parseInt(value) > 0 : false
+    .test('valid-number', 'Amount paid must be a valid number', (value) => {
+      if (!value) return false
+      // Remove any non-digit characters (₦, commas, spaces, etc.)
+      const cleanValue = value.toString().replace(/[^\d]/g, '')
+      const numValue = parseInt(cleanValue)
+      return !isNaN(numValue) && numValue > 0
     }),
-  paymentReceipt: Yup.mixed()
-    .nullable()
-    .optional()
+  paymentReceipt: Yup.mixed().nullable().optional(),
 })
 
 export const SchoolFeeInfoForm = () => {
@@ -153,24 +157,34 @@ export const SchoolFeeInfoForm = () => {
       const existingSchoolFeeInfo = userData?.schoolFeeInfo
 
       // Check if user already has school fee info
-      if (existingSchoolFeeInfo && existingSchoolFeeInfo.payments && existingSchoolFeeInfo.payments.length > 0) {
-        throw new Error('School fee information already exists. Use the installment payment to add additional payments.')
+      if (
+        existingSchoolFeeInfo &&
+        existingSchoolFeeInfo.payments &&
+        existingSchoolFeeInfo.payments.length > 0
+      ) {
+        throw new Error(
+          'School fee information already exists. Use the installment payment to add additional payments.',
+        )
       }
+
+      // Convert formatted values to clean numbers for database storage
+      const cleanSchoolFee = values.schoolFee.toString().replace(/[^\d]/g, '')
+      const cleanAmountPaid = values.amountPaid.toString().replace(/[^\d]/g, '')
 
       const newSchoolFeeInfo: SchoolFeeInfo = {
         cohort: values.cohort.toUpperCase(),
         classPlan: values.classPlan,
-        totalSchoolFee: parseInt(values.schoolFee),
+        totalSchoolFee: parseInt(cleanSchoolFee),
         payments: [
           {
             installmentNumber: 1,
-            amount: parseInt(values.amountPaid),
+            amount: parseInt(cleanAmountPaid),
             paymentReceiptUrl: paymentReceiptUrl || '',
             submittedAt: new Date(),
             status: 'pending',
           },
         ],
-        totalSubmitted: parseInt(values.amountPaid),
+        totalSubmitted: parseInt(cleanAmountPaid),
         totalApproved: 0,
         overallStatus: 'pending',
         createdAt: new Date(),
@@ -185,22 +199,25 @@ export const SchoolFeeInfoForm = () => {
 
       // Send notification to admins about the first payment
       try {
-        const notificationResponse = await fetch('/api/send-payment-installment-notification', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const notificationResponse = await fetch(
+          '/api/send-payment-installment-notification',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              studentId: uid, // Add the student ID
+              studentName: userData?.fullName || 'Unknown Student',
+              studentEmail: userData?.email || '',
+              amount: parseInt(cleanAmountPaid),
+              installmentNumber: 1,
+              paymentReceiptUrl: paymentReceiptUrl || '',
+              cohort: values.cohort.toUpperCase(),
+              classPlan: values.classPlan,
+            }),
           },
-          body: JSON.stringify({
-            studentId: uid, // Add the student ID
-            studentName: userData?.fullName || 'Unknown Student',
-            studentEmail: userData?.email || '',
-            amount: parseInt(values.amountPaid),
-            installmentNumber: 1,
-            paymentReceiptUrl: paymentReceiptUrl || '',
-            cohort: values.cohort.toUpperCase(),
-            classPlan: values.classPlan,
-          }),
-        })
+        )
 
         if (!notificationResponse.ok) {
           // Don't fail the main request if notification fails
@@ -213,7 +230,7 @@ export const SchoolFeeInfoForm = () => {
 
       toast({
         title: 'School Fee Information Updated! 🎉',
-        description: paymentReceiptUrl 
+        description: paymentReceiptUrl
           ? 'Your payment information and receipt have been saved successfully.'
           : 'Your payment information has been saved successfully.',
         status: 'success',
@@ -227,8 +244,9 @@ export const SchoolFeeInfoForm = () => {
     } catch (error: any) {
       console.error('School fee info update error:', error)
 
-      let errorMessage = 'Failed to update school fee information. Please try again.'
-      
+      let errorMessage =
+        'Failed to update school fee information. Please try again.'
+
       if (error.message) {
         errorMessage = error.message
       }
@@ -280,7 +298,12 @@ export const SchoolFeeInfoForm = () => {
             }}
           >
             <VStack w="full" alignItems="flex-start">
-              <SimpleGrid columns={[1, 2]} spacing={[5, 10]} w="full" maxW={'750px'}>
+              <SimpleGrid
+                columns={[1, 2]}
+                spacing={[5, 10]}
+                w="full"
+                maxW={'750px'}
+              >
                 <VStack w="full" alignItems="flex-start" gap="8">
                   <AuthInput
                     name="cohort"
@@ -336,157 +359,39 @@ export const SchoolFeeInfoForm = () => {
                     </Select>
                   </Box>
 
-                  <FormControl
+                  <CurrencyInput
+                    name="schoolFee"
+                    value={values.schoolFee}
+                    onChange={(value) => setFieldValue('schoolFee', value)}
+                    onBlur={() => handleBlur('schoolFee')}
+                    placeholder="How much is your school fee*"
                     isInvalid={touched.schoolFee && !!errors.schoolFee}
-                  >
-                    <NumberInput
-                      value={formatNaira(values.schoolFee)}
-                      onChange={(valueString) => {
-                        const parsedValue = parseNaira(valueString)
-                        setFieldValue('schoolFee', parsedValue)
-                      }}
-                      onBlur={() => handleBlur('schoolFee')}
-                      min={0}
-                    >
-                      <NumberInputField
-                        h="3.5rem"
-                        placeholder="How much is your school fee*"
-                        _placeholder={{ color: 'brand.dark.200' }}
-                        borderWidth={1}
-                        borderColor={
-                          touched.schoolFee && errors.schoolFee
-                            ? 'red.500'
-                            : 'yellow.300'
-                        }
-                        bgColor="yellow.50"
-                        _focus={{
-                          borderColor:
-                            touched.schoolFee && errors.schoolFee
-                              ? 'red.500'
-                              : 'yellow.400',
-                          bgColor: 'yellow.50',
-                        }}
-                        _focusVisible={{
-                          outline: 'none',
-                        }}
-                        _active={{
-                          borderColor:
-                            touched.schoolFee && errors.schoolFee
-                              ? 'red.500'
-                              : 'yellow.400',
-                          bgColor: 'yellow.50',
-                        }}
-                        _hover={{
-                          borderColor:
-                            touched.schoolFee && errors.schoolFee
-                              ? 'red.500'
-                              : 'yellow.400',
-                          bgColor: 'yellow.50',
-                        }}
-                      />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                    {touched.schoolFee && errors.schoolFee && (
-                      <FormErrorMessage>{errors.schoolFee}</FormErrorMessage>
-                    )}
-                  </FormControl>
+                    errorMessage={touched.schoolFee && errors.schoolFee}
+                    variant="yellow"
+                    isRequired
+                  />
 
-                  <FormControl
+                  <CurrencyInput
+                    name="amountPaid"
+                    value={values.amountPaid}
+                    onChange={(value) => setFieldValue('amountPaid', value)}
+                    onBlur={() => handleBlur('amountPaid')}
+                    placeholder="How much have you paid*"
                     isInvalid={touched.amountPaid && !!errors.amountPaid}
-                  >
-                    <NumberInput
-                      value={formatNaira(values.amountPaid)}
-                      onChange={(valueString) => {
-                        const parsedValue = parseNaira(valueString)
-                        setFieldValue('amountPaid', parsedValue)
-                      }}
-                      onBlur={() => handleBlur('amountPaid')}
-                      min={0}
-                    >
-                      <NumberInputField
-                        h="3.5rem"
-                        placeholder="How much have you paid*"
-                        _placeholder={{ color: 'brand.dark.200' }}
-                        borderWidth={1}
-                        borderColor={
-                          touched.amountPaid && errors.amountPaid
-                            ? 'red.500'
-                            : 'yellow.300'
-                        }
-                        bgColor="yellow.50"
-                        _focus={{
-                          borderColor:
-                            touched.amountPaid && errors.amountPaid
-                              ? 'red.500'
-                              : 'yellow.400',
-                          bgColor: 'yellow.50',
-                        }}
-                        _focusVisible={{
-                          outline: 'none',
-                        }}
-                        _active={{
-                          borderColor:
-                            touched.amountPaid && errors.amountPaid
-                              ? 'red.500'
-                              : 'yellow.400',
-                          bgColor: 'yellow.50',
-                        }}
-                        _hover={{
-                          borderColor:
-                            touched.amountPaid && errors.amountPaid
-                              ? 'red.500'
-                              : 'yellow.400',
-                          bgColor: 'yellow.50',
-                        }}
-                      />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
-                    {touched.amountPaid && errors.amountPaid && (
-                      <FormErrorMessage>{errors.amountPaid}</FormErrorMessage>
-                    )}
-
-                    {/* Payment suggestions */}
-                    {values.schoolFee && parseInt(values.schoolFee) > 0 && (
-                      <Box mt={2}>
-                        <Text fontSize="xs" color="gray.600" mb={1}>
-                          Suggested amount paid:
-                        </Text>
-                        <Wrap spacing={1}>
-                          {getPaymentSuggestions(
-                            parseInt(values.schoolFee),
-                          ).map((amount) => (
-                            <WrapItem key={amount}>
-                              <Badge
-                                colorScheme="yellow"
-                                cursor="pointer"
-                                fontSize="xs"
-                                px={2}
-                                py={1}
-                                onClick={() =>
-                                  setFieldValue('amountPaid', amount.toString())
-                                }
-                                _hover={{ bg: 'yellow.200' }}
-                              >
-                                ₦{amount.toLocaleString()}
-                              </Badge>
-                            </WrapItem>
-                          ))}
-                        </Wrap>
-                      </Box>
-                    )}
-                  </FormControl>
+                    errorMessage={touched.amountPaid && errors.amountPaid}
+                    variant="yellow"
+                    isRequired
+                  />
                 </VStack>
 
                 <VStack w="full" alignItems="flex-start" gap="8">
                   <FormLabel>Payment Receipt</FormLabel>
                   <EnhancedImageUpload
-                    value={paymentReceiptFile ? URL.createObjectURL(paymentReceiptFile) : undefined}
+                    value={
+                      paymentReceiptFile
+                        ? URL.createObjectURL(paymentReceiptFile)
+                        : undefined
+                    }
                     onChange={(file) => {
                       setPaymentReceiptFile(file)
                       setFieldValue('paymentReceipt', file)
@@ -498,7 +403,7 @@ export const SchoolFeeInfoForm = () => {
                         setPaymentReceiptFile(null)
                       }
                     }}
-                    maxSize={5}
+                    maxSize={12}
                     acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
                     minDimensions={{ width: 100, height: 100 }} // More lenient for receipts
                     uploadText="Upload your payment receipt"
@@ -513,7 +418,13 @@ export const SchoolFeeInfoForm = () => {
                 <Button
                   h="3.5rem"
                   type="submit"
-                  disabled={isSubmitting || !values.cohort || !values.classPlan || !values.schoolFee || !values.amountPaid}
+                  disabled={
+                    isSubmitting ||
+                    !values.cohort ||
+                    !values.classPlan ||
+                    !values.schoolFee ||
+                    !values.amountPaid
+                  }
                   isLoading={isSubmitting}
                   px={16}
                 >

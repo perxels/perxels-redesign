@@ -26,7 +26,20 @@ import { usePortalAuth } from '../../../hooks/usePortalAuth'
 import { EnhancedImageUpload } from '../../../components/EnhancedImageUpload'
 
 interface ProfileImageUpdaterProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl' | '10xl'
+  size?:
+    | 'sm'
+    | 'md'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '3xl'
+    | '4xl'
+    | '5xl'
+    | '6xl'
+    | '7xl'
+    | '8xl'
+    | '9xl'
+    | '10xl'
   showEditButton?: boolean
 }
 
@@ -116,7 +129,7 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
       formData.append('file', selectedFile)
       formData.append(
         'upload_preset',
-        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || ''
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || '',
       )
       formData.append('folder', 'portal/profile-pictures')
       formData.append('public_id', `${uid}_${Date.now()}_profile_picture`)
@@ -128,12 +141,12 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
         {
           method: 'POST',
           body: formData,
-        }
+        },
       )
 
       if (!cloudinaryResponse.ok) {
         throw new Error(
-          `Cloudinary upload failed: ${cloudinaryResponse.status} ${cloudinaryResponse.statusText}`
+          `Cloudinary upload failed: ${cloudinaryResponse.status} ${cloudinaryResponse.statusText}`,
         )
       }
 
@@ -158,7 +171,7 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
       })
 
       const result = await response.json()
-      
+
       if (!response.ok || !result.success) {
         throw new Error(result.error || 'Failed to update profile image')
       }
@@ -179,7 +192,6 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
 
       // Refresh page or trigger re-fetch of user data
       window.location.reload()
-
     } catch (error: any) {
       console.error('Profile image update error:', error)
 
@@ -187,12 +199,14 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
       if (error.message?.includes('upload_preset')) {
         errorMessage = 'Upload configuration error. Please contact support.'
       } else if (error.message?.includes('Network')) {
-        errorMessage = 'Upload failed: Network error. Please check your connection.'
+        errorMessage =
+          'Upload failed: Network error. Please check your connection.'
       } else if (
         error.message?.includes('401') ||
         error.message?.includes('unauthorized')
       ) {
-        errorMessage = 'Upload failed: Invalid configuration. Please contact support.'
+        errorMessage =
+          'Upload failed: Invalid configuration. Please contact support.'
       }
 
       toast({
@@ -236,7 +250,7 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
           <IconButton
             aria-label="Edit profile picture"
             icon={<FiEdit2 />}
-            size={["sm", "lg"]}
+            size={['sm', 'lg']}
             colorScheme="brand.purple"
             bg="brand.purple.500"
             color="white"
@@ -251,76 +265,49 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
             onClick={onOpen}
             cursor="pointer"
             _hover={{
-                borderRadius: "full"
+              borderRadius: 'full',
             }}
           />
         )}
-
-
       </Box>
 
       {/* Preview and Upload Modal */}
       <Modal isOpen={isOpen} onClose={handleModalClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update Profile Picture</ModalHeader>
+          <ModalHeader>Upload Profile Picture</ModalHeader>
           {!isUploading && <ModalCloseButton />}
-          
+
           <ModalBody>
             <VStack spacing={6}>
-              {/* Current vs New Image Comparison */}
-              <HStack spacing={8} align="center">
-                {/* Current Image */}
-                <VStack>
-                  <Text fontSize="sm" fontWeight="bold" color="gray.600">
-                    Current
-                  </Text>
-                  <Avatar
-                    size="xl"
-                    src={currentImageUrl}
-                    name={portalUser?.fullName || 'User'}
-                    bg="gray.300"
-                    color="white"
-                  />
-                </VStack>
-
-                {/* Arrow or separator */}
-                <Text fontSize="2xl" color="gray.400">
-                  →
-                </Text>
-
-                {/* New Image Upload */}
-                <VStack>
-                  <Text fontSize="sm" fontWeight="bold" color="gray.600">
-                    New
-                  </Text>
-                  <Box w="96px" h="96px">
-                    <EnhancedImageUpload
-                      onChange={(file) => {
-                        setSelectedFile(file)
-                        if (file) {
-                          const reader = new FileReader()
-                          reader.onloadend = () => {
-                            setPreviewUrl(reader.result as string)
-                          }
-                          reader.readAsDataURL(file)
-                        } else {
-                          setPreviewUrl(null)
+              {/* Simple Image Upload */}
+              <Box w="full" textAlign="center">
+                <Box w="200px" h="200px" mx="auto">
+                  <EnhancedImageUpload
+                    onChange={(file) => {
+                      setSelectedFile(file)
+                      if (file) {
+                        const reader = new FileReader()
+                        reader.onloadend = () => {
+                          setPreviewUrl(reader.result as string)
                         }
-                      }}
-                      maxSize={5}
-                      acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
-                      showPreviewModal={false}
-                      uploadText="Choose Profile Picture"
-                      previewText="NEW"
-                    />
-                  </Box>
-                </VStack>
-              </HStack>
+                        reader.readAsDataURL(file)
+                      } else {
+                        setPreviewUrl(null)
+                      }
+                    }}
+                    maxSize={5}
+                    acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
+                    showPreviewModal={false}
+                    uploadText="Choose Profile Picture"
+                    previewText="PREVIEW"
+                  />
+                </Box>
+              </Box>
             </VStack>
           </ModalBody>
 
-          <ModalFooter>
+          <ModalFooter mt={8}>
             <HStack spacing={3}>
               <Button
                 colorScheme="yellow"

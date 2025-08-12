@@ -284,8 +284,6 @@ export const GrowthInfoForm = () => {
                       }}
                       maxSize={5}
                       acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
-                      aspectRatio={{ width: 1, height: 1 }}
-                      minDimensions={{ width: 200, height: 200 }}
                       uploadText="Drop profile picture here or click to upload (optional)"
                       previewText="PROFILE"
                     />

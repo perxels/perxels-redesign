@@ -20,24 +20,29 @@ import {
   Alert,
   AlertIcon,
   AlertDescription,
+  Select,
+  Spinner,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
+import { Syllabus } from '../../../../types/syllabus.types'
 
 interface CreateClassFormValues {
   cohortName: string
   startDate: string
   endDate: string
+  syllabusId: string
 }
 
 interface ClassData {
   cohortName: string
   startDate: Date
   endDate: Date
+  syllabusId: string
   createdBy: string
   createdAt: any
   status: 'active' | 'inactive' | 'completed'
@@ -58,17 +63,59 @@ const validationSchema = Yup.object().shape({
   endDate: Yup.date()
     .required('End date is required')
     .min(Yup.ref('startDate'), 'End date must be after start date'),
+
+  syllabusId: Yup.string()
+    .required('Syllabus is required'),
 })
 
 export const CreateClass = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [authError, setAuthError] = useState<string | null>(null)
+  const [syllabi, setSyllabi] = useState<Syllabus[]>([])
+  const [loadingSyllabi, setLoadingSyllabi] = useState(false)
   const toast = useToast()
   const { portalUser, user, loading } = usePortalAuth()
 
   // Check if user is admin
   const isAdmin = portalUser?.role === 'admin'
+
+  // Fetch syllabi
+  const fetchSyllabi = async () => {
+    if (!isAdmin) return
+    
+    setLoadingSyllabi(true)
+    try {
+      const querySnapshot = await getDocs(collection(portalDb, 'syllabi'))
+      const syllabiData: Syllabus[] = querySnapshot.docs.map(doc => {
+        const data = doc.data()
+        return {
+          id: doc.id,
+          name: data.name,
+          description: data.description,
+          totalWeeks: data.totalWeeks,
+          totalDays: data.totalDays,
+          weeks: data.weeks,
+          createdAt: data.createdAt?.toDate() || new Date(),
+          updatedAt: data.updatedAt?.toDate() || new Date(),
+          createdBy: data.createdBy,
+          isActive: data.isActive,
+          version: data.version,
+        }
+      }).filter(s => s.isActive) // Only show active syllabi
+      setSyllabi(syllabiData)
+    } catch (err) {
+      console.error('Error fetching syllabi:', err)
+    } finally {
+      setLoadingSyllabi(false)
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen && isAdmin) {
+      fetchSyllabi()
+    }
+  }, [isOpen, isAdmin])
 
   const handleCreateClass = async (values: CreateClassFormValues) => {
     // Double-check admin role before proceeding
@@ -91,6 +138,7 @@ export const CreateClass = () => {
         cohortName: values.cohortName.trim(),
         startDate: new Date(values.startDate),
         endDate: new Date(values.endDate),
+        syllabusId: values.syllabusId,
         createdBy: user.uid,
         createdAt: serverTimestamp(),
         status: 'active',
@@ -216,6 +264,7 @@ export const CreateClass = () => {
               cohortName: '',
               startDate: '',
               endDate: '',
+              syllabusId: '',
             }}
             validationSchema={validationSchema}
             onSubmit={handleCreateClass}
@@ -247,6 +296,47 @@ export const CreateClass = () => {
                       />
                       <FormErrorMessage>
                         {formik.errors.cohortName}
+                      </FormErrorMessage>
+                    </FormControl>
+
+                    <Divider />
+
+                    {/* Syllabus Selection */}
+                    <FormControl
+                      isInvalid={
+                        !!(formik.touched.syllabusId && formik.errors.syllabusId)
+                      }
+                      isRequired
+                    >
+                      <FormLabel fontWeight="semibold">Course Syllabus</FormLabel>
+                      {loadingSyllabi ? (
+                        <HStack justify="center" py={4}>
+                          <Spinner size="sm" />
+                          <Text fontSize="sm" color="gray.600">Loading syllabi...</Text>
+                        </HStack>
+                      ) : syllabi.length === 0 ? (
+                        <Text fontSize="sm" color="red.500" py={2}>
+                          No active syllabi found. Please create a syllabus first.
+                        </Text>
+                      ) : (
+                        <Select
+                          name="syllabusId"
+                          placeholder="Select a syllabus"
+                          value={formik.values.syllabusId}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          isDisabled={isSubmitting}
+                          size="lg"
+                        >
+                          {syllabi.map((syllabus) => (
+                            <option key={syllabus.id} value={syllabus.id}>
+                              {syllabus.name} ({syllabus.totalWeeks} weeks, {syllabus.totalDays} days)
+                            </option>
+                          ))}
+                        </Select>
+                      )}
+                      <FormErrorMessage>
+                        {formik.errors.syllabusId}
                       </FormErrorMessage>
                     </FormControl>
 

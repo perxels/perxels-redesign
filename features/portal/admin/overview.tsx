@@ -19,6 +19,10 @@ const menuItems = [
     href: '/portal/admin/classes',
   },
   {
+    title: 'Students',
+    href: '/portal/admin/students',
+  },
+  {
     title: 'Notifications',
     href: '/portal/admin/notifications',
   },

@@ -23,61 +23,34 @@ interface ProfileDetailsFormValues {
   phone: string
   gender: string
   dateOfBirth: string
-  monthOfEnrollment: string
+  dateOfEnrollment: string
   classCohort: string
 }
-
-
-
-// Month options for enrollment
-const monthOptions = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-]
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string()
     .required('Full name is required')
     .min(2, 'Full name must be at least 2 characters')
     .max(50, 'Full name must not exceed 50 characters')
-    .matches(
-      /^[a-zA-Z\s]*$/,
-      'Full name can only contain letters and spaces'
-    )
+    .matches(/^[a-zA-Z\s]*$/, 'Full name can only contain letters and spaces')
     .trim(),
-  
+
   phone: Yup.string()
     .required('Phone number is required')
     .matches(
       /^(\+234|0)[789][01]\d{8}$/,
-      'Enter a valid Nigerian phone number (e.g., +2348012345678 or 08012345678)'
+      'Enter a valid Nigerian phone number (e.g., +2348012345678 or 08012345678)',
     )
     .trim(),
-  
+
   gender: Yup.string()
     .required('Gender is required')
     .oneOf(['male', 'female'], 'Please select a valid gender'),
-  
-  dateOfBirth: Yup.date()
-    .required('Date of birth is required')
-    .max(new Date(), 'Date of birth cannot be in the future')
-    .test('age', 'You must be at least 13 years old', function(value) {
-      if (!value) return false
-      const today = new Date()
-      const birthDate = new Date(value)
-      const age = today.getFullYear() - birthDate.getFullYear()
-      const monthDiff = today.getMonth() - birthDate.getMonth()
-      
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        return age - 1 >= 13
-      }
-      return age >= 13
-    }),
-  
-  monthOfEnrollment: Yup.string()
-    .required('Month of enrollment is required')
-    .oneOf(monthOptions, 'Please select a valid month'),
-  
+
+  dateOfEnrollment: Yup.date()
+    .required('Date of enrollment is required')
+    .max(new Date(), 'Date of enrollment cannot be in the future'),
+
   classCohort: Yup.string()
     .required('Class cohort is required')
     .oneOf(classPlans, 'Please select a valid class plan'),
@@ -94,7 +67,7 @@ export const ProfileDetailsForm = () => {
     phone: portalUser?.phone || '',
     gender: portalUser?.growthInfo?.gender || '',
     dateOfBirth: portalUser?.growthInfo?.dateOfBirth || '',
-    monthOfEnrollment: portalUser?.growthInfo?.monthOfEnrollment || '',
+    dateOfEnrollment: portalUser?.growthInfo?.dateOfEnrollment || '',
     classCohort: portalUser?.schoolFeeInfo?.classPlan || '',
   }
 
@@ -129,15 +102,14 @@ export const ProfileDetailsForm = () => {
             growthInfo: {
               ...portalUser?.growthInfo,
               gender: values.gender,
-              dateOfBirth: values.dateOfBirth,
-              monthOfEnrollment: values.monthOfEnrollment,
-            }
+              dateOfEnrollment: values.dateOfEnrollment,
+            },
           },
         }),
       })
 
       const result = await response.json()
-      
+
       if (!response.ok || !result.success) {
         throw new Error(result.error || 'Failed to update profile details')
       }
@@ -155,7 +127,6 @@ export const ProfileDetailsForm = () => {
       setTimeout(() => {
         window.location.reload()
       }, 1500)
-
     } catch (error: any) {
       console.error('Profile update error:', error)
 
@@ -163,7 +134,8 @@ export const ProfileDetailsForm = () => {
       if (error.message.includes('authentication')) {
         errorMessage = 'Please log in again to update your profile.'
       } else if (error.message.includes('Network')) {
-        errorMessage = 'Network error. Please check your connection and try again.'
+        errorMessage =
+          'Network error. Please check your connection and try again.'
       }
 
       toast({
@@ -198,19 +170,24 @@ export const ProfileDetailsForm = () => {
           setFieldValue,
         }) => {
           return (
-            <form onSubmit={(e) => {
-              e.preventDefault()
-              handleSubmit(e)
-            }}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleSubmit(e)
+              }}
+            >
               <VStack spacing={6} align="stretch">
                 {/* Full Name */}
                 <FormControl isInvalid={touched.fullName && !!errors.fullName}>
+                  <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
+                    Full Name
+                  </FormLabel>
                   <Input
                     name="fullName"
                     value={values.fullName}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Full Name"
+                    placeholder="Enter your full name"
                     bg="gray.50"
                     border="1px solid"
                     borderColor="yellow.300"
@@ -229,12 +206,15 @@ export const ProfileDetailsForm = () => {
 
                 {/* Phone Number */}
                 <FormControl isInvalid={touched.phone && !!errors.phone}>
+                  <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
+                    Phone Number
+                  </FormLabel>
                   <Input
                     name="phone"
                     value={values.phone}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Phone Number"
+                    placeholder="Enter your phone number"
                     bg="gray.50"
                     border="1px solid"
                     borderColor="yellow.300"
@@ -253,12 +233,15 @@ export const ProfileDetailsForm = () => {
 
                 {/* Gender */}
                 <FormControl isInvalid={touched.gender && !!errors.gender}>
+                  <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
+                    Gender
+                  </FormLabel>
                   <Select
                     name="gender"
                     value={values.gender}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Gender"
+                    placeholder="Select your gender"
                     bg="gray.50"
                     border="1px solid"
                     borderColor="yellow.300"
@@ -278,80 +261,69 @@ export const ProfileDetailsForm = () => {
                   <FormErrorMessage>{errors.gender}</FormErrorMessage>
                 </FormControl>
 
-                {/* Date of Birth */}
-                <FormControl isInvalid={touched.dateOfBirth && !!errors.dateOfBirth}>
+                {/* Date of Enrollment */}
+                <FormControl
+                  isInvalid={
+                    touched.dateOfEnrollment && !!errors.dateOfEnrollment
+                  }
+                >
+                  <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
+                    Date of Enrollment
+                  </FormLabel>
                   <Input
-                    name="dateOfBirth"
+                    name="dateOfEnrollment"
                     type="date"
-                    value={values.dateOfBirth}
+                    value={values.dateOfEnrollment}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Date of Birth"
                     bg="gray.50"
                     border="1px solid"
                     borderColor="yellow.300"
                     borderRadius="md"
                     h="3.5rem"
                     _focus={{
-                      borderColor: errors.dateOfBirth ? 'red.500' : 'yellow.400',
+                      borderColor: errors.dateOfEnrollment
+                        ? 'red.500'
+                        : 'yellow.400',
                       bg: 'white',
                     }}
                     _hover={{
-                      borderColor: errors.dateOfBirth ? 'red.500' : 'yellow.400',
+                      borderColor: errors.dateOfEnrollment
+                        ? 'red.500'
+                        : 'yellow.400',
                     }}
                   />
-                  <FormErrorMessage>{errors.dateOfBirth}</FormErrorMessage>
-                </FormControl>
-
-                {/* Month of Enrollment */}
-                <FormControl isInvalid={touched.monthOfEnrollment && !!errors.monthOfEnrollment}>
-                  <Select
-                    name="monthOfEnrollment"
-                    value={values.monthOfEnrollment}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder="Month of enrollment"
-                    bg="gray.50"
-                    border="1px solid"
-                    borderColor="yellow.300"
-                    borderRadius="md"
-                    h="3.5rem"
-                    _focus={{
-                      borderColor: errors.monthOfEnrollment ? 'red.500' : 'yellow.400',
-                      bg: 'white',
-                    }}
-                    _hover={{
-                      borderColor: errors.monthOfEnrollment ? 'red.500' : 'yellow.400',
-                    }}
-                  >
-                    {monthOptions.map((month) => (
-                      <option key={month} value={month}>
-                        {month}
-                      </option>
-                    ))}
-                  </Select>
-                  <FormErrorMessage>{errors.monthOfEnrollment}</FormErrorMessage>
+                  <FormErrorMessage>{errors.dateOfEnrollment}</FormErrorMessage>
                 </FormControl>
 
                 {/* Class Cohort */}
-                <FormControl isInvalid={touched.classCohort && !!errors.classCohort}>
+                <FormControl
+                  isInvalid={touched.classCohort && !!errors.classCohort}
+                >
+                  <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
+                    Class Cohort
+                  </FormLabel>
                   <Select
                     name="classCohort"
                     value={values.classCohort}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="Class cohort"
+                    placeholder="Select your class cohort"
                     bg="gray.50"
                     border="1px solid"
                     borderColor="yellow.300"
                     borderRadius="md"
                     h="3.5rem"
                     _focus={{
-                      borderColor: errors.classCohort ? 'red.500' : 'yellow.400',
+                      borderColor: errors.classCohort
+                        ? 'red.500'
+                        : 'yellow.400',
                       bg: 'white',
                     }}
                     _hover={{
-                      borderColor: errors.classCohort ? 'red.500' : 'yellow.400',
+                      borderColor: errors.classCohort
+                        ? 'red.500'
+                        : 'yellow.400',
                     }}
                   >
                     {classPlans.map((plan) => (

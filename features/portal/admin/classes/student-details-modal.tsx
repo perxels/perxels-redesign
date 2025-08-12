@@ -33,7 +33,10 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
+  IconButton,
+  Tooltip,
 } from '@chakra-ui/react'
+import { MdNotifications } from 'react-icons/md'
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import {
@@ -324,6 +327,51 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   const attendanceStats = getAttendanceStats()
   const paymentStats = getPaymentStats()
 
+  // Function to send admin notification for a payment
+  const sendPaymentNotification = async (payment: PaymentRecord) => {
+    try {
+      const notificationData = {
+        studentId: student.uid,
+        studentName: student.fullName || 'Unknown Student',
+        studentEmail: student.email || '',
+        amount: payment.amount,
+        installmentNumber: payment.installmentNumber || 1,
+        paymentReceiptUrl: payment.receiptUrl || '',
+        cohort: student.schoolFeeInfo?.cohort || '',
+        classPlan: student.schoolFeeInfo?.classPlan || '',
+        paymentDate: payment.date.toISOString(),
+      }
+
+      const response = await fetch('/api/send-payment-installment-notification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(notificationData),
+      })
+
+      if (response.ok) {
+        toast({
+          title: 'Notification Sent!',
+          description: `Admin notification sent for payment #${payment.installmentNumber}`,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        })
+      } else {
+        throw new Error('Failed to send notification')
+      }
+    } catch (error) {
+      toast({
+        title: 'Notification Failed',
+        description: 'Failed to send admin notification',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+    }
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside">
       <ModalOverlay />
@@ -598,6 +646,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                               <Th>Installment</Th>
                               <Th>Type</Th>
                               <Th>Receipt</Th>
+                              <Th>Actions</Th>
                             </Tr>
                           </Thead>
                           <Tbody>
@@ -643,6 +692,16 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                                       No receipt
                                     </Text>
                                   )}
+                                </Td>
+                                <Td>
+                                  <Button
+                                    size="sm"
+                                    colorScheme="purple"
+                                    variant="outline"
+                                    onClick={() => sendPaymentNotification(payment)}
+                                  >
+                                    Resend notification
+                                  </Button>
                                 </Td>
                               </Tr>
                             ))}
