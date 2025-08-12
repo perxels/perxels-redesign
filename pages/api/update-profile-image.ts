@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { doc, updateDoc } from 'firebase/firestore'
-import { portalDb } from '../../portalFirebaseConfig'
 
 interface UpdateProfileImageRequest {
   uid: string
@@ -11,6 +9,10 @@ interface ApiResponse {
   success: boolean
   message?: string
   error?: string
+  data?: {
+    'growthInfo.pictureUrl': string
+    updatedAt: string
+  }
 }
 
 export default async function handler(
@@ -46,17 +48,18 @@ export default async function handler(
       })
     }
 
-    // Update user document in Firestore
-    const userDocRef = doc(portalDb, 'users', uid)
-
-    await updateDoc(userDocRef, {
+    // Client will handle Firebase operations
+    // Server only validates and returns success response
+    
+    const updateData = {
       'growthInfo.pictureUrl': imageUrl,
       updatedAt: new Date().toISOString(),
-    })
+    }
 
     return res.status(200).json({
       success: true,
-      message: 'Profile image updated successfully.',
+      message: 'Profile image validated successfully. Please handle Firebase operations on the client side.',
+      data: updateData
     })
   } catch (error: any) {
     console.error('Error updating profile image:', {

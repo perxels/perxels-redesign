@@ -26,6 +26,7 @@ import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { useToast } from '@chakra-ui/react'
 import { getPaymentSuggestions } from '../../../../types/school-fee.types'
 import { addPaymentInstallment } from '../../../../lib/utils/payment.utils'
+import { usePaymentNotifications } from '../../../../hooks/usePaymentNotifications'
 
 interface PaymentDetailsProps {
   setStep: (step: number) => void
@@ -140,6 +141,7 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
   const { user, portalUser } = usePortalAuth()
   const toast = useToast()
   const schoolFeeInfo = portalUser?.schoolFeeInfo
+  const { sendPaymentNotification } = usePaymentNotifications()
 
   const initialAmountOwed =
     (portalUser?.schoolFeeInfo?.totalSchoolFee || 0) -
@@ -209,24 +211,23 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
           throw new Error(result.error || 'Failed to add payment installment')
         }
 
-        // Send notifications via API
+        // Send notifications using client-side hook
         if (result.notificationData) {
-          const notificationResponse = await fetch('/api/send-payment-installment-notification', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+          try {
+            const notificationResult = await sendPaymentNotification({
               ...result.notificationData,
               studentId: uid, // Add the student ID
-            }),
-          })
+            })
 
-          if (!notificationResponse.ok) {
-            console.error('Failed to send notification, but payment was processed')
+            if (!notificationResult.success) {
+              console.warn('Payment notification failed:', notificationResult.error)
+              // Don't fail the main request if notification fails
+            } else {
+              console.log('Payment notification sent successfully')
+            }
+          } catch (notificationError) {
+            console.error('Payment notification error:', notificationError)
             // Don't fail the main request if notification fails
-          } else {
-            const notificationResult = await notificationResponse.json()
           }
         }
       }

@@ -23,6 +23,7 @@ import {
 import { FiEdit2, FiCamera } from 'react-icons/fi'
 import { portalAuth } from '../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
+import { useProfileOperations } from '../../../hooks/useProfileOperations'
 import { EnhancedImageUpload } from '../../../components/EnhancedImageUpload'
 
 interface ProfileImageUpdaterProps {
@@ -53,6 +54,7 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
   const { user, portalUser } = usePortalAuth()
+  const { updateProfileImage, isLoading: isProfileLoading } = useProfileOperations()
 
   // Get current profile image URL
   const currentImageUrl = portalUser?.growthInfo?.pictureUrl || ''
@@ -158,32 +160,12 @@ export const ProfileImageUpdater: React.FC<ProfileImageUpdaterProps> = ({
 
       const newImageUrl = cloudinaryResult.secure_url
 
-      // Update user profile in Firestore
-      const response = await fetch('/api/update-profile-image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          uid,
-          imageUrl: newImageUrl,
-        }),
-      })
+      // Update user profile using client-side hook
+      const result = await updateProfileImage(uid, newImageUrl)
 
-      const result = await response.json()
-
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.error || 'Failed to update profile image')
       }
-
-      toast({
-        title: 'Profile Updated! 🎉',
-        description: 'Your profile picture has been updated successfully.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      })
 
       // Close modal and reset state
       onClose()

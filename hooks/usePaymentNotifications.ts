@@ -30,7 +30,6 @@ export const usePaymentNotifications = () => {
     setIsLoading(true)
     
     try {
-      console.log('🔍 Starting payment notification process...', paymentData)
 
       // 1. Get all admin users from Firestore
       const adminUsersQuery = query(
@@ -52,7 +51,7 @@ export const usePaymentNotifications = () => {
         return { success: false, error: 'No admin users found' }
       }
 
-      console.log(`✅ Found ${adminUsers.length} admin users`)
+
 
       // 2. Extract admin emails for email notification
       const adminEmails = adminUsers.map(doc => doc.data().email).filter(Boolean)
@@ -88,14 +87,11 @@ export const usePaymentNotifications = () => {
           createdAt: new Date(),
           userId: notificationPayload.userId,
         })
-
-        console.log(`✅ Notification created for admin ${adminId}:`, notificationRef.id)
         return notificationRef.id
       })
 
       // Wait for all notifications to be created
       const notificationIds = await Promise.all(notificationPromises)
-      console.log(`✅ Created ${notificationIds.length} notifications`)
 
       // 4. Send email notification via API
       if (adminEmails.length > 0) {
@@ -119,7 +115,6 @@ export const usePaymentNotifications = () => {
             duration: 3000,
           })
         } else {
-          console.log('✅ Email notification sent successfully')
           toast({
             title: 'Success',
             description: 'Payment notification sent to admins',

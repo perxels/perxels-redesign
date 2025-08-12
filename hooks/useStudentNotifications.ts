@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { usePortalAuth } from './usePortalAuth'
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore'
+import { collection, query, where, getDocs, orderBy, updateDoc, doc, writeBatch } from 'firebase/firestore'
 import { portalDb } from '../portalFirebaseConfig'
 
 interface StudentNotification {
@@ -81,20 +81,14 @@ export function useStudentNotifications(): UseStudentNotificationsReturn {
     if (!user?.uid) return
 
     try {
-      const response = await fetch('/api/notifications/mark-as-read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.uid,
-          notificationId,
-        }),
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to mark notification as read')
-      }
+      
+      // Update notification in Firestore
+      const notificationRef = doc(portalDb, 'notifications', notificationId)
+      await updateDoc(notificationRef, {
+        read: true,
+        readAt: new Date(),
+      })
 
       // Update local state
       setNotifications(prev =>
@@ -104,8 +98,9 @@ export function useStudentNotifications(): UseStudentNotificationsReturn {
       )
       setUnreadCount(prev => Math.max(0, prev - 1))
 
+
     } catch (error) {
-      console.error('Error marking notification as read:', error)
+      console.error('❌ Error marking student notification as read:', error)
       throw error
     }
   }, [user?.uid])
@@ -115,30 +110,39 @@ export function useStudentNotifications(): UseStudentNotificationsReturn {
     if (!user?.uid || unreadCount === 0) return
 
     try {
-      const response = await fetch('/api/notifications/mark-as-read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.uid,
-          markAllAsRead: true,
-        }),
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to mark all notifications as read')
+      
+      // Get all unread notifications for this student
+      const unreadNotifications = notifications.filter(n => !n.read)
+      
+      if (unreadNotifications.length === 0) {
+  
+        return
       }
+
+      // Use batch write for efficiency
+      const batch = writeBatch(portalDb)
+      
+      unreadNotifications.forEach(notification => {
+        const notificationRef = doc(portalDb, 'notifications', notification.id)
+        batch.update(notificationRef, {
+          read: true,
+          readAt: new Date(),
+        })
+      })
+      
+      await batch.commit()
 
       // Update local state
       setNotifications(prev => prev.map(n => ({ ...n, read: true })))
       setUnreadCount(0)
 
+
     } catch (error) {
-      console.error('Error marking all notifications as read:', error)
+      console.error('❌ Error marking all student notifications as read:', error)
       throw error
     }
-  }, [user?.uid, unreadCount])
+  }, [user?.uid, unreadCount, notifications])
 
   // Manual refresh function
   const refreshNotifications = useCallback(() => {

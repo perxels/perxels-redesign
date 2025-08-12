@@ -20,6 +20,7 @@ import { classPlans } from '../../../constant/adminConstants'
 import { EnhancedImageUpload } from '../../../components/EnhancedImageUpload'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { SchoolFeeInfo } from '../../../types/school-fee.types'
+import { usePaymentNotifications } from '../../../hooks/usePaymentNotifications'
 
 // Currency formatting functions for Naira
 export const formatNaira = (val: string) => {
@@ -89,6 +90,7 @@ export const SchoolFeeInfoForm = () => {
   const toast = useToast()
   const router = useRouter()
   const { user } = usePortalAuth()
+  const { sendPaymentNotification } = usePaymentNotifications()
 
   async function handleSchoolFeeInfoSubmit(values: SchoolFeeFormValues) {
     if (!user) {
@@ -197,34 +199,29 @@ export const SchoolFeeInfoForm = () => {
         schoolFeeInfoUpdatedAt: new Date(),
       })
 
-      // Send notification to admins about the first payment
+      // Send notification to admins about the first payment using client-side hook
       try {
-        const notificationResponse = await fetch(
-          '/api/send-payment-installment-notification',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              studentId: uid, // Add the student ID
-              studentName: userData?.fullName || 'Unknown Student',
-              studentEmail: userData?.email || '',
-              amount: parseInt(cleanAmountPaid),
-              installmentNumber: 1,
-              paymentReceiptUrl: paymentReceiptUrl || '',
-              cohort: values.cohort.toUpperCase(),
-              classPlan: values.classPlan,
-            }),
-          },
-        )
+        const notificationData = {
+          studentId: uid,
+          studentName: userData?.fullName || 'Unknown Student',
+          studentEmail: userData?.email || '',
+          amount: parseInt(cleanAmountPaid),
+          installmentNumber: 1,
+          paymentReceiptUrl: paymentReceiptUrl || '',
+          cohort: values.cohort.toUpperCase(),
+          classPlan: values.classPlan,
+        }
 
-        if (!notificationResponse.ok) {
+        const result = await sendPaymentNotification(notificationData)
+        
+        if (!result.success) {
+          console.warn('Payment notification failed:', result.error)
           // Don't fail the main request if notification fails
         } else {
-          const notificationResult = await notificationResponse.json()
+          console.log('Payment notification sent successfully')
         }
       } catch (notificationError) {
+        console.error('Payment notification error:', notificationError)
         // Don't fail the main request if notification fails
       }
 

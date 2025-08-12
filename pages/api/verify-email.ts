@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { verifyOTP } from '../../lib/utils/auth.utils'
-import { doc, updateDoc } from 'firebase/firestore'
-import { portalDb } from '../../portalFirebaseConfig'
 import { sendWelcomeEmail } from '../../lib/utils/email.utils'
 
 // Types
@@ -15,6 +13,13 @@ interface VerifyEmailResponse {
   success: boolean
   message?: string
   error?: string
+  data?: {
+    email: string
+    otp: string
+    uid?: string
+    emailVerified: boolean
+    verifiedAt: Date
+  }
 }
 
 export default async function handler(
@@ -48,19 +53,9 @@ export default async function handler(
       })
     }
 
-    // Update email verification status in user document if UID is provided
-    if (uid) {
-      try {
-        await updateDoc(doc(portalDb, 'users', uid), {
-          emailVerified: true,
-          verifiedAt: new Date(),
-        })
-      } catch (updateError) {
-        console.error('Failed to update email verification status:', updateError)
-        // Don't fail the request if update fails, OTP was still valid
-      }
-    }
-
+    // Client will handle Firebase operations
+    // Server only validates OTP and sends welcome email
+    
     // Send welcome email (optional, don't fail if it doesn't work)
     try {
       await sendWelcomeEmail(email, '', {
@@ -74,7 +69,14 @@ export default async function handler(
 
     return res.status(200).json({
       success: true,
-      message: 'Email verified successfully',
+      message: 'Email verified successfully. Please handle Firebase operations on the client side.',
+      data: {
+        email,
+        otp,
+        uid,
+        emailVerified: true,
+        verifiedAt: new Date(),
+      }
     })
 
   } catch (error: any) {

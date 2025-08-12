@@ -15,6 +15,7 @@ import {
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
+import { useProfileOperations } from '../../../hooks/useProfileOperations'
 import { portalAuth } from '../../../portalFirebaseConfig'
 import { classPlans } from '../../../constant/adminConstants'
 
@@ -60,6 +61,7 @@ export const ProfileDetailsForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
   const { portalUser } = usePortalAuth()
+  const { updateProfileDetails, isLoading: isProfileLoading } = useProfileOperations()
 
   // Extract existing data from portalUser
   const initialValues: ProfileDetailsFormValues = {
@@ -84,44 +86,24 @@ export const ProfileDetailsForm = () => {
       await currentUser.reload()
       const uid = currentUser.uid
 
-      // Update user profile via API
-      const response = await fetch('/api/update-profile-details', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      // Update user profile using client-side hook
+      const result = await updateProfileDetails(uid, {
+        fullName: values.fullName.trim(),
+        phone: values.phone.trim(),
+        schoolFeeInfo: {
+          ...portalUser?.schoolFeeInfo,
+          classPlan: values.classCohort,
         },
-        body: JSON.stringify({
-          uid,
-          profileData: {
-            fullName: values.fullName.trim(),
-            phone: values.phone.trim(),
-            schoolFeeInfo: {
-              ...portalUser?.schoolFeeInfo,
-              classPlan: values.classCohort,
-            },
-            growthInfo: {
-              ...portalUser?.growthInfo,
-              gender: values.gender,
-              dateOfEnrollment: values.dateOfEnrollment,
-            },
-          },
-        }),
+        growthInfo: {
+          ...portalUser?.growthInfo,
+          gender: values.gender,
+          dateOfEnrollment: values.dateOfEnrollment,
+        },
       })
 
-      const result = await response.json()
-
-      if (!response.ok || !result.success) {
+      if (!result.success) {
         throw new Error(result.error || 'Failed to update profile details')
       }
-
-      toast({
-        title: 'Profile Updated! 🎉',
-        description: 'Your profile details have been updated successfully.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      })
 
       // Refresh page to show updated data
       setTimeout(() => {
@@ -338,9 +320,9 @@ export const ProfileDetailsForm = () => {
                 {/* Save Button */}
                 <Button
                   type="submit"
-                  isLoading={isSubmitting}
+                  isLoading={isSubmitting || isProfileLoading}
                   loadingText="Saving Changes..."
-                  isDisabled={!isValid || isSubmitting}
+                  isDisabled={!isValid || isSubmitting || isProfileLoading}
                   bg="brand.purple.500"
                   color="white"
                   h="3.5rem"
