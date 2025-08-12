@@ -71,12 +71,22 @@ export default async function handler(
         })
       }
 
+      // Add IDs to weeks and days for database storage
+      const weeksWithIds = weeks.map((week, weekIndex) => ({
+        ...week,
+        id: `week_${Date.now()}_${weekIndex}`,
+        days: week.days.map((day, dayIndex) => ({
+          ...day,
+          id: `day_${Date.now()}_${weekIndex}_${dayIndex}`
+        }))
+      }))
+
       const syllabusData = {
         name,
         description,
         totalWeeks: weeks.length,
         totalDays: weeks.reduce((acc, week) => acc + week.days.length, 0),
-        weeks,
+        weeks: weeksWithIds,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         createdBy: req.body.createdBy || 'system',
@@ -92,7 +102,7 @@ export default async function handler(
         description,
         totalWeeks: weeks.length,
         totalDays: weeks.reduce((acc, week) => acc + week.days.length, 0),
-        weeks,
+        weeks: weeksWithIds,
         createdAt: new Date(),
         updatedAt: new Date(),
         createdBy: req.body.createdBy || 'system',
@@ -128,6 +138,17 @@ export default async function handler(
       }
 
       if (updateData.weeks) {
+        // Add IDs to weeks and days for database storage
+        const weeksWithIds = updateData.weeks.map((week: any, weekIndex: number) => ({
+          ...week,
+          id: week.id || `week_${Date.now()}_${weekIndex}`,
+          days: week.days.map((day: any, dayIndex: number) => ({
+            ...day,
+            id: day.id || `day_${Date.now()}_${weekIndex}_${dayIndex}`
+          }))
+        }))
+        
+        updatePayload.weeks = weeksWithIds
         updatePayload.totalWeeks = updateData.weeks.length
         updatePayload.totalDays = updateData.weeks.reduce((acc: number, week: any) => acc + week.days.length, 0)
       }
