@@ -37,7 +37,7 @@ import {
   StatNumber,
   StatHelpText,
 } from '@chakra-ui/react'
-import { MdAdd, MdEdit, MdDelete, MdVisibility, MdCopy } from 'react-icons/md'
+import { MdAdd, MdEdit, MdDelete, MdVisibility, MdContentCopy } from 'react-icons/md'
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
@@ -284,8 +284,9 @@ export const SyllabusManagement = () => {
     setError(null)
 
     try {
+      const { id, ...syllabusWithoutId } = syllabus
       const duplicatedSyllabus = {
-        ...syllabus,
+        ...syllabusWithoutId,
         name: `${syllabus.name} (Copy)`,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
@@ -293,8 +294,6 @@ export const SyllabusManagement = () => {
         isActive: true,
         version: '1.0.0',
       }
-
-      delete duplicatedSyllabus.id // Remove the original ID
 
       await addDoc(collection(portalDb, 'syllabi'), duplicatedSyllabus)
 
@@ -468,7 +467,7 @@ export const SyllabusManagement = () => {
                           />
                           <IconButton
                             aria-label="Duplicate syllabus"
-                            icon={<MdCopy />}
+                            icon={<MdContentCopy />}
                             size="sm"
                             variant="ghost"
                             onClick={() => handleDuplicate(syllabus)}
@@ -537,7 +536,7 @@ export const SyllabusManagement = () => {
           <ModalCloseButton />
           <ModalBody>
             <Text>
-              Are you sure you want to delete "{selectedSyllabus?.name}"? This action cannot be undone.
+              Are you sure you want to delete &quot;{selectedSyllabus?.name}&quot;? This action cannot be undone.
             </Text>
           </ModalBody>
           <ModalFooter>
