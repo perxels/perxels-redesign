@@ -9,7 +9,6 @@ import {
   ModalCloseButton,
   Button,
   VStack,
-  HStack,
   Text,
   Box,
   Badge,
@@ -33,16 +32,14 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
-  IconButton,
-  Tooltip,
 } from '@chakra-ui/react'
-import { MdNotifications } from 'react-icons/md'
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import {
   ImagePreviewModal,
   useImagePreview,
 } from '../../../../components/ImagePreviewModal'
+import { usePaymentNotifications } from '../../../../hooks/usePaymentNotifications'
 
 interface StudentData {
   uid: string
@@ -107,6 +104,8 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
     title,
     openImagePreview,
   } = useImagePreview()
+  const { sendPaymentNotification, isLoading: isNotificationLoading } =
+    usePaymentNotifications()
 
   // Fetch payment records from schoolFeeInfo
   const fetchPayments = async () => {
@@ -328,7 +327,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   const paymentStats = getPaymentStats()
 
   // Function to send admin notification for a payment
-  const sendPaymentNotification = async (payment: PaymentRecord) => {
+  const handleSendPaymentNotification = async (payment: PaymentRecord) => {
     try {
       const notificationData = {
         studentId: student.uid,
@@ -339,18 +338,11 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
         paymentReceiptUrl: payment.receiptUrl || '',
         cohort: student.schoolFeeInfo?.cohort || '',
         classPlan: student.schoolFeeInfo?.classPlan || '',
-        paymentDate: payment.date.toISOString(),
       }
 
-      const response = await fetch('/api/send-payment-installment-notification', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(notificationData),
-      })
+      const result = await sendPaymentNotification(notificationData)
 
-      if (response.ok) {
+      if (result.success) {
         toast({
           title: 'Notification Sent!',
           description: `Admin notification sent for payment #${payment.installmentNumber}`,
@@ -359,7 +351,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
           isClosable: true,
         })
       } else {
-        throw new Error('Failed to send notification')
+        throw new Error(result.error || 'Failed to send notification')
       }
     } catch (error) {
       toast({
@@ -698,7 +690,10 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                                     size="sm"
                                     colorScheme="purple"
                                     variant="outline"
-                                    onClick={() => sendPaymentNotification(payment)}
+                                    isLoading={isNotificationLoading}
+                                    onClick={() =>
+                                      handleSendPaymentNotification(payment)
+                                    }
                                   >
                                     Resend notification
                                   </Button>
