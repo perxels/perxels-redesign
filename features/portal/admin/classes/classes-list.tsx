@@ -337,7 +337,7 @@ export const ClassesList = () => {
             </Text>
 
             {/* Syllabus Info */}
-            <Box minW="150px" textAlign="center">
+            {/* <Box minW="150px" textAlign="center">
               {klass.syllabusName ? (
                 <VStack spacing={1}>
                   <Text fontSize="sm" color="gray.700" noOfLines={1}>
@@ -352,7 +352,7 @@ export const ClassesList = () => {
                   No Syllabus
                 </Text>
               )}
-            </Box>
+            </Box> */}
 
             {/* Status */}
             <Text minW="100px" fontWeight="bold" fontSize="md" color="gray.800" textAlign="center">

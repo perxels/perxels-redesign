@@ -20,7 +20,7 @@ interface AdminNotification {
   }
   read: boolean
   createdAt: Date
-  adminId: string
+  userId: string // Changed from adminId to userId to match the field used in notification creation
 }
 
 interface UseAdminNotificationsReturn {
@@ -50,7 +50,7 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
       // Query notifications for this admin user
       const q = query(
         collection(portalDb, 'notifications'),
-        where('adminId', '==', user.uid),
+        where('userId', '==', user.uid), // Use userId to match the field used in notification creation
         orderBy('createdAt', 'desc')
       )
       
@@ -66,7 +66,7 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
             data: data.data || {},
             read: data.read || false,
             createdAt: data.createdAt?.toDate() || new Date(),
-            adminId: data.adminId || '',
+            userId: data.userId || '', // Use userId to match the field used in notification creation
           }
         })
         .slice(0, 20) // Limit to 20 notifications
@@ -124,7 +124,7 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
 
       
       // Get all unread notifications for this admin
-      const unreadNotifications = notifications.filter(n => !n.read && n.adminId === user.uid)
+      const unreadNotifications = notifications.filter(n => !n.read && n.userId === user.uid)
       
       if (unreadNotifications.length === 0) {
   

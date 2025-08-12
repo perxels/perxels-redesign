@@ -106,7 +106,7 @@ export const useProfileOperations = () => {
       }
 
       const { profession, whyClass, classOutcome, gender, pictureUrl } = growthInfo
-      if (!profession || !whyClass || !classOutcome || !gender || !pictureUrl) {
+      if (!profession || !whyClass || !classOutcome || !gender) {
         throw new Error('All growth information fields are required')
       }
 
@@ -117,18 +117,22 @@ export const useProfileOperations = () => {
       }
 
       // Update user document with growth information
-      const updateData = {
+      const updateData: any = {
         growthInfo: {
           profession,
           whyClass,
           classOutcome,
           gender,
-          pictureUrl,
         },
         growthInfoUpdatedAt: new Date(),
         // Mark registration as complete
         registrationComplete: true,
         registrationCompletedAt: new Date(),
+      }
+
+      // Only add pictureUrl if it's provided
+      if (pictureUrl) {
+        updateData.growthInfo.pictureUrl = pictureUrl
       }
 
       await updateDoc(doc(portalDb, 'users', uid), updateData)
