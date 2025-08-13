@@ -19,7 +19,6 @@ import {
   ModalFooter,
   ModalCloseButton,
   useToast,
-  Input,
   FormControl,
   FormLabel,
   Checkbox,
@@ -34,11 +33,13 @@ import {
   AlertIcon,
   AlertDescription,
 } from '@chakra-ui/react'
+import { CustomDatePicker } from '../../../../components'
 import { MdCalendarToday, MdCheckCircle, MdSchedule, MdEdit, MdAdd } from 'react-icons/md'
 import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { Syllabus, SyllabusDay } from '../../../../types/syllabus.types'
+import { format } from 'date-fns'
 
 interface ClassScheduleManagerProps {
   classId: string
@@ -464,16 +465,15 @@ export const ClassScheduleManager: React.FC<ClassScheduleManagerProps> = ({
                             <HStack justify="space-between" align="center">
                               <Text fontWeight="medium" fontSize="sm">Schedule Date:</Text>
                               <HStack spacing={2}>
-                                <Input
-                                  type="date"
-                                  size="sm"
+                                <CustomDatePicker
+                                  name={`scheduledDate-${day.id}`}
                                   value={scheduled ? scheduled.scheduledDate.toISOString().split('T')[0] : ''}
-                                  onChange={(e) => {
-                                    if (e.target.value) {
+                                  onChange={(date) => {
+                                    if (date) {
                                       const newScheduledDays = {
                                         ...scheduledDays,
                                         [day.id]: {
-                                          scheduledDate: new Date(e.target.value),
+                                          scheduledDate: date,
                                           isCompleted: scheduled?.isCompleted || false,
                                           notes: scheduled?.notes || ''
                                         }
@@ -481,9 +481,10 @@ export const ClassScheduleManager: React.FC<ClassScheduleManagerProps> = ({
                                       setScheduledDays(newScheduledDays)
                                     }
                                   }}
-                                  min={classStartDate.toISOString().split('T')[0]}
-                                  max={classEndDate.toISOString().split('T')[0]}
-                                  w="auto"
+                                  minDate={classStartDate}
+                                  maxDate={classEndDate}
+                                  width="auto"
+                                  size="sm"
                                 />
                                 <Button
                                   size="sm"
@@ -596,12 +597,12 @@ export const ClassScheduleManager: React.FC<ClassScheduleManagerProps> = ({
             <VStack spacing={4}>
               <FormControl isRequired>
                 <FormLabel>Date</FormLabel>
-                <Input
-                  type="date"
+                <CustomDatePicker
+                  name="editDate"
                   value={editDate}
-                  onChange={(e) => setEditDate(e.target.value)}
-                  min={classStartDate.toISOString().split('T')[0]}
-                  max={classEndDate.toISOString().split('T')[0]}
+                  onChange={(date) => setEditDate(date ? format(date, 'yyyy-MM-dd') : '')}
+                  minDate={classStartDate}
+                  maxDate={classEndDate}
                 />
               </FormControl>
 

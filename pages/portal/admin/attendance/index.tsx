@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { AdminAuthGuard } from '../../../../components/PortalAuthGuard'
 import { PortalAdminLayout } from '../../../../features/portal/admin/admin-layout'
-import { Box, Table, Thead, Tbody, Tr, Th, Td, Button, Spinner, Text, Select, VStack, HStack, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Flex } from '@chakra-ui/react'
+import { Box, Table, Thead, Tbody, Tr, Th, Td, Button, Spinner, Text, Select, VStack, HStack, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Flex } from '@chakra-ui/react'
+import { CustomDatePicker } from '../../../../components'
 import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { Attendance } from '../../../../types/attendance.types'
 import { useRouter } from 'next/router'
 import { CreateAttendanceForm } from '../../../../components/admin/CreateAttendanceForm'
 import { useActiveClasses } from '../../../../hooks/useClasses'
+import { format } from 'date-fns'
 
 const AdminAttendanceDashboard = () => {
   const [attendanceRecords, setAttendanceRecords] = useState<Attendance[]>([])
@@ -63,7 +65,13 @@ const AdminAttendanceDashboard = () => {
                 ))}
               </Select>
             )}
-            <Input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} maxW="200px" />
+            <CustomDatePicker
+              name="selectedDate"
+              value={selectedDate}
+              onChange={(date) => setSelectedDate(date ? format(date, 'yyyy-MM-dd') : '')}
+              width="200px"
+              placeholder="Filter by date"
+            />
           </HStack>
           {loading ? (
             <Spinner size="lg" />

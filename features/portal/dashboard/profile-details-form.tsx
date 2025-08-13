@@ -12,8 +12,10 @@ import {
   FormErrorMessage,
   Box,
 } from '@chakra-ui/react'
+import { CustomDatePicker } from '../../../components'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { format } from 'date-fns'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
 import { useProfileOperations } from '../../../hooks/useProfileOperations'
 import { portalAuth } from '../../../portalFirebaseConfig'
@@ -63,13 +65,34 @@ export const ProfileDetailsForm = () => {
   const { portalUser } = usePortalAuth()
   const { updateProfileDetails, isLoading: isProfileLoading } = useProfileOperations()
 
+  // Helper function to safely convert Firestore timestamp to date string
+  const formatDateForInput = (dateValue: any): string => {
+    if (!dateValue) return ''
+    
+    try {
+      // Handle Firestore Timestamp objects
+      if (dateValue && typeof dateValue === 'object' && dateValue.seconds) {
+        return new Date(dateValue.seconds * 1000).toISOString().split('T')[0]
+      }
+      
+      // Handle regular Date objects or date strings
+      const date = new Date(dateValue)
+      if (isNaN(date.getTime())) return ''
+      
+      return date.toISOString().split('T')[0]
+    } catch (error) {
+      console.error('Error formatting date:', error)
+      return ''
+    }
+  }
+
   // Extract existing data from portalUser
   const initialValues: ProfileDetailsFormValues = {
     fullName: portalUser?.fullName || '',
     phone: portalUser?.phone || '',
     gender: portalUser?.growthInfo?.gender || '',
     dateOfBirth: portalUser?.growthInfo?.dateOfBirth || '',
-    dateOfEnrollment: portalUser?.growthInfo?.dateOfEnrollment || '',
+    dateOfEnrollment: portalUser?.growthInfo?.dateOfEnrollment || formatDateForInput(portalUser?.createdAt),
     classCohort: portalUser?.schoolFeeInfo?.classPlan || '',
   }
 
@@ -252,30 +275,18 @@ export const ProfileDetailsForm = () => {
                   <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
                     Date of Enrollment
                   </FormLabel>
-                  <Input
+                  <CustomDatePicker
                     name="dateOfEnrollment"
-                    type="date"
                     value={values.dateOfEnrollment}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    bg="gray.50"
-                    border="1px solid"
-                    borderColor="yellow.300"
-                    borderRadius="md"
-                    h="3.5rem"
-                    _focus={{
-                      borderColor: errors.dateOfEnrollment
-                        ? 'red.500'
-                        : 'yellow.400',
-                      bg: 'white',
+                    onChange={(date) => {
+                      const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
+                      setFieldValue('dateOfEnrollment', formattedDate)
                     }}
-                    _hover={{
-                      borderColor: errors.dateOfEnrollment
-                        ? 'red.500'
-                        : 'yellow.400',
-                    }}
+                    onBlur={() => handleBlur('dateOfEnrollment')}
+                    isInvalid={!!(touched.dateOfEnrollment && errors.dateOfEnrollment)}
+                    errorMessage={errors.dateOfEnrollment}
+                    maxDate={new Date()}
                   />
-                  <FormErrorMessage>{errors.dateOfEnrollment}</FormErrorMessage>
                 </FormControl>
 
                 {/* Class Cohort */}

@@ -731,9 +731,9 @@ export function generateAdmittedHtml(
         <ul style="margin-left: 1.2em;">
           <li>Join the Slack channel using the PDF guide attached to this email</li>
           <li>Sign up on Figma using the document attached to this email</li>
-          <li>Attend Perxels Orientation on the 8th of June at 7 pm (This is very compulsory), and here is the link to join the session: <a href="https://meet.google.com/zii-mtkx-vkd" style="color: #6C63FF; text-decoration: underline;">https://meet.google.com/zii-mtkx-vkd</a></li>
+          <li>Attend Perxels Orientation on the Sunday at 7 pm (This is very compulsory), and here is the link to join the session: <a href="https://meet.google.com/zii-mtkx-vkd" target="_blank" style="color: #6C63FF; text-decoration: underline;">https://meet.google.com/zii-mtkx-vkd</a></li>
         </ul>
-        <p>You can also join via: <a href="https://bit.ly/3xk97VM" style="color: #767474; text-decoration: underline;">https://bit.ly/3xk97VM</a></p>
+        <p>You can also join via: <a href="https://bit.ly/3xk97VM" target="_blank" style="color: #767474; text-decoration: underline;">https://bit.ly/3xk97VM</a></p>
         <p style="margin-top: 18px; font-weight: bold;">PLEASE REPLY TO THIS EMAIL WITH 'I HAVE COMPLETED THE INSTRUCTIONS'</p>
         <p>Also, just so you know, the hub address and your timetable will be sent to you after the orientation day.<br/>
         Once again, congratulations on your admission to Perxels Design School. We are excited to welcome you to our community and look forward to seeing the incredible contributions you will make as a designer to the World.</p>

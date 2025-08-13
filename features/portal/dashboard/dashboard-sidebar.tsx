@@ -1,6 +1,7 @@
 import { Box, Text, Badge } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { useStudentNotifications } from '../../../hooks/useStudentNotifications'
 
@@ -34,6 +35,7 @@ const sidebarItems = [
 
 export const DashboardSidebar = () => {
   const { unreadCount } = useStudentNotifications()
+  const router = useRouter()
 
   return (
     <Box
@@ -47,50 +49,91 @@ export const DashboardSidebar = () => {
       alignItems="center"
       gap={8}
     >
-      {sidebarItems.map((item) => (
-        <Link href={item.href} key={item.label}>
-          <Box
-            display="flex"
-            cursor="pointer"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            gap="1rem"
-            p="1rem"
-            position="relative"
-          >
-            <Box position="relative">
-              <Image src={item.icon} alt={item.label} width={48} height={48} />
-              {item.label === 'Message' && unreadCount > 0 && (
-                <Badge
-                  position="absolute"
-                  top="-8px"
-                  right="-8px"
-                  colorScheme="red"
-                  borderRadius="full"
-                  minW="20px"
-                  h="20px"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  fontSize="12px"
-                  fontWeight="bold"
-                >
-                  {unreadCount > 99 ? '99+' : unreadCount}
-                </Badge>
-              )}
-            </Box>
-            <Text
-              fontSize="1.25rem"
-              fontWeight="medium"
-              color="brand.white"
-              textAlign="center"
+      {sidebarItems.map((item) => {
+        const isActive = router.pathname === item.href
+        const isHomeActive = item.href === '/portal/dashboard' && router.pathname === '/portal/dashboard'
+        
+        return (
+          <Link href={item.href} key={item.label}>
+            <Box
+              display="flex"
+              cursor="pointer"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              gap="1rem"
+              p="1rem"
+              position="relative"
+              borderRadius="xl"
+              transition="all 0.2s ease-in-out"
+              bg={isActive || isHomeActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent'}
+              _hover={{
+                bg: 'rgba(255, 255, 255, 0.1)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+              }}
+              _active={{
+                bg: 'rgba(255, 255, 255, 0.2)',
+                transform: 'translateY(0px)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+              }}
+              _before={isActive || isHomeActive ? {
+                content: '""',
+                position: 'absolute',
+                left: 0,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '4px',
+                height: '60%',
+                bg: 'white',
+                borderRadius: '0 4px 4px 0',
+              } : undefined}
             >
-              {item.label}
-            </Text>
-          </Box>
-        </Link>
-      ))}
+              <Box position="relative">
+                <Image 
+                  src={item.icon} 
+                  alt={item.label} 
+                  width={48} 
+                  height={48}
+                  style={{
+                    filter: isActive || isHomeActive ? 'brightness(1.2)' : 'brightness(1)',
+                    transition: 'filter 0.2s ease-in-out',
+                  }}
+                />
+                {item.label === 'Message' && unreadCount > 0 && (
+                  <Badge
+                    position="absolute"
+                    top="-8px"
+                    right="-8px"
+                    colorScheme="red"
+                    borderRadius="full"
+                    minW="20px"
+                    h="20px"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    fontSize="12px"
+                    fontWeight="bold"
+                    animation={unreadCount > 0 ? 'pulse 2s infinite' : undefined}
+                  >
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </Badge>
+                )}
+              </Box>
+              <Text
+                fontSize="1.25rem"
+                fontWeight={isActive || isHomeActive ? "bold" : "medium"}
+                color="brand.white"
+                textAlign="center"
+                transition="all 0.2s ease-in-out"
+                opacity={isActive || isHomeActive ? 1 : 0.9}
+              >
+                {item.label}
+              </Text>
+            </Box>
+          </Link>
+        )
+      })}
     </Box>
   )
 }

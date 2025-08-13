@@ -11,6 +11,7 @@ import {
   Grid,
   Alert,
   AlertIcon,
+  keyframes,
 } from '@chakra-ui/react'
 import { usePaymentData } from '../../../../hooks/usePaymentData'
 import { getRemainingBalance } from '../../../../types/school-fee.types'
@@ -36,6 +37,99 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
   const { schoolFeeInfo, loading, error } = usePaymentData()
   const { isOpen, onClose, imageUrl, title, openImagePreview } =
     useImagePreview()
+
+  // Animation keyframes for pending status
+  const pulseAnimation = keyframes`
+    0% { 
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.8);
+    }
+    50% { 
+      transform: scale(1.08);
+      box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+    }
+    100% { 
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    }
+  `
+
+  const shakeAnimation = keyframes`
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+    20%, 40%, 60%, 80% { transform: translateX(2px); }
+  `
+
+  const attentionAnimation = keyframes`
+    0%, 100% { 
+      transform: scale(1) rotate(0deg);
+      background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    }
+    25% { 
+      transform: scale(1.05) rotate(1deg);
+      background: linear-gradient(45deg, #f59e0b, #d97706);
+    }
+    50% { 
+      transform: scale(1.1) rotate(0deg);
+      background: linear-gradient(45deg, #d97706, #fbbf24);
+    }
+    75% { 
+      transform: scale(1.05) rotate(-1deg);
+      background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    }
+  `
+
+  // Animated Badge component for pending status
+  const AnimatedBadge = ({ status, children }: { status: string; children: React.ReactNode }) => {
+    const isPending = status === 'Pending'
+    
+    return (
+      <Badge
+        colorScheme={getStatusColor(status as PaymentRecord['status'])}
+        px={3}
+        py={1}
+        borderRadius="full"
+        fontSize="xs"
+        fontWeight="bold"
+        w="fit-content"
+        animation={isPending ? `${attentionAnimation} 3s infinite, ${shakeAnimation} 0.5s infinite 1s` : undefined}
+        position={isPending ? 'relative' : undefined}
+        bg={isPending ? 'linear-gradient(45deg, #fbbf24, #f59e0b)' : undefined}
+        color={isPending ? 'white' : undefined}
+        textShadow={isPending ? '0 1px 2px rgba(0,0,0,0.3)' : undefined}
+        _before={isPending ? {
+          content: '""',
+          position: 'absolute',
+          top: '-3px',
+          left: '-3px',
+          right: '-3px',
+          bottom: '-3px',
+          borderRadius: 'full',
+          background: 'linear-gradient(45deg, #fbbf24, #f59e0b, #d97706, #92400e)',
+          zIndex: -1,
+          animation: `${pulseAnimation} 2s infinite`,
+          opacity: 0.4,
+        } : undefined}
+        _after={isPending ? {
+          content: '""',
+          position: 'absolute',
+          top: '-1px',
+          left: '-1px',
+          right: '-1px',
+          bottom: '-1px',
+          borderRadius: 'full',
+          background: 'rgba(255, 255, 255, 0.2)',
+          zIndex: -1,
+        } : undefined}
+        _hover={isPending ? {
+          transform: 'scale(1.1)',
+          transition: 'transform 0.2s ease-in-out',
+        } : undefined}
+      >
+        {children}
+      </Badge>
+    )
+  }
 
   // Helper function to safely parse dates from Firestore
   const parseFirestoreDate = (dateValue: any): string => {
@@ -268,17 +362,9 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
                 <Text fontSize="xs" color="gray.500">
                   Status
                 </Text>
-                <Badge
-                  colorScheme={getStatusColor(payment.status)}
-                  px={2}
-                  py={0.5}
-                  borderRadius="full"
-                  fontSize="xs"
-                  fontWeight="medium"
-                  w="fit-content"
-                >
+                <AnimatedBadge status={payment.status}>
                   {payment.status}
-                </Badge>
+                </AnimatedBadge>
               </Grid>
             </Box>
             {/* Desktop Grid Row */}
@@ -309,17 +395,9 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
                   {truncateUrl(payment.receiptLink)}
                 </Link>
               )}
-              <Badge
-                colorScheme={getStatusColor(payment.status)}
-                px={3}
-                py={1}
-                borderRadius="full"
-                fontSize="xs"
-                fontWeight="medium"
-                w="fit-content"
-              >
+              <AnimatedBadge status={payment.status}>
                 {payment.status}
-              </Badge>
+              </AnimatedBadge>
             </Grid>
           </Box>
         ))}

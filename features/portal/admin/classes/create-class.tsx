@@ -23,9 +23,11 @@ import {
   Select,
   Spinner,
 } from '@chakra-ui/react'
+import { CustomDatePicker } from '../../../../components'
 import React, { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { format } from 'date-fns'
 import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
@@ -362,19 +364,20 @@ export const CreateClass = () => {
                           <FormLabel fontWeight="medium" fontSize="sm">
                             Start Date
                           </FormLabel>
-                          <Input
+                          <CustomDatePicker
                             name="startDate"
-                            type="date"
-                            value={formatDateForInput(formik.values.startDate)}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
+                            value={formik.values.startDate}
+                            onChange={(date) => {
+                              const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
+                              formik.setFieldValue('startDate', formattedDate)
+                            }}
+                            onBlur={() => formik.handleBlur('startDate')}
                             isDisabled={isSubmitting}
                             size="lg"
-                            min={new Date().toISOString().split('T')[0]}
+                            minDate={new Date()}
+                            isInvalid={!!(formik.touched.startDate && formik.errors.startDate)}
+                            errorMessage={formik.errors.startDate}
                           />
-                          <FormErrorMessage>
-                            {formik.errors.startDate}
-                          </FormErrorMessage>
                         </FormControl>
 
                         {/* End Date */}
@@ -387,22 +390,20 @@ export const CreateClass = () => {
                           <FormLabel fontWeight="medium" fontSize="sm">
                             End Date
                           </FormLabel>
-                          <Input
+                          <CustomDatePicker
                             name="endDate"
-                            type="date"
-                            value={formatDateForInput(formik.values.endDate)}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
+                            value={formik.values.endDate}
+                            onChange={(date) => {
+                              const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
+                              formik.setFieldValue('endDate', formattedDate)
+                            }}
+                            onBlur={() => formik.handleBlur('endDate')}
                             isDisabled={isSubmitting}
                             size="lg"
-                            min={
-                              formik.values.startDate ||
-                              new Date().toISOString().split('T')[0]
-                            }
+                            minDate={formik.values.startDate ? new Date(formik.values.startDate) : new Date()}
+                            isInvalid={!!(formik.touched.endDate && formik.errors.endDate)}
+                            errorMessage={formik.errors.endDate}
                           />
-                          <FormErrorMessage>
-                            {formik.errors.endDate}
-                          </FormErrorMessage>
                         </FormControl>
                       </HStack>
 

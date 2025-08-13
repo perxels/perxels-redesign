@@ -16,6 +16,7 @@ interface PortalUser {
   schoolFeeInfo?: any
   growthInfo?: any
   termsAgreed?: boolean
+  createdAt?: Date | { seconds: number; nanoseconds: number }
 }
 
 interface UsePortalAuthReturn {

@@ -9,14 +9,25 @@ import {
   HStack,
   useToast,
   Spinner,
+  Input,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
 } from '@chakra-ui/react'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import {
-  checkInStudent,
   findAttendanceByClassId,
   didStudentCheckIn,
+  checkInStudent,
 } from '../../../../lib/utils/attendance.utils'
 import { HeaderInfo } from '../../../../features/portal/dashboard/messages/header-info'
 
@@ -66,6 +77,9 @@ const AttendancePage = () => {
   const [attendanceLoading, setAttendanceLoading] = useState(true)
   const [summaryLoading, setSummaryLoading] = useState(true)
   const [stats, setStats] = useState<AttendanceStats>({ present: 0, absent: 0 })
+  const [attendanceCode, setAttendanceCode] = useState('')
+  const [codeError, setCodeError] = useState('')
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
 
   // Memoize today's date
@@ -194,16 +208,39 @@ const AttendancePage = () => {
     fetchSummary()
   }, [fetchSummary])
 
-  // Memoized check-in handler
+  // Open check-in modal
+  const handleCheckinClick = useCallback(() => {
+    setAttendanceCode('')
+    setCodeError('')
+    onOpen()
+  }, [onOpen])
+
+  // Memoized check-in handler with code validation
   const handleCheckin = useCallback(async () => {
     if (!attendance || !user?.uid) return
 
+    setCodeError('')
+    if (!attendanceCode.trim()) {
+      setCodeError('Please enter the attendance code')
+      return
+    }
+
     setLoading(true)
     try {
+      // Validate the attendance code
+      if (attendanceCode.trim().toUpperCase() !== attendance.code) {
+        setCodeError('Invalid attendance code. Please check and try again.')
+        return
+      }
+
       await checkInStudent(attendance.id, user.uid)
       setCheckedIn(true)
+      setAttendanceCode('')
+      onClose()
+      
       toast({
-        title: 'Check-in successful!',
+        title: 'Check-in successful! ✅',
+        description: 'You have been marked present for today',
         status: 'success',
         duration: 3000,
       })
@@ -211,15 +248,11 @@ const AttendancePage = () => {
       // Refresh summary after successful check-in
       fetchSummary()
     } catch (err: any) {
-      toast({
-        title: err.message || 'Check-in failed',
-        status: 'error',
-        duration: 4000,
-      })
+      setCodeError(err.message || 'Check-in failed. Please try again.')
     } finally {
       setLoading(false)
     }
-  }, [attendance, user?.uid, toast, fetchSummary])
+  }, [attendance, user?.uid, attendanceCode, onClose, toast, fetchSummary])
 
   // Memoized time display
   const timeDisplay = useMemo(
@@ -373,8 +406,7 @@ const AttendancePage = () => {
                     minW="160px"
                     minH="56px"
                     ml={{ base: 4, md: 12 }}
-                    onClick={handleCheckin}
-                    isLoading={loading}
+                    onClick={handleCheckinClick}
                     isDisabled={checkedIn}
                     fontWeight="medium"
                     style={{ borderRadius: 16 }}
@@ -471,6 +503,75 @@ const AttendancePage = () => {
             </HStack>
           </Box>
         </VStack>
+
+        {/* Attendance Code Modal */}
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+          <ModalOverlay />
+          <ModalContent mx={4} borderRadius="xl">
+            <ModalHeader textAlign="center" color="#363576">
+              Enter Attendance Code
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <VStack spacing={6}>
+                <Text color="gray.600" textAlign="center" fontSize="sm">
+                  Please enter the attendance code provided by your instructor to check in for today&apos;s class.
+                </Text>
+                
+                <FormControl isInvalid={!!codeError}>
+                  <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
+                    Attendance Code
+                  </FormLabel>
+                  <Input
+                    value={attendanceCode}
+                    onChange={(e) => setAttendanceCode(e.target.value.toUpperCase())}
+                    placeholder="e.g., COP1234"
+                    textTransform="uppercase"
+                    fontSize="lg"
+                    fontWeight="bold"
+                    textAlign="center"
+                    letterSpacing="0.1em"
+                    bg="gray.50"
+                    border="2px solid"
+                    borderColor={codeError ? 'red.300' : 'yellow.300'}
+                    borderRadius="lg"
+                    h="3.5rem"
+                    _focus={{
+                      borderColor: codeError ? 'red.500' : 'yellow.400',
+                      bg: 'white',
+                      boxShadow: '0 0 0 1px rgba(245, 158, 11, 0.2)',
+                    }}
+                    _hover={{
+                      borderColor: codeError ? 'red.500' : 'yellow.400',
+                    }}
+                  />
+                  <FormErrorMessage>{codeError}</FormErrorMessage>
+                </FormControl>
+
+                <Button
+                  bg="#363576"
+                  color="white"
+                  _hover={{ bg: '#28235c' }}
+                  px={8}
+                  py={4}
+                  fontSize="lg"
+                  borderRadius="lg"
+                  w="full"
+                  onClick={handleCheckin}
+                  isLoading={loading}
+                  isDisabled={!attendanceCode.trim()}
+                  fontWeight="medium"
+                >
+                  Confirm Check-in
+                </Button>
+
+                <Text fontSize="xs" color="gray.500" textAlign="center">
+                  Make sure you have the correct code from your instructor before proceeding.
+                </Text>
+              </VStack>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </DashboardLayout>
     </StudentAuthGuard>
   )

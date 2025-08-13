@@ -27,10 +27,12 @@ import {
 } from '@chakra-ui/react'
 import { MdAdd, MdSchedule } from 'react-icons/md'
 import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore'
-import { Input, Checkbox, Textarea } from '@chakra-ui/react'
+import { Checkbox, Textarea } from '@chakra-ui/react'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { Syllabus } from '../../../../types/syllabus.types'
+import { CustomDatePicker } from '../../../../components'
+import { format } from 'date-fns'
 
 interface ClassSyllabusManagementProps {
   classId: string
@@ -508,9 +510,8 @@ export const ClassSyllabusManagement: React.FC<
                                         Schedule Date:
                                       </Text>
                                       <HStack spacing={2}>
-                                        <Input
-                                          type="date"
-                                          size="sm"
+                                        <CustomDatePicker
+                                          name={`scheduledDate-${day.id}`}
                                           value={
                                             scheduled
                                               ? scheduled.scheduledDate
@@ -518,14 +519,12 @@ export const ClassSyllabusManagement: React.FC<
                                                   .split('T')[0]
                                               : ''
                                           }
-                                          onChange={(e) => {
-                                            if (e.target.value) {
+                                          onChange={(date) => {
+                                            if (date) {
                                               const newScheduledDays = {
                                                 ...scheduledDays,
                                                 [day.id]: {
-                                                  scheduledDate: new Date(
-                                                    e.target.value,
-                                                  ),
+                                                  scheduledDate: date,
                                                   isCompleted:
                                                     scheduled?.isCompleted ||
                                                     false,
@@ -535,17 +534,10 @@ export const ClassSyllabusManagement: React.FC<
                                               setScheduledDays(newScheduledDays)
                                             }
                                           }}
-                                          min={
-                                            classStartDate
-                                              ?.toISOString()
-                                              .split('T')[0]
-                                          }
-                                          max={
-                                            classEndDate
-                                              ?.toISOString()
-                                              .split('T')[0]
-                                          }
-                                          w="auto"
+                                          minDate={classStartDate}
+                                          maxDate={classEndDate}
+                                          width="auto"
+                                          size="sm"
                                         />
                                         <Button
                                           size="sm"
