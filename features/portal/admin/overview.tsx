@@ -38,8 +38,8 @@ const menuItems = [
     icon: '/assets/icons/attandance.svg',
   },
   {
-    title: 'Videos',
-    href: '/portal/admin/videos',
+    title: 'Library',
+    href: '/portal/admin/library',
     icon: '/assets/icons/video.svg',
   },
 ]

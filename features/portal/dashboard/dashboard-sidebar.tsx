@@ -22,9 +22,9 @@ const sidebarItems = [
     href: '/portal/dashboard/attendance',
   },
   {
-    label: 'Videos',
+    label: 'Library',
     icon: '/assets/icons/video.svg',
-    href: '/portal/dashboard/videos',
+    href: '/portal/dashboard/library',
   },
   {
     label: 'Message',

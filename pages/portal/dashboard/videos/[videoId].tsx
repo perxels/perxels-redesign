@@ -185,7 +185,7 @@ function VideoWatchPageContent() {
         <Button
           leftIcon={<FiArrowLeft />}
           variant="outline"
-          onClick={() => router.push('/portal/dashboard/videos')}
+                          onClick={() => router.push('/portal/dashboard/library')}
         >
           Back to Video Library
         </Button>

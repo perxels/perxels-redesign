@@ -265,17 +265,6 @@ export async function sendPaymentNotificationEmail(
   options: EmailOptions = {},
 ): Promise<EmailResponse> {
   try {
-    console.log('📧 Starting payment notification email process...', {
-      adminEmails,
-      studentName,
-      studentEmail,
-      amount,
-      installmentNumber,
-      cohort,
-      classPlan,
-      submittedAt,
-    })
-
     const { appName = DEFAULT_APP_NAME } = options
 
     // Validate inputs
@@ -301,16 +290,8 @@ export async function sendPaymentNotificationEmail(
       }
     }
 
-    console.log('✅ Valid admin emails for notification:', validEmails)
-
     const resend = getResendClient()
     const fromEmail = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
-
-    console.log('📧 Email configuration:', {
-      fromEmail,
-      toEmails: validEmails,
-      appName,
-    })
 
     const subject = `🔔 Payment Submitted: ${studentName} - ₦${amount.toLocaleString()} (Installment ${installmentNumber})`
 
@@ -327,20 +308,12 @@ export async function sendPaymentNotificationEmail(
       appName,
     )
 
-    console.log('📧 Sending email via Resend...')
-
     // Send email to all admin recipients
     const result = await resend.emails.send({
       from: fromEmail,
       to: validEmails,
       subject,
       html,
-    })
-
-    console.log('📧 Resend API response:', {
-      success: !result.error,
-      emailId: result.data?.id,
-      error: result.error,
     })
 
     if (result.error) {
@@ -352,23 +325,12 @@ export async function sendPaymentNotificationEmail(
       }
     }
 
-    console.log('✅ Payment notification email sent successfully:', {
-      emailId: result.data?.id,
-      to: validEmails,
-    })
-
     return {
       success: true,
       emailId: result.data?.id,
       message: 'Payment notification email sent successfully',
     }
   } catch (error) {
-    console.error('❌ Send payment notification email error:', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      adminEmails,
-      studentName,
-    })
     return {
       success: false,
       message: 'Failed to send payment notification email',
@@ -855,8 +817,6 @@ export async function sendPaymentReminderEmail(
       }
     }
 
-    console.log('📧 Sending payment reminder email to:', to)
-
     const resend = getResendClient()
     const fromEmail = process.env.RESEND_FROM_EMAIL || DEFAULT_FROM_EMAIL
 
@@ -871,19 +831,11 @@ export async function sendPaymentReminderEmail(
       outstandingAmount,
     )
 
-    console.log('📧 Sending payment reminder via Resend...')
-
     const result = await resend.emails.send({
       from: fromEmail,
       to: [to],
       subject,
       html,
-    })
-
-    console.log('📧 Resend API response:', {
-      success: !result.error,
-      emailId: result.data?.id,
-      error: result.error,
     })
 
     if (result.error) {
@@ -895,24 +847,12 @@ export async function sendPaymentReminderEmail(
       }
     }
 
-    console.log('✅ Payment reminder email sent successfully:', {
-      emailId: result.data?.id,
-      to,
-      studentName,
-    })
-
     return {
       success: true,
       emailId: result.data?.id,
       message: 'Payment reminder email sent successfully',
     }
   } catch (error) {
-    console.error('❌ Send payment reminder email error:', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      to,
-      studentName,
-    })
     return {
       success: false,
       message: 'Failed to send payment reminder email',
@@ -1067,23 +1007,14 @@ export async function sendAdmissionEmail(
   options: EmailOptions = {},
 ): Promise<EmailResponse> {
   try {
-    console.log('🎓 sendAdmissionEmail called with:', {
-      to,
-      studentName,
-      cohort,
-      options,
-    })
 
     const resend = getResendClient()
 
     // Create the admission HTML content
     const htmlContent = generateAdmittedHtml(studentName, cohort)
-    console.log('📧 Generated admission HTML content')
 
     // Create the PDF attachments
-    console.log('📎 Creating PDF attachments...')
     const pdfAttachments = createOnboardingPdfAttachments()
-    console.log('📎 PDF attachments created:', pdfAttachments.length, 'files')
 
     // Resolve from email (prefer explicit option, then env, then default testing address)
     const fromEmail =

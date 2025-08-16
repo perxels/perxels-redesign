@@ -29,8 +29,6 @@ import {
 
 // Helper function to format payment date
 const formatPaymentDate = (dateString: string | any): string => {
-  console.log('formatPaymentDate input:', dateString, typeof dateString) // Debug log
-
   if (!dateString) return ''
 
   try {
@@ -42,14 +40,12 @@ const formatPaymentDate = (dateString: string | any): string => {
         month: '2-digit',
         year: 'numeric',
       })
-      console.log('Firestore timestamp formatted:', formatted) // Debug log
       return formatted
     }
 
     // Handle ISO strings or other date formats
     const date = new Date(dateString)
     if (isNaN(date.getTime())) {
-      console.log('Invalid date:', dateString) // Debug log
       return ''
     }
 
@@ -58,10 +54,8 @@ const formatPaymentDate = (dateString: string | any): string => {
       month: '2-digit',
       year: 'numeric',
     })
-    console.log('Date string formatted:', formatted) // Debug log
     return formatted
   } catch (error) {
-    console.log('Date formatting error:', error) // Debug log
     return ''
   }
 }
@@ -218,12 +212,6 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
                     {formatPaymentDate(amt.paymentDate)}
                   </Text>
                 )}
-                {/* Debug: Show raw payment date */}
-                {amt.paymentDate && (
-                  <Text fontSize="xs" color="red.500" textAlign="center">
-                    Raw: {JSON.stringify(amt.paymentDate)}
-                  </Text>
-                )}
                 {amt.receipt && amt.receipt.trim() !== '' ? (
                   <Link
                     fontSize="xs"
@@ -284,12 +272,6 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
               {amt.paymentDate && (
                 <Text fontSize="xs" color="gray.600" mt={1}>
                   {formatPaymentDate(amt.paymentDate)}
-                </Text>
-              )}
-              {/* Debug: Show raw payment date */}
-              {amt.paymentDate && (
-                <Text fontSize="xs" color="red.500" mt={1}>
-                  Raw: {JSON.stringify(amt.paymentDate)}
                 </Text>
               )}
             </VStack>
@@ -355,6 +337,7 @@ const SchoolFeesListTable = React.memo(function SchoolFeesListTable({
   )
 })
 
+
 export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
   const [selected, setSelected] = useState<'debtor' | 'paid'>('debtor')
   const [data, setData] = useState<StudentFeeRecord[]>([])
@@ -401,14 +384,13 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
             const p = payments.find(
               (pay: any) => pay.installmentNumber === idx + 1,
             )
-            console.log(`Payment data for installment ${idx + 1}:`, p) // Debug log
             return p
               ? {
                   amount: p.amount || 0,
                   receipt: p.paymentReceiptUrl || '',
                   status: p.status || 'unpaid',
                   paymentDate:
-                    p.paymentDate || p.createdAt || p.date || p.timestamp || '',
+                    p.submittedAt || p.createdAt || p.date || p.timestamp || '',
                 }
               : { amount: 0, receipt: '', status: 'unpaid', paymentDate: '' }
           })

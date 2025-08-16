@@ -21,25 +21,20 @@ import {
   FormControl,
   FormLabel,
 } from '@chakra-ui/react'
-import { FiLock } from 'react-icons/fi'
-import { MdSchool } from 'react-icons/md'
-import { PortalVideo } from '../../../../types/video.types'
-import {
-  getAllVideosWithAccessStatus,
-  grantVideoAccess,
-} from '../../../../lib/utils/video.utils'
-import { usePortalAuth } from '../../../../hooks/usePortalAuth'
-import { VideoCard } from './video-card'
+import { FiLock, FiBook } from 'react-icons/fi'
+import { PortalEbook } from '../../../../types/ebook.types'
 
-export const VideoLibrary = () => {
+  import { usePortalAuth } from '../../../../hooks/usePortalAuth'
+import { EbookCard } from './ebook-card'
+import { getAllEbooksWithAccessStatus, grantEbookAccess } from '../../../../lib/utils/ebook.utils'
+
+export const EbookLibrary = () => {
   const router = useRouter()
-  const [videos, setVideos] = useState<
-    Array<PortalVideo & { hasAccess: boolean }>
-  >([])
+  const [ebooks, setEbooks] = useState<Array<PortalEbook & { hasAccess: boolean }>>([])
   const [loading, setLoading] = useState(true)
   const [accessCode, setAccessCode] = useState('')
   const [grantingAccess, setGrantingAccess] = useState(false)
-  const [videoToUnlock, setVideoToUnlock] = useState<PortalVideo | null>(null)
+  const [ebookToUnlock, setEbookToUnlock] = useState<PortalEbook | null>(null)
 
   const {
     isOpen: isCodeModalOpen,
@@ -50,18 +45,18 @@ export const VideoLibrary = () => {
   const { user } = usePortalAuth()
   const toast = useToast()
 
-  const fetchVideos = async () => {
+  const fetchEbooks = async () => {
     if (!user?.uid) return
 
     try {
       setLoading(true)
-      const videoData = await getAllVideosWithAccessStatus(user.uid)
-      setVideos(videoData)
+      const ebookData = await getAllEbooksWithAccessStatus(user.uid)
+      setEbooks(ebookData)
     } catch (error) {
-      console.error('Error fetching videos:', error)
+      console.error('Error fetching ebooks:', error)
       toast({
         title: 'Error',
-        description: 'Failed to fetch videos',
+        description: 'Failed to fetch ebooks',
         status: 'error',
         duration: 3000,
       })
@@ -71,7 +66,7 @@ export const VideoLibrary = () => {
   }
 
   useEffect(() => {
-    fetchVideos()
+    fetchEbooks()
   }, [user?.uid])
 
   const handleGrantAccess = async () => {
@@ -87,8 +82,8 @@ export const VideoLibrary = () => {
 
     setGrantingAccess(true)
     try {
-      const result = await grantVideoAccess({
-        videoId: '', // Will be determined by access code
+      const result = await grantEbookAccess({
+        ebookId: '', // Will be determined by access code
         studentId: user.uid,
         accessCode: accessCode.trim().toUpperCase(),
       })
@@ -102,7 +97,7 @@ export const VideoLibrary = () => {
         })
         setAccessCode('')
         onCodeModalClose()
-        fetchVideos() // Refresh the video list
+        fetchEbooks() // Refresh the ebook list
       } else {
         toast({
           title: 'Access Denied',
@@ -124,12 +119,10 @@ export const VideoLibrary = () => {
     }
   }
 
-  const handleVideoSelect = (video: PortalVideo) => {
-    router.push(`/portal/dashboard/videos/${video.id}`)
-  }
 
-  const handleUnlockVideo = (video: PortalVideo) => {
-    setVideoToUnlock(video)
+
+  const handleUnlockEbook = (ebook: PortalEbook) => {
+    setEbookToUnlock(ebook)
     onCodeModalOpen()
   }
 
@@ -140,20 +133,20 @@ export const VideoLibrary = () => {
   }
 
   const getStats = () => {
-    const totalVideos = videos.length
-    const unlockedVideos = videos.filter((v) => v.hasAccess).length
-    const lockedVideos = totalVideos - unlockedVideos
-    const categories = new Set(videos.map((v) => v.category).filter(Boolean))
+    const totalEbooks = ebooks.length
+    const unlockedEbooks = ebooks.filter((e) => e.hasAccess).length
+    const lockedEbooks = totalEbooks - unlockedEbooks
+    const categories = new Set(ebooks.map((e) => e.category).filter(Boolean))
       .size
 
-    return { totalVideos, unlockedVideos, lockedVideos, categories }
+    return { totalEbooks, unlockedEbooks, lockedEbooks, categories }
   }
 
   if (loading) {
     return (
       <VStack spacing={4} py={8}>
         <Spinner size="xl" color="purple.500" />
-        <Text color="gray.500">Loading video library...</Text>
+        <Text color="gray.500">Loading ebook library...</Text>
       </VStack>
     )
   }
@@ -164,15 +157,15 @@ export const VideoLibrary = () => {
     <Box>
       <VStack spacing={6} align="stretch">
         {/* Stats */}
-        {videos.length > 0 && (
+        {ebooks.length > 0 && (
           <VStack spacing={4} align="stretch">
             <HStack spacing={6} flexWrap="wrap">
               <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
                 <Text fontSize="sm" color="gray.500">
-                  Total Videos
+                  Total Ebooks
                 </Text>
                 <Text fontSize="2xl" fontWeight="bold" color="purple.600">
-                  {stats.totalVideos}
+                  {stats.totalEbooks}
                 </Text>
               </Box>
               <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
@@ -180,7 +173,7 @@ export const VideoLibrary = () => {
                   Unlocked
                 </Text>
                 <Text fontSize="2xl" fontWeight="bold" color="green.600">
-                  {stats.unlockedVideos}
+                  {stats.unlockedEbooks}
                 </Text>
               </Box>
               <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
@@ -188,34 +181,40 @@ export const VideoLibrary = () => {
                   Locked
                 </Text>
                 <Text fontSize="2xl" fontWeight="bold" color="orange.600">
-                  {stats.lockedVideos}
+                  {stats.lockedEbooks}
                 </Text>
               </Box>
-
-
             </HStack>
           </VStack>
         )}
 
-        {/* Video Grid */}
-        {videos.length === 0 ? (
+        {/* Ebook Grid */}
+        {ebooks.length === 0 ? (
           <Box textAlign="center" py={12}>
-            <FiLock size={48} color="#E2E8F0" />
+            <FiBook size={48} color="#E2E8F0" />
             <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
-              No videos available yet
+              No ebooks available yet
             </Text>
             <Text color="gray.400" mb={6}>
-              Videos will appear here once they are added by your instructors
+              Ebooks will appear here once they are added by your instructors
             </Text>
+            <Button
+              colorScheme="purple"
+              onClick={onCodeModalOpen}
+              leftIcon={<FiLock />}
+            >
+              Unlock with Access Code
+            </Button>
           </Box>
         ) : (
           <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-            {videos.map((video) => (
-              <VideoCard
-                key={video.id}
-                video={video}
-                onPlay={() => handleVideoSelect(video)}
-                onUnlock={() => handleUnlockVideo(video)}
+            {ebooks.map((ebook) => (
+              <EbookCard
+                key={ebook.id}
+                ebook={ebook}
+                onDownload={() => {}} // Download is handled directly in the card
+                onUnlock={() => handleUnlockEbook(ebook)}
+                userId={user?.uid}
               />
             ))}
           </SimpleGrid>
@@ -227,8 +226,8 @@ export const VideoLibrary = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            {videoToUnlock
-              ? `Unlock: ${videoToUnlock.title}`
+            {ebookToUnlock
+              ? `Unlock: ${ebookToUnlock.title}`
               : 'Enter Access Code'}
           </ModalHeader>
           <ModalCloseButton />
@@ -264,7 +263,7 @@ export const VideoLibrary = () => {
               loadingText="Checking code..."
               isDisabled={accessCode.length < 3}
             >
-              {videoToUnlock ? 'Unlock Video' : 'Access Video'}
+              {ebookToUnlock ? 'Unlock Ebook' : 'Access Ebook'}
             </Button>
           </ModalFooter>
         </ModalContent>

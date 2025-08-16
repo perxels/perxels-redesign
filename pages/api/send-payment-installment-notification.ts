@@ -44,13 +44,22 @@ export default async function handler(
     } = req.body as SendPaymentInstallmentNotificationRequest
 
     // Validate required fields
-    if (!studentId || !studentName || !amount || !installmentNumber || !paymentReceiptUrl || !cohort || !classPlan || !adminEmails) {
+    if (
+      !studentId ||
+      !studentName ||
+      !amount ||
+      !installmentNumber ||
+      !paymentReceiptUrl ||
+      !cohort ||
+      !classPlan ||
+      !adminEmails
+    ) {
       return res.status(400).json({
         success: false,
         error: 'All required fields are needed',
       })
     }
-    
+
     // Send email notification to all admins
     if (adminEmails && adminEmails.length > 0) {
       const emailResult = await sendPaymentNotificationEmail(
@@ -64,14 +73,17 @@ export default async function handler(
         new Date().toLocaleString(),
         paymentReceiptUrl,
         {
-          appName: 'Perxels Portal'
-        }
+          appName: 'Perxels Portal',
+        },
       )
-      
+
       if (emailResult.success) {
         console.log('✅ Email notification sent successfully:', emailResult)
       } else {
-        console.error('❌ Failed to send email notification:', emailResult.error)
+        console.error(
+          '❌ Failed to send email notification:',
+          emailResult.error,
+        )
       }
     } else {
       console.log('⚠️ No admin emails provided for notification')
@@ -81,7 +93,6 @@ export default async function handler(
       success: true,
       message: 'Notification and email sent successfully',
     })
-
   } catch (error: any) {
     console.error('Send payment installment notification API error:', error)
     return res.status(500).json({
@@ -89,4 +100,4 @@ export default async function handler(
       error: 'Failed to send notification and email',
     })
   }
-} 
+}

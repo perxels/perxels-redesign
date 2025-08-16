@@ -22,9 +22,9 @@ const sidebarItems = [
     href: '/portal/admin/classes',
   },
   {
-    label: 'Videos',
+    label: 'Library',
     icon: '/assets/icons/video.svg',
-    href: '/portal/admin/videos',
+    href: '/portal/admin/library',
   },
   {
     label: 'Notifications',
@@ -51,8 +51,10 @@ export const AdminSidebar = () => {
     >
       {sidebarItems.map((item) => {
         const isActive = router.pathname === item.href
-        const isHomeActive = item.href === '/portal/admin/overview' && router.pathname === '/portal/admin/overview'
-        
+        const isHomeActive =
+          item.href === '/portal/admin/overview' &&
+          router.pathname === '/portal/admin/overview'
+
         return (
           <Link href={item.href} key={item.label}>
             <Box
@@ -66,7 +68,11 @@ export const AdminSidebar = () => {
               position="relative"
               borderRadius="xl"
               transition="all 0.2s ease-in-out"
-              bg={isActive || isHomeActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent'}
+              bg={
+                isActive || isHomeActive
+                  ? 'rgba(255, 255, 255, 0.15)'
+                  : 'transparent'
+              }
               _hover={{
                 bg: 'rgba(255, 255, 255, 0.1)',
                 transform: 'translateY(-2px)',
@@ -77,26 +83,33 @@ export const AdminSidebar = () => {
                 transform: 'translateY(0px)',
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
               }}
-              _before={isActive || isHomeActive ? {
-                content: '""',
-                position: 'absolute',
-                left: 0,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: '4px',
-                height: '60%',
-                bg: 'white',
-                borderRadius: '0 4px 4px 0',
-              } : undefined}
+              _before={
+                isActive || isHomeActive
+                  ? {
+                      content: '""',
+                      position: 'absolute',
+                      left: 0,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '4px',
+                      height: '60%',
+                      bg: 'white',
+                      borderRadius: '0 4px 4px 0',
+                    }
+                  : undefined
+              }
             >
               <Box position="relative">
-                <Image 
-                  src={item.icon} 
-                  alt={item.label} 
-                  width={48} 
+                <Image
+                  src={item.icon}
+                  alt={item.label}
+                  width={48}
                   height={48}
                   style={{
-                    filter: isActive || isHomeActive ? 'brightness(1.2)' : 'brightness(1)',
+                    filter:
+                      isActive || isHomeActive
+                        ? 'brightness(1.2)'
+                        : 'brightness(1)',
                     transition: 'filter 0.2s ease-in-out',
                   }}
                 />
@@ -114,7 +127,9 @@ export const AdminSidebar = () => {
                     justifyContent="center"
                     fontSize="12px"
                     fontWeight="bold"
-                    animation={unreadCount > 0 ? 'pulse 2s infinite' : undefined}
+                    animation={
+                      unreadCount > 0 ? 'pulse 2s infinite' : undefined
+                    }
                   >
                     {unreadCount > 99 ? '99+' : unreadCount}
                   </Badge>
@@ -122,7 +137,7 @@ export const AdminSidebar = () => {
               </Box>
               <Text
                 fontSize="1.25rem"
-                fontWeight={isActive || isHomeActive ? "bold" : "medium"}
+                fontWeight={isActive || isHomeActive ? 'bold' : 'medium'}
                 color="brand.white"
                 textAlign="center"
                 transition="all 0.2s ease-in-out"
