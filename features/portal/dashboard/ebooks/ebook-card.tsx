@@ -15,7 +15,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react'
 import { FiLock, FiDownload, FiFile, FiBook, FiEye } from 'react-icons/fi'
-import { PortalEbook } from '../../../types/ebook.types'
+import { PortalEbook } from '../../../../types/ebook.types'
 
 interface EbookCardProps {
   ebook: PortalEbook

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
-  Box,
   Button,
   Input,
   Text,
@@ -22,20 +21,14 @@ import {
   FormLabel,
   Card,
   CardBody,
-  CardHeader,
   Badge,
   Icon,
-  Progress,
 } from '@chakra-ui/react'
-import { FiLock, FiDownload, FiFile, FiBook } from 'react-icons/fi'
-import { PortalEbook } from '../../../types/ebook.types'
-import {
-  getAllEbooksWithAccessStatus,
-  grantEbookAccess,
-  recordEbookDownload,
-} from '../../../lib/utils/ebook.utils'
-import { usePortalAuth } from '../../../hooks/usePortalAuth'
+import { FiLock, FiBook } from 'react-icons/fi'
 import { EbookCard } from './ebook-card'
+import { PortalEbook } from '../../../../types/ebook.types'
+import { usePortalAuth } from '../../../../hooks/usePortalAuth'
+import { getAllEbooksWithAccessStatus, grantEbookAccess, recordEbookDownload } from '../../../../lib/utils/ebook.utils'
 
 export const EbookLibrary = () => {
   const router = useRouter()
