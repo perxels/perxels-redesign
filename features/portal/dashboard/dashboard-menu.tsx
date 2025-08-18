@@ -2,7 +2,6 @@ import {
   Card,
   CardBody,
   Center,
-  HStack,
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
@@ -32,8 +31,8 @@ const menuItems = [
     icon: '/assets/icons/video.svg',
   },
   {
-    title: 'Sylabus',
-    href: '/portal/dashboard/sylabus',
+    title: 'Syllabus',
+    href: '/portal/dashboard/syllabus',
     icon: '/assets/icons/syllabus.svg',
   },
 ]

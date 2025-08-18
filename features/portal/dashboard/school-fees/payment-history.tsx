@@ -54,30 +54,12 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
     }
   `
 
-  const shakeAnimation = keyframes`
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
-    20%, 40%, 60%, 80% { transform: translateX(2px); }
+  const scaleAnimation = keyframes`
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
   `
 
-  const attentionAnimation = keyframes`
-    0%, 100% { 
-      transform: scale(1) rotate(0deg);
-      background: linear-gradient(45deg, #fbbf24, #f59e0b);
-    }
-    25% { 
-      transform: scale(1.05) rotate(1deg);
-      background: linear-gradient(45deg, #f59e0b, #d97706);
-    }
-    50% { 
-      transform: scale(1.1) rotate(0deg);
-      background: linear-gradient(45deg, #d97706, #fbbf24);
-    }
-    75% { 
-      transform: scale(1.05) rotate(-1deg);
-      background: linear-gradient(45deg, #fbbf24, #f59e0b);
-    }
-  `
+
 
   // Animated Badge component for pending status
   const AnimatedBadge = ({ status, children }: { status: string; children: React.ReactNode }) => {
@@ -90,39 +72,13 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
         py={1}
         borderRadius="full"
         fontSize="xs"
-        fontWeight="bold"
+        fontWeight="medium"
         w="fit-content"
-        animation={isPending ? `${attentionAnimation} 3s infinite, ${shakeAnimation} 0.5s infinite 1s` : undefined}
-        position={isPending ? 'relative' : undefined}
-        bg={isPending ? 'linear-gradient(45deg, #fbbf24, #f59e0b)' : undefined}
-        color={isPending ? 'white' : undefined}
-        textShadow={isPending ? '0 1px 2px rgba(0,0,0,0.3)' : undefined}
-        _before={isPending ? {
-          content: '""',
-          position: 'absolute',
-          top: '-3px',
-          left: '-3px',
-          right: '-3px',
-          bottom: '-3px',
-          borderRadius: 'full',
-          background: 'linear-gradient(45deg, #fbbf24, #f59e0b, #d97706, #92400e)',
-          zIndex: -1,
-          animation: `${pulseAnimation} 2s infinite`,
-          opacity: 0.4,
-        } : undefined}
-        _after={isPending ? {
-          content: '""',
-          position: 'absolute',
-          top: '-1px',
-          left: '-1px',
-          right: '-1px',
-          bottom: '-1px',
-          borderRadius: 'full',
-          background: 'rgba(255, 255, 255, 0.2)',
-          zIndex: -1,
-        } : undefined}
+        animation={isPending ? `${scaleAnimation} 2s infinite` : undefined}
+        bg={isPending ? 'yellow.400' : undefined}
+        color={isPending ? 'black' : undefined}
         _hover={isPending ? {
-          transform: 'scale(1.1)',
+          transform: 'scale(1.05)',
           transition: 'transform 0.2s ease-in-out',
         } : undefined}
       >

@@ -35,27 +35,27 @@ export const LibraryManagement = () => {
         <Tabs
           index={activeTab}
           onChange={setActiveTab}
-          variant="enclosed"
+          variant="soft-rounded"
           colorScheme="purple"
           size="lg"
         >
           <TabList>
-            <Tab>
+            <Tab px={8} _selected={{
+              bg: 'purple.800',
+              color: 'white',
+            }}>
               <HStack spacing={3}>
                 <FiVideo size={20} />
                 <Text fontWeight="medium">Videos</Text>
-                <Badge colorScheme="blue" variant="subtle" fontSize="xs">
-                  Learning
-                </Badge>
               </HStack>
             </Tab>
-            <Tab>
+            <Tab px={8} _selected={{
+              bg: 'purple.800',
+              color: 'white',
+            }}>
               <HStack spacing={3}>
                 <FiBook size={20} />
                 <Text fontWeight="medium">Ebooks</Text>
-                <Badge colorScheme="green" variant="subtle" fontSize="xs">
-                  Resources
-                </Badge>
               </HStack>
             </Tab>
           </TabList>

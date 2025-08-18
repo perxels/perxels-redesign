@@ -23,7 +23,8 @@ import { branchOptions } from '../../../constant/adminConstants'
 
 // Types
 interface SignUpFormValues {
-  fullName: string
+  firstName: string
+  lastName: string
   email: string
   phone: string
   password: string
@@ -33,11 +34,18 @@ interface SignUpFormValues {
 
 // Enhanced validation schema with better error messages
 const formSchema = Yup.object().shape({
-  fullName: Yup.string()
-    .required('Full name is required')
-    .min(2, 'Full name must be at least 2 characters')
-    .max(50, 'Full name must not exceed 50 characters')
-    .matches(/^[a-zA-Z\s]*$/, 'Full name can only contain letters and spaces')
+  firstName: Yup.string()
+    .required('First name is required')
+    .min(2, 'First name must be at least 2 characters')
+    .max(25, 'First name must not exceed 25 characters')
+    .matches(/^[a-zA-Z\s]*$/, 'First name can only contain letters and spaces')
+    .trim(),
+
+  lastName: Yup.string()
+    .required('Last name is required')
+    .min(2, 'Last name must be at least 2 characters')
+    .max(25, 'Last name must not exceed 25 characters')
+    .matches(/^[a-zA-Z\s]*$/, 'Last name can only contain letters and spaces')
     .trim(),
 
   email: Yup.string()
@@ -91,11 +99,11 @@ export function SignUpForm() {
     setSubmitError(null)
 
     try {
-      // Sanitize form data
+      // Sanitize form data and merge names
       const sanitizedData = {
         email: values.email.toLowerCase().trim(),
         password: values.password,
-        fullName: values.fullName.trim(),
+        fullName: `${values.firstName.trim()} ${values.lastName.trim()}`.trim(),
         phone: values.phone.trim(),
         branch: values.branch,
       }
@@ -187,7 +195,8 @@ export function SignUpForm() {
 
       <Formik<SignUpFormValues>
         initialValues={{
-          fullName: '',
+          firstName: '',
+          lastName: '',
           email: '',
           phone: '',
           password: '',
@@ -204,8 +213,14 @@ export function SignUpForm() {
             <VStack w="full" alignItems="flex-start" spacing={6}>
               <SimpleGrid columns={2} spacing={[5, 10]} w="full" maxW="750px">
                 <AuthInput
-                  name="fullName"
-                  placeholder="Full name*"
+                  name="firstName"
+                  placeholder="First name*"
+                  isDisabled={isSubmitting}
+                />
+
+                <AuthInput
+                  name="lastName"
+                  placeholder="Last name*"
                   isDisabled={isSubmitting}
                 />
 

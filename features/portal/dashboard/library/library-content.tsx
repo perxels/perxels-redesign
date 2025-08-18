@@ -24,24 +24,24 @@ export const LibraryContent = () => {
       <Tabs 
         index={activeTab} 
         onChange={setActiveTab}
-        variant="enclosed"
+        variant="soft-rounded"
         colorScheme="purple"
       >
         <TabList mb={6}>
-          <Tab>
+          <Tab px={8} _selected={{
+            bg: 'purple.800',
+            color: 'white',
+          }}>
             <HStack spacing={2}>
               <Text>Videos</Text>
-              <Badge colorScheme="blue" variant="subtle" fontSize="xs">
-                Learning
-              </Badge>
             </HStack>
           </Tab>
-          <Tab>
+          <Tab px={8} _selected={{
+            bg: 'purple.800',
+            color: 'white',
+          }}>
             <HStack spacing={2}>
               <Text>Ebooks</Text>
-              <Badge colorScheme="green" variant="subtle" fontSize="xs">
-                Resources
-              </Badge>
             </HStack>
           </Tab>
         </TabList>

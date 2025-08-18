@@ -172,7 +172,6 @@ export const ProfileDetailsForm = () => {
           handleBlur,
           handleSubmit,
           isValid,
-          setFieldValue,
         }) => {
           return (
             <form
@@ -279,13 +278,13 @@ export const ProfileDetailsForm = () => {
                     name="dateOfEnrollment"
                     value={values.dateOfEnrollment}
                     onChange={(date) => {
-                      const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
-                      setFieldValue('dateOfEnrollment', formattedDate)
+                      return;
                     }}
                     onBlur={() => handleBlur('dateOfEnrollment')}
                     isInvalid={!!(touched.dateOfEnrollment && errors.dateOfEnrollment)}
                     errorMessage={errors.dateOfEnrollment}
                     maxDate={new Date()}
+                    isDisabled={true}
                   />
                 </FormControl>
 

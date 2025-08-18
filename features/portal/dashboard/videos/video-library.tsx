@@ -88,7 +88,7 @@ export const VideoLibrary = () => {
     setGrantingAccess(true)
     try {
       const result = await grantVideoAccess({
-        videoId: '', // Will be determined by access code
+        videoId: videoToUnlock?.id || '', // Use the actual video ID
         studentId: user.uid,
         accessCode: accessCode.trim().toUpperCase(),
       })
@@ -101,12 +101,13 @@ export const VideoLibrary = () => {
           duration: 5000,
         })
         setAccessCode('')
+        setVideoToUnlock(null)
         onCodeModalClose()
         fetchVideos() // Refresh the video list
       } else {
         toast({
           title: 'Access Denied',
-          description: result.error,
+          description: result.error || 'Invalid access code',
           status: 'error',
           duration: 5000,
         })

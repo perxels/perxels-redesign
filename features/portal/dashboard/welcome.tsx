@@ -1,6 +1,7 @@
 import { Avatar, Heading, HStack } from '@chakra-ui/react'
 import React from 'react'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
+import Link from 'next/link'
 
 export const Welcome = () => {
   const { portalUser } = usePortalAuth()
@@ -11,11 +12,13 @@ export const Welcome = () => {
         Welcome {portalUser?.fullName?.split(' ')[0]}
       </Heading>
 
-      <Avatar
-        size={{ base: "md", md: "xl" }}
-        name={portalUser?.fullName}
-        src={portalUser?.growthInfo?.pictureUrl}
-      />
+      <Link href="/portal/dashboard/profile">
+        <Avatar
+          size={{ base: "md", md: "xl" }}
+          name={portalUser?.fullName}
+          src={portalUser?.growthInfo?.pictureUrl}
+        />
+      </Link>
     </HStack>
   )
 }

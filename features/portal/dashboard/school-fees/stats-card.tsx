@@ -7,6 +7,7 @@ interface StatsCardProps {
   isTitleBig?: boolean
   color?: string
   w?: string[]
+  desc?: string
 }
 
 export const StatsCard = ({
@@ -14,7 +15,8 @@ export const StatsCard = ({
   amount,
   isTitleBig = false,
   color = 'brand.purple.100',
-  w = ['300px']
+  w = ['300px'],
+  desc
 }: StatsCardProps) => {
   return (
     <Card shadow="none" bg={color} borderRadius="2xl" p={[4, 6]} px={[1, 3]} h={['130px', '150px', '170px']} cursor="pointer" w={w}>
@@ -30,6 +32,11 @@ export const StatsCard = ({
         >
           {amount}
         </Heading>
+        {desc && (
+          <Text fontSize="md" color="brand.dark.100">
+            {desc}
+          </Text>
+        )}
       </CardBody>
     </Card>
   )

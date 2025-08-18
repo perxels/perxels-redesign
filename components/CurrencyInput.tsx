@@ -78,6 +78,13 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
             borderColor: isInvalid ? 'red.500' : 'yellow.400',
             bgColor: 'yellow.50',
           },
+          _disabled: {
+            opacity: 1,
+            cursor: 'not-allowed',
+            color: 'brand.dark.100',
+            bgColor: 'yellow.50',
+            borderColor: 'yellow.300',
+          },
         }
       case 'purple':
         return {
@@ -98,6 +105,13 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
             borderColor: isInvalid ? 'red.500' : 'purple.400',
             bgColor: 'purple.50',
           },
+          _disabled: {
+            opacity: 1,
+            cursor: 'not-allowed',
+            color: 'brand.dark.100',
+            bgColor: 'purple.50',
+            borderColor: 'purple.300',
+          },
         }
       default:
         return {
@@ -117,6 +131,13 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
           _hover: {
             borderColor: isInvalid ? 'red.500' : 'blue.400',
             bgColor: 'white',
+          },
+          _disabled: {
+            opacity: 1,
+            cursor: 'not-allowed',
+            color: 'brand.dark.100',
+            bgColor: 'white',
+            borderColor: 'gray.300',
           },
         }
     }

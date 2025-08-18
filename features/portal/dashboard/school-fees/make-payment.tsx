@@ -27,6 +27,7 @@ import { useToast } from '@chakra-ui/react'
 import { getPaymentSuggestions } from '../../../../types/school-fee.types'
 import { addPaymentInstallment } from '../../../../lib/utils/payment.utils'
 import { usePaymentNotifications } from '../../../../hooks/usePaymentNotifications'
+import { EnhancedImageUpload } from '../../../../components/EnhancedImageUpload'
 
 interface PaymentDetailsProps {
   setStep: (step: number) => void
@@ -140,7 +141,6 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { user, portalUser } = usePortalAuth()
   const toast = useToast()
-  const schoolFeeInfo = portalUser?.schoolFeeInfo
   const { sendPaymentNotification } = usePaymentNotifications()
 
   const initialAmountOwed =
@@ -183,7 +183,7 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
       }
 
       // Prepare payment data (match school-fee-info-form.tsx)
-      const isFirstPayment = !schoolFeeInfo?.payments || schoolFeeInfo.payments.length === 0
+      const isFirstPayment = !portalUser?.schoolFeeInfo?.payments || portalUser.schoolFeeInfo.payments.length === 0
       let response, result
       if (isFirstPayment) {
         // First payment: send full info
@@ -240,9 +240,13 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
         isClosable: true,
         position: 'top',
       })
+      
       setPaymentReceiptFile(null)
       if (setStep) setStep(1)
       if (onClose) onClose()
+      
+      // Refresh the page to update school fee details
+      window.location.reload()
     } catch (error: any) {
       toast({
         title: 'Payment Failed',
@@ -298,7 +302,9 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
               <CurrencyInput
                 name="amountOwed"
                 value={values.amountOwed}
-                onChange={(value) => setFieldValue('amountOwed', value)}
+                onChange={(value) => {
+                  return;
+                }}
                 onBlur={() => handleBlur('amountOwed')}
                 placeholder="How much are you owing?"
                 label="Amount Owed"
@@ -306,68 +312,28 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
                 errorMessage={touched.amountOwed && errors.amountOwed}
                 variant="yellow"
                 isRequired
+                isDisabled={true}
               />
 
-              <VStack w="full" alignItems="flex-start" gap="8">
-                <Input
-                  type="file"
-                  name="paymentReceipt"
-                  onChange={(event) => {
-                    const file = event.currentTarget.files?.[0]
-                    if (file) {
+              <VStack w="full" alignItems="flex-start" gap="4">
+                <Box w="full">
+                  <EnhancedImageUpload
+                    onChange={(file) => {
                       setPaymentReceiptFile(file)
                       setFieldValue('paymentReceipt', file)
-                    }
-                  }}
-                  onBlur={handleBlur}
-                  accept="image/*"
-                  hidden
-                  id="paymentReceipt"
-                />
-
-                <FormLabel
-                  w="full"
-                  h="14.5rem"
-                  bg="yellow.50"
-                  borderWidth={1}
-                  borderColor={
-                    touched.paymentReceipt && errors.paymentReceipt
-                      ? 'red.500'
-                      : paymentReceiptFile
-                      ? 'green.300'
-                      : 'yellow.300'
-                  }
-                  rounded="md"
-                  htmlFor="paymentReceipt"
-                  cursor="pointer"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  fontSize="md"
-                  textAlign="center"
-                  color="brand.dark.100"
-                  flexDirection="column"
-                  gap={2}
-                >
-                  {paymentReceiptFile ? (
-                    <>
-                      <Text fontSize="sm" color="green.600" fontWeight="bold">
-                        ✓ File Selected
-                      </Text>
-                      <Text fontSize="xs" color="gray.600">
-                        {paymentReceiptFile.name}
-                      </Text>
-                      <Text fontSize="xs" color="gray.500">
-                        Click to change file
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      Upload your payment receipt <br />
-                      (as screenshot)
-                    </>
-                  )}
-                </FormLabel>
+                    }}
+                    onError={(error) => {
+                      // Handle validation errors
+                      console.error('Image upload error:', error)
+                    }}
+                    maxSize={5}
+                    acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
+                    showPreviewModal={true}
+                    uploadText="Upload your payment receipt (as screenshot)"
+                    previewText="RECEIPT PREVIEW"
+                    isRequired={true}
+                  />
+                </Box>
                 {touched.paymentReceipt && errors.paymentReceipt && (
                   <Text fontSize="sm" color="red.500">
                     {errors.paymentReceipt}
