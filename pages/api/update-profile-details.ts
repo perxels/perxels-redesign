@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { doc, updateDoc } from 'firebase/firestore'
-import { portalDb } from '../../portalFirebaseConfig'
 
 interface UpdateProfileDetailsRequest {
   uid: string
@@ -10,12 +8,14 @@ interface UpdateProfileDetailsRequest {
     schoolFeeInfo?: any
     growthInfo?: any
   }
+  // Client will handle Firebase operations, server only validates
 }
 
 interface ApiResponse {
   success: boolean
   message?: string
   error?: string
+  data?: any
 }
 
 export default async function handler(
@@ -83,14 +83,13 @@ export default async function handler(
       updateData.growthInfo = profileData.growthInfo
     }
 
-    // Update user document in Firestore
-    const userDocRef = doc(portalDb, 'users', uid)
+    // Client will handle Firebase operations
+    // Server only validates and returns success response
     
-    await updateDoc(userDocRef, updateData)
-
     return res.status(200).json({
       success: true,
-      message: 'Profile details updated successfully.',
+      message: 'Profile details validated successfully. Please handle Firebase operations on the client side.',
+      data: updateData
     })
 
   } catch (error: any) {

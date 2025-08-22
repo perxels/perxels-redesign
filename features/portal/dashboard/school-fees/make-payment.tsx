@@ -11,13 +11,6 @@ import {
   Text,
   Heading,
   VStack,
-  FormControl,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  FormErrorMessage,
   Box,
   Input,
   FormLabel,
@@ -28,11 +21,13 @@ import {
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { formatNaira, parseNaira } from '../../auth/school-fee-info-form'
+import { CurrencyInput } from '../../../../components/CurrencyInput'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { useToast } from '@chakra-ui/react'
 import { getPaymentSuggestions } from '../../../../types/school-fee.types'
 import { addPaymentInstallment } from '../../../../lib/utils/payment.utils'
+import { usePaymentNotifications } from '../../../../hooks/usePaymentNotifications'
+import { EnhancedImageUpload } from '../../../../components/EnhancedImageUpload'
 
 interface PaymentDetailsProps {
   setStep: (step: number) => void
@@ -146,7 +141,7 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { user, portalUser } = usePortalAuth()
   const toast = useToast()
-  const schoolFeeInfo = portalUser?.schoolFeeInfo
+  const { sendPaymentNotification } = usePaymentNotifications()
 
   const initialAmountOwed =
     (portalUser?.schoolFeeInfo?.totalSchoolFee || 0) -
@@ -188,7 +183,7 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
       }
 
       // Prepare payment data (match school-fee-info-form.tsx)
-      const isFirstPayment = !schoolFeeInfo?.payments || schoolFeeInfo.payments.length === 0
+      const isFirstPayment = !portalUser?.schoolFeeInfo?.payments || portalUser.schoolFeeInfo.payments.length === 0
       let response, result
       if (isFirstPayment) {
         // First payment: send full info
@@ -216,24 +211,23 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
           throw new Error(result.error || 'Failed to add payment installment')
         }
 
-        // Send notifications via API
+        // Send notifications using client-side hook
         if (result.notificationData) {
-          const notificationResponse = await fetch('/api/send-payment-installment-notification', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+          try {
+            const notificationResult = await sendPaymentNotification({
               ...result.notificationData,
               studentId: uid, // Add the student ID
-            }),
-          })
+            })
 
-          if (!notificationResponse.ok) {
-            console.error('Failed to send notification, but payment was processed')
+            if (!notificationResult.success) {
+              console.warn('Payment notification failed:', notificationResult.error)
+              // Don't fail the main request if notification fails
+            } else {
+              console.log('Payment notification sent successfully')
+            }
+          } catch (notificationError) {
+            console.error('Payment notification error:', notificationError)
             // Don't fail the main request if notification fails
-          } else {
-            const notificationResult = await notificationResponse.json()
           }
         }
       }
@@ -246,9 +240,13 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
         isClosable: true,
         position: 'top',
       })
+      
       setPaymentReceiptFile(null)
       if (setStep) setStep(1)
       if (onClose) onClose()
+      
+      // Refresh the page to update school fee details
+      window.location.reload()
     } catch (error: any) {
       toast({
         title: 'Payment Failed',
@@ -288,223 +286,54 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
             await handleSubmit(e);
           }}>
             <VStack>
-              <FormControl
+              <CurrencyInput
+                name="amountPaid"
+                value={values.amountPaid}
+                onChange={(value) => setFieldValue('amountPaid', value)}
+                onBlur={() => handleBlur('amountPaid')}
+                placeholder="How much have you paid?"
+                label="Amount Paid"
                 isInvalid={touched.amountPaid && !!errors.amountPaid}
-              >
-                <NumberInput
-                  value={
-                    values.amountPaid === 0
-                      ? ''
-                      : formatNaira(values.amountPaid.toString())
-                  }
-                  onChange={(valueString) => {
-                    const parsedValue = parseNaira(valueString)
-                    setFieldValue('amountPaid', parsedValue)
-                  }}
-                  onBlur={() => handleBlur('amountPaid')}
-                  min={0}
-                >
-                  <NumberInputField
-                    h="3.5rem"
-                    placeholder="How much have you paid?"
-                    _placeholder={{ color: 'brand.dark.200' }}
-                    borderWidth={1}
-                    borderColor={
-                      touched.amountPaid && errors.amountPaid
-                        ? 'red.500'
-                        : 'yellow.300'
-                    }
-                    bgColor="yellow.50"
-                    _focus={{
-                      borderColor:
-                        touched.amountPaid && errors.amountPaid
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _focusVisible={{
-                      outline: 'none',
-                    }}
-                    _active={{
-                      borderColor:
-                        touched.amountPaid && errors.amountPaid
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _hover={{
-                      borderColor:
-                        touched.amountPaid && errors.amountPaid
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                  />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-                {touched.amountPaid && errors.amountPaid && (
-                  <FormErrorMessage>{errors.amountPaid}</FormErrorMessage>
-                )}
+                errorMessage={touched.amountPaid && errors.amountPaid}
+                variant="yellow"
+                isRequired
+              />
 
-                {/* Payment suggestions */}
-                {schoolFeeInfo?.totalSchoolFee && (
-                  <Box mt={2}>
-                    <Text fontSize="xs" color="gray.600" mb={1}>
-                      Suggested amounts:
-                    </Text>
-                    <Wrap spacing={1}>
-                      {getPaymentSuggestions(
-                        schoolFeeInfo.totalSchoolFee || 0,
-                        schoolFeeInfo.totalApproved || 0
-                      )
-                        .slice(0, Math.max(0, 3 - (schoolFeeInfo.payments?.length || 0)))
-                        .map((amount) => (
-                          <WrapItem key={amount}>
-                            <Badge
-                              colorScheme="yellow"
-                              cursor="pointer"
-                              fontSize="xs"
-                              px={2}
-                              py={1}
-                              onClick={() =>
-                                setFieldValue('amountPaid', amount.toString())
-                              }
-                              _hover={{ bg: 'yellow.200' }}
-                            >
-                              ₦{amount.toLocaleString()}
-                            </Badge>
-                          </WrapItem>
-                        ))}
-                    </Wrap>
-                  </Box>
-                )}
-              </FormControl>
-
-              <FormControl
+              <CurrencyInput
+                name="amountOwed"
+                value={values.amountOwed}
+                onChange={(value) => {
+                  return;
+                }}
+                onBlur={() => handleBlur('amountOwed')}
+                placeholder="How much are you owing?"
+                label="Amount Owed"
                 isInvalid={touched.amountOwed && !!errors.amountOwed}
-              >
-                <NumberInput
-                  value={
-                    values.amountOwed === 0
-                      ? ''
-                      : formatNaira(values.amountOwed.toString())
-                  }
-                  onChange={(valueString) => {
-                    const parsedValue = parseNaira(valueString)
-                    setFieldValue('amountOwed', parsedValue)
-                  }}
-                  onBlur={() => handleBlur('amountOwed')}
-                  min={0}
-                >
-                  <NumberInputField
-                    h="3.5rem"
-                    placeholder="How much are you owing?"
-                    _placeholder={{ color: 'brand.dark.200' }}
-                    borderWidth={1}
-                    borderColor={
-                      touched.amountOwed && errors.amountOwed
-                        ? 'red.500'
-                        : 'yellow.300'
-                    }
-                    bgColor="yellow.50"
-                    _focus={{
-                      borderColor:
-                        touched.amountOwed && errors.amountOwed
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _focusVisible={{
-                      outline: 'none',
-                    }}
-                    _active={{
-                      borderColor:
-                        touched.amountOwed && errors.amountOwed
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                    _hover={{
-                      borderColor:
-                        touched.amountOwed && errors.amountOwed
-                          ? 'red.500'
-                          : 'yellow.400',
-                      bgColor: 'yellow.50',
-                    }}
-                  />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-                {touched.amountOwed && errors.amountOwed && (
-                  <FormErrorMessage>{errors.amountOwed}</FormErrorMessage>
-                )}
-              </FormControl>
+                errorMessage={touched.amountOwed && errors.amountOwed}
+                variant="yellow"
+                isRequired
+                isDisabled={true}
+              />
 
-              <VStack w="full" alignItems="flex-start" gap="8">
-                <Input
-                  type="file"
-                  name="paymentReceipt"
-                  onChange={(event) => {
-                    const file = event.currentTarget.files?.[0]
-                    if (file) {
+              <VStack w="full" alignItems="flex-start" gap="4">
+                <Box w="full">
+                  <EnhancedImageUpload
+                    onChange={(file) => {
                       setPaymentReceiptFile(file)
                       setFieldValue('paymentReceipt', file)
-                    }
-                  }}
-                  onBlur={handleBlur}
-                  accept="image/*"
-                  hidden
-                  id="paymentReceipt"
-                />
-
-                <FormLabel
-                  w="full"
-                  h="14.5rem"
-                  bg="yellow.50"
-                  borderWidth={1}
-                  borderColor={
-                    touched.paymentReceipt && errors.paymentReceipt
-                      ? 'red.500'
-                      : paymentReceiptFile
-                      ? 'green.300'
-                      : 'yellow.300'
-                  }
-                  rounded="md"
-                  htmlFor="paymentReceipt"
-                  cursor="pointer"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  fontSize="md"
-                  textAlign="center"
-                  color="brand.dark.100"
-                  flexDirection="column"
-                  gap={2}
-                >
-                  {paymentReceiptFile ? (
-                    <>
-                      <Text fontSize="sm" color="green.600" fontWeight="bold">
-                        ✓ File Selected
-                      </Text>
-                      <Text fontSize="xs" color="gray.600">
-                        {paymentReceiptFile.name}
-                      </Text>
-                      <Text fontSize="xs" color="gray.500">
-                        Click to change file
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      Upload your payment receipt <br />
-                      (as screenshot)
-                    </>
-                  )}
-                </FormLabel>
+                    }}
+                    onError={(error) => {
+                      // Handle validation errors
+                      console.error('Image upload error:', error)
+                    }}
+                    maxSize={5}
+                    acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
+                    showPreviewModal={true}
+                    uploadText="Upload your payment receipt (as screenshot)"
+                    previewText="RECEIPT PREVIEW"
+                    isRequired={true}
+                  />
+                </Box>
                 {touched.paymentReceipt && errors.paymentReceipt && (
                   <Text fontSize="sm" color="red.500">
                     {errors.paymentReceipt}
@@ -512,7 +341,31 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
                 )}
               </VStack>
 
-              <HStack justifyContent="flex-start" w="full" mt={10}>
+              {/* Date and Time Display */}
+              <Box w="full" textAlign="right" mt={4}>
+                <HStack gap={4} align="end" justifyContent="flex-end">
+                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                    Date: {new Date().toLocaleDateString('en-US', {
+                      weekday: 'short',
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </Text>
+                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                    |
+                  </Text>
+                  <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                    Time: {new Date().toLocaleTimeString('en-US', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+                  </Text>
+                </HStack>
+              </Box>
+
+              <HStack justifyContent="flex-start" w="full" mt={6}>
                 <Button
                   h="3.5rem"
                   type="submit"

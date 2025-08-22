@@ -24,7 +24,14 @@ import {
   Flex,
   Divider,
 } from '@chakra-ui/react'
-import { FiUpload, FiX, FiImage, FiZoomIn, FiRotateCw, FiDownload } from 'react-icons/fi'
+import {
+  FiUpload,
+  FiX,
+  FiImage,
+  FiZoomIn,
+  FiRotateCw,
+  FiDownload,
+} from 'react-icons/fi'
 
 interface EnhancedImageUploadProps {
   value?: string
@@ -52,8 +59,8 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
   minDimensions = { width: 300, height: 150 },
   maxDimensions,
   showPreviewModal = true,
-  uploadText = "Drop image here or click to upload",
-  previewText = "PREVIEW"
+  uploadText = 'Drop image here or click to upload',
+  previewText = 'PREVIEW',
 }) => {
   const [dragOver, setDragOver] = useState(false)
   const [previewUrl, setPreviewUrl] = useState<string>('')
@@ -77,83 +84,96 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
-  const validateImage = useCallback(async (file: File): Promise<{ 
-    valid: boolean
-    error?: string
-    dimensions?: { width: number; height: number }
-  }> => {
-    return new Promise((resolve) => {
-      // Check file type
-      if (!acceptedTypes.includes(file.type)) {
-        resolve({ 
-          valid: false, 
-          error: `Please select a valid image file (${acceptedTypes.map(t => t.split('/')[1]).join(', ')})` 
-        })
-        return
-      }
-
-      // Check file size
-      if (file.size > maxSize * 1024 * 1024) {
-        resolve({ 
-          valid: false, 
-          error: `Image size must be less than ${maxSize}MB` 
-        })
-        return
-      }
-
-      // Check dimensions
-      const img = new window.Image()
-      img.onload = () => {
-        const { width, height } = img
-        
-        // Minimum dimensions check
-        if (width < minDimensions.width || height < minDimensions.height) {
+  const validateImage = useCallback(
+    async (
+      file: File,
+    ): Promise<{
+      valid: boolean
+      error?: string
+      dimensions?: { width: number; height: number }
+    }> => {
+      return new Promise((resolve) => {
+        // Check file type
+        if (!acceptedTypes.includes(file.type)) {
           resolve({
             valid: false,
-            error: `Image is too small. Minimum: ${minDimensions.width}x${minDimensions.height}px. Current: ${width}x${height}`,
-            dimensions: { width, height }
+            error: `Please select a valid image file (${acceptedTypes
+              .map((t) => t.split('/')[1])
+              .join(', ')})`,
           })
           return
         }
 
-        // Maximum dimensions check
-        if (maxDimensions && (width > maxDimensions.width || height > maxDimensions.height)) {
+        // Check file size
+        if (file.size > maxSize * 1024 * 1024) {
           resolve({
             valid: false,
-            error: `Image is too large. Maximum: ${maxDimensions.width}x${maxDimensions.height}px. Current: ${width}x${height}`,
-            dimensions: { width, height }
+            error: `Image size must be less than ${maxSize}MB`,
           })
           return
         }
 
-        // Aspect ratio check
-        if (aspectRatio) {
-          const targetAspectRatio = aspectRatio.width / aspectRatio.height
-          const imageAspectRatio = width / height
-          const tolerance = 0.1
-          const minAspectRatio = targetAspectRatio * (1 - tolerance)
-          const maxAspectRatio = targetAspectRatio * (1 + tolerance)
+        // Check dimensions
+        const img = new window.Image()
+        img.onload = () => {
+          const { width, height } = img
 
-          if (imageAspectRatio < minAspectRatio || imageAspectRatio > maxAspectRatio) {
+          // Minimum dimensions check
+          if (width < minDimensions.width || height < minDimensions.height) {
             resolve({
               valid: false,
-              error: `Image aspect ratio should be close to ${aspectRatio.width}x${aspectRatio.height}. Current: ${width}x${height}`,
-              dimensions: { width, height }
+              error: `Image is too small. Minimum: ${minDimensions.width}x${minDimensions.height}px. Current: ${width}x${height}`,
+              dimensions: { width, height },
             })
             return
           }
+
+          // Maximum dimensions check
+          if (
+            maxDimensions &&
+            (width > maxDimensions.width || height > maxDimensions.height)
+          ) {
+            resolve({
+              valid: false,
+              error: `Image is too large. Maximum: ${maxDimensions.width}x${maxDimensions.height}px. Current: ${width}x${height}`,
+              dimensions: { width, height },
+            })
+            return
+          }
+
+          // Aspect ratio check
+          if (aspectRatio) {
+            const targetAspectRatio = aspectRatio.width / aspectRatio.height
+            const imageAspectRatio = width / height
+            const tolerance = 0.1
+            const minAspectRatio = targetAspectRatio * (1 - tolerance)
+            const maxAspectRatio = targetAspectRatio * (1 + tolerance)
+
+            if (
+              imageAspectRatio < minAspectRatio ||
+              imageAspectRatio > maxAspectRatio
+            ) {
+              resolve({
+                valid: false,
+                error: `Image aspect ratio should be close to ${aspectRatio.width}x${aspectRatio.height}. Current: ${width}x${height}`,
+                dimensions: { width, height },
+              })
+              return
+            }
+          }
+
+          resolve({ valid: true, dimensions: { width, height } })
         }
 
-        resolve({ valid: true, dimensions: { width, height } })
-      }
+        img.onerror = () => {
+          resolve({ valid: false, error: 'Invalid image file' })
+        }
 
-      img.onerror = () => {
-        resolve({ valid: false, error: 'Invalid image file' })
-      }
-
-      img.src = URL.createObjectURL(file)
-    })
-  }, [acceptedTypes, maxSize, minDimensions, maxDimensions, aspectRatio])
+        img.src = URL.createObjectURL(file)
+      })
+    },
+    [acceptedTypes, maxSize, minDimensions, maxDimensions, aspectRatio],
+  )
 
   const handleFileSelect = async (file: File) => {
     try {
@@ -162,7 +182,6 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
 
       // Validate image first
       const validation = await validateImage(file)
-      console.log('🔍 Image validation result:', validation)
       if (!validation.valid) {
         const errorMsg = validation.error || 'Invalid image'
         onError?.(errorMsg)
@@ -174,21 +193,19 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
       const preview = URL.createObjectURL(file)
       setPreviewUrl(preview)
       setSelectedFile(file)
-      
+
       // Set image info
       if (validation.dimensions) {
         setImageInfo({
           width: validation.dimensions.width,
           height: validation.dimensions.height,
           size: formatFileSize(file.size),
-          type: file.type
+          type: file.type,
         })
       }
-      
-      console.log('📤 Calling onChange with file:', file)
+
       onChange(file)
       onError?.('') // Clear any previous errors
-
     } catch (error) {
       console.error('File validation error:', error)
       const errorMessage = 'Failed to process image. Please try again.'
@@ -199,7 +216,9 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
     }
   }
 
-  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0]
     if (file) {
       handleFileSelect(file)
@@ -219,7 +238,7 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
   const handleDrop = (event: React.DragEvent) => {
     event.preventDefault()
     setDragOver(false)
-    
+
     const file = event.dataTransfer.files[0]
     if (file) {
       handleFileSelect(file)
@@ -231,13 +250,13 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl)
     }
-    
+
     setPreviewUrl('')
     setSelectedFile(null)
     setValidationError('')
     setImageInfo(null)
     onChange(null)
-    
+
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -301,11 +320,13 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
               >
                 <VStack spacing={2}>
                   <Spinner size="lg" color="purple.500" />
-                  <Text fontSize="sm" color="gray.600">Processing image...</Text>
+                  <Text fontSize="sm" color="gray.600">
+                    Processing image...
+                  </Text>
                 </VStack>
               </Box>
             )}
-            
+
             <VStack spacing={3}>
               <FiImage size={32} color="#A0AEC0" />
               <Text fontWeight="medium" color="gray.600">
@@ -317,13 +338,22 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
                 </Text>
               )}
               <Text fontSize="xs" color="gray.400">
-                {acceptedTypes.map(t => t.split('/')[1]).join(', ').toUpperCase()} • Max {maxSize}MB
+                {acceptedTypes
+                  .map((t) => t.split('/')[1])
+                  .join(', ')
+                  .toUpperCase()}{' '}
+                • Max {maxSize}MB
               </Text>
             </VStack>
           </Box>
         ) : (
           /* Enhanced Image Preview */
-          <Box position="relative" borderRadius="lg" overflow="hidden" bg="gray.100">
+          <Box
+            position="relative"
+            borderRadius="lg"
+            overflow="hidden"
+            bg="gray.100"
+          >
             <Image
               src={displayUrl}
               alt="Image preview"
@@ -335,7 +365,7 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
               transition="transform 0.2s"
               _hover={showPreviewModal ? { transform: 'scale(1.02)' } : {}}
             />
-            
+
             {/* Overlay with actions */}
             <Box
               position="absolute"
@@ -412,7 +442,9 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
                 fontSize="xs"
               >
                 <HStack justify="space-between">
-                  <Text>{imageInfo.width} × {imageInfo.height}</Text>
+                  <Text>
+                    {imageInfo.width} × {imageInfo.height}
+                  </Text>
                   <Text>{imageInfo.size}</Text>
                 </HStack>
               </Box>
@@ -440,7 +472,7 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
               Choose Image
             </Button>
           )}
-          
+
           {displayUrl && (
             <>
               <Button
@@ -473,7 +505,12 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
           <ModalCloseButton />
           <ModalBody pb={6}>
             <VStack spacing={4}>
-              <Box position="relative" display="flex" justifyContent="center" alignItems="center">
+              <Box
+                position="relative"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
                 <Image
                   src={displayUrl}
                   alt="Full size preview"
@@ -483,11 +520,13 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
                   borderRadius="md"
                 />
               </Box>
-              
+
               {imageInfo && (
                 <Box w="full" p={4} bg="gray.50" borderRadius="md">
                   <VStack spacing={2} align="stretch">
-                    <Text fontWeight="medium" fontSize="sm">Image Details</Text>
+                    <Text fontWeight="medium" fontSize="sm">
+                      Image Details
+                    </Text>
                     <Divider />
                     <HStack justify="space-between">
                       <Text fontSize="sm">Dimensions:</Text>
@@ -497,11 +536,15 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
                     </HStack>
                     <HStack justify="space-between">
                       <Text fontSize="sm">File Size:</Text>
-                      <Text fontSize="sm" fontWeight="medium">{imageInfo.size}</Text>
+                      <Text fontSize="sm" fontWeight="medium">
+                        {imageInfo.size}
+                      </Text>
                     </HStack>
                     <HStack justify="space-between">
                       <Text fontSize="sm">Type:</Text>
-                      <Text fontSize="sm" fontWeight="medium">{imageInfo.type}</Text>
+                      <Text fontSize="sm" fontWeight="medium">
+                        {imageInfo.type}
+                      </Text>
                     </HStack>
                     {aspectRatio && (
                       <HStack justify="space-between">
@@ -521,13 +564,11 @@ export const EnhancedImageUpload: React.FC<EnhancedImageUploadProps> = ({
               <Button variant="outline" onClick={openFileDialog}>
                 Change Image
               </Button>
-              <Button onClick={onClose}>
-                Close
-              </Button>
+              <Button onClick={onClose}>Close</Button>
             </HStack>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </>
   )
-} 
+}

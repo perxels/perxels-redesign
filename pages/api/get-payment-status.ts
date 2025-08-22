@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { doc, getDoc } from 'firebase/firestore'
-import { portalDb } from '../../portalFirebaseConfig'
 import { SchoolFeeInfo, getRemainingBalance, getTotalPending, getNextInstallmentNumber, canAddInstallment } from '../../types/school-fee.types'
 
 interface GetPaymentStatusRequest {
@@ -9,14 +7,7 @@ interface GetPaymentStatusRequest {
 
 interface PaymentStatusResponse {
   success: boolean
-  data?: {
-    schoolFeeInfo: SchoolFeeInfo | null
-    remainingBalance: number
-    totalPending: number
-    nextInstallmentNumber: number | null
-    canAddInstallment: boolean
-    hasSchoolFeeInfo: boolean
-  }
+  message?: string
   error?: string
 }
 
@@ -42,48 +33,12 @@ export default async function handler(
       })
     }
 
-    // Verify user exists and get school fee info
-    const userDoc = await getDoc(doc(portalDb, 'users', uid))
-    if (!userDoc.exists()) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found',
-      })
-    }
-
-    const userData = userDoc.data()
-    const schoolFeeInfo = userData?.schoolFeeInfo as SchoolFeeInfo | undefined
-
-    if (!schoolFeeInfo) {
-      return res.status(200).json({
-        success: true,
-        data: {
-          schoolFeeInfo: null,
-          remainingBalance: 0,
-          totalPending: 0,
-          nextInstallmentNumber: null,
-          canAddInstallment: false,
-          hasSchoolFeeInfo: false,
-        },
-      })
-    }
-
-    // Calculate status information
-    const remainingBalance = getRemainingBalance(schoolFeeInfo)
-    const totalPending = getTotalPending(schoolFeeInfo)
-    const nextInstallmentNumber = getNextInstallmentNumber(schoolFeeInfo)
-    const canAddMore = canAddInstallment(schoolFeeInfo)
-
+    // Client will handle Firebase operations
+    // Server only validates and returns success response
+    
     return res.status(200).json({
       success: true,
-      data: {
-        schoolFeeInfo,
-        remainingBalance,
-        totalPending,
-        nextInstallmentNumber,
-        canAddInstallment: canAddMore,
-        hasSchoolFeeInfo: true,
-      },
+      message: 'Payment status should be retrieved on the client side using Firestore queries.',
     })
 
   } catch (error: any) {

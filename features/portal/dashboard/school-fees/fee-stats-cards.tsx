@@ -44,6 +44,7 @@ export const FeeStatsCards = () => {
       <StatsCard 
         title="0775531140"
         amount="GTBANK"
+        desc="The Perxels Service Limited"
         color="pink.100"
         isTitleBig
         w={['100%', '300px']}

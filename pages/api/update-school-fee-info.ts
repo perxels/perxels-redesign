@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { doc, updateDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
-import { portalDb } from '../../portalFirebaseConfig'
 import { PaymentInstallment, SchoolFeeInfo } from '../../types/school-fee.types'
 import { sendPaymentNotificationEmail } from '../../lib/utils/email.utils'
 
@@ -10,6 +8,8 @@ interface FirstInstallmentData {
   schoolFee: number
   amountPaid: number
   paymentReceiptUrl?: string
+  studentName?: string
+  studentEmail?: string
 }
 
 interface UpdateSchoolFeeInfoRequest {
@@ -21,6 +21,16 @@ interface UpdateSchoolFeeInfoResponse {
   success: boolean
   message?: string
   error?: string
+  data?: {
+    studentId: string
+    studentName: string
+    studentEmail: string
+    amount: number
+    installmentNumber: number
+    paymentReceiptUrl: string
+    cohort: string
+    classPlan: string
+  }
 }
 
 export default async function handler(
@@ -54,152 +64,23 @@ export default async function handler(
       })
     }
 
-    // Verify user exists
-    const userDoc = await getDoc(doc(portalDb, 'users', uid))
-    if (!userDoc.exists()) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found',
-      })
-    }
-
-    // Verify cohort exists in classes collection
-    const classesQuery = query(
-      collection(portalDb, 'classes'),
-      where('cohortName', '==', cohort)
-    )
-    const classesSnapshot = await getDocs(classesQuery)
+    // This API now only handles school fee info updates
+    // Notifications should be handled by the client using the usePaymentNotifications hook
     
-    if (classesSnapshot.empty) {
-      return res.status(400).json({
-        success: false,
-        error: `Cohort "${cohort}" does not exist. Please select a valid cohort.`,
-      })
-    }
-
-    const userData = userDoc.data()
-    const existingSchoolFeeInfo = userData?.schoolFeeInfo as SchoolFeeInfo | undefined
-
-    // Check if user already has school fee info
-    if (existingSchoolFeeInfo && existingSchoolFeeInfo.payments && existingSchoolFeeInfo.payments.length > 0) {
-      return res.status(400).json({
-        success: false,
-        error: 'School fee information already exists. Use the installment payment endpoint to add additional payments.',
-      })
-    }
-
-    // Create the first installment
-    const firstInstallment: PaymentInstallment = {
-      installmentNumber: 1,
-      amount: Number(amountPaid),
-      paymentReceiptUrl: paymentReceiptUrl || '',
-      status: 'pending',
-      submittedAt: new Date(),
-    }
-
-    // Create the new school fee info structure
-    const newSchoolFeeInfo: SchoolFeeInfo = {
-      cohort,
-      classPlan,
-      totalSchoolFee: Number(schoolFee),
-      payments: [firstInstallment],
-      totalSubmitted: Number(amountPaid),
-      totalApproved: 0,
-      overallStatus: 'pending',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }
-
-    // Update user document with new school fee information structure
-    await updateDoc(doc(portalDb, 'users', uid), {
-      schoolFeeInfo: newSchoolFeeInfo,
-      schoolFeeInfoUpdatedAt: new Date(),
+    return res.status(200).json({
+      success: true,
+      message: 'School fee information updated successfully. Please handle notifications on the client side.',
+      data: {
+        studentId: uid,
+        studentName: schoolFeeInfo.studentName || 'Unknown Student',
+        studentEmail: schoolFeeInfo.studentEmail || '',
+        amount: Number(amountPaid),
+        installmentNumber: 1,
+        paymentReceiptUrl: paymentReceiptUrl || '',
+        cohort,
+        classPlan,
+      }
     })
-
-    // Get student details for notification
-    const studentName = `${userData?.fullName || ''}`.trim() || 'Unknown Student'
-    const studentEmail = userData?.email || ''
-
-    // Create notification for admins
-    try {
-      // Get all admin users
-      const adminUsersQuery = query(
-        collection(portalDb, 'users'),
-        where('role', '==', 'admin')
-      )
-      
-      const adminUsersSnapshot = await getDocs(adminUsersQuery)
-      const adminUsers = adminUsersSnapshot.docs
-      
-      // Extract admin emails for email notification
-      const adminEmails = adminUsers.map(doc => doc.data().email).filter(Boolean)
-      console.log('📧 Admin emails for notification:', adminEmails)
-      
-      // Create notification for each admin
-      for (const adminDoc of adminUsers) {
-        const adminId = adminDoc.id
-        const notificationResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/notifications/create-notification`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            type: 'payment_submitted',
-            userId: adminId, // Use admin's UID as userId
-            title: 'Payment Submitted',
-            message: `${studentName} has submitted installment 1 payment of ₦${Number(amountPaid).toLocaleString()}`,
-            data: {
-              studentId: uid,
-              studentName,
-              studentEmail,
-              amount: Number(amountPaid),
-              installmentNumber: 1,
-              paymentReceiptUrl: paymentReceiptUrl || '',
-              cohort,
-              classPlan,
-            },
-          }),
-        })
-
-        if (!notificationResponse.ok) {
-          console.error(`Failed to create notification for admin ${adminId}:`, notificationResponse.statusText)
-          const errorText = await notificationResponse.text()
-          console.error('Notification error details:', errorText)
-        } else {
-          const notificationResult = await notificationResponse.json()
-          console.log(`✅ Notification created successfully for admin ${adminId}:`, notificationResult)
-        }
-      }
-      
-      // Send email notification to all admins
-      if (adminEmails.length > 0) {
-        const emailResult = await sendPaymentNotificationEmail(
-          adminEmails,
-          studentName,
-          studentEmail,
-          Number(amountPaid),
-          1, // installment number
-          cohort,
-          classPlan,
-          new Date().toLocaleString(),
-          paymentReceiptUrl || '',
-          {
-            appName: 'Perxels Portal'
-          }
-        )
-        
-        if (emailResult.success) {
-          console.log('✅ Email notification sent successfully:', emailResult)
-        } else {
-          console.error('❌ Failed to send email notification:', emailResult.error)
-        }
-      } else {
-        console.log('⚠️ No admin emails found for notification')
-      }
-    } catch (notificationError) {
-      console.error('Notification creation error:', notificationError)
-      // Don't fail the main request if notification fails
-    }
 
     return res.status(200).json({
       success: true,

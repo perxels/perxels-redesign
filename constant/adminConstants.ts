@@ -4,6 +4,7 @@ export const branchOptions = [
   { value: 'Lekki, Lagos', label: 'Lekki, Lagos' },
   { value: 'Yaba, Lagos', label: 'Yaba, Lagos' },
   { value: 'Abuja', label: 'Abuja' },
+  { value: 'International', label: 'International' },
 ]
 
 export const classPlans = [
@@ -15,6 +16,7 @@ export const classPlans = [
   'Lagos Yaba Weekday Class',
   'Ibadan Weekday Physical Class',
   'Ibadan Weekend Physical Class',
+  'International Class',
 ]
 
 export const paymentStatusOptions = [

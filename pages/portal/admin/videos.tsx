@@ -1,16 +1,14 @@
-import React from 'react'
-import { AdminAuthGuard } from '../../../components/PortalAuthGuard'
-import { PortalAdminLayout } from '../../../features/portal/admin/admin-layout'
-import { VideoManagement } from '../../../features/portal/admin/videos/video-management'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const AdminVideosPage = () => {
-  return (
-    <AdminAuthGuard>
-      <PortalAdminLayout>
-        <VideoManagement />
-      </PortalAdminLayout>
-    </AdminAuthGuard>
-  )
+  const router = useRouter()
+
+  useEffect(() => {
+    router.replace('/portal/admin/library')
+  }, [router])
+
+  return null
 }
 
 export default AdminVideosPage 

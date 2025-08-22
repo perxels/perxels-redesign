@@ -23,7 +23,8 @@ import { branchOptions } from '../../../constant/adminConstants'
 
 // Types
 interface SignUpFormValues {
-  fullName: string
+  firstName: string
+  lastName: string
   email: string
   phone: string
   password: string
@@ -33,11 +34,18 @@ interface SignUpFormValues {
 
 // Enhanced validation schema with better error messages
 const formSchema = Yup.object().shape({
-  fullName: Yup.string()
-    .required('Full name is required')
-    .min(2, 'Full name must be at least 2 characters')
-    .max(50, 'Full name must not exceed 50 characters')
-    .matches(/^[a-zA-Z\s]*$/, 'Full name can only contain letters and spaces')
+  firstName: Yup.string()
+    .required('First name is required')
+    .min(2, 'First name must be at least 2 characters')
+    .max(25, 'First name must not exceed 25 characters')
+    .matches(/^[a-zA-Z\s]*$/, 'First name can only contain letters and spaces')
+    .trim(),
+
+  lastName: Yup.string()
+    .required('Last name is required')
+    .min(2, 'Last name must be at least 2 characters')
+    .max(25, 'Last name must not exceed 25 characters')
+    .matches(/^[a-zA-Z\s]*$/, 'Last name can only contain letters and spaces')
     .trim(),
 
   email: Yup.string()
@@ -62,7 +70,7 @@ const formSchema = Yup.object().shape({
     .required('Password is required')
     .min(8, 'Password must be at least 8 characters')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/,
       'Password must contain: uppercase letter, lowercase letter, number, and special character',
     ),
 
@@ -91,11 +99,11 @@ export function SignUpForm() {
     setSubmitError(null)
 
     try {
-      // Sanitize form data
+      // Sanitize form data and merge names
       const sanitizedData = {
         email: values.email.toLowerCase().trim(),
         password: values.password,
-        fullName: values.fullName.trim(),
+        fullName: `${values.firstName.trim()} ${values.lastName.trim()}`.trim(),
         phone: values.phone.trim(),
         branch: values.branch,
       }
@@ -187,7 +195,8 @@ export function SignUpForm() {
 
       <Formik<SignUpFormValues>
         initialValues={{
-          fullName: '',
+          firstName: '',
+          lastName: '',
           email: '',
           phone: '',
           password: '',
@@ -204,8 +213,14 @@ export function SignUpForm() {
             <VStack w="full" alignItems="flex-start" spacing={6}>
               <SimpleGrid columns={2} spacing={[5, 10]} w="full" maxW="750px">
                 <AuthInput
-                  name="fullName"
-                  placeholder="Full name*"
+                  name="firstName"
+                  placeholder="First name*"
+                  isDisabled={isSubmitting}
+                />
+
+                <AuthInput
+                  name="lastName"
+                  placeholder="Last name*"
                   isDisabled={isSubmitting}
                 />
 
@@ -278,11 +293,13 @@ export function SignUpForm() {
                       bgColor: 'yellow.50',
                     }}
                   >
-                    {branchOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
+                    {branchOptions
+                      .filter((option) => option.value !== 'all')
+                      .map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
                   </Select>
                   {formik.touched.branch && formik.errors.branch && (
                     <Text color="red.500" fontSize="sm" mt={1}>
@@ -342,12 +359,12 @@ export function SignUpForm() {
                     <Text
                       fontSize="xs"
                       color={
-                        /[@$!%*?&]/.test(formik.values.password)
+                        /[@$!%*?&.]/.test(formik.values.password)
                           ? 'green.500'
                           : 'gray.400'
                       }
                     >
-                      ✓ One special character (@$!%*?&)
+                      ✓ One special character (@$!%*?&.)
                     </Text>
                   </VStack>
                 </Box>

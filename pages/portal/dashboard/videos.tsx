@@ -1,18 +1,14 @@
-import React from 'react'
-import { StudentAuthGuard } from '../../../components/PortalAuthGuard'
-import { DashboardLayout } from '../../../features/portal/dashboard/dashboard-layout'
-import { VideoLibrary } from '../../../features/portal/dashboard/videos/video-library'
-import { HeaderInfo } from '../../../features/portal/dashboard/messages/header-info'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
-const StudentVideosPage = () => {
-  return (
-    <StudentAuthGuard>
-      <DashboardLayout>
-        <HeaderInfo title="Videos" />
-        <VideoLibrary />
-      </DashboardLayout>
-    </StudentAuthGuard>
-  )
+const VideosRedirect = () => {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.replace('/portal/dashboard/library')
+  }, [router])
+
+  return null
 }
 
-export default StudentVideosPage 
+export default VideosRedirect 

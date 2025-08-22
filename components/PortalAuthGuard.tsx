@@ -81,17 +81,14 @@ export function PortalAuthGuard({
       // Determine where to redirect based on current progress
       if (portalUser) {
         const correctPath = getRedirectPath(portalUser)
-        console.log('📍 Registration incomplete, redirecting to:', correctPath)
         router.push(correctPath)
       } else {
-        console.log('📍 No portal user, redirecting to /portal')
         router.push('/portal')
       }
       return
     }
 
     if (requireOnboardingComplete && !isOnboardingComplete) {
-      console.log('📍 Onboarding incomplete, redirecting to terms')
       router.push('/portal/terms-and-conditions')
       return
     }

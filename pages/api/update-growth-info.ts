@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { doc, updateDoc, getDoc } from 'firebase/firestore'
-import { portalDb } from '../../portalFirebaseConfig'
 
 interface GrowthInfoData {
   profession: string
@@ -19,6 +17,11 @@ interface UpdateGrowthInfoResponse {
   success: boolean
   message?: string
   error?: string
+  data?: {
+    growthInfo: GrowthInfoData
+    registrationComplete: boolean
+    registrationCompletedAt: Date
+  }
 }
 
 export default async function handler(
@@ -52,17 +55,10 @@ export default async function handler(
       })
     }
 
-    // Verify user exists
-    const userDoc = await getDoc(doc(portalDb, 'users', uid))
-    if (!userDoc.exists()) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found',
-      })
-    }
-
-    // Update user document with growth information
-    await updateDoc(doc(portalDb, 'users', uid), {
+    // Client will handle Firebase operations
+    // Server only validates and returns success response
+    
+    const updateData = {
       growthInfo: {
         profession,
         whyClass,
@@ -74,11 +70,12 @@ export default async function handler(
       // Mark registration as complete
       registrationComplete: true,
       registrationCompletedAt: new Date(),
-    })
+    }
 
     return res.status(200).json({
       success: true,
-      message: 'Growth information updated successfully',
+      message: 'Growth information validated successfully. Please handle Firebase operations on the client side.',
+      data: updateData
     })
 
   } catch (error: any) {

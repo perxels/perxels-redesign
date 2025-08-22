@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { collection, addDoc } from 'firebase/firestore'
-import { portalDb } from '../../../portalFirebaseConfig'
+
 
 interface CreateNotificationRequest {
   type: 'payment_submitted'
@@ -23,21 +22,21 @@ interface CreateNotificationResponse {
   success: boolean
   message?: string
   error?: string
-  notificationId?: string
+  data?: {
+    type: string
+    title: string
+    message: string
+    htmlContent?: string
+    userId: string
+    data?: any
+  }
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<CreateNotificationResponse>,
 ) {
-  console.log('🔍 create-notification API called with:', {
-    method: req.method,
-    body: req.body,
-    headers: req.headers
-  })
-
   if (req.method !== 'POST') {
-    console.log('❌ Method not allowed:', req.method)
     return res.status(405).json({
       success: false,
       error: 'Method not allowed',
@@ -53,56 +52,28 @@ export default async function handler(
       data,
     } = req.body as CreateNotificationRequest
 
-    console.log('📋 Parsed request body:', {
-      type,
-      userId,
-      title,
-      message,
-      data
-    })
-
     // Validate required fields
     if (!type || !userId || !title || !message || !data) {
-      console.log('❌ Missing required fields:', {
-        hasType: !!type,
-        hasUserId: !!userId,
-        hasTitle: !!title,
-        hasMessage: !!message,
-        hasData: !!data
-      })
       return res.status(400).json({
         success: false,
         error: 'All notification fields are required',
       })
     }
 
-    console.log('📝 Creating notification...')
-    // Create simple notification
-    const notification = {
-      type,
-      title,
-      message,
-      data,
-      read: false,
-      createdAt: new Date(),
-      userId, // Simple user ID
-    }
-
-    console.log('💾 Saving notification to Firestore:', notification)
-
-    // Save notification to Firestore
-    const notificationRef = await addDoc(collection(portalDb, 'notifications'), notification)
+    // Client will handle Firebase operations
+    // Server only validates and returns success response
     
-    console.log('✅ Notification saved with ID:', notificationRef.id)
-
-    const response = {
+    return res.status(200).json({
       success: true,
-      message: 'Notification created successfully',
-      notificationId: notificationRef.id,
-    }
-
-    console.log('✅ Returning response:', response)
-    return res.status(200).json(response)
+      message: 'Notification creation should be handled on the client side using Firestore operations.',
+      data: {
+        type,
+        title,
+        message,
+        userId,
+        data,
+      }
+    })
 
   } catch (error: any) {
     console.error('❌ Create notification API error:', {

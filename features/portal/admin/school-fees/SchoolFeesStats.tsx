@@ -75,11 +75,13 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
         title="Total School Fees"
         amount={formatNaira(stats.totalSchoolFees)}
         color="brand.purple.100"
+        w={['100%', '450px']}
       />
       <StatsCard 
         title="Owing"
         amount={formatNaira(stats.totalOwing)}
         color="brand.yellow.100"
+        w={['100%', '450px']}
       />
     </HStack>
   )

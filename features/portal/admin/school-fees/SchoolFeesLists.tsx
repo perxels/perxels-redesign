@@ -22,7 +22,43 @@ import { FiDownload, FiMoreVertical, FiExternalLink } from 'react-icons/fi'
 import { collection, getDocs, query, orderBy } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { PaymentReminderModal } from './PaymentReminderModal'
-import { ImagePreviewModal, useImagePreview } from '../../../../components/ImagePreviewModal'
+import {
+  ImagePreviewModal,
+  useImagePreview,
+} from '../../../../components/ImagePreviewModal'
+
+// Helper function to format payment date
+const formatPaymentDate = (dateString: string | any): string => {
+  if (!dateString) return ''
+
+  try {
+    // Handle Firestore Timestamp objects
+    if (typeof dateString === 'object' && dateString.seconds) {
+      const date = new Date(dateString.seconds * 1000)
+      const formatted = date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      })
+      return formatted
+    }
+
+    // Handle ISO strings or other date formats
+    const date = new Date(dateString)
+    if (isNaN(date.getTime())) {
+      return ''
+    }
+
+    const formatted = date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    })
+    return formatted
+  } catch (error) {
+    return ''
+  }
+}
 
 export interface StudentFeeRecord {
   id: string
@@ -32,7 +68,12 @@ export interface StudentFeeRecord {
   classPlan: string
   cohort: string
   totalFee: number
-  installments: { amount: number; receipt: string; status: string }[]
+  installments: {
+    amount: number
+    receipt: string
+    status: string
+    paymentDate?: string
+  }[]
   status: 'debtor' | 'paid'
 }
 
@@ -102,7 +143,7 @@ function SchoolFeesListHeader({
             </MenuList>
           </Menu>
         )}
-        
+
         {selected === 'debtor' && (
           <Button colorScheme="purple" onClick={onSendReminder} px={[4, 6]}>
             Send Payment Reminder
@@ -166,6 +207,11 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
                 >
                   {amt.amount > 0 ? amt.amount.toLocaleString() : '-'}
                 </Text>
+                {amt.paymentDate && (
+                  <Text fontSize="xs" color="gray.600" textAlign="center">
+                    {formatPaymentDate(amt.paymentDate)}
+                  </Text>
+                )}
                 {amt.receipt && amt.receipt.trim() !== '' ? (
                   <Link
                     fontSize="xs"
@@ -212,7 +258,7 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
             </Text>
           </VStack>
           {record.installments.map((amt, idx) => (
-            <VStack key={idx} align="center" minW="100px" mr={8} spacing={0}>
+            <VStack key={idx} align="center" minW="120px" mr={8} spacing={0}>
               <Text fontSize="xs" fontWeight="semibold" color="gray.500">
                 Installment {idx + 1}
               </Text>
@@ -223,13 +269,18 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
               >
                 {amt.amount > 0 ? amt.amount.toLocaleString() : '-'}
               </Text>
+              {amt.paymentDate && (
+                <Text fontSize="xs" color="gray.600" mt={1}>
+                  {formatPaymentDate(amt.paymentDate)}
+                </Text>
+              )}
             </VStack>
           ))}
           <VStack align="center" minW="120px" spacing={0}>
             <Text fontSize="xs" fontWeight="semibold" color="gray.500">
               Receipt
             </Text>
-            {record.installments.map((amt, i) => (
+            {record.installments.map((amt, i) =>
               amt.receipt && amt.receipt.trim() !== '' ? (
                 <Link
                   key={i}
@@ -257,8 +308,8 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
                 >
                   No receipt
                 </Text>
-              )
-            ))}
+              ),
+            )}
           </VStack>
         </Flex>
       </Flex>
@@ -276,11 +327,16 @@ const SchoolFeesListTable = React.memo(function SchoolFeesListTable({
   return (
     <Box>
       {records.map((rec) => (
-        <SchoolFeesListRow key={rec.id} record={rec} onReceiptClick={onReceiptClick} />
+        <SchoolFeesListRow
+          key={rec.id}
+          record={rec}
+          onReceiptClick={onReceiptClick}
+        />
       ))}
     </Box>
   )
 })
+
 
 export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
   const [selected, setSelected] = useState<'debtor' | 'paid'>('debtor')
@@ -293,7 +349,13 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
   const pageSize = 20
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
-  const { isOpen: isImageOpen, onClose: onImageClose, imageUrl, title, openImagePreview } = useImagePreview()
+  const {
+    isOpen: isImageOpen,
+    onClose: onImageClose,
+    imageUrl,
+    title,
+    openImagePreview,
+  } = useImagePreview()
 
   const fetchData = useCallback(
     async (
@@ -327,8 +389,10 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
                   amount: p.amount || 0,
                   receipt: p.paymentReceiptUrl || '',
                   status: p.status || 'unpaid',
+                  paymentDate:
+                    p.submittedAt || p.createdAt || p.date || p.timestamp || '',
                 }
-              : { amount: 0, receipt: '', status: 'unpaid' }
+              : { amount: 0, receipt: '', status: 'unpaid', paymentDate: '' }
           })
           const userStatus: 'debtor' | 'paid' =
             totalApproved < totalFee ? 'debtor' : 'paid'
@@ -361,7 +425,7 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
         })
         // Store all data for export
         setAllData(allUsers)
-        
+
         // Pagination
         const startIdx = (page - 1) * pageSize
         const paged = allUsers.slice(startIdx, startIdx + pageSize)
@@ -404,21 +468,21 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
         'Cohort',
         'Total School Fee',
         'Installment 1',
-        'Installment 2', 
+        'Installment 2',
         'Installment 3',
         'Total Paid',
         'Balance',
-        'Status'
+        'Status',
       ]
 
       const csvContent = [
         headers.join(','),
-        ...allData.map(record => {
+        ...allData.map((record) => {
           const totalPaid = record.installments
-            .filter(inst => inst.status === 'approved')
+            .filter((inst) => inst.status === 'approved')
             .reduce((sum, inst) => sum + inst.amount, 0)
           const balance = record.totalFee - totalPaid
-          
+
           return [
             `"${record.name}"`,
             `"${record.email}"`,
@@ -431,9 +495,9 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
             record.installments[2]?.amount || 0,
             totalPaid,
             balance,
-            record.status
+            record.status,
           ].join(',')
-        })
+        }),
       ].join('\n')
 
       // Create and download file
@@ -441,7 +505,10 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
       const link = document.createElement('a')
       const url = URL.createObjectURL(blob)
       link.setAttribute('href', url)
-      link.setAttribute('download', `school-fees-${selected}-${new Date().toISOString().split('T')[0]}.csv`)
+      link.setAttribute(
+        'download',
+        `school-fees-${selected}-${new Date().toISOString().split('T')[0]}.csv`,
+      )
       link.style.visibility = 'hidden'
       document.body.appendChild(link)
       link.click()
@@ -491,7 +558,10 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
           <Text>No records found.</Text>
         </Flex>
       ) : (
-        <SchoolFeesListTable records={data} onReceiptClick={handleReceiptClick} />
+        <SchoolFeesListTable
+          records={data}
+          onReceiptClick={handleReceiptClick}
+        />
       )}
       <Flex justify="flex-end" align="center" mt={4} gap={2}>
         <Button onClick={handlePrev} isDisabled={page === 1 || loading}>

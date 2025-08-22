@@ -14,11 +14,11 @@ import {
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 import { AuthInput } from './auth-input'
-import { portalAuth, portalDb } from '../../../portalFirebaseConfig'
+import { portalAuth } from '../../../portalFirebaseConfig'
 import { useRouter } from 'next/navigation'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
+import { useProfileOperations } from '../../../hooks/useProfileOperations'
 import { EnhancedImageUpload } from '../../../components/EnhancedImageUpload'
-import { doc, updateDoc, getDoc } from 'firebase/firestore'
 
 interface GrowthInfoFormValues {
   profession: string
@@ -52,6 +52,7 @@ export const GrowthInfoForm = () => {
   const toast = useToast()
   const router = useRouter()
   const { user } = usePortalAuth()
+  const { updateGrowthInfo, isLoading: isGrowthLoading } = useProfileOperations()
 
   const handleGrowthInfoSubmit = async (values: GrowthInfoFormValues) => {
     setIsSubmitting(true)
@@ -114,18 +115,6 @@ export const GrowthInfoForm = () => {
         }
       }
 
-      // Verify user exists in Firestore
-      const userDoc = await getDoc(doc(portalDb, 'users', uid))
-      if (!userDoc.exists()) {
-        throw new Error('User not found. Please log in again.')
-      }
-
-      // Check if user already has growth info
-      const userData = userDoc.data()
-      if (userData?.growthInfo) {
-        throw new Error('Growth information already exists.')
-      }
-
       // Prepare growth info data
       const growthInfoData: GrowthInfoData = {
         profession: values.profession,
@@ -135,20 +124,12 @@ export const GrowthInfoForm = () => {
         pictureUrl,
       }
 
-      // Update user document with growth info directly in Firestore
-      await updateDoc(doc(portalDb, 'users', uid), {
-        growthInfo: growthInfoData,
-        growthInfoUpdatedAt: new Date(),
-      })
+      // Update user document with growth info using client-side hook
+      const result = await updateGrowthInfo(uid, growthInfoData)
 
-      toast({
-        title: 'Growth Information Updated! 🎉',
-        description: 'Your information has been saved successfully.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      })
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to update growth information')
+      }
 
       // Redirect to terms and conditions or dashboard
       router.push('/portal/terms-and-conditions')
@@ -218,7 +199,7 @@ export const GrowthInfoForm = () => {
 
                 <AuthInput
                   name="classOutcome"
-                  placeholder="What are you looking foeward to?"
+                  placeholder="What are you looking forward to?"
                 />
 
                 <Box w="full">
@@ -272,7 +253,7 @@ export const GrowthInfoForm = () => {
 
                 <VStack w="full" alignItems="flex-start" gap="4">
                   <FormControl>
-                    <FormLabel>Profile Picture</FormLabel>
+                    <FormLabel>Profile Picture (Optional)</FormLabel>
                     <EnhancedImageUpload
                       value={pictureFile ? URL.createObjectURL(pictureFile) : undefined}
                       onChange={(file) => {
@@ -284,9 +265,7 @@ export const GrowthInfoForm = () => {
                       }}
                       maxSize={5}
                       acceptedTypes={['image/jpeg', 'image/png', 'image/jpg']}
-                      aspectRatio={{ width: 1, height: 1 }}
-                      minDimensions={{ width: 200, height: 200 }}
-                      uploadText="Drop profile picture here or click to upload"
+                      uploadText="Drop profile picture here or click to upload (optional)"
                       previewText="PROFILE"
                     />
                   </FormControl>

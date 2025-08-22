@@ -1,6 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { portalDb } from '../../portalFirebaseConfig'
 import { sendPaymentReminderEmail } from '../../lib/utils/email.utils'
 
 interface SendPaymentRemindersRequest {
@@ -9,6 +7,13 @@ interface SendPaymentRemindersRequest {
     classType?: string
     classPlan?: string
   }
+  debtors?: Array<{
+    id: string
+    email: string
+    fullName: string
+    branch?: string
+    schoolFeeInfo: any
+  }>
 }
 
 interface SendPaymentRemindersResponse {
@@ -35,18 +40,11 @@ export default async function handler(
   }
 
   try {
-    const { filters } = req.body as SendPaymentRemindersRequest
+    const { filters, debtors: clientDebtors } = req.body as SendPaymentRemindersRequest
 
-    console.log('📧 Starting bulk payment reminder process...', { filters })
+    console.log('📧 Starting bulk payment reminder process...', { filters, hasClientDebtors: !!clientDebtors })
 
-    // Get all students with school fee info
-    const usersQuery = query(
-      collection(portalDb, 'users'),
-      where('role', '==', 'student')
-    )
-    
-    const snapshot = await getDocs(usersQuery)
-    const debtors: Array<{
+    let debtors: Array<{
       id: string
       email: string
       fullName: string
@@ -54,48 +52,17 @@ export default async function handler(
       schoolFeeInfo: any
     }> = []
 
-    // Filter debtors based on school fee info and filters
-    snapshot.forEach(doc => {
-      const data = doc.data()
-      const fee = data.schoolFeeInfo
-      
-      if (!fee) return
-      
-      const totalFee = fee.totalSchoolFee || 0
-      const totalApproved = fee.totalApproved || 0
-      const outstandingAmount = totalFee - totalApproved
-      
-      // Only include debtors (those with outstanding balance)
-      if (outstandingAmount > 0) {
-        // Apply filters if provided
-        if (filters) {
-          if (filters.branch && filters.branch !== 'all' && data.branch) {
-            if (data.branch.toLowerCase() !== filters.branch.toLowerCase()) {
-              return
-            }
-          }
-          
-          if (filters.classPlan && fee.classPlan) {
-            if (fee.classPlan.toLowerCase() !== filters.classPlan.toLowerCase()) {
-              return
-            }
-          }
-          
-          // Note: classType filter would need to be implemented based on your data structure
-          // This might be cohort or another field
-        }
-        
-        debtors.push({
-          id: doc.id,
-          email: data.email || '',
-          fullName: data.fullName || 'Student',
-          branch: data.branch,
-          schoolFeeInfo: fee,
-        })
-      }
-    })
-
-    console.log(`📧 Found ${debtors.length} debtors to send reminders to`)
+    // Use debtors provided by client (required)
+    if (!clientDebtors || clientDebtors.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No debtors data provided',
+        error: 'Debtors data is required from client',
+      })
+    }
+    
+    debtors = clientDebtors
+    console.log(`📧 Using ${debtors.length} debtors provided by client`)
 
     if (debtors.length === 0) {
       return res.status(200).json({

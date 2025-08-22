@@ -10,32 +10,26 @@ import {
 import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { portalAuth } from '../../../portalFirebaseConfig'
+import { usePortalAuth } from '../../../hooks/usePortalAuth'
+import { useEmailVerification } from '../../../hooks/useEmailVerification'
 // import { AuthDebugInfo } from '../../../components/AuthDebugInfo'
 
 export const VerifyEmailForm = () => {
   const [otp, setOtp] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const [isResending, setIsResending] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const toast = useToast()
+  const { user, portalUser } = usePortalAuth()
+  const { verifyEmail, isLoading } = useEmailVerification()
 
-  const email = searchParams.get('email') || ''
+  // Get email from URL params first, then fall back to authenticated user
+  const urlEmail = searchParams.get('email') || ''
+  const userEmail = user?.email || portalUser?.email || ''
+  const email = urlEmail || userEmail
 
   useEffect(() => {
-    if (!email) {
-      toast({
-        title: 'Error',
-        description: 'Email not found. Please try signing up again.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      })
-      router.push('/portal/signup')
-      return
-    }
-
-    // Check if user is authenticated
+    // Check if user is authenticated first
     const currentUser = portalAuth.currentUser
     if (!currentUser) {
       console.warn('No authenticated user found during verification')
@@ -43,6 +37,19 @@ export const VerifyEmailForm = () => {
         title: 'Authentication Required',
         description: 'Please sign in to verify your email.',
         status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      })
+      router.push('/portal/signup')
+      return
+    }
+
+    // If no email is available (neither from URL nor from authenticated user)
+    if (!email) {
+      toast({
+        title: 'Error',
+        description: 'Email not found. Please try signing up again.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       })
@@ -63,55 +70,45 @@ export const VerifyEmailForm = () => {
       return
     }
 
-    setIsLoading(true)
-
-    try {
-      // Check if user is still authenticated
-      const currentUser = portalAuth.currentUser
-      if (!currentUser) {
-        toast({
-          title: 'Authentication Error',
-          description: 'You have been logged out. Please sign in again.',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
-        router.push('/portal/signup')
-        return
-      }
-
-      // Verify OTP and mark email as verified using new API route
-      const verifyResponse = await fetch('/api/verify-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          otp,
-          uid: currentUser.uid, // Use current user's UID
-        }),
-      })
-
-      const verifyResult = await verifyResponse.json()
-
-      if (!verifyResult.success) {
-        throw new Error(verifyResult.error || 'Invalid verification code')
-      }
-
-      // Refresh the user's token to get updated emailVerified status
-      await currentUser.reload()
-
+    // Check if user is still authenticated
+    const currentUser = portalAuth.currentUser
+    if (!currentUser) {
       toast({
-        title: 'Email Verified! ✅',
-        description: 'Your email has been successfully verified.',
-        status: 'success',
+        title: 'Authentication Error',
+        description: 'You have been logged out. Please sign in again.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       })
+      router.push('/portal/signup')
+      return
+    }
 
-      // Redirect to school fee info
-      router.push('/portal/school-fee-info')
+    try {
+      // Use the client-side email verification hook
+      const result = await verifyEmail({
+        email,
+        otp,
+        uid: currentUser.uid,
+      })
+
+      if (result.success) {
+        // Refresh the user's token to get updated emailVerified status
+        await currentUser.reload()
+
+        toast({
+          title: 'Email Verified! ✅',
+          description: 'Your email has been successfully verified.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
+
+        // Redirect to school fee info
+        router.push('/portal/school-fee-info')
+      } else {
+        throw new Error(result.error || 'Verification failed')
+      }
     } catch (error) {
       console.error('Verification error:', error)
       toast({
@@ -122,8 +119,6 @@ export const VerifyEmailForm = () => {
         duration: 5000,
         isClosable: true,
       })
-    } finally {
-      setIsLoading(false)
     }
   }
 

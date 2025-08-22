@@ -1,7 +1,17 @@
-import { Box, Button, Checkbox, Heading, HStack, Text, useToast } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Checkbox,
+  Heading,
+  HStack,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
+import { portalDb } from '../../../portalFirebaseConfig'
 
 export const TermsAndConditionsWrapper = () => {
   const [isAccepted, setIsAccepted] = useState(false)
@@ -22,23 +32,20 @@ export const TermsAndConditionsWrapper = () => {
         throw new Error('User not authenticated. Please log in again.')
       }
 
-      // Update terms agreement status via API
-      const response = await fetch('/api/update-terms-agreement', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          uid,
-          termsAgreed: true,
-        }),
-      })
-
-      const result = await response.json()
-      
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to update terms agreement')
+      // Verify user exists in Firestore
+      const userDoc = await getDoc(doc(portalDb, 'users', uid))
+      if (!userDoc.exists()) {
+        throw new Error('User not found. Please log in again.')
       }
+
+      // Update user document with terms agreement status directly in Firestore
+      await updateDoc(doc(portalDb, 'users', uid), {
+        termsAgreed: true,
+        termsAgreedAt: new Date(),
+        // Mark onboarding as fully complete
+        onboardingComplete: true,
+        onboardingCompletedAt: new Date(),
+      })
 
       // Show success message
       toast({
@@ -53,13 +60,12 @@ export const TermsAndConditionsWrapper = () => {
       // Clear session storage as registration is complete
       sessionStorage.removeItem('signupEmail')
       sessionStorage.removeItem('signupUID')
-      
+
       // Redirect to portal dashboard
       router.push('/portal/dashboard')
-
     } catch (error: any) {
       console.error('Terms agreement error:', error)
-      
+
       let errorMessage = 'Failed to complete registration. Please try again.'
       if (error.message.includes('session')) {
         errorMessage = error.message
@@ -83,7 +89,7 @@ export const TermsAndConditionsWrapper = () => {
       <Box maxW="750px">
         <Heading
           as="h1"
-          fontSize={["5xl", "7xl"]}
+          fontSize={['5xl', '7xl']}
           fontFamily="Proxima Nova"
           fontWeight="bold"
           color="brand.dark.100"
@@ -92,17 +98,29 @@ export const TermsAndConditionsWrapper = () => {
         </Heading>
 
         <Text
-          fontSize={["lg", "xl"]}
+          fontSize={['lg', 'xl']}
           fontFamily="Proxima Nova"
           fontWeight="normal"
           color="gray.600"
           my={8}
           lineHeight={1.5}
         >
-          To safeguard your account and personal information, we require BVN
-          verification during registration. Rest assured that your BVN is safe
-          with us. We have implemented strict security measures to protect your
-          personal and financial information.
+          We&apos;re excited to have you join us on your journey to becoming a
+          world-class UI/UX designer. At Perxels, we specialize in training and
+          mentoring aspiring designers—whether you&apos;re just starting out or
+          have no prior experience, you&apos;re in the right place. <br />
+          <br />
+          This portal will serve as your personal dashboard. Here, you&apos;ll
+          find all your class updates, video lessons, attendance records,
+          payment details, and more—everything you need in one place to track
+          your learning journey. <br />
+          <br />
+          <span className="font-bold">Our Promise:</span>
+          <br />
+          At Perxels, we’re committed to giving our very best to ensure you have
+          an impactful and rewarding learning experience. In return, we ask that
+          you also give your best—show up, stay curious, and stay consistent.
+          Together, we’ll achieve great success.
         </Text>
       </Box>
 
@@ -136,21 +154,21 @@ export const TermsAndConditionsWrapper = () => {
           }}
         >
           <Text
-            fontSize={["lg", "2xl"]}
+            fontSize={['lg', '2xl']}
             fontFamily="Proxima Nova"
             fontWeight="normal"
             color="black"
             ml={4}
           >
-            Accept Terms and Condition
+            I pledge to put my best into the training
           </Text>
         </Checkbox>
       </Box>
 
       <HStack justifyContent="flex-end" w="full" mt={10}>
-        <Button 
-          h="3.5rem" 
-          type="button" 
+        <Button
+          h="3.5rem"
+          type="button"
           px={16}
           isDisabled={!isAccepted || isSubmitting}
           isLoading={isSubmitting}

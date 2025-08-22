@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
+import { collection, query, where, getDocs, orderBy, updateDoc, doc, writeBatch } from 'firebase/firestore'
+import { portalDb } from '../portalFirebaseConfig'
 import { usePortalAuth } from './usePortalAuth'
 
 interface AdminNotification {
@@ -18,7 +20,7 @@ interface AdminNotification {
   }
   read: boolean
   createdAt: Date
-  adminId: string
+  userId: string // Changed from adminId to userId to match the field used in notification creation
 }
 
 interface UseAdminNotificationsReturn {
@@ -43,19 +45,43 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
 
     setIsLoading(true)
     try {
-      const response = await fetch(`/api/notifications/get-admin-notifications?userId=${user.uid}&limitCount=20`)
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch notifications')
-      }
 
-      const result = await response.json()
-      if (result.success) {
-        setNotifications(result.data.notifications || [])
-        setUnreadCount(result.data.unreadCount || 0)
-      }
+      
+      // Query notifications for this admin user
+      const q = query(
+        collection(portalDb, 'notifications'),
+        where('userId', '==', user.uid), // Use userId to match the field used in notification creation
+        orderBy('createdAt', 'desc')
+      )
+      
+      const snapshot = await getDocs(q)
+      const adminNotifications: AdminNotification[] = snapshot.docs
+        .map(doc => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            type: data.type || '',
+            title: data.title || '',
+            message: data.message || '',
+            data: data.data || {},
+            read: data.read || false,
+            createdAt: data.createdAt?.toDate() || new Date(),
+            userId: data.userId || '', // Use userId to match the field used in notification creation
+          }
+        })
+        .slice(0, 20) // Limit to 20 notifications
+      
+      setNotifications(adminNotifications)
+      
+      // Calculate unread count
+      const unreadCount = adminNotifications.filter(n => !n.read).length
+      setUnreadCount(unreadCount)
+      
+
     } catch (error) {
-      console.error('Error fetching notifications:', error)
+      console.error('❌ Error fetching admin notifications:', error)
+      setNotifications([])
+      setUnreadCount(0)
     } finally {
       setIsLoading(false)
     }
@@ -66,20 +92,14 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
     if (!user?.uid) return
 
     try {
-      const response = await fetch('/api/notifications/mark-as-read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.uid,
-          notificationId,
-        }),
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to mark notification as read')
-      }
+      
+      // Update notification in Firestore
+      const notificationRef = doc(portalDb, 'notifications', notificationId)
+      await updateDoc(notificationRef, {
+        read: true,
+        readAt: new Date(),
+      })
 
       // Update local state
       setNotifications(prev =>
@@ -89,8 +109,9 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
       )
       setUnreadCount(prev => Math.max(0, prev - 1))
 
+
     } catch (error) {
-      console.error('Error marking notification as read:', error)
+      console.error('❌ Error marking notification as read:', error)
       throw error
     }
   }, [user?.uid])
@@ -100,30 +121,39 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
     if (!user?.uid || unreadCount === 0) return
 
     try {
-      const response = await fetch('/api/notifications/mark-as-read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.uid,
-          markAllAsRead: true,
-        }),
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to mark all notifications as read')
+      
+      // Get all unread notifications for this admin
+      const unreadNotifications = notifications.filter(n => !n.read && n.userId === user.uid)
+      
+      if (unreadNotifications.length === 0) {
+  
+        return
       }
+
+      // Use batch write for efficiency
+      const batch = writeBatch(portalDb)
+      
+      unreadNotifications.forEach(notification => {
+        const notificationRef = doc(portalDb, 'notifications', notification.id)
+        batch.update(notificationRef, {
+          read: true,
+          readAt: new Date(),
+        })
+      })
+      
+      await batch.commit()
 
       // Update local state
       setNotifications(prev => prev.map(n => ({ ...n, read: true })))
       setUnreadCount(0)
 
+
     } catch (error) {
-      console.error('Error marking all notifications as read:', error)
+      console.error('❌ Error marking all notifications as read:', error)
       throw error
     }
-  }, [user?.uid, unreadCount])
+  }, [user?.uid, unreadCount, notifications])
 
   // Manual refresh function
   const refreshNotifications = useCallback(() => {

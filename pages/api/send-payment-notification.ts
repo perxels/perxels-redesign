@@ -80,8 +80,6 @@ export default async function handler(
 
       // If this is the first approval, send admission notification and email
       if (isFirstApproval) {
-        console.log('🎓 First approval detected - sending admission notification and email')
-        
         const admittedHtml = generateAdmittedHtml(studentName, cohort)
         
         // Create admission notification FOR THE STUDENT
@@ -104,8 +102,6 @@ export default async function handler(
           },
         })
 
-        console.log('✅ Admission notification created in Firestore for student')
-
         // Send admission email with PDF attachments
         if (studentEmail && studentEmail.includes('@')) {
           console.log('📧 Sending admission email to:', studentEmail)
@@ -122,8 +118,6 @@ export default async function handler(
             cohort,
             { appName: 'Perxels Portal' }
           )
-          
-          console.log('📧 Admission email result:', admissionEmailResult)
           
           if (admissionEmailResult.success) {
             console.log('✅ Admission email sent successfully')
@@ -147,7 +141,6 @@ export default async function handler(
     }
 
     // Create payment notification in Firestore FOR THE STUDENT
-    console.log('📝 Creating payment notification in Firestore for student')
     await addDoc(collection(portalDb, 'notifications'), {
       type: action === 'approve' ? 'payment_approved' : 'payment_rejected',
       title: notificationTitle,
@@ -164,18 +157,15 @@ export default async function handler(
         ...(action === 'reject' && { rejectionReason }),
       },
     })
-    console.log('✅ Payment notification created in Firestore for student')
 
     // Send email to student
     if (studentEmail && studentEmail.includes('@')) {
-      console.log('📧 Sending payment email to:', studentEmail)
       await sendStudentHtmlEmail(
         studentEmail,
         emailSubject,
         notificationHtml,
         { appName: 'Perxels Portal' }
       )
-      console.log('✅ Payment email sent')
     } else {
       console.log('⚠️ No valid email for payment notification')
     }
@@ -186,7 +176,6 @@ export default async function handler(
     })
 
   } catch (error: any) {
-    console.error('Send payment notification API error:', error)
     return res.status(500).json({
       success: false,
       error: 'Failed to send notification and email',

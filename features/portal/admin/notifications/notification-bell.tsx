@@ -15,6 +15,8 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { FiBell } from 'react-icons/fi'
+import { collection, query, where, getDocs, orderBy, updateDoc, doc, writeBatch } from 'firebase/firestore'
+import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 
 interface AdminNotification {
@@ -152,19 +154,43 @@ export function NotificationBell() {
 
     setIsLoading(true)
     try {
-      const response = await fetch(`/api/notifications/get-admin-notifications?userId=${user.uid}&limitCount=10`)
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch notifications')
-      }
 
-      const result = await response.json()
-      if (result.success) {
-        setNotifications(result.data.notifications || [])
-        setUnreadCount(result.data.unreadCount || 0)
-      }
+      
+      // Query notifications for this admin user
+      const q = query(
+        collection(portalDb, 'notifications'),
+        where('adminId', '==', user.uid),
+        orderBy('createdAt', 'desc')
+      )
+      
+      const snapshot = await getDocs(q)
+      const adminNotifications: AdminNotification[] = snapshot.docs
+        .map(doc => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            type: data.type || '',
+            title: data.title || '',
+            message: data.message || '',
+            data: data.data || {},
+            read: data.read || false,
+            createdAt: data.createdAt?.toDate() || new Date(),
+            adminId: data.adminId || '',
+          }
+        })
+        .slice(0, 10) // Limit to 10 notifications for bell
+      
+      setNotifications(adminNotifications)
+      
+      // Calculate unread count
+      const unreadCount = adminNotifications.filter(n => !n.read).length
+      setUnreadCount(unreadCount)
+      
+
     } catch (error) {
-      console.error('Error fetching notifications:', error)
+      console.error('❌ Error fetching admin notifications for bell:', error)
+      setNotifications([])
+      setUnreadCount(0)
     } finally {
       setIsLoading(false)
     }
@@ -175,20 +201,14 @@ export function NotificationBell() {
     if (!user?.uid) return
 
     try {
-      const response = await fetch('/api/notifications/mark-as-read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.uid,
-          notificationId,
-        }),
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to mark notification as read')
-      }
+      
+      // Update notification in Firestore
+      const notificationRef = doc(portalDb, 'notifications', notificationId)
+      await updateDoc(notificationRef, {
+        read: true,
+        readAt: new Date(),
+      })
 
       // Update local state
       setNotifications(prev =>
@@ -198,8 +218,9 @@ export function NotificationBell() {
       )
       setUnreadCount(prev => Math.max(0, prev - 1))
 
+
     } catch (error) {
-      console.error('Error marking notification as read:', error)
+      console.error('❌ Error marking notification as read from bell:', error)
       toast({
         title: 'Error',
         description: 'Failed to mark notification as read',
@@ -215,20 +236,28 @@ export function NotificationBell() {
     if (!user?.uid || unreadCount === 0) return
 
     try {
-      const response = await fetch('/api/notifications/mark-as-read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.uid,
-          markAllAsRead: true,
-        }),
-      })
 
-      if (!response.ok) {
-        throw new Error('Failed to mark all notifications as read')
+      
+      // Get all unread notifications for this admin
+      const unreadNotifications = notifications.filter(n => !n.read && n.adminId === user.uid)
+      
+      if (unreadNotifications.length === 0) {
+  
+        return
       }
+
+      // Use batch write for efficiency
+      const batch = writeBatch(portalDb)
+      
+      unreadNotifications.forEach(notification => {
+        const notificationRef = doc(portalDb, 'notifications', notification.id)
+        batch.update(notificationRef, {
+          read: true,
+          readAt: new Date(),
+        })
+      })
+      
+      await batch.commit()
 
       // Update local state
       setNotifications(prev => prev.map(n => ({ ...n, read: true })))
@@ -242,8 +271,9 @@ export function NotificationBell() {
         isClosable: true,
       })
 
+
     } catch (error) {
-      console.error('Error marking all notifications as read:', error)
+      console.error('❌ Error marking all notifications as read from bell:', error)
       toast({
         title: 'Error',
         description: 'Failed to mark all notifications as read',
