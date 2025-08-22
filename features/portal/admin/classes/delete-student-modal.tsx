@@ -132,6 +132,9 @@ export const DeleteStudentModal: React.FC<DeleteStudentModalProps> = ({
     deletionSummary.attendanceRecords + 
     deletionSummary.comments : 0
 
+  // Add 2 for user profile and Firebase Auth account
+  const totalRecordsToDelete = totalRecords + 2
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalOverlay />
@@ -203,6 +206,11 @@ export const DeleteStudentModal: React.FC<DeleteStudentModalProps> = ({
                     <Badge colorScheme="red">1 record</Badge>
                   </HStack>
                   
+                  <HStack justify="space-between" w="full">
+                    <Text>Firebase Authentication Account</Text>
+                    <Badge colorScheme="red">1 record</Badge>
+                  </HStack>
+                  
                   {deletionSummary.notifications > 0 && (
                     <HStack justify="space-between" w="full">
                       <Text>Notifications</Text>
@@ -242,7 +250,7 @@ export const DeleteStudentModal: React.FC<DeleteStudentModalProps> = ({
                   
                   <HStack justify="space-between" w="full" fontWeight="bold">
                     <Text>Total Records to Delete</Text>
-                    <Badge colorScheme="red" size="lg">{totalRecords + 1} records</Badge>
+                    <Badge colorScheme="red" size="lg">{totalRecordsToDelete} records</Badge>
                   </HStack>
                 </VStack>
               ) : (
