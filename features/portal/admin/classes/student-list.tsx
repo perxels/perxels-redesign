@@ -11,14 +11,17 @@ import {
   Button,
   Flex,
   useDisclosure,
+  HStack,
 } from '@chakra-ui/react'
 
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import { MdDelete } from 'react-icons/md'
 
 import { useRouter } from 'next/router'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { StudentDetailsModal } from './student-details-modal'
+import { DeleteStudentModal } from './delete-student-modal'
 
 interface StudentData {
   uid: string
@@ -56,6 +59,7 @@ export const StudentList = () => {
   const isAdmin = portalUser?.role === 'admin'
   
   const { isOpen: isDetailsOpen, onOpen: onDetailsOpen, onClose: onDetailsClose } = useDisclosure()
+  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
 
   // Get filters from query string
   const filters = useMemo(() => {
@@ -210,22 +214,6 @@ export const StudentList = () => {
     fetchStudents()
   }, [isAdmin])
 
-  // Format date for display
-  const formatDate = (timestamp: any) => {
-    if (!timestamp) return 'N/A'
-
-    try {
-      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp)
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      })
-    } catch {
-      return 'N/A'
-    }
-  }
-
   // Get student status key for filtering
   const getStudentStatusKey = (student: StudentData) => {
     if (!student.emailVerified) return 'email-pending'
@@ -237,6 +225,16 @@ export const StudentList = () => {
   const handleViewDetails = (student: StudentData) => {
     setSelectedStudent(student)
     onDetailsOpen()
+  }
+
+  const handleDeleteStudent = (student: StudentData) => {
+    setSelectedStudent(student)
+    onDeleteOpen()
+  }
+
+  const handleStudentDeleted = () => {
+    // Refresh the student list
+    fetchStudents()
   }
 
   return (
@@ -288,21 +286,38 @@ export const StudentList = () => {
                       {student.phone}
                     </Text>
                   </Box>
-                  <Button
-                    size="xs"
-                    bg="gray.700"
-                    color="white"
-                    borderRadius="sm"
-                    px={3}
-                    py={1}
-                    _hover={{ bg: 'gray.800' }}
-                    fontSize="xs"
-                    fontWeight="normal"
-                    minW="70px"
-                    onClick={() => handleViewDetails(student)}
-                  >
-                    Details
-                  </Button>
+                  <HStack spacing={2}>
+                    <Button
+                      size="xs"
+                      bg="gray.700"
+                      color="white"
+                      borderRadius="sm"
+                      px={3}
+                      py={1}
+                      _hover={{ bg: 'gray.800' }}
+                      fontSize="xs"
+                      fontWeight="normal"
+                      minW="70px"
+                      onClick={() => handleViewDetails(student)}
+                    >
+                      Details
+                    </Button>
+                    <Button
+                      size="xs"
+                      bg="red.500"
+                      color="white"
+                      borderRadius="sm"
+                      px={3}
+                      py={1}
+                      _hover={{ bg: 'red.600' }}
+                      fontSize="xs"
+                      fontWeight="normal"
+                      minW="70px"
+                      onClick={() => handleDeleteStudent(student)}
+                    >
+                      <MdDelete size={14} />
+                    </Button>
+                  </HStack>
                 </Flex>
 
                 <VStack spacing={2} align="stretch">
@@ -399,22 +414,39 @@ export const StudentList = () => {
                   {student.owingStatus || 'Owing'}
                 </Text>
 
-                {/* See Details Button */}
-                <Button
-                  size="xs"
-                  bg="gray.700"
-                  color="white"
-                  borderRadius="sm"
-                  px={3}
-                  py={1}
-                  _hover={{ bg: 'gray.800' }}
-                  fontSize="xs"
-                  fontWeight="normal"
-                  minW="70px"
-                  onClick={() => handleViewDetails(student)}
-                >
-                  See Details
-                </Button>
+                {/* Action Buttons */}
+                <HStack spacing={2}>
+                  <Button
+                    size="xs"
+                    bg="gray.700"
+                    color="white"
+                    borderRadius="sm"
+                    px={3}
+                    py={1}
+                    _hover={{ bg: 'gray.800' }}
+                    fontSize="xs"
+                    fontWeight="normal"
+                    minW="70px"
+                    onClick={() => handleViewDetails(student)}
+                  >
+                    See Details
+                  </Button>
+                  <Button
+                    size="xs"
+                    bg="red.500"
+                    color="white"
+                    borderRadius="sm"
+                    px={3}
+                    py={1}
+                    _hover={{ bg: 'red.600' }}
+                    fontSize="xs"
+                    fontWeight="normal"
+                    minW="70px"
+                    onClick={() => handleDeleteStudent(student)}
+                  >
+                    <MdDelete size={14} />
+                  </Button>
+                </HStack>
               </Flex>
             </Box>
           ))}
@@ -427,6 +459,17 @@ export const StudentList = () => {
           isOpen={isDetailsOpen}
           onClose={onDetailsClose}
           student={selectedStudent}
+        />
+      )}
+
+      {/* Delete Student Modal */}
+      {selectedStudent && (
+        <DeleteStudentModal
+          isOpen={isDeleteOpen}
+          onClose={onDeleteClose}
+          student={selectedStudent}
+          onStudentDeleted={handleStudentDeleted}
+          adminUser={portalUser}
         />
       )}
     </VStack>

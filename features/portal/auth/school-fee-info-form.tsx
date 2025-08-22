@@ -9,7 +9,8 @@ import {
   Select,
   SimpleGrid,
   VStack,
-  useToast
+  useToast,
+  Text
 } from '@chakra-ui/react'
 import { CurrencyInput } from '../../../components/CurrencyInput'
 import { AuthInput } from './auth-input'
@@ -21,6 +22,7 @@ import { EnhancedImageUpload } from '../../../components/EnhancedImageUpload'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { SchoolFeeInfo } from '../../../types/school-fee.types'
 import { usePaymentNotifications } from '../../../hooks/usePaymentNotifications'
+import { useActiveClasses } from '../../../hooks/useClasses'
 
 // Currency formatting functions for Naira
 export const formatNaira = (val: string) => {
@@ -56,8 +58,17 @@ interface SchoolFeeInfoData {
   paymentReceiptUrl: string
 }
 
-const formSchema = Yup.object().shape({
-  cohort: Yup.string().required('Cohort is required'),
+// Create dynamic validation schema that depends on existing classes
+const createFormSchema = (existingClasses: any[]) => Yup.object().shape({
+  cohort: Yup.string()
+    .required('Cohort is required')
+    .test('valid-cohort', 'Please enter a valid cohort as provided by your manager', (value) => {
+      if (!value) return false
+      const normalizedValue = value.toUpperCase().trim()
+      return existingClasses.some(cls => 
+        cls.cohortName.toUpperCase() === normalizedValue
+      )
+    }),
   classPlan: Yup.string()
     .required('Class plan is required')
     .oneOf(classPlans, 'Please select a valid class plan'),
@@ -79,7 +90,11 @@ const formSchema = Yup.object().shape({
       const numValue = parseInt(cleanValue)
       return !isNaN(numValue) && numValue > 0
     }),
-  paymentReceipt: Yup.mixed().nullable().optional(),
+  paymentReceipt: Yup.mixed()
+    .required('Payment receipt is required')
+    .test('file-required', 'Payment receipt is required', (value) => {
+      return value !== null && value !== undefined
+    }),
 })
 
 export const SchoolFeeInfoForm = () => {
@@ -91,6 +106,10 @@ export const SchoolFeeInfoForm = () => {
   const router = useRouter()
   const { user } = usePortalAuth()
   const { sendPaymentNotification } = usePaymentNotifications()
+  const { classes: existingClasses, loading: loadingClasses, error: classesError } = useActiveClasses()
+
+  // Create dynamic validation schema based on existing classes
+  const formSchema = createFormSchema(existingClasses)
 
   async function handleSchoolFeeInfoSubmit(values: SchoolFeeFormValues) {
     if (!user) {
@@ -110,44 +129,45 @@ export const SchoolFeeInfoForm = () => {
       const uid = user.uid
 
       // Handle payment receipt upload to Cloudinary
-      let paymentReceiptUrl = ''
-      if (paymentReceiptFile) {
-        const reader = new FileReader()
-        const base64Promise = new Promise<string>((resolve, reject) => {
-          reader.onload = () => {
-            const base64 = reader.result as string
-            resolve(base64.split(',')[1]) // Remove data:image/jpeg;base64, prefix
-          }
-          reader.onerror = reject
-        })
-        reader.readAsDataURL(paymentReceiptFile)
-
-        const base64File = await base64Promise
-
-        const uploadResponse = await fetch('/api/upload-payment-receipt', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            uid,
-            file: base64File,
-            fileName: paymentReceiptFile.name,
-            fileType: paymentReceiptFile.type,
-          }),
-        })
-
-        if (!uploadResponse.ok) {
-          throw new Error('Failed to upload payment receipt')
-        }
-
-        const uploadResult = await uploadResponse.json()
-        if (!uploadResult.success) {
-          throw new Error(uploadResult.error || 'Upload failed')
-        }
-
-        paymentReceiptUrl = uploadResult.url
+      if (!paymentReceiptFile) {
+        throw new Error('Payment receipt is required')
       }
+
+      const reader = new FileReader()
+      const base64Promise = new Promise<string>((resolve, reject) => {
+        reader.onload = () => {
+          const base64 = reader.result as string
+          resolve(base64.split(',')[1]) // Remove data:image/jpeg;base64, prefix
+        }
+        reader.onerror = reject
+      })
+      reader.readAsDataURL(paymentReceiptFile)
+
+      const base64File = await base64Promise
+
+      const uploadResponse = await fetch('/api/upload-payment-receipt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid,
+          file: base64File,
+          fileName: paymentReceiptFile.name,
+          fileType: paymentReceiptFile.type,
+        }),
+      })
+
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload payment receipt')
+      }
+
+      const uploadResult = await uploadResponse.json()
+      if (!uploadResult.success) {
+        throw new Error(uploadResult.error || 'Upload failed')
+      }
+
+      const paymentReceiptUrl = uploadResult.url
 
       // Handle first payment creation (client-side Firebase operations)
       const userDoc = await getDoc(doc(portalDb, 'users', uid))
@@ -181,7 +201,7 @@ export const SchoolFeeInfoForm = () => {
           {
             installmentNumber: 1,
             amount: parseInt(cleanAmountPaid),
-            paymentReceiptUrl: paymentReceiptUrl || '',
+            paymentReceiptUrl: paymentReceiptUrl,
             submittedAt: new Date(),
             status: 'pending',
           },
@@ -207,7 +227,7 @@ export const SchoolFeeInfoForm = () => {
           studentEmail: userData?.email || '',
           amount: parseInt(cleanAmountPaid),
           installmentNumber: 1,
-          paymentReceiptUrl: paymentReceiptUrl || '',
+          paymentReceiptUrl: paymentReceiptUrl,
           cohort: values.cohort.toUpperCase(),
           classPlan: values.classPlan,
         }
@@ -227,9 +247,7 @@ export const SchoolFeeInfoForm = () => {
 
       toast({
         title: 'School Fee Information Updated! 🎉',
-        description: paymentReceiptUrl
-          ? 'Your payment information and receipt have been saved successfully.'
-          : 'Your payment information has been saved successfully.',
+        description: 'Your payment information and receipt have been saved successfully.',
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -304,7 +322,8 @@ export const SchoolFeeInfoForm = () => {
                 <VStack w="full" alignItems="flex-start" gap="8">
                   <AuthInput
                     name="cohort"
-                    placeholder="What’s your cohort (Ask manager)"
+                    placeholder="What’s your cohort (Ask manager) e.g. Cohort 5"
+                    isRequired
                   />
 
                   <Box w="full">
@@ -382,7 +401,7 @@ export const SchoolFeeInfoForm = () => {
                 </VStack>
 
                 <VStack w="full" alignItems="flex-start" gap="8">
-                  <FormLabel>Payment Receipt</FormLabel>
+                  <FormLabel>Payment Receipt*</FormLabel>
                   <EnhancedImageUpload
                     value={
                       paymentReceiptFile
@@ -407,7 +426,11 @@ export const SchoolFeeInfoForm = () => {
                     previewText="RECEIPT"
                     showPreviewModal={true}
                   />
-                  {/* Payment receipt validation is optional, so we don't show errors */}
+                  {touched.paymentReceipt && errors.paymentReceipt && (
+                    <Box color="red.500" fontSize="sm" mt={1}>
+                      {errors.paymentReceipt}
+                    </Box>
+                  )}
                 </VStack>
               </SimpleGrid>
 
@@ -420,10 +443,16 @@ export const SchoolFeeInfoForm = () => {
                     !values.cohort ||
                     !values.classPlan ||
                     !values.schoolFee ||
-                    !values.amountPaid
+                    !values.amountPaid ||
+                    !paymentReceiptFile ||
+                    !isValid
                   }
                   isLoading={isSubmitting}
                   px={16}
+                  _disabled={{
+                    bg: 'gray.300',
+                    cursor: 'not-allowed',
+                  }}
                 >
                   Next
                 </Button>

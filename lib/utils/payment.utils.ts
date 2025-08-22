@@ -174,6 +174,11 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
       .filter(payment => payment.status === 'approved')
       .reduce((sum, payment) => sum + payment.amount, 0)
 
+    // Calculate total submitted from valid payments (approved + pending, exclude rejected)
+    const totalSubmitted = updatedPayments
+      .filter(payment => payment.status === 'approved' || payment.status === 'pending')
+      .reduce((sum, payment) => sum + payment.amount, 0)
+
     // Calculate new overall status
     const newOverallStatus = calculateOverallStatus(updatedPayments, schoolFeeInfo.totalSchoolFee)
 
@@ -182,6 +187,7 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
       ...schoolFeeInfo,
       payments: updatedPayments,
       totalApproved,
+      totalSubmitted, // Update total submitted to exclude rejected payments
       overallStatus: newOverallStatus,
       updatedAt: new Date(),
     }
@@ -282,23 +288,31 @@ export async function addPaymentInstallment(params: AddInstallmentParams): Promi
       }
     }
 
-    // Check if user has already made 3 payments
-    if (schoolFeeInfo.payments.length >= 3) {
+    // Count only approved and pending payments (exclude rejected payments)
+    const validPayments = schoolFeeInfo.payments.filter(payment => 
+      payment.status === 'approved' || payment.status === 'pending'
+    )
+
+    // Check if user has already made 3 valid payments
+    if (validPayments.length >= 3) {
       return {
         success: false,
         error: 'Maximum of 3 installments allowed. You have already submitted all allowed payments.',
       }
     }
 
-    // Determine next installment number
-    const nextInstallmentNumber = (schoolFeeInfo.payments.length + 1) as 1 | 2 | 3
+    // Determine next installment number based on valid payments only
+    const nextInstallmentNumber = (validPayments.length + 1) as 1 | 2 | 3
 
+    // Calculate total submitted amount from valid payments only (exclude rejected payments)
+    const totalSubmittedFromValidPayments = validPayments.reduce((sum, payment) => sum + payment.amount, 0)
+    
     // Check if total submitted amount (including this new payment) exceeds total school fee
-    const newTotalSubmitted = schoolFeeInfo.totalSubmitted + amount
+    const newTotalSubmitted = totalSubmittedFromValidPayments + amount
     if (newTotalSubmitted > schoolFeeInfo.totalSchoolFee) {
       return {
         success: false,
-        error: `Payment amount exceeds remaining balance. Remaining: ₦${schoolFeeInfo.totalSchoolFee - schoolFeeInfo.totalSubmitted}`,
+        error: `Payment amount exceeds remaining balance. Remaining: ₦${schoolFeeInfo.totalSchoolFee - totalSubmittedFromValidPayments}`,
       }
     }
 
@@ -316,7 +330,7 @@ export async function addPaymentInstallment(params: AddInstallmentParams): Promi
     const updatedSchoolFeeInfo: SchoolFeeInfo = {
       ...schoolFeeInfo,
       payments: updatedPayments,
-      totalSubmitted: newTotalSubmitted,
+      totalSubmitted: newTotalSubmitted, // This now correctly excludes rejected payments
       updatedAt: new Date(),
     }
 

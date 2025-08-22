@@ -136,7 +136,7 @@ export const CreateClass = () => {
     try {
       // Prepare class data
       const classData: ClassData = {
-        cohortName: values.cohortName.trim(),
+        cohortName: values.cohortName.trim().toUpperCase(),
         startDate: new Date(values.startDate),
         endDate: new Date(values.endDate),
         syllabusId: values.syllabusId,

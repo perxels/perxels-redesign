@@ -169,7 +169,7 @@ const ClassDetailsPage = () => {
       const studentsQuery = query(
         collection(portalDb, 'users'),
         where('role', '==', 'student'),
-        where('schoolFeeInfo.cohort', '==', klass.cohortName)
+        where('schoolFeeInfo.cohort', '==', klass.cohortName.toUpperCase())
       )
       
       const querySnapshot = await getDocs(studentsQuery)

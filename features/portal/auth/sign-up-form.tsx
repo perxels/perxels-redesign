@@ -61,9 +61,20 @@ const formSchema = Yup.object().shape({
   phone: Yup.string()
     .required('Phone number is required')
     .matches(
-      /^(\+234|0)[789][01]\d{8}$/,
-      'Enter a valid Nigerian phone number (e.g., +2348012345678 or 08012345678)',
+      /^(\+?[1-9]\d{1,14}|0[789][01]\d{8})$/,
+      'Enter a valid phone number (e.g., +1234567890, +2348012345678, or 08012345678)',
     )
+    .test('phone-format', 'Phone number must be in international or Nigerian format', (value) => {
+      if (!value) return false
+      
+      // Nigerian format: +234 or 0 followed by 7,8,9,0,1 and 8 digits
+      const nigerianFormat = /^(\+234|0)[789][01]\d{8}$/
+      
+      // International format: + followed by 1-15 digits
+      const internationalFormat = /^\+[1-9]\d{1,14}$/
+      
+      return nigerianFormat.test(value) || internationalFormat.test(value)
+    })
     .trim(),
 
   password: Yup.string()

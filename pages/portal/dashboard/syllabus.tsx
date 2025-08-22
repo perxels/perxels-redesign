@@ -70,14 +70,15 @@ const StudentSyllabusPage = () => {
       // Find the class for this cohort
       const classesQuery = query(
         collection(portalDb, 'classes'),
-        where('cohortName', '==', studentCohort)
+        where('cohortName', '==', studentCohort.toUpperCase())
       )
       const classesSnapshot = await getDocs(classesQuery)
-
+      
       if (classesSnapshot.empty) {
         setError(`No class found for cohort: ${studentCohort}`)
         return
       }
+      
 
       const classDoc = classesSnapshot.docs[0]
       const classData: ClassData = {

@@ -33,7 +33,7 @@ export function CreateAttendanceForm({ activeClasses, onCreated }: { activeClass
           attendanceId: `${cohort}_${today}`,
           date: today,
           code,
-          classId: cohort,
+          classId: cohort.toUpperCase(),
           createdAt: new Date(),
         }
         await createAttendance(attendance)

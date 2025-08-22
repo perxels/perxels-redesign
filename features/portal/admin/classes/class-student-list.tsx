@@ -16,11 +16,12 @@ import {
   InputGroup,
   InputLeftElement,
 } from '@chakra-ui/react'
-import { MdSearch, MdPerson } from 'react-icons/md'
+import { MdSearch, MdDelete } from 'react-icons/md'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { StudentDetailsModal } from './student-details-modal'
+import { DeleteStudentModal } from './delete-student-modal'
 
 interface StudentData {
   uid: string
@@ -59,6 +60,7 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
   const isAdmin = portalUser?.role === 'admin'
   
   const { isOpen: isDetailsOpen, onOpen: onDetailsOpen, onClose: onDetailsClose } = useDisclosure()
+  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
 
   // Filter students by search term and class
   const filteredStudents = useMemo(() => {
@@ -217,6 +219,16 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
     onDetailsOpen()
   }
 
+  const handleDeleteStudent = (student: StudentData) => {
+    setSelectedStudent(student)
+    onDeleteOpen()
+  }
+
+  const handleStudentDeleted = () => {
+    // Refresh the student list
+    fetchStudents()
+  }
+
   const trimUrl = (url: string) => {
     if (!url) return 'N/A'
     return url.length > 30 ? url.substring(0, 30) + '...' : url
@@ -294,21 +306,38 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                       {student.phone}
                     </Text>
                   </Box>
-                  <Button
-                    size="xs"
-                    bg="gray.700"
-                    color="white"
-                    borderRadius="sm"
-                    px={3}
-                    py={1}
-                    _hover={{ bg: 'gray.800' }}
-                    fontSize="xs"
-                    fontWeight="normal"
-                    minW="70px"
-                    onClick={() => handleViewDetails(student)}
-                  >
-                    Details
-                  </Button>
+                  <HStack spacing={2}>
+                    <Button
+                      size="xs"
+                      bg="gray.700"
+                      color="white"
+                      borderRadius="sm"
+                      px={3}
+                      py={1}
+                      _hover={{ bg: 'gray.800' }}
+                      fontSize="xs"
+                      fontWeight="normal"
+                      minW="70px"
+                      onClick={() => handleViewDetails(student)}
+                    >
+                      Details
+                    </Button>
+                    <Button
+                      size="xs"
+                      bg="red.500"
+                      color="white"
+                      borderRadius="sm"
+                      px={3}
+                      py={1}
+                      _hover={{ bg: 'red.600' }}
+                      fontSize="xs"
+                      fontWeight="normal"
+                      minW="70px"
+                      onClick={() => handleDeleteStudent(student)}
+                    >
+                      <MdDelete size={14} />
+                    </Button>
+                  </HStack>
                 </Flex>
 
                 <VStack spacing={2} align="stretch">
@@ -424,22 +453,39 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                   )}
                 </Box>
 
-                {/* See Details Button */}
-                <Button
-                  size="xs"
-                  bg="gray.700"
-                  color="white"
-                  borderRadius="sm"
-                  px={3}
-                  py={1}
-                  _hover={{ bg: 'gray.800' }}
-                  fontSize="xs"
-                  fontWeight="normal"
-                  minW="70px"
-                  onClick={() => handleViewDetails(student)}
-                >
-                  See Details
-                </Button>
+                {/* Action Buttons */}
+                <HStack spacing={2}>
+                  <Button
+                    size="xs"
+                    bg="gray.700"
+                    color="white"
+                    borderRadius="sm"
+                    px={3}
+                    py={1}
+                    _hover={{ bg: 'gray.800' }}
+                    fontSize="xs"
+                    fontWeight="normal"
+                    minW="70px"
+                    onClick={() => handleViewDetails(student)}
+                  >
+                    See Details
+                  </Button>
+                  <Button
+                    size="xs"
+                    bg="red.500"
+                    color="white"
+                    borderRadius="sm"
+                    px={3}
+                    py={1}
+                    _hover={{ bg: 'red.600' }}
+                    fontSize="xs"
+                    fontWeight="normal"
+                    minW="70px"
+                    onClick={() => handleDeleteStudent(student)}
+                  >
+                    <MdDelete size={14} />
+                  </Button>
+                </HStack>
               </Flex>
             </Box>
           ))}
@@ -452,6 +498,17 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
           isOpen={isDetailsOpen}
           onClose={onDetailsClose}
           student={selectedStudent}
+        />
+      )}
+
+      {/* Delete Student Modal */}
+      {selectedStudent && (
+        <DeleteStudentModal
+          isOpen={isDeleteOpen}
+          onClose={onDeleteClose}
+          student={selectedStudent}
+          onStudentDeleted={handleStudentDeleted}
+          adminUser={portalUser}
         />
       )}
     </VStack>

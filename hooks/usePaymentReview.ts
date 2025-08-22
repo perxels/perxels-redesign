@@ -92,6 +92,11 @@ export const usePaymentReview = () => {
         .filter(payment => payment.status === 'approved')
         .reduce((sum, payment) => sum + payment.amount, 0)
 
+      // Calculate total submitted from valid payments (approved + pending, exclude rejected)
+      const totalSubmitted = updatedPayments
+        .filter(payment => payment.status === 'approved' || payment.status === 'pending')
+        .reduce((sum, payment) => sum + payment.amount, 0)
+
       // Calculate new overall status
       const newOverallStatus = calculateOverallStatus(updatedPayments, schoolFeeInfo.totalSchoolFee)
 
@@ -100,6 +105,7 @@ export const usePaymentReview = () => {
         ...schoolFeeInfo,
         payments: updatedPayments,
         totalApproved,
+        totalSubmitted, // Update total submitted to exclude rejected payments
         overallStatus: newOverallStatus,
         updatedAt: new Date(),
       }

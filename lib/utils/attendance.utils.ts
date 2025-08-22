@@ -29,7 +29,7 @@ export async function findAttendanceByClassId(classId: string, date?: string) {
   // Try original case first
   let q = query(
     collection(portalDb, 'attendance'),
-    where('classId', '==', classId),
+    where('classId', '==', classId.toUpperCase()),
     ...(date ? [where('date', '==', date)] : [])
   )
   let snapshot = await getDocs(q)
@@ -38,7 +38,7 @@ export async function findAttendanceByClassId(classId: string, date?: string) {
   if (snapshot.empty) {
     q = query(
       collection(portalDb, 'attendance'),
-      where('classId', '==', classId.toLowerCase()),
+      where('classId', '==', classId.toUpperCase()),
       ...(date ? [where('date', '==', date)] : [])
     )
     snapshot = await getDocs(q)

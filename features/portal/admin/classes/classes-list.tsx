@@ -84,7 +84,7 @@ export const ClassesList = () => {
       const studentsQuery = query(
         collection(portalDb, 'users'),
         where('role', '==', 'student'),
-        where('schoolFeeInfo.cohort', '==', cohortName)
+        where('schoolFeeInfo.cohort', '==', cohortName.toUpperCase())
       )
       
       const querySnapshot = await getDocs(studentsQuery)
@@ -232,9 +232,6 @@ export const ClassesList = () => {
                 <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
                   {klass.cohortName}
                 </Text>
-                <Text fontSize="sm" color="gray.700" noOfLines={1}>
-                  {klass.branch || 'Not specified'}
-                </Text>
               </Box>
               <Button
                 size="xs"
@@ -311,9 +308,6 @@ export const ClassesList = () => {
             <Box minW="200px">
               <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
                 {klass.cohortName}
-              </Text>
-              <Text fontSize="sm" color="gray.700" noOfLines={1}>
-                {klass.branch || 'Not specified'}
               </Text>
             </Box>
 

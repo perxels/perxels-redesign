@@ -5,13 +5,14 @@ export const branchOptions = [
   { value: 'Yaba, Lagos', label: 'Yaba, Lagos' },
   { value: 'Abuja', label: 'Abuja' },
   { value: 'International', label: 'International' },
+  { value: 'Fully Online Class', label: 'Fully Online Class' },
 ]
 
 export const classPlans = [
   'Lagos Lekki Weekdays Physical Class',
   'Lagos Lekki Weekend Physical Class',
   'Abuja Physical Class',
-  'FULLY ONLINE CLASS',
+  'Premium Online Class',
   'Lagos Yaba Weekend Class',
   'Lagos Yaba Weekday Class',
   'Ibadan Weekday Physical Class',
