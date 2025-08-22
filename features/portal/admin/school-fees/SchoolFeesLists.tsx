@@ -19,7 +19,14 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { FiDownload, FiMoreVertical, FiExternalLink } from 'react-icons/fi'
-import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  limit,
+} from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { PaymentReminderModal } from './PaymentReminderModal'
 import {
@@ -73,6 +80,8 @@ export interface StudentFeeRecord {
     receipt: string
     status: string
     paymentDate?: string
+    installmentNumber: number
+    isRejected: boolean
   }[]
   status: 'debtor' | 'paid'
 }
@@ -195,30 +204,47 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
         {/* Horizontal scrollable installments on mobile */}
         <Box overflowX="auto" pb={1}>
           <Flex gap={4} minW="max-content">
-            {record.installments.map((amt, idx) => (
+            {record.installments.map((inst, idx) => (
               <VStack key={idx} spacing={1} minW="90px" align="center">
-                <Text fontSize="xs" fontWeight="semibold" color="gray.500">
-                  Inst {idx + 1}
+                <Text
+                  fontSize="xs"
+                  fontWeight="semibold"
+                  color={inst.isRejected ? 'red.500' : 'gray.500'}
+                >
+                  Inst {inst.installmentNumber}
                 </Text>
                 <Text
                   fontSize="md"
                   fontWeight="bold"
-                  color={amt.status === 'approved' ? 'green.500' : 'red.500'}
+                  color={
+                    inst.status === 'approved'
+                      ? 'green.500'
+                      : inst.status === 'pending'
+                      ? 'orange.500'
+                      : inst.isRejected
+                      ? 'red.500'
+                      : 'gray.400'
+                  }
                 >
-                  {amt.amount > 0 ? amt.amount.toLocaleString() : '-'}
+                  {inst.amount > 0 ? inst.amount.toLocaleString() : '-'}
                 </Text>
-                {amt.paymentDate && (
+                {inst.paymentDate && (
                   <Text fontSize="xs" color="gray.600" textAlign="center">
-                    {formatPaymentDate(amt.paymentDate)}
+                    {formatPaymentDate(inst.paymentDate)}
                   </Text>
                 )}
-                {amt.receipt && amt.receipt.trim() !== '' ? (
+                {inst.isRejected && (
+                  <Text fontSize="xs" color="red.500" textAlign="center">
+                    Rejected
+                  </Text>
+                )}
+                {inst.receipt && inst.receipt.trim() !== '' ? (
                   <Link
                     fontSize="xs"
-                    color="blue.500"
+                    color={inst.isRejected ? 'red.500' : 'blue.500'}
                     isTruncated
                     maxW="80px"
-                    onClick={() => onReceiptClick(amt.receipt, record.name)}
+                    onClick={() => onReceiptClick(inst.receipt, record.name)}
                     cursor="pointer"
                     _hover={{ textDecoration: 'underline' }}
                     display="flex"
@@ -235,6 +261,23 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
                 )}
               </VStack>
             ))}
+            {/* Show empty state if no installments */}
+            {record.installments.length === 0 && (
+              <VStack spacing={1} minW="90px" align="center">
+                <Text fontSize="xs" fontWeight="semibold" color="gray.400">
+                  No payments
+                </Text>
+                <Text fontSize="md" fontWeight="bold" color="gray.400">
+                  -
+                </Text>
+                <Text fontSize="xs" color="gray.400" textAlign="center">
+                  Not submitted
+                </Text>
+                <Text fontSize="xs" color="gray.400">
+                  No receipt
+                </Text>
+              </VStack>
+            )}
           </Flex>
         </Box>
       </Box>
@@ -248,47 +291,80 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
         <Box flex="1" minW="180px" fontWeight="medium" fontSize="lg" mb={0}>
           {record.name}
         </Box>
+        <VStack align="center" minW="120px" mr={8} spacing={0}>
+          <Text fontSize="xs" fontWeight="semibold" color="gray.500">
+            Total Sch Fee
+          </Text>
+          <Text fontSize="2xl" fontWeight="bold" color="black">
+            {record.totalFee.toLocaleString()}
+          </Text>
+        </VStack>
         <Flex flex="1" direction="row" align="center" gap={4} w="full">
-          <VStack align="center" minW="120px" mr={8} spacing={0}>
-            <Text fontSize="xs" fontWeight="semibold" color="gray.500">
-              Total Sch Fee
-            </Text>
-            <Text fontSize="2xl" fontWeight="bold" color="black">
-              {record.totalFee.toLocaleString()}
-            </Text>
-          </VStack>
-          {record.installments.map((amt, idx) => (
-            <VStack key={idx} align="center" minW="120px" mr={8} spacing={0}>
-              <Text fontSize="xs" fontWeight="semibold" color="gray.500">
-                Installment {idx + 1}
-              </Text>
-              <Text
-                fontSize="xl"
-                fontWeight="bold"
-                color={amt.status === 'approved' ? 'green.500' : 'red.500'}
-              >
-                {amt.amount > 0 ? amt.amount.toLocaleString() : '-'}
-              </Text>
-              {amt.paymentDate && (
-                <Text fontSize="xs" color="gray.600" mt={1}>
-                  {formatPaymentDate(amt.paymentDate)}
+          <HStack w="full" flex="1" minW="650px">
+            {record.installments.map((inst, idx) => (
+              <VStack key={idx} align="center" minW="120px" mr={8} spacing={0}>
+                <Text
+                  fontSize="xs"
+                  fontWeight="semibold"
+                  color={inst.isRejected ? 'red.500' : 'gray.500'}
+                >
+                  Installment {inst.installmentNumber}
                 </Text>
-              )}
-            </VStack>
-          ))}
+                <Text
+                  fontSize="xl"
+                  fontWeight="bold"
+                  color={
+                    inst.status === 'approved'
+                      ? 'green.500'
+                      : inst.status === 'pending'
+                      ? 'orange.500'
+                      : inst.isRejected
+                      ? 'red.500'
+                      : 'gray.400'
+                  }
+                >
+                  {inst.amount > 0 ? inst.amount.toLocaleString() : '-'}
+                </Text>
+                {inst.paymentDate && (
+                  <Text fontSize="xs" color="gray.600" mt={1}>
+                    {formatPaymentDate(inst.paymentDate)}
+                  </Text>
+                )}
+                {inst.isRejected && (
+                  <Text fontSize="xs" color="red.500" mt={1}>
+                    Rejected
+                  </Text>
+                )}
+              </VStack>
+            ))}
+            {/* Show empty state if no installments */}
+            {record.installments.length === 0 && (
+              <VStack align="center" minW="120px" mr={8} spacing={0}>
+                <Text fontSize="xs" fontWeight="semibold" color="gray.400">
+                  No payments
+                </Text>
+                <Text fontSize="xl" fontWeight="bold" color="gray.400">
+                  -
+                </Text>
+                <Text fontSize="xs" color="gray.400" mt={1}>
+                  Not submitted
+                </Text>
+              </VStack>
+            )}
+          </HStack>
           <VStack align="center" minW="120px" spacing={0}>
             <Text fontSize="xs" fontWeight="semibold" color="gray.500">
               Receipt
             </Text>
-            {record.installments.map((amt, i) =>
-              amt.receipt && amt.receipt.trim() !== '' ? (
+            {record.installments.map((inst, i) =>
+              inst.receipt && inst.receipt.trim() !== '' ? (
                 <Link
                   key={i}
                   fontSize="xs"
-                  color="blue.500"
+                  color={inst.isRejected ? 'red.500' : 'blue.500'}
                   isTruncated
                   maxW="100px"
-                  onClick={() => onReceiptClick(amt.receipt, record.name)}
+                  onClick={() => onReceiptClick(inst.receipt, record.name)}
                   cursor="pointer"
                   _hover={{ textDecoration: 'underline' }}
                   display="flex"
@@ -309,6 +385,12 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
                   No receipt
                 </Text>
               ),
+            )}
+            {/* Show empty state for receipts if no installments */}
+            {record.installments.length === 0 && (
+              <Text fontSize="xs" color="gray.400" isTruncated maxW="100px">
+                No receipt
+              </Text>
             )}
           </VStack>
         </Flex>
@@ -336,7 +418,6 @@ const SchoolFeesListTable = React.memo(function SchoolFeesListTable({
     </Box>
   )
 })
-
 
 export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
   const [selected, setSelected] = useState<'debtor' | 'paid'>('debtor')
@@ -366,50 +447,106 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
       setLoading(true)
       setError(null)
       try {
-        const usersQuery = query(
+        // Build optimized query with filters at database level
+        let usersQuery = query(
           collection(portalDb, 'users'),
           orderBy('fullName'),
         )
+
+        // Add branch filter to reduce data transfer
+        if (filters.branch && filters.branch !== 'all') {
+          usersQuery = query(usersQuery, where('branch', '==', filters.branch))
+        }
+
+        // Add class plan filter if specified
+        if (filters.classPlan) {
+          usersQuery = query(
+            usersQuery,
+            where('schoolFeeInfo.classPlan', '==', filters.classPlan),
+          )
+        }
+
+        // Note: Complex status filtering will be done client-side for better performance
+        // as Firestore doesn't support complex field comparisons in where clauses
+
+        // Add limit for pagination
+        const queryLimit = pageSize * 2 // Fetch a bit more for better UX
+        usersQuery = query(usersQuery, limit(queryLimit))
+
         const snapshot = await getDocs(usersQuery)
+
         let allUsers: StudentFeeRecord[] = []
         snapshot.forEach((doc) => {
           const data = doc.data()
           const fee = data.schoolFeeInfo
           if (!fee) return
+
           const totalFee = fee.totalSchoolFee || 0
           const totalApproved = fee.totalApproved || 0
           const payments = Array.isArray(fee.payments) ? fee.payments : []
-          // Always return 3 installments
-          const installments = [0, 1, 2].map((idx) => {
-            const p = payments.find(
-              (pay: any) => pay.installmentNumber === idx + 1,
-            )
-            return p
-              ? {
-                  amount: p.amount || 0,
-                  receipt: p.paymentReceiptUrl || '',
-                  status: p.status || 'unpaid',
-                  paymentDate:
-                    p.submittedAt || p.createdAt || p.date || p.timestamp || '',
-                }
-              : { amount: 0, receipt: '', status: 'unpaid', paymentDate: '' }
+
+          // Process all valid installments (approved and pending)
+          const validPayments = payments.filter(
+            (pay: any) => pay.status === 'approved' || pay.status === 'pending',
+          )
+
+          // Process rejected payments separately
+          const rejectedPayments = payments.filter(
+            (pay: any) => pay.status === 'rejected',
+          )
+
+          // Create installments array with valid payments first, then rejected
+          const installments: {
+            amount: number
+            receipt: string
+            status: string
+            paymentDate: string
+            installmentNumber: number
+            isRejected: boolean
+          }[] = []
+
+          // Add valid installments (1, 2, 3, etc.)
+          validPayments.forEach((pay: any) => {
+            installments.push({
+              amount: pay.amount || 0,
+              receipt: pay.paymentReceiptUrl || '',
+              status: pay.status || 'unpaid',
+              paymentDate:
+                pay.submittedAt ||
+                pay.createdAt ||
+                pay.date ||
+                pay.timestamp ||
+                '',
+              installmentNumber: pay.installmentNumber,
+              isRejected: false,
+            })
           })
+
+          // Add rejected payments after valid ones
+          rejectedPayments.forEach((pay: any) => {
+            installments.push({
+              amount: pay.amount || 0,
+              receipt: pay.paymentReceiptUrl || '',
+              status: 'rejected',
+              paymentDate:
+                pay.submittedAt ||
+                pay.createdAt ||
+                pay.date ||
+                pay.timestamp ||
+                '',
+              installmentNumber: pay.installmentNumber,
+              isRejected: true,
+            })
+          })
+
+          // Sort by installment number
+          installments.sort((a, b) => a.installmentNumber - b.installmentNumber)
+
           const userStatus: 'debtor' | 'paid' =
             totalApproved < totalFee ? 'debtor' : 'paid'
-          // Filtering logic
-          if (
-            ((status === 'debtor' && userStatus === 'debtor') ||
-              (status === 'paid' && userStatus === 'paid')) &&
-            (!filters.branch ||
-              filters.branch === 'all' ||
-              (data.branch &&
-                data.branch.toLowerCase() ===
-                  String(filters.branch).toLowerCase())) &&
-            (!filters.classPlan ||
-              (fee.classPlan &&
-                fee.classPlan.toLowerCase() ===
-                  String(filters.classPlan).toLowerCase()))
-          ) {
+
+          // Apply status filter
+          if (status === userStatus) {
             allUsers.push({
               id: doc.id,
               name: data.fullName || '',
@@ -423,6 +560,7 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
             })
           }
         })
+
         // Store all data for export
         setAllData(allUsers)
 
@@ -470,6 +608,8 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
         'Installment 1',
         'Installment 2',
         'Installment 3',
+        'Installment 4',
+        'Installment 5',
         'Total Paid',
         'Balance',
         'Status',
@@ -483,6 +623,15 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
             .reduce((sum, inst) => sum + inst.amount, 0)
           const balance = record.totalFee - totalPaid
 
+          // Get up to 5 installments for CSV export
+          const csvInstallments = []
+          for (let i = 1; i <= 5; i++) {
+            const inst = record.installments.find(
+              (inst) => inst.installmentNumber === i,
+            )
+            csvInstallments.push(inst?.amount || 0)
+          }
+
           return [
             `"${record.name}"`,
             `"${record.email}"`,
@@ -490,9 +639,7 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
             `"${record.classPlan}"`,
             `"${record.cohort}"`,
             record.totalFee,
-            record.installments[0]?.amount || 0,
-            record.installments[1]?.amount || 0,
-            record.installments[2]?.amount || 0,
+            ...csvInstallments,
             totalPaid,
             balance,
             record.status,

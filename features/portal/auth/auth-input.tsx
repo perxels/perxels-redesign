@@ -66,6 +66,7 @@ export function AuthInput({
             borderColor: isError ? 'red.500' : 'yellow.400',
             bgColor: 'yellow.50',
           }}
+          defaultValue={props.defaultValue}
           _focusVisible={{
             outline: 'none',
           }}
