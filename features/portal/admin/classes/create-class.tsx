@@ -59,8 +59,7 @@ const validationSchema = Yup.object().shape({
     .trim(),
 
   startDate: Yup.date()
-    .required('Start date is required')
-    .min(new Date(), 'Start date cannot be in the past'),
+    .required('Start date is required'),
 
   endDate: Yup.date()
     .required('End date is required')
@@ -374,7 +373,6 @@ export const CreateClass = () => {
                             onBlur={() => formik.handleBlur('startDate')}
                             isDisabled={isSubmitting}
                             size="lg"
-                            minDate={new Date()}
                             isInvalid={!!(formik.touched.startDate && formik.errors.startDate)}
                             errorMessage={formik.errors.startDate}
                           />
@@ -400,7 +398,7 @@ export const CreateClass = () => {
                             onBlur={() => formik.handleBlur('endDate')}
                             isDisabled={isSubmitting}
                             size="lg"
-                            minDate={formik.values.startDate ? new Date(formik.values.startDate) : new Date()}
+                            minDate={formik.values.startDate ? new Date(formik.values.startDate) : undefined}
                             isInvalid={!!(formik.touched.endDate && formik.errors.endDate)}
                             errorMessage={formik.errors.endDate}
                           />
