@@ -74,7 +74,11 @@ export const ClassSyllabusManagement: React.FC<ClassSyllabusManagementProps> = (
     handleAssignSyllabus,
     handleRemoveSyllabus,
     safeToISOString,
+    editDayAssignments,
+    handleAssignmentChange,
   } = useSyllabusManager({ classId, currentSyllabusId, onSyllabusUpdate })
+
+  // const [editDayAssignments, setEditDayAssignments] = React.useState('')
 
   const {
     isOpen: isAssignOpen,
@@ -160,11 +164,25 @@ export const ClassSyllabusManagement: React.FC<ClassSyllabusManagementProps> = (
                           isEditing={editingDay === day.id}
                           editDayTitle={editDayTitle}
                           editDayContent={editDayContent}
-                          onEditStart={() => startEditingDay(day)}
-                          onEditSave={() => saveDayEdit(day)}
-                          onEditCancel={cancelEditingDay}
+                          editDayAssignments={editDayAssignments}
+                          onEditStart={() => {
+                            handleAssignmentChange(Array.isArray(day.assignments) ? day.assignments.join('\n') : '')
+                            startEditingDay(day)
+                          }}
+                          onEditSave={() => {
+                            const assignmentsArray = editDayAssignments
+                              .split('\n')
+                              .map((s) => s.trim())
+                              .filter(Boolean)
+                            saveDayEdit({ ...day, assignments: assignmentsArray })
+                          }}
+                          onEditCancel={() => {
+                            handleAssignmentChange('')
+                            cancelEditingDay()
+                          }}
                           onTitleChange={handleTitleChange}
                           onContentChange={handleContentChange}
+                          onAssignmentChange={handleAssignmentChange}
                           onScheduleUpdate={handleScheduleUpdate}
                           onSaveInline={saveScheduledDayInline}
                           scheduledDays={scheduledDays}

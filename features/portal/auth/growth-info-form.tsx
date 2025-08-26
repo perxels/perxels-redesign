@@ -1,5 +1,48 @@
 import * as Yup from 'yup'
 import React, { useState } from 'react'
+
+// Add helper function for image compression
+const compressImage = async (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.src = URL.createObjectURL(file)
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      if (!ctx) {
+        reject(new Error('Failed to get canvas context'))
+        return
+      }
+
+      // Calculate new dimensions (max 800px width/height)
+      let width = img.width
+      let height = img.height
+      const maxSize = 800
+      if (width > height && width > maxSize) {
+        height *= maxSize / width
+        width = maxSize
+      } else if (height > maxSize) {
+        width *= maxSize / height
+        height = maxSize
+      }
+
+      canvas.width = width
+      canvas.height = height
+      ctx.drawImage(img, 0, 0, width, height)
+
+      // Convert to blob with reduced quality
+      canvas.toBlob(
+        (blob) => {
+          if (blob) resolve(blob)
+          else reject(new Error('Failed to compress image'))
+        },
+        'image/jpeg',
+        0.7  // 70% quality
+      )
+    }
+    img.onerror = () => reject(new Error('Failed to load image'))
+  })
+}
 import {
   Box,
   Button,
@@ -72,13 +115,14 @@ export const GrowthInfoForm = () => {
       let pictureUrl = ''
       if (pictureFile) {
         try {
-          // Convert file to base64 for API upload
+          // Compress image before upload
+          const compressedBlob = await compressImage(pictureFile)
           const reader = new FileReader()
           const base64Promise = new Promise<string>((resolve, reject) => {
             reader.onload = () => resolve(reader.result as string)
             reader.onerror = reject
           })
-          reader.readAsDataURL(pictureFile)
+          reader.readAsDataURL(compressedBlob)
           
           const base64Data = await base64Promise
           
@@ -92,7 +136,7 @@ export const GrowthInfoForm = () => {
               uid,
               file: base64Data,
               fileName: pictureFile.name,
-              fileType: pictureFile.type,
+              fileType: 'image/jpeg', // Always JPEG after compression
             }),
           })
 

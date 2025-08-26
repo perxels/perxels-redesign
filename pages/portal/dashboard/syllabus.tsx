@@ -21,11 +21,26 @@ import {
   ListIcon,
   useToast,
 } from '@chakra-ui/react'
-import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore'
 import { portalDb } from '../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
 import { Syllabus } from '../../../types/syllabus.types'
-import { MdCheckCircle, MdAccessTime, MdComputer, MdSchool, MdAssignment, MdLink, MdCalendarToday } from 'react-icons/md'
+import {
+  MdCheckCircle,
+  MdAccessTime,
+  MdComputer,
+  MdSchool,
+  MdAssignment,
+  MdLink,
+  MdCalendarToday,
+} from 'react-icons/md'
 
 interface ClassData {
   id: string
@@ -46,7 +61,9 @@ const StudentSyllabusPage = () => {
   const { user, portalUser } = usePortalAuth()
   const [syllabus, setSyllabus] = useState<Syllabus | null>(null)
   const [classData, setClassData] = useState<ClassData | null>(null)
-  const [scheduledDays, setScheduledDays] = useState<Record<string, ScheduledDay>>({})
+  const [scheduledDays, setScheduledDays] = useState<
+    Record<string, ScheduledDay>
+  >({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const toast = useToast()
@@ -61,24 +78,25 @@ const StudentSyllabusPage = () => {
 
       // Get student's cohort from their profile
       const studentCohort = portalUser.schoolFeeInfo?.cohort
-      
+
       if (!studentCohort) {
-        setError('You are not assigned to any class yet. Please contact your administrator.')
+        setError(
+          'You are not assigned to any class yet. Please contact your administrator.',
+        )
         return
       }
 
       // Find the class for this cohort
       const classesQuery = query(
         collection(portalDb, 'classes'),
-        where('cohortName', '==', studentCohort.toUpperCase())
+        where('cohortName', '==', studentCohort.toUpperCase()),
       )
       const classesSnapshot = await getDocs(classesQuery)
-      
+
       if (classesSnapshot.empty) {
         setError(`No class found for cohort: ${studentCohort}`)
         return
       }
-      
 
       const classDoc = classesSnapshot.docs[0]
       const classData: ClassData = {
@@ -94,16 +112,16 @@ const StudentSyllabusPage = () => {
       // Fetch scheduled days
       const savedScheduledDays = classDoc.data().scheduledDays || {}
       const convertedScheduledDays: Record<string, ScheduledDay> = {}
-      
-      Object.keys(savedScheduledDays).forEach(dayId => {
+
+      Object.keys(savedScheduledDays).forEach((dayId) => {
         const dayData = savedScheduledDays[dayId]
         convertedScheduledDays[dayId] = {
           scheduledDate: dayData.scheduledDate?.toDate() || new Date(),
           isCompleted: dayData.isCompleted || false,
-          notes: dayData.notes || ''
+          notes: dayData.notes || '',
         }
       })
-      
+
       setScheduledDays(convertedScheduledDays)
 
       // Fetch syllabus if available
@@ -132,7 +150,6 @@ const StudentSyllabusPage = () => {
       } else {
         setError('No syllabus has been assigned to your class yet')
       }
-
     } catch (err) {
       console.error('Error fetching syllabus:', err)
       setError('Failed to load syllabus. Please try again.')
@@ -169,19 +186,27 @@ const StudentSyllabusPage = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'green'
-      case 'overdue': return 'red'
-      case 'scheduled': return 'blue'
-      default: return 'gray'
+      case 'completed':
+        return 'green'
+      case 'overdue':
+        return 'red'
+      case 'scheduled':
+        return 'blue'
+      default:
+        return 'gray'
     }
   }
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'completed': return 'Completed'
-      case 'overdue': return 'Overdue'
-      case 'scheduled': return 'Scheduled'
-      default: return 'Not Scheduled'
+      case 'completed':
+        return 'Completed'
+      case 'overdue':
+        return 'Overdue'
+      case 'scheduled':
+        return 'Scheduled'
+      default:
+        return 'Not Scheduled'
     }
   }
 
@@ -225,11 +250,17 @@ const StudentSyllabusPage = () => {
                     <HStack justify="space-between" w="full">
                       <Heading size="lg">{syllabus.name}</Heading>
                       <HStack spacing={2}>
-                        <Badge colorScheme="purple" variant="subtle">v{syllabus.version}</Badge>
-                        <Badge colorScheme="green" variant="subtle">Active</Badge>
+                        <Badge colorScheme="purple" variant="subtle">
+                          v{syllabus.version}
+                        </Badge>
+                        <Badge colorScheme="green" variant="subtle">
+                          Active
+                        </Badge>
                       </HStack>
                     </HStack>
-                    <Text color="gray.600" fontSize="lg">{syllabus.description}</Text>
+                    <Text color="gray.600" fontSize="lg">
+                      {syllabus.description}
+                    </Text>
                     <HStack spacing={4}>
                       <Badge colorScheme="blue" variant="subtle">
                         <HStack spacing={1}>
@@ -246,9 +277,17 @@ const StudentSyllabusPage = () => {
                     </HStack>
                     {classData && (
                       <HStack spacing={4} fontSize="sm" color="gray.600">
-                        <Text>Cohort: <strong>{classData.cohortName}</strong></Text>
-                        <Text>Start Date: <strong>{formatDate(classData.startDate)}</strong></Text>
-                        <Text>End Date: <strong>{formatDate(classData.endDate)}</strong></Text>
+                        <Text>
+                          Cohort: <strong>{classData.cohortName}</strong>
+                        </Text>
+                        <Text>
+                          Start Date:{' '}
+                          <strong>{formatDate(classData.startDate)}</strong>
+                        </Text>
+                        <Text>
+                          End Date:{' '}
+                          <strong>{formatDate(classData.endDate)}</strong>
+                        </Text>
                       </HStack>
                     )}
                   </VStack>
@@ -271,7 +310,8 @@ const StudentSyllabusPage = () => {
                               <VStack align="start" spacing={1}>
                                 <Heading size="md">{week.title}</Heading>
                                 <Text fontSize="sm" color="gray.600">
-                                  {week.days.length} days • Week {week.weekNumber}
+                                  {week.days.length} days • Week{' '}
+                                  {week.weekNumber}
                                 </Text>
                               </VStack>
                               <Badge colorScheme="blue" variant="subtle">
@@ -284,7 +324,7 @@ const StudentSyllabusPage = () => {
                               {week.days.map((day, dayIndex) => {
                                 const status = getDayStatus(day)
                                 const scheduled = getScheduledDay(day.id)
-                                
+
                                 return (
                                   <Box
                                     key={day.id || dayIndex}
@@ -296,17 +336,37 @@ const StudentSyllabusPage = () => {
                                   >
                                     <VStack spacing={4} align="stretch">
                                       {/* Day Header */}
-                                      <HStack justify="space-between" align="start">
-                                        <VStack align="start" spacing={1} flex="1">
-                                          <Text fontWeight="bold" fontSize="lg" color="purple.600">
+                                      <HStack
+                                        justify="space-between"
+                                        align="start"
+                                      >
+                                        <VStack
+                                          align="start"
+                                          spacing={1}
+                                          flex="1"
+                                        >
+                                          <Text
+                                            fontWeight="bold"
+                                            fontSize="lg"
+                                            color="purple.600"
+                                          >
                                             Day {day.dayNumber}: {day.title}
                                           </Text>
-                                          <Text fontSize="sm" color="gray.700">
+                                          <Text
+                                            fontSize="sm"
+                                            color="gray.700"
+                                            whiteSpace="pre-line"
+                                            lineHeight="1.5"
+                                          >
                                             {day.content}
                                           </Text>
                                           <HStack spacing={2} mt={2}>
                                             {day.duration && (
-                                              <Badge colorScheme="purple" variant="subtle" fontSize="xs">
+                                              <Badge
+                                                colorScheme="purple"
+                                                variant="subtle"
+                                                fontSize="xs"
+                                              >
                                                 <HStack spacing={1}>
                                                   <MdAccessTime />
                                                   <Text>{day.duration}</Text>
@@ -315,21 +375,36 @@ const StudentSyllabusPage = () => {
                                             )}
                                             {/* Show class type if available */}
                                             {(day as any).classType && (
-                                              <Badge 
-                                                colorScheme={(day as any).classType === 'online' ? 'blue' : 'orange'} 
-                                                variant="subtle" 
+                                              <Badge
+                                                colorScheme={
+                                                  (day as any).classType ===
+                                                  'online'
+                                                    ? 'blue'
+                                                    : 'orange'
+                                                }
+                                                variant="subtle"
                                                 fontSize="xs"
                                               >
                                                 <HStack spacing={1}>
-                                                  {(day as any).classType === 'online' ? <MdComputer /> : <MdSchool />}
-                                                  <Text>{(day as any).classType}</Text>
+                                                  {(day as any).classType ===
+                                                  'online' ? (
+                                                    <MdComputer />
+                                                  ) : (
+                                                    <MdSchool />
+                                                  )}
+                                                  <Text>
+                                                    {(day as any).classType}
+                                                  </Text>
                                                 </HStack>
                                               </Badge>
                                             )}
                                           </HStack>
                                         </VStack>
                                         <VStack align="end" spacing={2}>
-                                          <Badge colorScheme={getStatusColor(status)} variant="subtle">
+                                          <Badge
+                                            colorScheme={getStatusColor(status)}
+                                            variant="subtle"
+                                          >
                                             {getStatusText(status)}
                                           </Badge>
                                         </VStack>
@@ -337,20 +412,42 @@ const StudentSyllabusPage = () => {
 
                                       {/* Scheduled Date Display */}
                                       {scheduled && (
-                                        <Box p={3} bg="blue.50" borderRadius="md" border="1px solid" borderColor="blue.200">
+                                        <Box
+                                          p={3}
+                                          bg="blue.50"
+                                          borderRadius="md"
+                                          border="1px solid"
+                                          borderColor="blue.200"
+                                        >
                                           <HStack spacing={2} align="center">
                                             <MdCalendarToday color="#3182CE" />
-                                            <Text fontSize="sm" fontWeight="medium" color="blue.700">
-                                              Scheduled for: {formatScheduledDate(scheduled.scheduledDate)}
+                                            <Text
+                                              fontSize="sm"
+                                              fontWeight="medium"
+                                              color="blue.700"
+                                            >
+                                              Scheduled for:{' '}
+                                              {formatScheduledDate(
+                                                scheduled.scheduledDate,
+                                              )}
                                             </Text>
                                             {scheduled.isCompleted && (
-                                              <Badge colorScheme="green" variant="subtle" size="sm">
+                                              <Badge
+                                                colorScheme="green"
+                                                variant="subtle"
+                                                size="sm"
+                                              >
                                                 Completed
                                               </Badge>
                                             )}
                                           </HStack>
                                           {scheduled.notes && (
-                                            <Text fontSize="xs" color="blue.600" mt={1} ml={6}>
+                                            <Text
+                                              fontSize="xs"
+                                              color="blue.600"
+                                              mt={1}
+                                              ml={6}
+                                            >
                                               Note: {scheduled.notes}
                                             </Text>
                                           )}
@@ -358,46 +455,80 @@ const StudentSyllabusPage = () => {
                                       )}
 
                                       {/* Assignments */}
-                                      {day.assignments && day.assignments.length > 0 && (
-                                        <Box>
-                                          <Text fontWeight="semibold" fontSize="sm" color="gray.700" mb={2}>
-                                            <HStack spacing={1}>
-                                              <MdAssignment />
-                                              <Text>Assignments</Text>
-                                            </HStack>
-                                          </Text>
-                                          <List spacing={1}>
-                                            {day.assignments.map((assignment, idx) => (
-                                              <ListItem key={idx} fontSize="sm" color="gray.600">
-                                                <ListIcon as={MdCheckCircle} color="green.500" />
-                                                {assignment}
-                                              </ListItem>
-                                            ))}
-                                          </List>
-                                        </Box>
-                                      )}
+                                      {day.assignments &&
+                                        day.assignments.length > 0 && (
+                                          <Box>
+                                            <Text
+                                              fontWeight="semibold"
+                                              fontSize="sm"
+                                              color="gray.700"
+                                              mb={2}
+                                            >
+                                              <HStack spacing={1}>
+                                                <MdAssignment />
+                                                <Text>Assignments</Text>
+                                              </HStack>
+                                            </Text>
+                                            <List spacing={1}>
+                                              {day.assignments.map(
+                                                (assignment, idx) => (
+                                                  <ListItem
+                                                    key={idx}
+                                                    fontSize="sm"
+                                                    color="gray.600"
+                                                  >
+                                                    <ListIcon
+                                                      as={MdCheckCircle}
+                                                      color="green.500"
+                                                    />
+                                                    {assignment}
+                                                  </ListItem>
+                                                ),
+                                              )}
+                                            </List>
+                                          </Box>
+                                        )}
 
                                       {/* Resources */}
-                                      {day.resources && day.resources.length > 0 && (
-                                        <Box>
-                                          <Text fontWeight="semibold" fontSize="sm" color="gray.700" mb={2}>
-                                            <HStack spacing={1}>
-                                              <MdLink />
-                                              <Text>Resources</Text>
-                                            </HStack>
-                                          </Text>
-                                          <List spacing={1}>
-                                            {day.resources.map((resource, idx) => (
-                                              <ListItem key={idx} fontSize="sm" color="blue.600">
-                                                <ListIcon as={MdLink} color="blue.500" />
-                                                <a href={resource} target="_blank" rel="noopener noreferrer">
-                                                  {resource}
-                                                </a>
-                                              </ListItem>
-                                            ))}
-                                          </List>
-                                        </Box>
-                                      )}
+                                      {day.resources &&
+                                        day.resources.length > 0 && (
+                                          <Box>
+                                            <Text
+                                              fontWeight="semibold"
+                                              fontSize="sm"
+                                              color="gray.700"
+                                              mb={2}
+                                            >
+                                              <HStack spacing={1}>
+                                                <MdLink />
+                                                <Text>Resources</Text>
+                                              </HStack>
+                                            </Text>
+                                            <List spacing={1}>
+                                              {day.resources.map(
+                                                (resource, idx) => (
+                                                  <ListItem
+                                                    key={idx}
+                                                    fontSize="sm"
+                                                    color="blue.600"
+                                                  >
+                                                    <ListIcon
+                                                      as={MdLink}
+                                                      color="blue.500"
+                                                    />
+                                                    <a
+                                                      href={resource}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
+                                                    >
+                                                      {resource}
+                                                    </a>
+                                                  </ListItem>
+                                                ),
+                                              )}
+                                            </List>
+                                          </Box>
+                                        )}
                                     </VStack>
                                   </Box>
                                 )
@@ -414,7 +545,9 @@ const StudentSyllabusPage = () => {
           ) : (
             <Alert status="info">
               <AlertIcon />
-              <AlertDescription>No syllabus available for your class yet.</AlertDescription>
+              <AlertDescription>
+                No syllabus available for your class yet.
+              </AlertDescription>
             </Alert>
           )}
         </VStack>

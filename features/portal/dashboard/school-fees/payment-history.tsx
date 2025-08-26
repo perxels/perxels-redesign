@@ -59,12 +59,16 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
     50% { transform: scale(1.1); }
   `
 
-
-
   // Animated Badge component for pending status
-  const AnimatedBadge = ({ status, children }: { status: string; children: React.ReactNode }) => {
+  const AnimatedBadge = ({
+    status,
+    children,
+  }: {
+    status: string
+    children: React.ReactNode
+  }) => {
     const isPending = status === 'Pending'
-    
+
     return (
       <Badge
         colorScheme={getStatusColor(status as PaymentRecord['status'])}
@@ -77,10 +81,14 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
         animation={isPending ? `${scaleAnimation} 2s infinite` : undefined}
         bg={isPending ? 'yellow.400' : undefined}
         color={isPending ? 'black' : undefined}
-        _hover={isPending ? {
-          transform: 'scale(1.05)',
-          transition: 'transform 0.2s ease-in-out',
-        } : undefined}
+        _hover={
+          isPending
+            ? {
+                transform: 'scale(1.05)',
+                transition: 'transform 0.2s ease-in-out',
+              }
+            : undefined
+        }
       >
         {children}
       </Badge>
@@ -146,14 +154,17 @@ function PaymentHistory({ payments: propPayments }: PaymentHistoryProps) {
     if (!schoolFeeInfo?.payments?.length) return []
 
     return schoolFeeInfo.payments.map((payment, index) => {
-      const remaining = getRemainingBalance(schoolFeeInfo)
-      const currentOwing = Math.max(0, remaining - payment.amount)
+      const currentOwed =
+        index === 0
+          ? schoolFeeInfo.totalSchoolFee - payment.amount
+          : schoolFeeInfo.totalSchoolFee -
+            (schoolFeeInfo.totalApproved + payment.amount)
 
       return {
         id: `${payment.installmentNumber}-${Date.now()}-${index}`,
         date: parseFirestoreDate(payment.submittedAt),
         paid: payment.amount,
-        owing: currentOwing,
+        owing: currentOwed,
         receiptLink: payment.paymentReceiptUrl,
         status:
           payment.status === 'approved'

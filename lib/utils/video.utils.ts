@@ -380,21 +380,32 @@ export async function getVideoById(videoId: string): Promise<PortalVideo | null>
  */
 export async function incrementVideoView(videoId: string, studentId: string): Promise<void> {
   try {
+    // First check if the student has access
+    const hasAccess = await hasVideoAccess(videoId, studentId)
+    
     // Update video view count
     const videoRef = doc(portalDb, 'portalVideos', videoId)
     await updateDoc(videoRef, {
-      viewCount: increment(1)
+      viewCount: increment(1),
+      lastViewedAt: serverTimestamp()
     })
 
-    // Update student's watch count if they have access
-    const accessId = `${videoId}_${studentId}`
-    const accessRef = doc(portalDb, 'videoAccess', accessId)
-    await updateDoc(accessRef, {
-      watchCount: increment(1),
-      lastWatchedAt: serverTimestamp()
-    })
+    // Only update access record if student has access
+    if (hasAccess) {
+      const accessId = `${videoId}_${studentId}`
+      const accessRef = doc(portalDb, 'videoAccess', accessId)
+      const accessDoc = await getDoc(accessRef)
+      
+      if (accessDoc.exists()) {
+        await updateDoc(accessRef, {
+          watchCount: increment(1),
+          lastWatchedAt: serverTimestamp()
+        })
+      }
+    }
   } catch (error) {
     console.error('Error incrementing video view:', error)
+    throw error // Re-throw to handle in component
   }
 }
 
