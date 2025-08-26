@@ -121,8 +121,10 @@ export const DayContentEditor: React.FC<{
   day: SyllabusDay
   editDayTitle: string
   editDayContent: string
+  editDayAssignments: string
   onTitleChange: (title: string) => void
   onContentChange: (content: string) => void
+  onAssignmentChange: (assignments: string) => void
   onSave: () => void
   onCancel: () => void
   isSaving: boolean
@@ -130,8 +132,10 @@ export const DayContentEditor: React.FC<{
   day, 
   editDayTitle, 
   editDayContent, 
+  editDayAssignments,
   onTitleChange, 
   onContentChange, 
+  onAssignmentChange,
   onSave, 
   onCancel, 
   isSaving 
@@ -179,6 +183,19 @@ export const DayContentEditor: React.FC<{
       </Text>
     </FormControl>
 
+    <FormControl>
+      <FormLabel fontSize="sm" fontWeight="semibold" color="purple.600">
+        Assignments:
+      </FormLabel>
+      <Textarea
+        value={editDayAssignments}
+        onChange={(e) => onAssignmentChange(e.target.value)}
+      />
+      <Text fontSize="xs" color="gray.500" mt={1}>
+        {editDayAssignments.length} characters
+      </Text>
+    </FormControl>
+
     <HStack spacing={2} w="full" justify="flex-end">
       <Button
         size="sm"
@@ -217,7 +234,7 @@ export const DayContentView: React.FC<{
         <Tooltip label="Edit day title and content" placement="top">
           <Button
             size="xs"
-            variant="ghost"
+            variant="link"
             colorScheme="purple"
             leftIcon={<MdEdit />}
             onClick={onEdit}
@@ -237,6 +254,19 @@ export const DayContentView: React.FC<{
         <Text fontSize="sm" color="gray.700" whiteSpace="pre-line" lineHeight="1.5">
           {day.content}
         </Text>
+
+        {day.assignments && (
+          <VStack align="start" spacing={1} mt={2}>
+            <Text fontSize="sm" color="gray.700" whiteSpace="pre-line" lineHeight="1.5">
+              Assignments:
+            </Text>
+            <Text fontSize="sm" color="gray.700" whiteSpace="pre-line" lineHeight="1.5">
+              {day.assignments.map((assignment: string) => (
+                <Text key={assignment}>{assignment}</Text>
+              ))}
+            </Text>
+          </VStack>
+        )}
       </Box>
       <HStack spacing={2} mt={2}>
         {day.duration && (
@@ -272,11 +302,13 @@ export const SyllabusDayCard: React.FC<{
   isEditing: boolean
   editDayTitle: string
   editDayContent: string
+  editDayAssignments: string
   onEditStart: () => void
   onEditSave: () => void
   onEditCancel: () => void
   onTitleChange: (title: string) => void
   onContentChange: (content: string) => void
+  onAssignmentChange: (assignments: string) => void
   onScheduleUpdate: (dayId: string, scheduledDay: ScheduledDay) => void
   onSaveInline: (dayId: string, scheduledDay: ScheduledDay) => void
   scheduledDays: Record<string, ScheduledDay>
@@ -292,11 +324,13 @@ export const SyllabusDayCard: React.FC<{
   isEditing,
   editDayTitle,
   editDayContent,
+  editDayAssignments,
   onEditStart,
   onEditSave,
   onEditCancel,
   onTitleChange,
   onContentChange,
+  onAssignmentChange,
   onScheduleUpdate,
   onSaveInline,
   scheduledDays,
@@ -341,8 +375,10 @@ export const SyllabusDayCard: React.FC<{
           day={day}
           editDayTitle={editDayTitle}
           editDayContent={editDayContent}
+          editDayAssignments={editDayAssignments}
           onTitleChange={onTitleChange}
           onContentChange={onContentChange}
+          onAssignmentChange={onAssignmentChange}
           onSave={onEditSave}
           onCancel={onEditCancel}
           isSaving={isSaving}
@@ -382,15 +418,6 @@ export const SyllabusDayCard: React.FC<{
                   fontSize: '0.875rem'
                 }}
               />
-              <Button
-                size="sm"
-                colorScheme="blue"
-                variant="outline"
-                onClick={() => scheduled && onSaveInline(day.id, scheduled)}
-                isDisabled={!scheduled}
-              >
-                Save
-              </Button>
             </HStack>
           </HStack>
 
@@ -437,7 +464,7 @@ export const SyllabusDayCard: React.FC<{
                   colorScheme="blue"
                   onClick={() => onSaveInline(day.id, scheduled)}
                 >
-                  Save Changes
+                  Update Schedule
                 </Button>
               </HStack>
             </>

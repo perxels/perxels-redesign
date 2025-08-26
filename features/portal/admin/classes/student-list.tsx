@@ -184,7 +184,7 @@ export const StudentList = () => {
           termsAgreed: data.termsAgreed || false,
           gender: data.gender,
           occupation: data.occupation,
-          owingStatus: data.owingStatus,
+          owingStatus: data.schoolFeeInfo.totalSchoolFee === data.schoolFeeInfo.totalApproved ? 'Paid' : 'Owing',
         })
       })
 

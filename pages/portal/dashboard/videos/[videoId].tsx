@@ -66,6 +66,23 @@ function VideoWatchPageContent() {
     }
   }, [videoId])
 
+  // Track video view after a delay to ensure actual viewing
+  useEffect(() => {
+    if (!video || !user?.uid) return
+    
+    const timer = setTimeout(async () => {
+      try {
+        await incrementVideoView(video.id, user.uid)
+        // Update local state to reflect the view
+        setVideo(prev => prev ? { ...prev, viewCount: (prev.viewCount || 0) + 1 } : null)
+      } catch (error) {
+        console.error('Error tracking video view:', error)
+      }
+    }, 10000) // Wait 10 seconds before counting as a view
+    
+    return () => clearTimeout(timer)
+  }, [video?.id, user?.uid])
+
   const fetchVideo = async () => {
     if (!videoId || typeof videoId !== 'string') return
 
@@ -74,10 +91,6 @@ function VideoWatchPageContent() {
       const videoData = await getVideoById(videoId)
       if (videoData) {
         setVideo(videoData)
-        // Increment view count when video is loaded
-        if (user?.uid) {
-          await incrementVideoView(videoId, user.uid)
-        }
       } else {
         setError('Video not found')
       }

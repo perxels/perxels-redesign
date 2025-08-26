@@ -20,7 +20,8 @@ import {
   WrapItem,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import { CurrencyInput } from '../../../../components/CurrencyInput'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { useToast } from '@chakra-ui/react'
@@ -76,7 +77,9 @@ export const MakePayment = () => {
           <ModalCloseButton />
           <ModalBody>
             {step === 1 && <PaymentDetails setStep={setStep} />}
-            {step === 2 && <PaymentConfirmation setStep={setStep} onClose={onClose} />}
+            {step === 2 && (
+              <PaymentConfirmation setStep={setStep} onClose={onClose} />
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -134,18 +137,27 @@ const PaymentDetails = ({ setStep }: PaymentDetailsProps) => {
   )
 }
 
-const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) => void; onClose?: () => void }) => {
+const PaymentConfirmation = ({
+  setStep,
+  onClose,
+}: {
+  setStep?: (step: number) => void
+  onClose?: () => void
+}) => {
   const [paymentReceiptFile, setPaymentReceiptFile] = useState<File | null>(
     null,
   )
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { user, portalUser } = usePortalAuth()
   const toast = useToast()
+  const router = useRouter()
   const { sendPaymentNotification } = usePaymentNotifications()
 
-  const initialAmountOwed =
+  const initialAmountOwed = useMemo(() => 
     (portalUser?.schoolFeeInfo?.totalSchoolFee || 0) -
-    (portalUser?.schoolFeeInfo?.totalApproved || 0)
+    (portalUser?.schoolFeeInfo?.totalApproved || 0), 
+    [portalUser?.schoolFeeInfo?.totalSchoolFee, portalUser?.schoolFeeInfo?.totalApproved]
+  )
 
   async function handlePaymentConfirmationSubmit(
     values: PaymentConfirmationFormValues,
@@ -157,33 +169,51 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
       await user.reload()
       const uid = user.uid
 
-      // Upload payment receipt to Cloudinary
+      // Upload payment receipt to our API endpoint
       let paymentReceiptUrl = ''
-      if (paymentReceiptFile) {
-        const formData = new FormData()
-        formData.append('file', paymentReceiptFile)
-        formData.append(
-          'upload_preset',
-          process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || '',
-        )
-        formData.append('folder', 'portal/payment-receipts')
-        formData.append('public_id', `${uid}_${Date.now()}_payment_receipt`)
-        formData.append('context', `user_id=${uid}|upload_type=payment_receipt`)
-        const cloudinaryResponse = await fetch(
-          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-          { method: 'POST', body: formData },
-        )
-        if (!cloudinaryResponse.ok) throw new Error('Cloudinary upload failed')
-        const cloudinaryResult = await cloudinaryResponse.json()
-        if (cloudinaryResult.error)
-          throw new Error(cloudinaryResult.error.message)
-        paymentReceiptUrl = cloudinaryResult.secure_url
-      } else {
+      if (!paymentReceiptFile) {
         throw new Error('Payment receipt is required.')
       }
 
+      try {
+        const formData = new FormData()
+        formData.append('file', paymentReceiptFile)
+        formData.append('uid', uid)
+        formData.append('type', 'payment_receipt')
+        
+        const uploadResponse = await fetch('/api/upload-receipt', {
+          method: 'POST',
+          body: formData,
+          // Prevent Next.js from auto-transforming the request
+          headers: {
+            accept: 'application/json',
+          },
+        })
+        
+        if (!uploadResponse.ok) {
+          const errorData = await uploadResponse.json().catch(() => null)
+          console.error('Upload error:', errorData || uploadResponse.statusText)
+          throw new Error(
+            errorData?.error || 
+            'Failed to upload receipt. Please try again.'
+          )
+        }
+        
+        const uploadResult = await uploadResponse.json()
+        if (!uploadResult.success || !uploadResult.url) {
+          throw new Error(uploadResult.error || 'Invalid upload response')
+        }
+        
+        paymentReceiptUrl = uploadResult.url
+      } catch (uploadError: any) {
+        console.error('Receipt upload error:', uploadError)
+        throw new Error('Failed to upload receipt. Please try again.')
+      }
+
       // Prepare payment data (match school-fee-info-form.tsx)
-      const isFirstPayment = !portalUser?.schoolFeeInfo?.payments || portalUser.schoolFeeInfo.payments.length === 0
+      const isFirstPayment =
+        !portalUser?.schoolFeeInfo?.payments ||
+        portalUser.schoolFeeInfo.payments.length === 0
       let response, result
       if (isFirstPayment) {
         // First payment: send full info
@@ -220,7 +250,10 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
             })
 
             if (!notificationResult.success) {
-              console.warn('Payment notification failed:', notificationResult.error)
+              console.warn(
+                'Payment notification failed:',
+                notificationResult.error,
+              )
               // Don't fail the main request if notification fails
             } else {
               console.log('Payment notification sent successfully')
@@ -240,13 +273,13 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
         isClosable: true,
         position: 'top',
       })
-      
+
       setPaymentReceiptFile(null)
       if (setStep) setStep(1)
       if (onClose) onClose()
-      
-      // Refresh the page to update school fee details
-      window.location.reload()
+
+      // Update UI without full page reload
+      router.refresh()
     } catch (error: any) {
       toast({
         title: 'Payment Failed',
@@ -272,7 +305,16 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
       validationSchema={formSchema}
       onSubmit={handlePaymentConfirmationSubmit}
     >
-      {({ values, errors, touched, handleBlur, setFieldValue, isValid, handleSubmit, resetForm }) => {
+      {({
+        values,
+        errors,
+        touched,
+        handleBlur,
+        setFieldValue,
+        isValid,
+        handleSubmit,
+        resetForm,
+      }) => {
         // Success handler to reset form, clear file, and close modal
         // const handleSuccess = (resetFormFn: () => void) => {
         //   setPaymentReceiptFile(null)
@@ -281,10 +323,12 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
         //   if (onClose) onClose()
         // }
         return (
-          <form onSubmit={async (e) => {
-            e.preventDefault();
-            await handleSubmit(e);
-          }}>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault()
+              await handleSubmit(e)
+            }}
+          >
             <VStack>
               <CurrencyInput
                 name="amountPaid"
@@ -303,7 +347,7 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
                 name="amountOwed"
                 value={values.amountOwed}
                 onChange={(value) => {
-                  return;
+                  return
                 }}
                 onBlur={() => handleBlur('amountOwed')}
                 placeholder="How much are you owing?"
@@ -345,21 +389,23 @@ const PaymentConfirmation = ({ setStep, onClose }: { setStep?: (step: number) =>
               <Box w="full" textAlign="right" mt={4}>
                 <HStack gap={4} align="end" justifyContent="flex-end">
                   <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                    Date: {new Date().toLocaleDateString('en-US', {
+                    Date:{' '}
+                    {new Date().toLocaleDateString('en-US', {
                       weekday: 'short',
                       year: 'numeric',
                       month: 'short',
-                      day: 'numeric'
+                      day: 'numeric',
                     })}
                   </Text>
                   <Text fontSize="sm" color="gray.500" fontWeight="medium">
                     |
                   </Text>
                   <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                    Time: {new Date().toLocaleTimeString('en-US', {
+                    Time:{' '}
+                    {new Date().toLocaleTimeString('en-US', {
                       hour: '2-digit',
                       minute: '2-digit',
-                      hour12: true
+                      hour12: true,
                     })}
                   </Text>
                 </HStack>

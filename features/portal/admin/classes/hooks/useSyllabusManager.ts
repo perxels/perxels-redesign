@@ -23,6 +23,7 @@ export const useSyllabusManager = ({ classId, currentSyllabusId, onSyllabusUpdat
   const [editingDay, setEditingDay] = useState<string | null>(null)
   const [editDayTitle, setEditDayTitle] = useState('')
   const [editDayContent, setEditDayContent] = useState('')
+  const [editDayAssignments, setEditDayAssignments] = useState('')
   const [savingDayEdit, setSavingDayEdit] = useState(false)
   
   // Hooks
@@ -182,6 +183,10 @@ export const useSyllabusManager = ({ classId, currentSyllabusId, onSyllabusUpdat
     setEditDayContent(content)
   }, [])
 
+  const handleAssignmentChange = useCallback((assignments: string) => {
+    setEditDayAssignments(assignments)
+  }, [])
+
   const saveDayEdit = useCallback(async (day: SyllabusDay) => {
     if (!user?.uid || !isAdmin || !syllabus) return
 
@@ -211,12 +216,18 @@ export const useSyllabusManager = ({ classId, currentSyllabusId, onSyllabusUpdat
     try {
       setSavingDayEdit(true)
 
+      // Normalize assignments from textarea (one per line) -> string[]
+      const assignmentsArray = editDayAssignments
+        .split('\n')
+        .map((s) => s.trim())
+        .filter(Boolean)
+
       // Find the week and day to update
       const updatedWeeks = syllabus.weeks.map(week => ({
         ...week,
         days: week.days.map(d => 
           d.id === day.id 
-            ? { ...d, title: editDayTitle, content: editDayContent }
+            ? { ...d, title: editDayTitle, content: editDayContent, assignments: assignmentsArray }
             : d
         )
       }))
@@ -255,7 +266,7 @@ export const useSyllabusManager = ({ classId, currentSyllabusId, onSyllabusUpdat
     } finally {
       setSavingDayEdit(false)
     }
-  }, [user?.uid, isAdmin, syllabus, editDayTitle, editDayContent, toast, cancelEditingDay])
+  }, [user?.uid, isAdmin, syllabus, editDayTitle, editDayContent, editDayAssignments, toast, cancelEditingDay])
 
   // Schedule management functions
   const saveScheduledDayInline = useCallback(async (dayId: string, scheduledDay: ScheduledDay) => {
@@ -435,5 +446,7 @@ export const useSyllabusManager = ({ classId, currentSyllabusId, onSyllabusUpdat
     handleAssignSyllabus,
     handleRemoveSyllabus,
     safeToISOString,
+    handleAssignmentChange,
+    editDayAssignments,
   }
 }
