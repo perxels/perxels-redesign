@@ -25,6 +25,7 @@ import {
   Link,
   Flex,
 } from '@chakra-ui/react'
+
 import { useAdminNotifications } from '../../../../hooks/useAdminNotifications'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import {
@@ -144,10 +145,12 @@ function NotificationRow({
   notification,
   onApprove,
   onReject,
+  getStatus,
 }: {
   notification: any;
   onApprove: (notification: AdminNotification) => void
   onReject: (notification: AdminNotification) => void
+  getStatus: (notification: AdminNotification) => string
 }) {
   // Format date to match design (MM/DD/YYYY)
   const formatDateToDesign = (date: any): string => {
@@ -180,12 +183,39 @@ function NotificationRow({
 
   const formattedDate = formatDateToDesign(notification.createdAt)
   
-  // Check if notification needs action (unread payment submissions)
+  // Check if notification needs action (unread payment submissions only)
   const needsAction = !notification.read && notification.type === 'payment_submitted'
   
-  // Determine background color based on read status
-  const bgColor = notification.read ? "gray.50" : "blue.50"
-  const hoverBgColor = notification.read ? "gray.100" : "blue.100"
+  // Determine background color based on notification type, status, and read status
+  const getBackgroundColor = () => {
+    if (notification.read) {
+      // For read notifications, check the status field for payment_submitted
+      if (notification.type === 'payment_submitted' && notification.data.status) {
+        switch (notification.data.status) {
+          case 'approved':
+            return { bg: "green.50", hover: "green.100" }
+          case 'rejected':
+            return { bg: "red.50", hover: "red.100" }
+          default:
+            return { bg: "gray.50", hover: "gray.100" }
+        }
+      } else {
+        // For other notification types
+        switch (notification.type) {
+          case 'payment_approved':
+            return { bg: "green.50", hover: "green.100" }
+          case 'payment_rejected':
+            return { bg: "red.50", hover: "red.100" }
+          default:
+            return { bg: "gray.50", hover: "gray.100" }
+        }
+      }
+    } else {
+      return { bg: "blue.50", hover: "blue.100" }
+    }
+  }
+  
+  const { bg: bgColor, hover: hoverBgColor } = getBackgroundColor()
 
   return (
     <Box
@@ -243,6 +273,13 @@ function NotificationRow({
             >
               View Receipt
             </Link>
+          )}
+          
+          {/* Status Display for Mobile */}
+          {!needsAction && (
+            <Text fontSize="sm" color="gray.500" fontStyle="italic" textAlign="center">
+              {getStatus(notification)}
+            </Text>
           )}
           
           {needsAction && (
@@ -348,7 +385,7 @@ function NotificationRow({
             </HStack>
           ) : (
             <Text fontSize="sm" color="gray.500" fontStyle="italic">
-              {notification.read ? 'Processed' : 'No action required'}
+              {getStatus(notification)}
             </Text>
           )}
         </Box>
@@ -359,8 +396,19 @@ function NotificationRow({
 
 export function NotificationsPage() {
   const { user } = usePortalAuth()
-  const { notifications, isLoading, markAsRead, refreshNotifications } =
-    useAdminNotifications()
+  const { 
+    notifications, 
+    isLoading, 
+    isLoadingMore,
+    hasMore, 
+    currentPage, 
+    pageSize,
+    markAsRead, 
+    updateNotificationStatus,
+    markAllAsRead,
+    loadMore, 
+    refreshNotifications 
+  } = useAdminNotifications()
   const [actionLoading, setActionLoading] = useState(false)
   const [selectedNotification, setSelectedNotification] =
     useState<AdminNotification | null>(null)
@@ -368,10 +416,32 @@ export function NotificationsPage() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
 
-  
-  // Show all payment notifications (both read and unread)
+  // Helper function to get notification status display text
+  const getNotificationStatus = (notification: AdminNotification) => {
+    switch (notification.type) {
+      case 'payment_submitted':
+        if (notification.data.status === 'approved') {
+          return 'Approved ✅'
+        } else if (notification.data.status === 'rejected') {
+          return notification.data.rejectionReason 
+            ? `Rejected ❌ - ${notification.data.rejectionReason}`
+            : 'Rejected ❌'
+        } else {
+          return notification.read ? 'Processed' : 'No action required'
+        }
+      case 'payment_approved':
+        return 'Approved ✅'
+      case 'payment_rejected':
+        return 'Rejected ❌'
+      default:
+        return notification.read ? 'Processed' : 'No action required'
+    }
+  }
+
+  // Show all payment-related notifications (submitted, approved, rejected)
+  // Unread notifications are already prioritized by the hook
   const paymentNotifications = notifications.filter(
-    (n) => n.type === 'payment_submitted',
+    (n) => ['payment_submitted', 'payment_approved', 'payment_rejected'].includes(n.type)
   )
 
   const handleApprove = (notification: AdminNotification) => {
@@ -384,6 +454,22 @@ export function NotificationsPage() {
     setSelectedNotification(notification)
     setActionType('reject')
     onOpen()
+  }
+
+  const handleLoadMore = async () => {
+    if (!hasMore || isLoadingMore) return
+    
+    try {
+      await loadMore()
+    } catch (error) {
+      console.error('Error loading more notifications:', error)
+      toast({
+        title: 'Error',
+        description: 'Failed to load more notifications',
+        status: 'error',
+        duration: 3000,
+      })
+    }
   }
 
   const handlePaymentAction = async (rejectionReason?: string) => {
@@ -436,9 +522,19 @@ export function NotificationsPage() {
         throw new Error('Failed to send notifications - payment status not updated')
       }
 
-      // Mark notification as read
+      // Update the original notification status and mark as read
       if (selectedNotification.id) {
-        await markAsRead(selectedNotification.id)
+        try {
+          await updateNotificationStatus(
+            selectedNotification.id,
+            actionType === 'approve' ? 'approved' : 'rejected',
+            actionType === 'reject' ? rejectionReason : undefined
+          )
+        } catch (error) {
+          console.error('Error updating notification status:', error)
+          // Still mark as read even if status update fails
+          await markAsRead(selectedNotification.id)
+        }
       }
 
       toast({
@@ -497,9 +593,33 @@ export function NotificationsPage() {
           </VStack>
         </Box>
 
+        {/* Action Buttons */}
+        {paymentNotifications.length > 0 && (
+          <Flex justify="end" gap={3}>
+            <Button
+              variant="outline"
+              colorScheme="blue"
+              size="sm"
+              onClick={refreshNotifications}
+              isLoading={isLoading}
+            >
+              Refresh
+            </Button>
+            <Button
+              variant="outline"
+              colorScheme="green"
+              size="sm"
+              onClick={markAllAsRead}
+              isDisabled={notifications.filter(n => !n.read).length === 0}
+            >
+              Mark All as Read
+            </Button>
+          </Flex>
+        )}
+
         {/* Notifications List */}
         <Box>
-          {isLoading ? (
+          {isLoading && currentPage === 1 ? (
             <Flex justify="center" p={8}>
               <Spinner size="lg" color="blue.500" />
             </Flex>
@@ -523,8 +643,35 @@ export function NotificationsPage() {
                   notification={notification}
                   onApprove={handleApprove}
                   onReject={handleReject}
+                  getStatus={getNotificationStatus}
                 />
               ))}
+              
+              {/* Load More Button */}
+              {hasMore && !isLoadingMore && (
+                <Flex justify="center" pt={4}>
+                  <Button
+                    onClick={handleLoadMore}
+                    isLoading={isLoadingMore}
+                    loadingText="Loading..."
+                    variant="outline"
+                    colorScheme="blue"
+                    size="lg"
+                  >
+                    Load More Notifications
+                  </Button>
+                </Flex>
+              )}
+              
+              {/* Pagination Info */}
+              {paymentNotifications.length > 0 && (
+                <Flex justify="center" pt={2}>
+                  <Text fontSize="sm" color="gray.500">
+                    Showing {paymentNotifications.length} notifications
+                    {hasMore && ` (Page ${currentPage})`}
+                  </Text>
+                </Flex>
+              )}
             </VStack>
           )}
         </Box>

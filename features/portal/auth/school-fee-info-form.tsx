@@ -194,7 +194,7 @@ export const SchoolFeeInfoForm = () => {
       const cleanAmountPaid = values.amountPaid.toString().replace(/[^\d]/g, '')
 
       const newSchoolFeeInfo: SchoolFeeInfo = {
-        cohort: values.cohort.toUpperCase(),
+        cohort: values.cohort.toUpperCase().trim(),
         classPlan: values.classPlan,
         totalSchoolFee: parseInt(cleanSchoolFee),
         payments: [

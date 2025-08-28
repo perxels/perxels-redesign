@@ -12,6 +12,8 @@ export interface AdminNotification {
     paymentReceiptUrl?: string
     cohort?: string
     classPlan?: string
+    status?: 'pending' | 'approved' | 'rejected' // Payment status for payment_submitted notifications
+    rejectionReason?: string // Reason for rejection if applicable
   }
   read: boolean
   createdAt: Date
@@ -58,6 +60,13 @@ export const NOTIFICATION_TYPES = {
   STUDENT_REGISTERED: 'student_registered' as const,
 } as const
 
+// Payment status constants
+export const PAYMENT_STATUS = {
+  PENDING: 'pending' as const,
+  APPROVED: 'approved' as const,
+  REJECTED: 'rejected' as const,
+} as const
+
 // Helper functions
 export function createPaymentNotification(
   studentId: string,
@@ -83,6 +92,7 @@ export function createPaymentNotification(
       paymentReceiptUrl,
       cohort,
       classPlan,
+      status: PAYMENT_STATUS.PENDING,
     },
     read: false,
     createdAt: new Date(),
