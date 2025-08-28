@@ -92,7 +92,7 @@ const formSchema = Yup.object().shape({
   branch: Yup.string()
     .required('Please select your preferred branch')
     .oneOf(
-      ['Ibadan', 'Lekki, Lagos', 'Yaba, Lagos', 'Abuja'],
+      ['Ibadan', 'Lekki, Lagos', 'Yaba, Lagos', 'Abuja', 'Fully Online Class'],
       'Please select a valid branch',
     ),
 })

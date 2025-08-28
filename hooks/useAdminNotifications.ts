@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { collection, query, where, getDocs, orderBy, updateDoc, doc, writeBatch } from 'firebase/firestore'
+import { collection, query, where, getDocs, orderBy, updateDoc, doc, writeBatch, limit, startAfter, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore'
 import { portalDb } from '../portalFirebaseConfig'
 import { usePortalAuth } from './usePortalAuth'
 
@@ -20,15 +20,21 @@ interface AdminNotification {
   }
   read: boolean
   createdAt: Date
-  userId: string // Changed from adminId to userId to match the field used in notification creation
+  userId: string
 }
 
 interface UseAdminNotificationsReturn {
   notifications: AdminNotification[]
   unreadCount: number
   isLoading: boolean
-  fetchNotifications: () => Promise<void>
+  isLoadingMore: boolean
+  hasMore: boolean
+  currentPage: number
+  pageSize: number
+  fetchNotifications: (page?: number, reset?: boolean) => Promise<void>
+  loadMore: () => Promise<void>
   markAsRead: (notificationId: string) => Promise<void>
+  updateNotificationStatus: (notificationId: string, status: 'approved' | 'rejected', rejectionReason?: string) => Promise<void>
   markAllAsRead: () => Promise<void>
   refreshNotifications: () => void
 }
@@ -38,45 +44,51 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
   const [notifications, setNotifications] = useState<AdminNotification[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
+  const [hasMore, setHasMore] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null)
+  const pageSize = 15
 
-  // Fetch notifications
-  const fetchNotifications = useCallback(async () => {
+  // Initial fetch function
+  const initialFetch = useCallback(async () => {
     if (!user?.uid || portalUser?.role !== 'admin') return
 
     setIsLoading(true)
     try {
-
-      
-      // Query notifications for this admin user
       const q = query(
         collection(portalDb, 'notifications'),
-        where('userId', '==', user.uid), // Use userId to match the field used in notification creation
-        orderBy('createdAt', 'desc')
+        where('userId', '==', user.uid),
+        orderBy('read', 'asc'),
+        orderBy('createdAt', 'desc'),
+        limit(pageSize)
       )
       
       const snapshot = await getDocs(q)
-      const adminNotifications: AdminNotification[] = snapshot.docs
-        .map(doc => {
-          const data = doc.data()
-          return {
-            id: doc.id,
-            type: data.type || '',
-            title: data.title || '',
-            message: data.message || '',
-            data: data.data || {},
-            read: data.read || false,
-            createdAt: data.createdAt?.toDate() || new Date(),
-            userId: data.userId || '', // Use userId to match the field used in notification creation
-          }
-        })
-        .slice(0, 20) // Limit to 20 notifications
-      
-      setNotifications(adminNotifications)
+      const newNotifications: AdminNotification[] = snapshot.docs.map(doc => {
+        const data = doc.data()
+        return {
+          id: doc.id,
+          type: data.type || '',
+          title: data.title || '',
+          message: data.message || '',
+          data: data.data || {},
+          read: data.read || false,
+          createdAt: data.createdAt?.toDate() || new Date(),
+          userId: data.userId || '',
+        }
+      })
+
+      setNotifications(newNotifications)
+      setHasMore(snapshot.docs.length === pageSize)
+      if (snapshot.docs.length > 0) {
+        setLastDoc(snapshot.docs[snapshot.docs.length - 1])
+      }
+      setCurrentPage(1)
       
       // Calculate unread count
-      const unreadCount = adminNotifications.filter(n => !n.read).length
-      setUnreadCount(unreadCount)
-      
+      const totalUnread = newNotifications.filter(n => !n.read).length
+      setUnreadCount(totalUnread)
 
     } catch (error) {
       console.error('❌ Error fetching admin notifications:', error)
@@ -85,15 +97,61 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
     } finally {
       setIsLoading(false)
     }
-  }, [user?.uid, portalUser?.role])
+  }, [user?.uid, portalUser?.role, pageSize])
+
+  // Load more notifications
+  const loadMore = useCallback(async () => {
+    if (!hasMore || isLoadingMore || !lastDoc) return
+    
+    setIsLoadingMore(true)
+    try {
+      const q = query(
+        collection(portalDb, 'notifications'),
+        where('userId', '==', user?.uid),
+        orderBy('read', 'asc'),
+        orderBy('createdAt', 'desc'),
+        startAfter(lastDoc),
+        limit(pageSize)
+      )
+      
+      const snapshot = await getDocs(q)
+      const newNotifications: AdminNotification[] = snapshot.docs.map(doc => {
+        const data = doc.data()
+        return {
+          id: doc.id,
+          type: data.type || '',
+          title: data.title || '',
+          message: data.message || '',
+          data: data.data || {},
+          read: data.read || false,
+          createdAt: data.createdAt?.toDate() || new Date(),
+          userId: data.userId || '',
+        }
+      })
+
+      setNotifications(prev => [...prev, ...newNotifications])
+      setHasMore(snapshot.docs.length === pageSize)
+      if (snapshot.docs.length > 0) {
+        setLastDoc(snapshot.docs[snapshot.docs.length - 1])
+      }
+      setCurrentPage(prev => prev + 1)
+      
+      // Update unread count
+      const newUnreadCount = newNotifications.filter(n => !n.read).length
+      setUnreadCount(prev => prev + newUnreadCount)
+      
+    } catch (error) {
+      console.error('❌ Error loading more notifications:', error)
+    } finally {
+      setIsLoadingMore(false)
+    }
+  }, [hasMore, isLoadingMore, lastDoc, user?.uid, pageSize])
 
   // Mark notification as read
   const markAsRead = useCallback(async (notificationId: string) => {
     if (!user?.uid) return
 
     try {
-
-      
       // Update notification in Firestore
       const notificationRef = doc(portalDb, 'notifications', notificationId)
       await updateDoc(notificationRef, {
@@ -109,9 +167,46 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
       )
       setUnreadCount(prev => Math.max(0, prev - 1))
 
-
     } catch (error) {
       console.error('❌ Error marking notification as read:', error)
+      throw error
+    }
+  }, [user?.uid])
+
+  // Update notification status (for payment processing)
+  const updateNotificationStatus = useCallback(async (notificationId: string, status: 'approved' | 'rejected', rejectionReason?: string) => {
+    if (!user?.uid) return
+
+    try {
+      // Update notification in Firestore
+      const notificationRef = doc(portalDb, 'notifications', notificationId)
+      await updateDoc(notificationRef, {
+        read: true,
+        readAt: new Date(),
+        'data.status': status,
+        ...(status === 'rejected' && rejectionReason && { 'data.rejectionReason': rejectionReason }),
+      })
+
+      // Update local state
+      setNotifications(prev =>
+        prev.map(n =>
+          n.id === notificationId
+            ? {
+                ...n,
+                read: true,
+                data: {
+                  ...n.data,
+                  status,
+                  ...(status === 'rejected' && rejectionReason && { rejectionReason }),
+                }
+              }
+            : n
+        )
+      )
+      setUnreadCount(prev => Math.max(0, prev - 1))
+
+    } catch (error) {
+      console.error('❌ Error updating notification status:', error)
       throw error
     }
   }, [user?.uid])
@@ -121,13 +216,10 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
     if (!user?.uid || unreadCount === 0) return
 
     try {
-
-      
       // Get all unread notifications for this admin
       const unreadNotifications = notifications.filter(n => !n.read && n.userId === user.uid)
       
       if (unreadNotifications.length === 0) {
-  
         return
       }
 
@@ -148,7 +240,6 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
       setNotifications(prev => prev.map(n => ({ ...n, read: true })))
       setUnreadCount(0)
 
-
     } catch (error) {
       console.error('❌ Error marking all notifications as read:', error)
       throw error
@@ -157,30 +248,41 @@ export function useAdminNotifications(): UseAdminNotificationsReturn {
 
   // Manual refresh function
   const refreshNotifications = useCallback(() => {
-    fetchNotifications()
-  }, [fetchNotifications])
+    initialFetch()
+  }, [initialFetch])
 
   // Fetch notifications when hook is first used
   useEffect(() => {
     if (user?.uid && portalUser?.role === 'admin') {
-      fetchNotifications()
+      initialFetch()
     }
-  }, [user?.uid, portalUser?.role, fetchNotifications])
+  }, [user?.uid, portalUser?.role, initialFetch])
 
-  // Auto-refresh notifications every 30 seconds
-  useEffect(() => {
-    if (user?.uid && portalUser?.role === 'admin') {
-      const interval = setInterval(fetchNotifications, 30000) // 30 seconds
-      return () => clearInterval(interval)
+  // External fetch function (for compatibility)
+  const fetchNotifications = useCallback(async (page: number = 1, reset: boolean = false) => {
+    if (!user?.uid || portalUser?.role !== 'admin') return
+
+    if (reset || page === 1) {
+      // Reset to first page
+      refreshNotifications()
+    } else if (lastDoc) {
+      // Load more pages
+      await loadMore()
     }
-  }, [user?.uid, portalUser?.role, fetchNotifications])
+  }, [user?.uid, portalUser?.role, lastDoc, refreshNotifications, loadMore])
 
   return {
     notifications,
     unreadCount,
     isLoading,
+    isLoadingMore,
+    hasMore,
+    currentPage,
+    pageSize,
     fetchNotifications,
+    loadMore,
     markAsRead,
+    updateNotificationStatus,
     markAllAsRead,
     refreshNotifications,
   }

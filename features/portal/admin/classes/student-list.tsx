@@ -50,16 +50,32 @@ function trimUrl(url: string, maxLength = 25): string {
 
 export const StudentList = () => {
   const [students, setStudents] = useState<StudentData[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(null)
+  const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(
+    null,
+  )
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize] = useState(20) // Show 20 students per page
+  const [hasMore, setHasMore] = useState(true)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
 
   const { portalUser } = usePortalAuth()
   const router = useRouter()
   const isAdmin = portalUser?.role === 'admin'
-  
-  const { isOpen: isDetailsOpen, onOpen: onDetailsOpen, onClose: onDetailsClose } = useDisclosure()
-  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
+
+  const {
+    isOpen: isDetailsOpen,
+    onOpen: onDetailsOpen,
+    onClose: onDetailsClose,
+  } = useDisclosure()
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onClose: onDeleteClose,
+  } = useDisclosure()
 
   // Get filters from query string
   const filters = useMemo(() => {
@@ -146,16 +162,76 @@ export const StudentList = () => {
     return filtered
   }, [students, filters])
 
+  // Calculate owing status based on payment data
+  const calculateOwingStatus = (student: StudentData): string => {
+    const schoolFeeInfo = student.schoolFeeInfo
+
+    if (!schoolFeeInfo) {
+      return 'No Payment Info'
+    }
+
+    const totalSchoolFee = schoolFeeInfo.totalSchoolFee || 0
+    const totalApproved = schoolFeeInfo.totalApproved || 0
+
+    // If approved payments equal or exceed total school fee, student is paid
+    if (totalApproved >= totalSchoolFee) {
+      return 'Paid'
+    }
+
+    // Otherwise, student is owing
+    return 'Owing'
+  }
+
+  // Get payment details for display
+  const getPaymentDetails = (student: StudentData) => {
+    const schoolFeeInfo = student.schoolFeeInfo
+
+    if (!schoolFeeInfo) {
+      return { totalFee: 0, paid: 0, remaining: 0, progress: 0 }
+    }
+
+    const totalFee = schoolFeeInfo.totalSchoolFee || 0
+    const paid = schoolFeeInfo.totalApproved || 0
+    const remaining = Math.max(0, totalFee - paid)
+    const progress = totalFee > 0 ? (paid / totalFee) * 100 : 0
+
+    return { totalFee, paid, remaining, progress }
+  }
+
+  // Get paginated students for current page
+  const paginatedStudents = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize
+    const endIndex = startIndex + pageSize
+    return filteredStudents.slice(startIndex, endIndex)
+  }, [filteredStudents, currentPage, pageSize])
+
+  // Check if there are more students to load
+  const hasMoreStudents = useMemo(() => {
+    return currentPage * pageSize < filteredStudents.length
+  }, [filteredStudents.length, currentPage, pageSize])
+
+  // Load more students
+  const loadMoreStudents = () => {
+    if (hasMoreStudents && !isLoadingMore) {
+      setCurrentPage((prev) => prev + 1)
+    }
+  }
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filters])
+
   // Fetch students from Firebase
   const fetchStudents = async () => {
     if (!isAdmin) {
       setError('Only administrators can view student list')
-      setLoading(false)
+      setIsLoading(false)
       return
     }
 
     try {
-      setLoading(true)
+      setIsLoading(true)
       setError(null)
 
       const studentsQuery = query(
@@ -184,7 +260,15 @@ export const StudentList = () => {
           termsAgreed: data.termsAgreed || false,
           gender: data.gender,
           occupation: data.occupation,
-          owingStatus: data.schoolFeeInfo.totalSchoolFee === data.schoolFeeInfo.totalApproved ? 'Paid' : 'Owing',
+          owingStatus:
+            data.schoolFeeInfo &&
+            data.schoolFeeInfo.totalSchoolFee &&
+            data.schoolFeeInfo.totalApproved
+              ? data.schoolFeeInfo.totalSchoolFee ===
+                data.schoolFeeInfo.totalApproved
+                ? 'Paid'
+                : 'Owing'
+              : 'Not Set',
         })
       })
 
@@ -201,11 +285,12 @@ export const StudentList = () => {
       })
 
       setStudents(sortedStudents)
+      setHasMore(sortedStudents.length > pageSize)
     } catch (err: any) {
       console.error('Error fetching students:', err)
       setError('Failed to load students. Please try again.')
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -239,6 +324,31 @@ export const StudentList = () => {
 
   return (
     <VStack w="full" spacing={6} align="stretch">
+      {/* Header with Stats and Actions */}
+      <Flex justify="space-between" align="center" wrap="wrap" gap={4}>
+        <Box>
+          <Text fontSize="2xl" fontWeight="bold" color="gray.800">
+            Student Management
+          </Text>
+          <Text fontSize="sm" color="gray.600">
+            {loading
+              ? 'Loading...'
+              : `${filteredStudents.length} students found`}
+          </Text>
+        </Box>
+
+        {!loading && filteredStudents.length > 0 && (
+          <Button
+            variant="outline"
+            colorScheme="blue"
+            size="sm"
+            onClick={fetchStudents}
+          >
+            Refresh
+          </Button>
+        )}
+      </Flex>
+
       {/* Loading State */}
       {loading ? (
         <Box textAlign="center" py={12}>
@@ -266,7 +376,7 @@ export const StudentList = () => {
       ) : (
         /* Students Grid */
         <VStack spacing={4} align="stretch">
-          {filteredStudents.map((student) => (
+          {paginatedStudents.map((student) => (
             <Box
               key={student.uid}
               bg="gray.100"
@@ -404,7 +514,7 @@ export const StudentList = () => {
                 </Text>
 
                 {/* Owing Status */}
-                <Text
+                {/* <Text
                   minW="80px"
                   fontWeight="bold"
                   fontSize="md"
@@ -412,7 +522,63 @@ export const StudentList = () => {
                   textAlign="center"
                 >
                   {student.owingStatus || 'Owing'}
-                </Text>
+                </Text> */}
+                {/* Payment Progress */}
+                <Box minW="120px" textAlign="center">
+                  {student.schoolFeeInfo ? (
+                    <VStack spacing={1}>
+                      <Text fontSize="sm" fontWeight="medium" color="gray.800">
+                        {calculateOwingStatus(student)}
+                      </Text>
+                      <HStack spacing={2} fontSize="xs">
+                        <VStack spacing={0}>
+                          <Text color="red.600" fontWeight="medium">
+                            Owing
+                          </Text>
+                          <Text color="red.600">
+                            ₦
+                            {getPaymentDetails(
+                              student,
+                            ).remaining.toLocaleString()}
+                          </Text>
+                        </VStack>
+                        <Text color="gray.400">|</Text>
+                        <VStack spacing={0}>
+                          <Text color="green.600" fontWeight="medium">
+                            Paid
+                          </Text>
+                          <Text color="green.600">
+                            ₦{getPaymentDetails(student).paid.toLocaleString()}
+                          </Text>
+                        </VStack>
+                      </HStack>
+                      {/* Progress Bar */}
+                      <Box
+                        w="full"
+                        bg="gray.200"
+                        borderRadius="full"
+                        h="2px"
+                        mt={1}
+                      >
+                        <Box
+                          bg="green.500"
+                          h="2px"
+                          borderRadius="full"
+                          w={`${getPaymentDetails(student).progress}%`}
+                          transition="width 0.3s ease"
+                        />
+                      </Box>
+                      <Text fontSize="xs" color="gray.500">
+                        {getPaymentDetails(student).progress.toFixed(0)}%
+                        Complete
+                      </Text>
+                    </VStack>
+                  ) : (
+                    <Text fontSize="sm" color="gray.500">
+                      No Payment Info
+                    </Text>
+                  )}
+                </Box>
 
                 {/* Action Buttons */}
                 <HStack spacing={2}>
@@ -450,6 +616,31 @@ export const StudentList = () => {
               </Flex>
             </Box>
           ))}
+
+          {/* Pagination Controls */}
+          {hasMoreStudents && (
+            <Flex justify="center" pt={4}>
+              <Button
+                onClick={loadMoreStudents}
+                variant="outline"
+                colorScheme="blue"
+                size="lg"
+              >
+                Load More Students
+              </Button>
+            </Flex>
+          )}
+
+          {/* Pagination Info */}
+          {filteredStudents.length > 0 && (
+            <Flex justify="center" pt={2}>
+              <Text fontSize="sm" color="gray.500">
+                Showing {paginatedStudents.length} of {filteredStudents.length}{' '}
+                students
+                {hasMoreStudents && ` (Page ${currentPage})`}
+              </Text>
+            </Flex>
+          )}
         </VStack>
       )}
 

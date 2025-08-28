@@ -376,14 +376,39 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
 
                   {/* Payment Progress (Mobile) */}
                   {student.schoolFeeInfo && (
-                    <Flex justify="space-between" align="center">
-                      <Text fontSize="xs" color="gray.500">
-                        Payment:
+                    <VStack spacing={1} align="stretch">
+                      <Text fontSize="xs" color="gray.500" textAlign="center">
+                        Payment Status
                       </Text>
-                      <Text fontSize="xs" color="gray.700" fontWeight="medium">
-                        ₦{getPaymentDetails(student).paid.toLocaleString()} / ₦{getPaymentDetails(student).totalFee.toLocaleString()}
+                      <HStack spacing={2} justify="center" fontSize="xs">
+                        <VStack spacing={0}>
+                          <Text color="red.600" fontWeight="medium">Owing</Text>
+                          <Text color="red.600">
+                            ₦{getPaymentDetails(student).remaining.toLocaleString()}
+                          </Text>
+                        </VStack>
+                        <Text color="gray.400">|</Text>
+                        <VStack spacing={0}>
+                          <Text color="green.600" fontWeight="medium">Paid</Text>
+                          <Text color="green.600">
+                            ₦{getPaymentDetails(student).paid.toLocaleString()}
+                          </Text>
+                        </VStack>
+                      </HStack>
+                      {/* Progress Bar */}
+                      <Box w="full" bg="gray.200" borderRadius="full" h="2px" mt={1}>
+                        <Box
+                          bg="green.500"
+                          h="2px"
+                          borderRadius="full"
+                          w={`${getPaymentDetails(student).progress}%`}
+                          transition="width 0.3s ease"
+                        />
+                      </Box>
+                      <Text fontSize="xs" color="gray.500" textAlign="center">
+                        {getPaymentDetails(student).progress.toFixed(0)}% Complete
                       </Text>
-                    </Flex>
+                    </VStack>
                   )}
                 </VStack>
               </Box>
@@ -442,8 +467,33 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                       <Text fontSize="sm" fontWeight="medium" color="gray.800">
                         {calculateOwingStatus(student)}
                       </Text>
-                      <Text fontSize="xs" color="gray.600">
-                        ₦{getPaymentDetails(student).paid.toLocaleString()} / ₦{getPaymentDetails(student).totalFee.toLocaleString()}
+                      <HStack spacing={2} fontSize="xs">
+                        <VStack spacing={0}>
+                          <Text color="red.600" fontWeight="medium">Owing</Text>
+                          <Text color="red.600">
+                            ₦{getPaymentDetails(student).remaining.toLocaleString()}
+                          </Text>
+                        </VStack>
+                        <Text color="gray.400">|</Text>
+                        <VStack spacing={0}>
+                          <Text color="green.600" fontWeight="medium">Paid</Text>
+                          <Text color="green.600">
+                            ₦{getPaymentDetails(student).paid.toLocaleString()}
+                          </Text>
+                        </VStack>
+                      </HStack>
+                      {/* Progress Bar */}
+                      <Box w="full" bg="gray.200" borderRadius="full" h="2px" mt={1}>
+                        <Box
+                          bg="green.500"
+                          h="2px"
+                          borderRadius="full"
+                          w={`${getPaymentDetails(student).progress}%`}
+                          transition="width 0.3s ease"
+                        />
+                      </Box>
+                      <Text fontSize="xs" color="gray.500">
+                        {getPaymentDetails(student).progress.toFixed(0)}% Complete
                       </Text>
                     </VStack>
                   ) : (
