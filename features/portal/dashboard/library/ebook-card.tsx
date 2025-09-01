@@ -36,10 +36,104 @@ export const EbookCard = ({
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
+  const validateFileUrl = (url: string): boolean => {
+    try {
+      const urlObj = new URL(url)
+      return urlObj.protocol === 'https:' || urlObj.protocol === 'http:'
+    } catch {
+      return false
+    }
+  }
+
+  const downloadFile = async (url: string, fileName: string): Promise<boolean> => {
+    try {
+      // Method 1: Try direct download first
+      const link = document.createElement('a')
+      link.href = url
+      link.download = fileName
+      link.target = '_blank'
+      link.style.display = 'none'
+      
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      
+      // Give it a moment to see if it works
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      return true
+    } catch (error) {
+      console.warn('Direct download failed, trying fetch method:', error)
+      
+      // Method 2: Fetch and download
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          mode: 'cors',
+        })
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
+        
+        const blob = await response.blob()
+        const downloadUrl = window.URL.createObjectURL(blob)
+        
+        const link = document.createElement('a')
+        link.href = downloadUrl
+        link.download = fileName
+        link.style.display = 'none'
+        
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        
+        // Clean up the blob URL
+        window.URL.revokeObjectURL(downloadUrl)
+        
+        return true
+      } catch (fetchError) {
+        console.error('Fetch download also failed:', fetchError)
+        return false
+      }
+    }
+  }
+
   const handleDownload = async () => {
-    if (isDownloading || !userId) return // Prevent multiple downloads
+    if (isDownloading || !userId) {
+      toast({
+        title: 'Error',
+        description: 'Please wait for the current download to complete.',
+        status: 'warning',
+        duration: 3000,
+      })
+      return
+    }
+
+    // Validate access
+    if (!ebook.hasAccess) {
+      toast({
+        title: 'Access Denied',
+        description: 'You need to unlock this ebook first.',
+        status: 'error',
+        duration: 3000,
+      })
+      return
+    }
+
+    // Validate file URL
+    if (!ebook.fileUrl || !validateFileUrl(ebook.fileUrl)) {
+      toast({
+        title: 'Download Error',
+        description: 'Invalid file URL. Please contact support.',
+        status: 'error',
+        duration: 5000,
+      })
+      return
+    }
 
     setIsDownloading(true)
+    
     try {
       // Show loading state
       toast({
@@ -49,49 +143,59 @@ export const EbookCard = ({
         duration: 2000,
       })
 
-      // Handle all Firebase operations on client side first
-      if (userId && ebook.id) {
+      // Prepare file name
+      const fileName = ebook.fileName || `${ebook.title.replace(/[^a-zA-Z0-9]/g, '_')}.${ebook.fileType.toLowerCase()}`
+
+      // Attempt download
+      const downloadSuccess = await downloadFile(ebook.fileUrl, fileName)
+
+      if (downloadSuccess) {
+        // Record the download only after successful download
         try {
-          // Record the download using client-side Firebase
           const { recordEbookDownload } = await import(
             '../../../../lib/utils/ebook.utils'
           )
           await recordEbookDownload(ebook.id, userId)
-        } catch (error) {
-          console.warn('Failed to record download:', error)
-          // Continue with download even if recording fails
+          
+          toast({
+            title: 'Download Successful! 📚',
+            description: `${ebook.title} has been downloaded successfully`,
+            status: 'success',
+            duration: 4000,
+          })
+        } catch (recordError) {
+          console.warn('Failed to record download:', recordError)
+          // Still show success message even if recording fails
+          toast({
+            title: 'Download Successful! 📚',
+            description: `${ebook.title} has been downloaded (download count may not be updated)`,
+            status: 'success',
+            duration: 4000,
+          })
         }
+      } else {
+        throw new Error('Download failed')
       }
-
-      // Simple direct download approach
-      const fileName =
-        ebook.fileName || `${ebook.title}.${ebook.fileType.toLowerCase()}`
-
-      // Create a temporary link element to trigger download
-      const link = document.createElement('a')
-      link.href = ebook.fileUrl
-      link.download = fileName
-      link.target = '_blank'
-      link.style.display = 'none'
-
-      // Append to body, click, and cleanup
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-
-      toast({
-        title: 'Download Started! 📚',
-        description: `${ebook.title} is being downloaded`,
-        status: 'success',
-        duration: 3000,
-      })
     } catch (error) {
       console.error('Download error:', error)
+      
+      let errorMessage = 'Unable to download the ebook. Please try again.'
+      
+      if (error instanceof Error) {
+        if (error.message.includes('CORS')) {
+          errorMessage = 'Download blocked by browser security. Please try opening the link in a new tab.'
+        } else if (error.message.includes('HTTP')) {
+          errorMessage = 'File not found or access denied. Please contact support.'
+        } else if (error.message.includes('network')) {
+          errorMessage = 'Network error. Please check your connection and try again.'
+        }
+      }
+      
       toast({
         title: 'Download Failed',
-        description: 'Unable to download the ebook. Please try again.',
+        description: errorMessage,
         status: 'error',
-        duration: 3000,
+        duration: 5000,
       })
     } finally {
       setIsDownloading(false)

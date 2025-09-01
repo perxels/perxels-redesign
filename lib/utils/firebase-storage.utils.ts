@@ -37,16 +37,61 @@ export async function uploadFileToFirebase(
  */
 export async function deleteFileFromFirebase(fileUrl: string): Promise<boolean> {
   try {
-    // Extract the file path from the URL
-    const url = new URL(fileUrl)
-    const pathMatch = url.pathname.match(/\/o\/(.+?)\?/)
+    // Handle different Firebase Storage URL formats
+    let filePath: string | null = null
     
-    if (!pathMatch) {
-      throw new Error('Invalid Firebase Storage URL')
+    // Try to extract path from URL
+    try {
+      const url = new URL(fileUrl)
+      
+      // Method 1: Standard Firebase Storage URL format
+      const pathMatch = url.pathname.match(/\/o\/(.+?)\?/)
+      if (pathMatch) {
+        filePath = decodeURIComponent(pathMatch[1])
+      }
+      
+      // Method 2: Alternative format (some Firebase URLs might have different patterns)
+      if (!filePath) {
+        const altPathMatch = url.pathname.match(/\/v0\/b\/[^\/]+\/o\/(.+?)\?/)
+        if (altPathMatch) {
+          filePath = decodeURIComponent(altPathMatch[1])
+        }
+      }
+      
+      // Method 3: Direct path extraction (fallback)
+      if (!filePath) {
+        // Try to extract from the full pathname
+        const segments = url.pathname.split('/')
+        const oIndex = segments.indexOf('o')
+        if (oIndex !== -1 && segments[oIndex + 1]) {
+          filePath = decodeURIComponent(segments[oIndex + 1])
+        }
+      }
+    } catch (urlError) {
+      console.warn('Failed to parse URL:', urlError)
     }
     
-    // Decode the path (Firebase URLs are URL-encoded)
-    const filePath = decodeURIComponent(pathMatch[1])
+    // If URL parsing failed, try to extract path using regex directly
+    if (!filePath) {
+      const directPathMatch = fileUrl.match(/\/o\/([^?]+)/)
+      if (directPathMatch) {
+        filePath = decodeURIComponent(directPathMatch[1])
+      }
+    }
+    
+    // If still no path found, try alternative patterns
+    if (!filePath) {
+      const altMatch = fileUrl.match(/\/v0\/b\/[^\/]+\/o\/([^?]+)/)
+      if (altMatch) {
+        filePath = decodeURIComponent(altMatch[1])
+      }
+    }
+    
+    // If we still can't extract the path, throw a more descriptive error
+    if (!filePath) {
+      console.error('Unable to extract file path from URL:', fileUrl)
+      throw new Error(`Invalid Firebase Storage URL format: ${fileUrl}`)
+    }
     
     // Create storage reference
     const storageRef = ref(storage, filePath)
@@ -57,7 +102,14 @@ export async function deleteFileFromFirebase(fileUrl: string): Promise<boolean> 
     return true
   } catch (error) {
     console.error('Error deleting file from Firebase Storage:', error)
-    throw new Error('Failed to delete file from storage')
+    
+    // If it's a "not found" error, we can consider it successful (file already deleted)
+    if (error instanceof Error && error.message.includes('not found')) {
+      console.warn('File not found in storage (may have been already deleted):', fileUrl)
+      return true
+    }
+    
+    throw new Error(`Failed to delete file from storage: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
 
@@ -66,14 +118,37 @@ export async function deleteFileFromFirebase(fileUrl: string): Promise<boolean> 
  */
 export function extractFilePathFromUrl(fileUrl: string): string | null {
   try {
-    const url = new URL(fileUrl)
-    const pathMatch = url.pathname.match(/\/o\/(.+?)\?/)
+    // Try multiple URL parsing methods
+    let filePath: string | null = null
     
-    if (!pathMatch) {
-      return null
+    // Method 1: Standard URL parsing
+    try {
+      const url = new URL(fileUrl)
+      const pathMatch = url.pathname.match(/\/o\/(.+?)\?/)
+      if (pathMatch) {
+        filePath = decodeURIComponent(pathMatch[1])
+      }
+    } catch (urlError) {
+      console.warn('Failed to parse URL with URL constructor:', urlError)
     }
     
-    return decodeURIComponent(pathMatch[1])
+    // Method 2: Direct regex on string
+    if (!filePath) {
+      const directPathMatch = fileUrl.match(/\/o\/([^?]+)/)
+      if (directPathMatch) {
+        filePath = decodeURIComponent(directPathMatch[1])
+      }
+    }
+    
+    // Method 3: Alternative Firebase URL format
+    if (!filePath) {
+      const altMatch = fileUrl.match(/\/v0\/b\/[^\/]+\/o\/([^?]+)/)
+      if (altMatch) {
+        filePath = decodeURIComponent(altMatch[1])
+      }
+    }
+    
+    return filePath
   } catch (error) {
     console.error('Error extracting file path from URL:', error)
     return null

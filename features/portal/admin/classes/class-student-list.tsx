@@ -15,6 +15,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Avatar,
 } from '@chakra-ui/react'
 import { MdSearch, MdDelete } from 'react-icons/md'
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -298,14 +299,17 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
               {/* Mobile Layout */}
               <Box display={{ base: 'block', md: 'none' }}>
                 <Flex justify="space-between" align="center" mb={3}>
-                  <Box flex="1">
-                    <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
-                      {student.fullName}
-                    </Text>
-                    <Text fontSize="sm" color="gray.700" noOfLines={1}>
-                      {student.phone}
-                    </Text>
-                  </Box>
+                  <HStack spacing={2}>
+                    <Avatar name={student.fullName} src={student?.growthInfo?.pictureUrl} />
+                    <Box minW="180px">
+                      <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
+                        {student.fullName}
+                      </Text>
+                      <Text fontSize="sm" color="gray.700" noOfLines={1}>
+                        {student.phone}
+                      </Text>
+                    </Box>
+                  </HStack>
                   <HStack spacing={2}>
                     <Button
                       size="xs"
@@ -421,14 +425,17 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                 gap={4}
               >
                 {/* Name and Phone */}
-                <Box minW="180px">
-                  <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
-                    {student.fullName}
-                  </Text>
-                  <Text fontSize="sm" color="gray.700" noOfLines={1}>
-                    {student.phone}
-                  </Text>
-                </Box>
+                <HStack spacing={2}>
+                  <Avatar name={student.fullName} src={student?.growthInfo?.pictureUrl} />
+                  <Box minW="180px">
+                    <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
+                      {student.fullName}
+                    </Text>
+                    <Text fontSize="sm" color="gray.700" noOfLines={1}>
+                      {student.phone}
+                    </Text>
+                  </Box>
+                </HStack>
 
                 {/* Email and Profile Link */}
                 <Box minW="220px">

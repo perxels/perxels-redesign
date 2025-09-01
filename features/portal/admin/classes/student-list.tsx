@@ -12,6 +12,7 @@ import {
   Flex,
   useDisclosure,
   HStack,
+  Avatar,
 } from '@chakra-ui/react'
 
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -59,8 +60,7 @@ export const StudentList = () => {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize] = useState(20) // Show 20 students per page
-  const [hasMore, setHasMore] = useState(true)
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
+  const [totalPages, setTotalPages] = useState(1)
 
   const { portalUser } = usePortalAuth()
   const router = useRouter()
@@ -162,6 +162,46 @@ export const StudentList = () => {
     return filtered
   }, [students, filters])
 
+  // Calculate total pages based on filtered students
+  useEffect(() => {
+    const total = Math.ceil(filteredStudents.length / pageSize)
+    setTotalPages(total)
+    
+    // Reset to first page if current page exceeds total pages
+    if (currentPage > total && total > 0) {
+      setCurrentPage(1)
+    }
+  }, [filteredStudents.length, pageSize, currentPage])
+
+  // Get paginated students for current page
+  const paginatedStudents = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize
+    const endIndex = startIndex + pageSize
+    return filteredStudents.slice(startIndex, endIndex)
+  }, [filteredStudents, currentPage, pageSize])
+
+  // Pagination handlers
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filters])
+
   // Calculate owing status based on payment data
   const calculateOwingStatus = (student: StudentData): string => {
     const schoolFeeInfo = student.schoolFeeInfo
@@ -197,30 +237,6 @@ export const StudentList = () => {
 
     return { totalFee, paid, remaining, progress }
   }
-
-  // Get paginated students for current page
-  const paginatedStudents = useMemo(() => {
-    const startIndex = (currentPage - 1) * pageSize
-    const endIndex = startIndex + pageSize
-    return filteredStudents.slice(startIndex, endIndex)
-  }, [filteredStudents, currentPage, pageSize])
-
-  // Check if there are more students to load
-  const hasMoreStudents = useMemo(() => {
-    return currentPage * pageSize < filteredStudents.length
-  }, [filteredStudents.length, currentPage, pageSize])
-
-  // Load more students
-  const loadMoreStudents = () => {
-    if (hasMoreStudents && !isLoadingMore) {
-      setCurrentPage((prev) => prev + 1)
-    }
-  }
-
-  // Reset pagination when filters change
-  useEffect(() => {
-    setCurrentPage(1)
-  }, [filters])
 
   // Fetch students from Firebase
   const fetchStudents = async () => {
@@ -285,7 +301,6 @@ export const StudentList = () => {
       })
 
       setStudents(sortedStudents)
-      setHasMore(sortedStudents.length > pageSize)
     } catch (err: any) {
       console.error('Error fetching students:', err)
       setError('Failed to load students. Please try again.')
@@ -320,6 +335,19 @@ export const StudentList = () => {
   const handleStudentDeleted = () => {
     // Refresh the student list
     fetchStudents()
+  }
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = []
+    const maxVisiblePages = 5
+    const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2))
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1)
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i)
+    }
+    return pages
   }
 
   return (
@@ -474,14 +502,17 @@ export const StudentList = () => {
                 gap={4}
               >
                 {/* Name and Phone */}
-                <Box minW="180px">
-                  <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
-                    {student.fullName}
-                  </Text>
-                  <Text fontSize="sm" color="gray.700" noOfLines={1}>
-                    {student.phone}
-                  </Text>
-                </Box>
+                <HStack spacing={2}>
+                  <Avatar name={student.fullName} src={student?.growthInfo?.pictureUrl} />
+                  <Box minW="180px">
+                    <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
+                      {student.fullName}
+                    </Text>
+                    <Text fontSize="sm" color="gray.700" noOfLines={1}>
+                      {student.phone}
+                    </Text>
+                  </Box>
+                </HStack>
 
                 {/* Email and Profile Link */}
                 <Box minW="220px">
@@ -513,16 +544,6 @@ export const StudentList = () => {
                   {student.growthInfo?.profession || 'Banker'}
                 </Text>
 
-                {/* Owing Status */}
-                {/* <Text
-                  minW="80px"
-                  fontWeight="bold"
-                  fontSize="md"
-                  color="gray.800"
-                  textAlign="center"
-                >
-                  {student.owingStatus || 'Owing'}
-                </Text> */}
                 {/* Payment Progress */}
                 <Box minW="120px" textAlign="center">
                   {student.schoolFeeInfo ? (
@@ -618,15 +639,44 @@ export const StudentList = () => {
           ))}
 
           {/* Pagination Controls */}
-          {hasMoreStudents && (
-            <Flex justify="center" pt={4}>
+          {totalPages > 1 && (
+            <Flex justify="center" align="center" pt={6} gap={2} wrap="wrap">
+              {/* Previous Button */}
               <Button
-                onClick={loadMoreStudents}
+                onClick={handlePrevPage}
+                isDisabled={currentPage === 1}
                 variant="outline"
+                size="sm"
                 colorScheme="blue"
-                size="lg"
               >
-                Load More Students
+                Previous
+              </Button>
+
+              {/* Page Numbers */}
+              <HStack spacing={1}>
+                {getPageNumbers().map((page) => (
+                  <Button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    variant={currentPage === page ? 'solid' : 'outline'}
+                    size="sm"
+                    colorScheme="blue"
+                    minW="40px"
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </HStack>
+
+              {/* Next Button */}
+              <Button
+                onClick={handleNextPage}
+                isDisabled={currentPage === totalPages}
+                variant="outline"
+                size="sm"
+                colorScheme="blue"
+              >
+                Next
               </Button>
             </Flex>
           )}
@@ -635,9 +685,8 @@ export const StudentList = () => {
           {filteredStudents.length > 0 && (
             <Flex justify="center" pt={2}>
               <Text fontSize="sm" color="gray.500">
-                Showing {paginatedStudents.length} of {filteredStudents.length}{' '}
-                students
-                {hasMoreStudents && ` (Page ${currentPage})`}
+                Showing {((currentPage - 1) * pageSize) + 1} to {Math.min(currentPage * pageSize, filteredStudents.length)} of {filteredStudents.length} students
+                {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
               </Text>
             </Flex>
           )}
