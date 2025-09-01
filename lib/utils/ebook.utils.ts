@@ -425,23 +425,38 @@ export async function deleteEbookCompletely(ebookId: string): Promise<{
     }
 
     const deletedFiles: string[] = []
+    const errors: string[] = []
 
     // Delete files from Firebase Storage
     try {
       // Delete main file
       if (ebook.fileUrl) {
-        await deleteFromFirebaseStorage(ebook.fileUrl)
-        deletedFiles.push(ebook.fileUrl)
+        try {
+          await deleteFromFirebaseStorage(ebook.fileUrl)
+          deletedFiles.push(ebook.fileUrl)
+          console.log('Successfully deleted main file:', ebook.fileUrl)
+        } catch (fileError) {
+          const errorMsg = `Failed to delete main file: ${fileError instanceof Error ? fileError.message : 'Unknown error'}`
+          console.warn(errorMsg)
+          errors.push(errorMsg)
+        }
       }
 
       // Delete thumbnail if exists
       if (ebook.thumbnailUrl) {
-        await deleteFromFirebaseStorage(ebook.thumbnailUrl)
-        deletedFiles.push(ebook.thumbnailUrl)
+        try {
+          await deleteFromFirebaseStorage(ebook.thumbnailUrl)
+          deletedFiles.push(ebook.thumbnailUrl)
+          console.log('Successfully deleted thumbnail:', ebook.thumbnailUrl)
+        } catch (thumbnailError) {
+          const errorMsg = `Failed to delete thumbnail: ${thumbnailError instanceof Error ? thumbnailError.message : 'Unknown error'}`
+          console.warn(errorMsg)
+          errors.push(errorMsg)
+        }
       }
     } catch (firebaseError) {
       console.warn('Failed to delete from Firebase Storage:', firebaseError)
-      // Continue with database cleanup even if Firebase deletion fails
+      errors.push(`Firebase Storage error: ${firebaseError instanceof Error ? firebaseError.message : 'Unknown error'}`)
     }
 
     // Delete all access records for this ebook
@@ -451,12 +466,31 @@ export async function deleteEbookCompletely(ebookId: string): Promise<{
         deleteDoc(doc(portalDb, 'ebookAccess', access.id))
       )
       await Promise.all(deletePromises)
+      console.log(`Successfully deleted ${accessList.length} access records`)
     } catch (accessError) {
       console.warn('Failed to delete access records:', accessError)
+      errors.push(`Failed to delete access records: ${accessError instanceof Error ? accessError.message : 'Unknown error'}`)
     }
 
     // Delete the ebook document
-    await deleteDoc(doc(portalDb, 'portalEbooks', ebookId))
+    try {
+      await deleteDoc(doc(portalDb, 'portalEbooks', ebookId))
+      console.log('Successfully deleted ebook document')
+    } catch (docError) {
+      console.error('Failed to delete ebook document:', docError)
+      errors.push(`Failed to delete ebook document: ${docError instanceof Error ? docError.message : 'Unknown error'}`)
+    }
+
+    // If we have errors but the main document was deleted, we can still consider it successful
+    // but report the errors
+    if (errors.length > 0) {
+      console.warn('Ebook deletion completed with some errors:', errors)
+      return {
+        success: true,
+        deletedFiles,
+        error: `Ebook deleted but some cleanup failed: ${errors.join('; ')}`
+      }
+    }
 
     return {
       success: true,
@@ -466,7 +500,7 @@ export async function deleteEbookCompletely(ebookId: string): Promise<{
     console.error('Error deleting ebook completely:', error)
     return {
       success: false,
-      error: 'Failed to delete ebook completely'
+      error: `Failed to delete ebook completely: ${error instanceof Error ? error.message : 'Unknown error'}`
     }
   }
 }

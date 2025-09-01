@@ -148,14 +148,16 @@ export const SchoolFeesFilter = ({ onChange }: SchoolFeesFilterProps) => {
     typeof classPlanParam === 'string' ? classPlanParam : '',
   )
 
-  const { classes, loading: loadingClasses } = useClasses()
+  const { classes, loading: loadingClasses } = useClasses({ status: 'active' })
   const isMobile = useBreakpointValue({ base: true, md: false })
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  // Transform classes data for select options
+  // Transform classes data for select options - sort alphabetically
   const classOptions = [
     { value: 'all', label: 'All Classes' },
-    ...classes.map((c) => ({ value: c.cohortName, label: c.cohortName })),
+    ...classes
+      .map((c) => ({ value: c.cohortName, label: c.cohortName }))
+      .sort((a, b) => a.label.localeCompare(b.label)),
   ]
 
   // Sync filter state to URL search params

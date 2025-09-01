@@ -33,6 +33,7 @@ import {
   ImagePreviewModal,
   useImagePreview,
 } from '../../../../components/ImagePreviewModal'
+import { useClasses } from '../../../../hooks/useClasses'
 
 // Helper function to format payment date
 const formatPaymentDate = (dateString: string | any): string => {
@@ -437,6 +438,9 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
     title,
     openImagePreview,
   } = useImagePreview()
+  
+  // Get classes for classType filtering
+  const { classes } = useClasses({ status: 'active' })
 
   const fetchData = useCallback(
     async (
@@ -455,7 +459,12 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
 
         // Add branch filter to reduce data transfer
         if (filters.branch && filters.branch !== 'all') {
-          usersQuery = query(usersQuery, where('branch', '==', filters.branch))
+          // Handle special case for "Fully Online Class"
+          if (filters.branch === 'Fully Online Class') {
+            usersQuery = query(usersQuery, where('branch', '==', 'Fully Online Class'))
+          } else {
+            usersQuery = query(usersQuery, where('branch', '==', filters.branch))
+          }
         }
 
         // Add class plan filter if specified
@@ -465,9 +474,6 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
             where('schoolFeeInfo.classPlan', '==', filters.classPlan),
           )
         }
-
-        // Note: Complex status filtering will be done client-side for better performance
-        // as Firestore doesn't support complex field comparisons in where clauses
 
         // Add limit for pagination
         const queryLimit = pageSize * 2 // Fetch a bit more for better UX
@@ -480,6 +486,14 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
           const data = doc.data()
           const fee = data.schoolFeeInfo
           if (!fee) return
+
+          // Apply classType filter (cohort matching)
+          if (filters.classType && filters.classType !== 'all') {
+            const studentCohort = fee.cohort || ''
+            if (studentCohort !== filters.classType) {
+              return // Skip this student if cohort doesn't match
+            }
+          }
 
           const totalFee = fee.totalSchoolFee || 0
           const totalApproved = fee.totalApproved || 0
@@ -577,7 +591,7 @@ export function SchoolFeesLists({ filters }: SchoolFeesListsProps) {
         setLoading(false)
       }
     },
-    [],
+    [classes],
   )
 
   useEffect(() => {

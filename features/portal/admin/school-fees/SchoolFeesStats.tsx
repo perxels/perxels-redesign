@@ -19,6 +19,7 @@ import {
   limit,
 } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
+import { useClasses } from '../../../../hooks/useClasses'
 
 export interface SchoolFeesFilterState {
   branch: string
@@ -41,6 +42,9 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isRefreshing, setIsRefreshing] = useState(false)
+  
+  // Get classes for classType filtering
+  const { classes } = useClasses({ status: 'active' })
 
   const fetchStats = useCallback(
     async (isRefresh = false) => {
@@ -52,7 +56,7 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
       setError(null)
 
       try {
-        // Build optimized query with filters at database level (same as SchoolFeesLists)
+        // Build optimized query with filters at database level
         let usersQuery = query(
           collection(portalDb, 'users'),
           orderBy('fullName'),
@@ -60,7 +64,12 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
 
         // Add branch filter to reduce data transfer
         if (filters.branch && filters.branch !== 'all') {
-          usersQuery = query(usersQuery, where('branch', '==', filters.branch))
+          // Handle special case for "Fully Online Class"
+          if (filters.branch === 'Fully Online Class') {
+            usersQuery = query(usersQuery, where('branch', '==', 'Fully Online Class'))
+          } else {
+            usersQuery = query(usersQuery, where('branch', '==', filters.branch))
+          }
         }
 
         // Add class plan filter if specified
@@ -71,7 +80,6 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
           )
         }
 
-        // Note: We don't need limit here since we're calculating stats for all filtered data
         const snapshot = await getDocs(usersQuery)
 
         let totalSchoolFees = 0
@@ -79,17 +87,21 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
         let totalApproved = 0
         let studentCount = 0
 
+        // Get valid class names for filtering
+        const validClassNames = classes.map(c => c.cohortName)
+
         snapshot.forEach((doc) => {
           const data = doc.data()
           const fee = data.schoolFeeInfo
 
           if (!fee) return
 
-          // Apply additional client-side filtering for classType if needed
-          // (Since Firestore doesn't support complex field comparisons)
+          // Apply classType filter (cohort matching)
           if (filters.classType && filters.classType !== 'all') {
-            // You can add classType filtering logic here if needed
-            // For now, we'll use the database-level filters
+            const studentCohort = fee.cohort || ''
+            if (studentCohort !== filters.classType) {
+              return // Skip this student if cohort doesn't match
+            }
           }
 
           const totalFee = fee.totalSchoolFee || 0
@@ -125,7 +137,7 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
         }
       }
     },
-    [filters],
+    [filters, classes],
   )
 
   useEffect(() => {
@@ -158,10 +170,10 @@ export const SchoolFeesStats = ({ filters }: SchoolFeesStatsProps) => {
       contextParts.push(`Branch: ${filters.branch}`)
     }
     if (filters.classPlan) {
-      contextParts.push(`Class: ${filters.classPlan}`)
+      contextParts.push(`Class Plan: ${filters.classPlan}`)
     }
     if (filters.classType && filters.classType !== 'all') {
-      contextParts.push(`Type: ${filters.classType}`)
+      contextParts.push(`Class: ${filters.classType}`)
     }
     return contextParts.length > 0 ? contextParts.join(' • ') : 'All Students'
   }

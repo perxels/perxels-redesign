@@ -14,12 +14,6 @@ import {
   FormLabel,
   Input,
   Textarea,
-  Select,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   useToast,
   Text,
   Box,
@@ -27,7 +21,11 @@ import {
   Divider,
   Alert,
   AlertIcon,
+  Progress,
+  Icon,
+  IconButton,
 } from '@chakra-ui/react'
+import { FiUpload, FiFile, FiX, FiImage } from 'react-icons/fi'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { PortalEbook } from '../../../../types/ebook.types'
@@ -44,12 +42,8 @@ const editEbookValidationSchema = Yup.object({
     .required('Author is required')
     .max(100, 'Author must be less than 100 characters'),
   category: Yup.string().optional(),
-  maxAccess: Yup.number()
-    .min(1, 'Max access must be at least 1')
-    .optional(),
-  pageCount: Yup.number()
-    .min(1, 'Page count must be at least 1')
-    .optional(),
+  maxAccess: Yup.number().min(1, 'Max access must be at least 1').optional(),
+  pageCount: Yup.number().min(1, 'Page count must be at least 1').optional(),
   language: Yup.string().optional(),
   isbn: Yup.string().optional(),
 })
@@ -68,6 +62,11 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
   onEbookUpdated,
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(0)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null)
+  const [fileError, setFileError] = useState('')
+  const [thumbnailError, setThumbnailError] = useState('')
   const toast = useToast()
 
   const formik = useFormik({
@@ -84,6 +83,8 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
     validationSchema: editEbookValidationSchema,
     onSubmit: async (values) => {
       setIsSubmitting(true)
+      setUploadProgress(0)
+
       try {
         // Create updates object with only defined values
         const updates: any = {
@@ -99,7 +100,28 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
         if (values.language) updates.language = values.language
         if (values.isbn) updates.isbn = values.isbn
 
+        // Handle file uploads if new files are selected
+        if (selectedFile) {
+          setUploadProgress(25)
+          const fileUrl = await uploadFile(selectedFile)
+          setUploadProgress(75)
+
+          updates.fileUrl = fileUrl
+          updates.fileName = selectedFile.name
+          updates.fileSize = selectedFile.size
+          updates.fileType = selectedFile.type
+        }
+
+        // Handle thumbnail upload if new thumbnail is selected
+        if (selectedThumbnail) {
+          const thumbnailUrl = await uploadFile(selectedThumbnail)
+          updates.thumbnailUrl = thumbnailUrl
+        }
+
+        setUploadProgress(90)
+
         await updateEbook(ebook.id, updates)
+        setUploadProgress(100)
 
         toast({
           title: 'Success! 🎉',
@@ -112,19 +134,106 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
         onClose()
       } catch (error) {
         console.error('Error updating ebook:', error)
+
+        let errorMessage = 'Failed to update ebook. Please try again.'
+        if (error instanceof Error) {
+          if (error.message.includes('Cloudinary')) {
+            errorMessage = 'Failed to upload file. Please try again.'
+          } else if (error.message.includes('permission')) {
+            errorMessage = 'Permission denied. Please check your admin access.'
+          } else if (error.message.includes('network')) {
+            errorMessage = 'Network error. Please check your connection.'
+          }
+        }
+
         toast({
           title: 'Error',
-          description: 'Failed to update ebook. Please try again.',
+          description: errorMessage,
           status: 'error',
           duration: 3000,
         })
       } finally {
         setIsSubmitting(false)
+        setUploadProgress(0)
       }
     },
   })
 
+  // File upload function
+  const uploadFile = async (file: File): Promise<string> => {
+    try {
+      // Import the upload function dynamically
+      const { uploadFileToFirebase } = await import(
+        '../../../../lib/utils/firebase-storage.utils'
+      )
 
+      const folder = 'portal/ebooks'
+      const downloadURL = await uploadFileToFirebase(file, folder)
+      return downloadURL
+    } catch (error) {
+      console.error('Error uploading file:', error)
+      throw new Error('Failed to upload file')
+    }
+  }
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    const allowedTypes = [
+      'application/pdf',
+      'application/epub+zip',
+      'text/plain',
+    ]
+    if (!allowedTypes.includes(file.type)) {
+      setFileError('Please select a valid file type (PDF, EPUB, or TXT)')
+      return
+    }
+
+    // Validate file size (50MB limit)
+    const maxSize = 50 * 1024 * 1024 // 50MB
+    if (file.size > maxSize) {
+      setFileError('File size must be less than 50MB')
+      return
+    }
+
+    setSelectedFile(file)
+    setFileError('')
+  }
+
+  const handleThumbnailSelect = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+    if (!allowedTypes.includes(file.type)) {
+      setThumbnailError('Please select a valid image type (JPEG, PNG, or WebP)')
+      return
+    }
+
+    // Validate file size (5MB limit)
+    const maxSize = 5 * 1024 * 1024 // 5MB
+    if (file.size > maxSize) {
+      setThumbnailError('Image size must be less than 5MB')
+      return
+    }
+
+    setSelectedThumbnail(file)
+    setThumbnailError('')
+  }
+
+  const handleClose = () => {
+    setSelectedFile(null)
+    setSelectedThumbnail(null)
+    setFileError('')
+    setThumbnailError('')
+    setUploadProgress(0)
+    onClose()
+  }
 
   const formatFileSize = (bytes: number): string => {
     if (bytes === 0) return '0 Bytes'
@@ -135,7 +244,7 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={handleClose} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit Ebook</ModalHeader>
@@ -148,7 +257,11 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
               <VStack align="start" spacing={2}>
                 <Text fontWeight="semibold">Current Ebook Information</Text>
                 <HStack spacing={4} wrap="wrap">
-                  <Badge colorScheme="purple" variant="outline" fontFamily="mono">
+                  <Badge
+                    colorScheme="purple"
+                    variant="outline"
+                    fontFamily="mono"
+                  >
                     Access Code: {ebook.accessCode}
                   </Badge>
                   <Badge colorScheme="blue" variant="subtle">
@@ -161,6 +274,11 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
                 <Text fontSize="sm" color="gray.600">
                   File: {ebook.fileName} ({ebook.fileType.toUpperCase()})
                 </Text>
+                {ebook.thumbnailUrl && (
+                  <Text fontSize="sm" color="gray.600">
+                    Cover Image: Available
+                  </Text>
+                )}
               </VStack>
             </Alert>
 
@@ -169,7 +287,9 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
             {/* Edit Form */}
             <form onSubmit={formik.handleSubmit}>
               <VStack spacing={4} align="stretch">
-                <FormControl isInvalid={!!formik.errors.title && formik.touched.title}>
+                <FormControl
+                  isInvalid={!!formik.errors.title && formik.touched.title}
+                >
                   <FormLabel>Title</FormLabel>
                   <Input
                     name="title"
@@ -185,7 +305,11 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
                   )}
                 </FormControl>
 
-                <FormControl isInvalid={!!formik.errors.description && formik.touched.description}>
+                <FormControl
+                  isInvalid={
+                    !!formik.errors.description && formik.touched.description
+                  }
+                >
                   <FormLabel>Description</FormLabel>
                   <Textarea
                     name="description"
@@ -202,7 +326,9 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
                   )}
                 </FormControl>
 
-                <FormControl isInvalid={!!formik.errors.author && formik.touched.author}>
+                <FormControl
+                  isInvalid={!!formik.errors.author && formik.touched.author}
+                >
                   <FormLabel>Author</FormLabel>
                   <Input
                     name="author"
@@ -218,90 +344,163 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
                   )}
                 </FormControl>
 
-                <HStack spacing={4}>
-                  <FormControl>
-                    <FormLabel>Category</FormLabel>
-                    <Input
-                      name="category"
-                      value={formik.values.category}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      placeholder="e.g., Design, Development"
-                    />
-                  </FormControl>
+                {/* File Upload Section */}
+                <VStack spacing={4} align="stretch">
+                  <Text fontWeight="semibold" fontSize="lg">
+                    Update Files (Optional)
+                  </Text>
 
+                  {/* PDF File Upload */}
                   <FormControl>
-                    <FormLabel>Language</FormLabel>
-                    <Select 
-                      name="language"
-                      value={formik.values.language}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      placeholder="Select language"
+                    <FormLabel>Update PDF File</FormLabel>
+                    <Box
+                      border="2px dashed"
+                      borderColor={selectedFile ? 'green.300' : 'gray.300'}
+                      borderRadius="lg"
+                      p={4}
+                      textAlign="center"
+                      bg={selectedFile ? 'green.50' : 'gray.50'}
+                      transition="all 0.2s"
                     >
-                      <option value="English">English</option>
-                      <option value="French">French</option>
-                      <option value="Spanish">Spanish</option>
-                      <option value="German">German</option>
-                      <option value="Chinese">Chinese</option>
-                      <option value="Japanese">Japanese</option>
-                    </Select>
-                  </FormControl>
-                </HStack>
-
-                <HStack spacing={4}>
-                  <FormControl>
-                    <FormLabel>Page Count</FormLabel>
-                    <NumberInput min={1}>
-                      <NumberInputField
-                        name="pageCount"
-                        value={formik.values.pageCount || ''}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        placeholder="Number of pages"
+                      {selectedFile ? (
+                        <VStack spacing={2}>
+                          <HStack spacing={2}>
+                            <Icon as={FiFile} color="green.500" />
+                            <Text fontWeight="medium">{selectedFile.name}</Text>
+                            <IconButton
+                              aria-label="Remove file"
+                              icon={<FiX />}
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => setSelectedFile(null)}
+                            />
+                          </HStack>
+                          <Text fontSize="sm" color="gray.600">
+                            {formatFileSize(selectedFile.size)}
+                          </Text>
+                        </VStack>
+                      ) : (
+                        <VStack spacing={2}>
+                          <Icon as={FiUpload} color="gray.400" boxSize={8} />
+                          <Text>Click to select new PDF file</Text>
+                          <Text fontSize="sm" color="gray.500">
+                            Current: {ebook.fileName}
+                          </Text>
+                        </VStack>
+                      )}
+                      <Input
+                        type="file"
+                        accept=".pdf,.epub,.txt"
+                        onChange={handleFileSelect}
+                        style={{ display: 'none' }}
+                        id="file-upload"
                       />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                      <Button
+                        as="label"
+                        htmlFor="file-upload"
+                        variant="outline"
+                        size="sm"
+                        mt={2}
+                        cursor="pointer"
+                      >
+                        Select File
+                      </Button>
+                    </Box>
+                    {fileError && (
+                      <Text color="red.500" fontSize="sm" mt={1}>
+                        {fileError}
+                      </Text>
+                    )}
                   </FormControl>
 
+                  {/* Thumbnail Upload */}
                   <FormControl>
-                    <FormLabel>Max Access Limit</FormLabel>
-                    <NumberInput min={1}>
-                      <NumberInputField
-                        name="maxAccess"
-                        value={formik.values.maxAccess || ''}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        placeholder="No limit"
+                    <FormLabel>Update Cover Image</FormLabel>
+                    <Box
+                      border="2px dashed"
+                      borderColor={selectedThumbnail ? 'green.300' : 'gray.300'}
+                      borderRadius="lg"
+                      p={4}
+                      textAlign="center"
+                      bg={selectedThumbnail ? 'green.50' : 'gray.50'}
+                      transition="all 0.2s"
+                    >
+                      {selectedThumbnail ? (
+                        <VStack spacing={2}>
+                          <HStack spacing={2}>
+                            <Icon as={FiImage} color="green.500" />
+                            <Text fontWeight="medium">
+                              {selectedThumbnail.name}
+                            </Text>
+                            <IconButton
+                              aria-label="Remove thumbnail"
+                              icon={<FiX />}
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => setSelectedThumbnail(null)}
+                            />
+                          </HStack>
+                          <Text fontSize="sm" color="gray.600">
+                            {formatFileSize(selectedThumbnail.size)}
+                          </Text>
+                        </VStack>
+                      ) : (
+                        <VStack spacing={2}>
+                          <Icon as={FiUpload} color="gray.400" boxSize={8} />
+                          <Text>Click to select new cover image</Text>
+                          <Text fontSize="sm" color="gray.500">
+                            {ebook.thumbnailUrl
+                              ? 'Current: Available'
+                              : 'Current: None'}
+                          </Text>
+                        </VStack>
+                      )}
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleThumbnailSelect}
+                        style={{ display: 'none' }}
+                        id="thumbnail-upload"
                       />
-                      <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                      </NumberInputStepper>
-                    </NumberInput>
+                      <Button
+                        as="label"
+                        htmlFor="thumbnail-upload"
+                        variant="outline"
+                        size="sm"
+                        mt={2}
+                        cursor="pointer"
+                      >
+                        Select Image
+                      </Button>
+                    </Box>
+                    {thumbnailError && (
+                      <Text color="red.500" fontSize="sm" mt={1}>
+                        {thumbnailError}
+                      </Text>
+                    )}
                   </FormControl>
-                </HStack>
-
-                <FormControl>
-                  <FormLabel>ISBN</FormLabel>
-                  <Input
-                    name="isbn"
-                    value={formik.values.isbn}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    placeholder="Enter ISBN (optional)"
-                  />
-                </FormControl>
+                </VStack>
               </VStack>
             </form>
+
+            {/* Upload Progress */}
+            {uploadProgress > 0 && (
+              <VStack spacing={2}>
+                <Text fontSize="sm" color="gray.600">
+                  Uploading files...
+                </Text>
+                <Progress
+                  value={uploadProgress}
+                  width="100%"
+                  colorScheme="purple"
+                />
+              </VStack>
+            )}
           </VStack>
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="ghost" mr={3} onClick={onClose}>
+          <Button variant="outline" mr={3} onClick={handleClose}>
             Cancel
           </Button>
           <Button
@@ -309,6 +508,7 @@ export const EditEbookModal: React.FC<EditEbookModalProps> = ({
             type="submit"
             isLoading={isSubmitting}
             loadingText="Updating..."
+            onClick={() => formik.handleSubmit()}
           >
             Update Ebook
           </Button>
