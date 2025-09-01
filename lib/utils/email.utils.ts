@@ -746,6 +746,7 @@ export function generatePaymentReminderHtml(
       <div style="color: #222; font-size: 1rem;">
         <p>Hello ${studentName},</p>
         <p>This is a friendly reminder that you have outstanding school fees for your enrollment at Perxels Design School.</p>
+        <p>The deadline for payment is on the 7th of this new month.</p>
         
         <div style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 20px 0;">
           <h3 style="margin: 0 0 15px 0; color: #333; font-size: 1.1rem;">Payment Summary</h3>
@@ -1060,3 +1061,5 @@ export async function sendAdmissionEmail(
     }
   }
 }
+
+

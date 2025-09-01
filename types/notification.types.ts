@@ -1,12 +1,12 @@
 export interface AdminNotification {
   id?: string
-  type: 'payment_submitted' | 'payment_approved' | 'payment_rejected' | 'student_registered'
+  type: 'payment_submitted' | 'payment_approved' | 'payment_rejected' | 'student_registered' | 'payment_reminder'
   title: string
   message: string
   data: {
-    studentId: string
-    studentName: string
-    studentEmail: string
+    studentId?: string
+    studentName?: string
+    studentEmail?: string
     amount?: number
     installmentNumber?: number
     paymentReceiptUrl?: string
@@ -14,6 +14,10 @@ export interface AdminNotification {
     classPlan?: string
     status?: 'pending' | 'approved' | 'rejected' // Payment status for payment_submitted notifications
     rejectionReason?: string // Reason for rejection if applicable
+    totalFee?: number
+    totalPaid?: number
+    outstandingAmount?: number
+    reminderType?: string
   }
   read: boolean
   createdAt: Date
@@ -58,6 +62,7 @@ export const NOTIFICATION_TYPES = {
   PAYMENT_APPROVED: 'payment_approved' as const,
   PAYMENT_REJECTED: 'payment_rejected' as const,
   STUDENT_REGISTERED: 'student_registered' as const,
+  PAYMENT_REMINDER: 'payment_reminder' as const,
 } as const
 
 // Payment status constants
@@ -97,6 +102,34 @@ export function createPaymentNotification(
     read: false,
     createdAt: new Date(),
     adminIds,
+  }
+}
+
+export function createPaymentReminderNotification(
+  studentId: string,
+  studentName: string,
+  cohort: string,
+  classPlan: string,
+  totalFee: number,
+  totalPaid: number,
+  outstandingAmount: number,
+): AdminNotification {
+  return {
+    type: NOTIFICATION_TYPES.PAYMENT_REMINDER,
+    title: 'Payment Reminder',
+    message: `You have an outstanding balance of ₦${outstandingAmount.toLocaleString()} for ${cohort}. Please complete your payment to continue.`,
+    data: {
+      studentId,
+      studentName,
+      cohort,
+      classPlan,
+      totalFee,
+      totalPaid,
+      outstandingAmount,
+      reminderType: 'payment_reminder',
+    },
+    read: false,
+    createdAt: new Date(),
   }
 }
 

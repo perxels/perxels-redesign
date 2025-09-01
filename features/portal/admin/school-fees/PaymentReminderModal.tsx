@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -15,12 +15,13 @@ import {
   Alert,
   AlertIcon,
   Box,
-  Divider,
+  Badge,
   useToast,
 } from '@chakra-ui/react'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, getDocs, query, where, addDoc } from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { SchoolFeesFilterState } from './SchoolFeesLists'
+import { createPaymentReminderNotificationPayload } from '../../../../lib/utils/notification-templates'
 
 interface PaymentReminderModalProps {
   isOpen: boolean
@@ -30,13 +31,22 @@ interface PaymentReminderModalProps {
 
 interface ReminderResult {
   totalStudents: number
-  emailsSent: number
-  failedEmails: string[]
-  failedEmailsData?: Array<{
+  notificationsSent: number
+  failedNotifications: string[]
+  failedNotificationsData?: Array<{
     email: string
     fullName: string
     schoolFeeInfo: any
   }>
+}
+
+interface DebtorStudent {
+  id: string
+  email: string
+  fullName: string
+  branch?: string
+  schoolFeeInfo: any
+  selected?: boolean
 }
 
 export function PaymentReminderModal({
@@ -48,7 +58,45 @@ export function PaymentReminderModal({
   const [isResending, setIsResending] = useState(false)
   const [result, setResult] = useState<ReminderResult | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [debtorCount, setDebtorCount] = useState<number | null>(null)
+  const [isCounting, setIsCounting] = useState(false)
+  const [debtors, setDebtors] = useState<DebtorStudent[]>([])
+  const [selectedDebtors, setSelectedDebtors] = useState<Set<string>>(new Set())
+  const [showStudentList, setShowStudentList] = useState(false)
   const toast = useToast()
+
+  // Auto-count debtors when modal opens or filters change
+  useEffect(() => {
+    if (isOpen) {
+      countDebtors()
+    }
+  }, [isOpen, filters])
+
+  const handleSelectAll = () => {
+    if (selectedDebtors.size === debtors.length) {
+      setSelectedDebtors(new Set())
+    } else {
+      setSelectedDebtors(new Set(debtors.map((d) => d.id)))
+    }
+  }
+
+  const selectAllByDefault = () => {
+    if (debtors.length > 0) {
+      setSelectedDebtors(new Set(debtors.map((d) => d.id)))
+    }
+  }
+
+  const handleSelectStudent = (studentId: string) => {
+    const newSelected = new Set(selectedDebtors)
+    if (newSelected.has(studentId)) {
+      newSelected.delete(studentId)
+    } else {
+      newSelected.add(studentId)
+    }
+    setSelectedDebtors(newSelected)
+  }
+
+  const getSelectedCount = () => selectedDebtors.size
 
   const handleSendReminders = async () => {
     setIsLoading(true)
@@ -56,96 +104,74 @@ export function PaymentReminderModal({
     setResult(null)
 
     try {
-      // Get all students with school fee info
-      const usersQuery = query(
-        collection(portalDb, 'users'),
-        where('role', '==', 'student'),
-      )
+      // Use selected debtors or all debtors if none selected
+      const debtorsToNotify =
+        selectedDebtors.size > 0
+          ? debtors.filter((d) => selectedDebtors.has(d.id))
+          : debtors
 
-      const snapshot = await getDocs(usersQuery)
-      const debtors: Array<{
-        id: string
-        email: string
-        fullName: string
-        branch?: string
-        schoolFeeInfo: any
-      }> = []
-
-      // Filter debtors based on school fee info and filters
-      snapshot.forEach((doc) => {
-        const data = doc.data()
-        const fee = data.schoolFeeInfo
-
-        if (!fee) return
-
-        const totalFee = fee.totalSchoolFee || 0
-        const totalApproved = fee.totalApproved || 0
-        const outstandingAmount = totalFee - totalApproved
-
-        // Only include debtors (those with outstanding balance)
-        if (outstandingAmount > 0) {
-          // Apply filters if provided
-          if (filters) {
-            if (filters.branch && filters.branch !== 'all' && data.branch) {
-              if (data.branch.toLowerCase() !== filters.branch.toLowerCase()) {
-                return
-              }
-            }
-
-            if (filters.classPlan && fee.classPlan) {
-              if (
-                fee.classPlan.toLowerCase() !== filters.classPlan.toLowerCase()
-              ) {
-                return
-              }
-            }
-          }
-
-          debtors.push({
-            id: doc.id,
-            email: data.email || '',
-            fullName: data.fullName || 'Student',
-            branch: data.branch,
-            schoolFeeInfo: fee,
-          })
-        }
-      })
-
-      if (debtors.length === 0) {
+      if (debtorsToNotify.length === 0) {
         setResult({
           totalStudents: 0,
-          emailsSent: 0,
-          failedEmails: [],
+          notificationsSent: 0,
+          failedNotifications: [],
         })
         return
       }
 
-      // Send payment reminder emails via API
-      const response = await fetch('/api/send-payment-reminders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          filters,
-          debtors: debtors.map((debtor) => ({
-            id: debtor.id,
-            email: debtor.email,
-            fullName: debtor.fullName,
-            branch: debtor.branch,
-            schoolFeeInfo: debtor.schoolFeeInfo,
-          })),
-        }),
-      })
+      // Send in-app payment reminder notifications
+      const failedNotifications: string[] = []
+      let notificationsSent = 0
 
-      const data = await response.json()
+      for (const debtor of debtorsToNotify) {
+        try {
+          const fee = debtor.schoolFeeInfo
+          const totalFee = fee.totalSchoolFee || 0
+          const totalApproved = fee.totalApproved || 0
+          const outstandingAmount = totalFee - totalApproved
 
-      if (data.success) {
-        // Collect failed email data for resend functionality
-        const failedEmailsData = data.data.failedEmails
-          .map((failedEmail: string) => {
-            const debtor = debtors.find(
-              (d) => `${d.fullName} (${d.email})` === failedEmail,
+          // Create in-app notification for the student using centralized function
+          const notificationPayload = createPaymentReminderNotificationPayload(
+            debtor.id,
+            debtor.fullName,
+            fee.cohort || '',
+            fee.classPlan || '',
+            totalFee,
+            totalApproved,
+            outstandingAmount,
+          )
+
+          // Add notification to Firestore
+          await addDoc(
+            collection(portalDb, 'notifications'),
+            notificationPayload,
+          )
+
+          notificationsSent++
+          console.log(
+            `✅ Payment reminder notification sent to ${debtor.fullName}`,
+          )
+
+          // Add a small delay to avoid overwhelming the system
+          await new Promise((resolve) => setTimeout(resolve, 100))
+        } catch (error) {
+          console.error(
+            `❌ Failed to send notification to ${debtor.fullName}:`,
+            error,
+          )
+          failedNotifications.push(`${debtor.fullName} (${debtor.email})`)
+        }
+      }
+
+      // Set result
+      setResult({
+        totalStudents: debtorsToNotify.length,
+        notificationsSent,
+        failedNotifications,
+        failedNotificationsData: failedNotifications
+          .map((failedNotification) => {
+            const debtor = debtorsToNotify.find(
+              (d) => `${d.fullName} (${d.email})` === failedNotification,
             )
             return debtor
               ? {
@@ -155,30 +181,24 @@ export function PaymentReminderModal({
                 }
               : null
           })
-          .filter(Boolean)
+          .filter(
+            (
+              item,
+            ): item is {
+              email: string
+              fullName: string
+              schoolFeeInfo: any
+            } => item !== null,
+          ),
+      })
 
-        setResult({
-          ...data.data,
-          failedEmailsData,
-        })
-
-        toast({
-          title: 'Payment Reminders Sent',
-          description: `${data.data.emailsSent} out of ${data.data.totalStudents} emails were sent successfully.`,
-          status: data.data.emailsSent > 0 ? 'success' : 'warning',
-          duration: 5000,
-          isClosable: true,
-        })
-      } else {
-        setError(data.error || 'Failed to send payment reminders')
-        toast({
-          title: 'Error',
-          description: data.error || 'Failed to send payment reminders',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
-      }
+      toast({
+        title: 'Payment Reminders Sent',
+        description: `${notificationsSent} out of ${debtorsToNotify.length} in-app notifications were sent successfully.`,
+        status: notificationsSent > 0 ? 'success' : 'warning',
+        duration: 5000,
+        isClosable: true,
+      })
     } catch (err: any) {
       setError(err?.message || 'Failed to send payment reminders')
 
@@ -194,11 +214,14 @@ export function PaymentReminderModal({
     }
   }
 
-  const handleResendFailedEmails = async () => {
-    if (!result?.failedEmailsData || result.failedEmailsData.length === 0) {
+  const handleResendFailedNotifications = async () => {
+    if (
+      !result?.failedNotificationsData ||
+      result.failedNotificationsData.length === 0
+    ) {
       toast({
-        title: 'No Failed Emails',
-        description: 'There are no failed emails to resend.',
+        title: 'No Failed Notifications',
+        description: 'There are no failed notifications to resend.',
         status: 'info',
         duration: 3000,
         isClosable: true,
@@ -210,66 +233,85 @@ export function PaymentReminderModal({
     setError(null)
 
     try {
-      const response = await fetch('/api/send-payment-reminders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          debtors: result.failedEmailsData.map((debtor) => ({
-            id: 'retry', // Not needed for email sending
-            email: debtor.email,
-            fullName: debtor.fullName,
-            branch: '', // Not needed for email sending
-            schoolFeeInfo: debtor.schoolFeeInfo,
-          })),
-        }),
+      const failedNotifications: string[] = []
+      let notificationsSent = 0
+
+      for (const debtor of result.failedNotificationsData) {
+        try {
+          const fee = debtor.schoolFeeInfo
+          const totalFee = fee.totalSchoolFee || 0
+          const totalApproved = fee.totalApproved || 0
+          const outstandingAmount = totalFee - totalApproved
+
+          // Create in-app notification for the student using centralized function
+          const notificationPayload = createPaymentReminderNotificationPayload(
+            debtor.email, // Using email as identifier for resend
+            debtor.fullName,
+            fee.cohort || '',
+            fee.classPlan || '',
+            totalFee,
+            totalApproved,
+            outstandingAmount,
+          )
+
+          // Add notification to Firestore
+          await addDoc(
+            collection(portalDb, 'notifications'),
+            notificationPayload,
+          )
+
+          notificationsSent++
+          console.log(
+            `✅ Payment reminder notification resent to ${debtor.fullName}`,
+          )
+
+          // Add a small delay to avoid overwhelming the system
+          await new Promise((resolve) => setTimeout(resolve, 100))
+        } catch (error) {
+          console.error(
+            `❌ Failed to resend notification to ${debtor.fullName}:`,
+            error,
+          )
+          failedNotifications.push(`${debtor.fullName} (${debtor.email})`)
+        }
+      }
+
+      // Update the result with new resend data
+      setResult({
+        ...result,
+        notificationsSent: result.notificationsSent + notificationsSent,
+        failedNotifications,
+        failedNotificationsData: failedNotifications
+          .map((failedNotification) => {
+            const debtor = result.failedNotificationsData?.find(
+              (d) => `${d.fullName} (${d.email})` === failedNotification,
+            )
+            return debtor
+              ? {
+                  email: debtor.email,
+                  fullName: debtor.fullName,
+                  schoolFeeInfo: debtor.schoolFeeInfo,
+                }
+              : null
+          })
+          .filter(
+            (
+              item,
+            ): item is {
+              email: string
+              fullName: string
+              schoolFeeInfo: any
+            } => item !== null,
+          ),
       })
 
-      const data = await response.json()
-
-      if (data.success) {
-        const newEmailsSent = data.data.emailsSent
-        const newFailedEmails = data.data.failedEmails
-
-        // Update the result with new resend data
-        setResult({
-          ...result,
-          emailsSent: result.emailsSent + newEmailsSent,
-          failedEmails: newFailedEmails,
-          failedEmailsData: newFailedEmails
-            .map((failedEmail: string) => {
-              const debtor = result.failedEmailsData?.find(
-                (d) => `${d.fullName} (${d.email})` === failedEmail,
-              )
-              return debtor
-                ? {
-                    email: debtor.email,
-                    fullName: debtor.fullName,
-                    schoolFeeInfo: debtor.schoolFeeInfo,
-                  }
-                : null
-            })
-            .filter(Boolean),
-        })
-
-        toast({
-          title: 'Resend Complete',
-          description: `${newEmailsSent} out of ${result.failedEmailsData.length} failed emails were resent successfully.`,
-          status: newEmailsSent > 0 ? 'success' : 'warning',
-          duration: 5000,
-          isClosable: true,
-        })
-      } else {
-        setError(data.error || 'Failed to resend payment reminders')
-        toast({
-          title: 'Resend Error',
-          description: data.error || 'Failed to resend payment reminders',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        })
-      }
+      toast({
+        title: 'Resend Complete',
+        description: `${notificationsSent} out of ${result.failedNotificationsData.length} failed notifications were resent successfully.`,
+        status: notificationsSent > 0 ? 'success' : 'warning',
+        duration: 5000,
+        isClosable: true,
+      })
     } catch (err: any) {
       setError(err?.message || 'Failed to resend payment reminders')
 
@@ -307,6 +349,86 @@ export function PaymentReminderModal({
     return activeFilters.length > 0 ? activeFilters.join(', ') : 'All debtors'
   }
 
+  const countDebtors = async () => {
+    setIsCounting(true)
+    setDebtorCount(null)
+    setDebtors([])
+    setSelectedDebtors(new Set())
+
+    try {
+      // Get all students with school fee info
+      const usersQuery = query(
+        collection(portalDb, 'users'),
+        where('role', '==', 'student'),
+      )
+
+      const snapshot = await getDocs(usersQuery)
+      let count = 0
+      const debtorList: DebtorStudent[] = []
+
+      // Count debtors based on school fee info and filters
+      snapshot.forEach((doc) => {
+        const data = doc.data()
+        const fee = data.schoolFeeInfo
+
+        if (!fee) return
+
+        const totalFee = fee.totalSchoolFee || 0
+        const totalApproved = fee.totalApproved || 0
+        const outstandingAmount = totalFee - totalApproved
+
+        // Only count debtors (those with outstanding balance)
+        if (outstandingAmount > 0) {
+          // Apply filters if provided
+          if (filters) {
+            if (filters.branch && filters.branch !== 'all' && data.branch) {
+              if (data.branch.toLowerCase() !== filters.branch.toLowerCase()) {
+                return
+              }
+            }
+
+            if (filters.classPlan && fee.classPlan) {
+              if (
+                fee.classPlan.toLowerCase() !== filters.classPlan.toLowerCase()
+              ) {
+                return
+              }
+            }
+          }
+
+          count++
+          debtorList.push({
+            id: doc.id,
+            email: data.email || '',
+            fullName: data.fullName || 'Student',
+            branch: data.branch,
+            schoolFeeInfo: fee,
+            selected: false,
+          })
+        }
+      })
+
+      setDebtorCount(count)
+      setDebtors(debtorList)
+
+      // Select all students by default
+      if (debtorList.length > 0) {
+        setSelectedDebtors(new Set(debtorList.map((d) => d.id)))
+      }
+    } catch (err: any) {
+      console.error('Error counting debtors:', err)
+      toast({
+        title: 'Error',
+        description: 'Failed to count debtors. Please try again.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+    } finally {
+      setIsCounting(false)
+    }
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={handleClose} size="lg">
       <ModalOverlay />
@@ -322,8 +444,8 @@ export function PaymentReminderModal({
                 <Box>
                   <Text fontWeight="bold">Payment Reminder Confirmation</Text>
                   <Text fontSize="sm" mt={1}>
-                    This will send payment reminder emails to all students with
-                    outstanding fees.
+                    This will send in-app payment reminder notifications to all
+                    students with outstanding fees.
                   </Text>
                 </Box>
               </Alert>
@@ -335,6 +457,167 @@ export function PaymentReminderModal({
                 <Text fontSize="sm" color="gray.600">
                   {getFilterDescription()}
                 </Text>
+                <Text fontSize="sm" color="gray.500" mt={2}>
+                  <strong>Note:</strong> Notifications will be sent to ALL
+                  students with outstanding fees matching your filters.
+                </Text>
+
+                {/* Debtor Count Display */}
+                <Box
+                  mt={3}
+                  p={3}
+                  bg="blue.50"
+                  borderRadius="md"
+                  border="1px solid"
+                  borderColor="blue.200"
+                >
+                  <HStack justify="space-between" align="center">
+                    <Text fontSize="sm" fontWeight="medium" color="blue.800">
+                      Students with Outstanding Fees:
+                    </Text>
+                    <HStack spacing={2}>
+                      {isCounting ? (
+                        <Spinner size="sm" color="blue.500" />
+                      ) : debtorCount !== null ? (
+                        <Badge
+                          colorScheme="blue"
+                          variant="solid"
+                          fontSize="sm"
+                          px={3}
+                          py={1}
+                        >
+                          {debtorCount} students
+                        </Badge>
+                      ) : (
+                        <Text fontSize="sm" color="blue.600">
+                          Calculating...
+                        </Text>
+                      )}
+                      <Button
+                        size="xs"
+                        variant="outline"
+                        colorScheme="blue"
+                        onClick={countDebtors}
+                        isDisabled={isCounting}
+                        isLoading={isCounting}
+                        loadingText="..."
+                      >
+                        Refresh
+                      </Button>
+                    </HStack>
+                  </HStack>
+                  {debtorCount === 0 && (
+                    <Text fontSize="xs" color="blue.600" mt={1}>
+                      No students found with outstanding fees matching your
+                      criteria.
+                    </Text>
+                  )}
+
+                  {/* Student Selection Controls */}
+                  {debtorCount !== null && debtorCount > 0 && (
+                    <Box
+                      mt={3}
+                      pt={3}
+                      borderTop="1px solid"
+                      borderColor="blue.200"
+                    >
+                      <HStack justify="space-between" align="center" mb={2}>
+                        <Text
+                          fontSize="sm"
+                          fontWeight="medium"
+                          color="blue.800"
+                        >
+                          Selection:{' '}
+                          <Text
+                            as="span"
+                            fontSize="xs"
+                            color="blue.600"
+                            fontWeight="normal"
+                          >
+                            (All selected by default)
+                          </Text>
+                        </Text>
+                        <HStack spacing={2}>
+                          <Text fontSize="xs" color="blue.600">
+                            {getSelectedCount()} of {debtorCount || 0} selected
+                          </Text>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            colorScheme="blue"
+                            onClick={handleSelectAll}
+                          >
+                            {selectedDebtors.size === debtors.length
+                              ? 'Deselect All'
+                              : 'Select All'}
+                          </Button>
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            colorScheme="blue"
+                            onClick={() => setShowStudentList(!showStudentList)}
+                          >
+                            {showStudentList ? 'Hide List' : 'Show List'}
+                          </Button>
+                        </HStack>
+                      </HStack>
+
+                      {showStudentList && (
+                        <Box
+                          maxH="200px"
+                          overflowY="auto"
+                          bg="white"
+                          borderRadius="md"
+                          p={2}
+                        >
+                          {debtors.map((debtor) => (
+                            <HStack
+                              key={debtor.id}
+                              spacing={2}
+                              p={2}
+                              borderRadius="md"
+                              bg={
+                                selectedDebtors.has(debtor.id)
+                                  ? 'blue.50'
+                                  : 'transparent'
+                              }
+                              _hover={{ bg: 'blue.50' }}
+                              cursor="pointer"
+                              onClick={() => handleSelectStudent(debtor.id)}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={selectedDebtors.has(debtor.id)}
+                                onChange={() => handleSelectStudent(debtor.id)}
+                                style={{ cursor: 'pointer' }}
+                              />
+                              <Box flex="1">
+                                <Text fontSize="sm" fontWeight="medium">
+                                  {debtor.fullName}
+                                </Text>
+                                <Text fontSize="xs" color="gray.600">
+                                  {debtor.email} •{' '}
+                                  {debtor.schoolFeeInfo?.cohort || 'N/A'}
+                                </Text>
+                              </Box>
+                              <Badge
+                                colorScheme="red"
+                                variant="subtle"
+                                fontSize="xs"
+                              >
+                                ₦
+                                {(
+                                  debtor.schoolFeeInfo?.totalSchoolFee -
+                                  debtor.schoolFeeInfo?.totalApproved
+                                ).toLocaleString()}
+                              </Badge>
+                            </HStack>
+                          ))}
+                        </Box>
+                      )}
+                    </Box>
+                  )}
+                </Box>
               </Box>
 
               <Box
@@ -349,12 +632,12 @@ export function PaymentReminderModal({
                 </Text>
                 <Text fontSize="sm" color="yellow.700">
                   • This action cannot be undone
-                  <br />
-                  • Emails will be sent immediately
+                  <br />• In-app notifications will be sent immediately to{' '}
+                  <strong>{debtorCount || '...'} students</strong>
                   <br />
                   • Only students with outstanding balances will receive
                   reminders
-                  <br />• Invalid email addresses will be skipped
+                  <br />• Students will see these notifications in their portal
                 </Text>
               </Box>
             </VStack>
@@ -363,7 +646,7 @@ export function PaymentReminderModal({
           {isLoading && (
             <VStack spacing={4} py={8}>
               <Spinner size="lg" />
-              <Text>Sending payment reminders...</Text>
+              <Text>Sending payment reminder notifications...</Text>
               <Text fontSize="sm" color="gray.500">
                 This may take a few moments depending on the number of
                 recipients.
@@ -385,17 +668,19 @@ export function PaymentReminderModal({
 
           {result && (
             <VStack spacing={4} align="stretch">
-              <Alert status={result.emailsSent > 0 ? 'success' : 'warning'}>
+              <Alert
+                status={result.notificationsSent > 0 ? 'success' : 'warning'}
+              >
                 <AlertIcon />
                 <Box>
                   <Text fontWeight="bold">
-                    {result.emailsSent > 0
+                    {result.notificationsSent > 0
                       ? 'Reminders Sent Successfully'
                       : 'No Reminders Sent'}
                   </Text>
                   <Text fontSize="sm" mt={1}>
-                    {result.emailsSent} out of {result.totalStudents} emails
-                    were sent successfully.
+                    {result.notificationsSent} out of {result.totalStudents}{' '}
+                    in-app notifications were sent successfully.
                   </Text>
                 </Box>
               </Alert>
@@ -412,35 +697,37 @@ export function PaymentReminderModal({
                     </Text>
                   </HStack>
                   <HStack justify="space-between">
-                    <Text fontSize="sm">Emails Sent:</Text>
+                    <Text fontSize="sm">Notifications Sent:</Text>
                     <Text fontSize="sm" fontWeight="semibold" color="green.600">
-                      {result.emailsSent}
+                      {result.notificationsSent}
                     </Text>
                   </HStack>
                   <HStack justify="space-between">
                     <Text fontSize="sm">Failed:</Text>
                     <Text fontSize="sm" fontWeight="semibold" color="red.600">
-                      {result.failedEmails.length}
+                      {result.failedNotifications.length}
                     </Text>
                   </HStack>
                 </VStack>
               </Box>
 
-              {result.failedEmails.length > 0 && (
+              {result.failedNotifications.length > 0 && (
                 <Box>
                   <HStack justify="space-between" align="center" mb={2}>
                     <Text fontWeight="semibold" color="red.600">
-                      Failed Emails ({result.failedEmails.length}):
+                      Failed Notifications ({result.failedNotifications.length}
+                      ):
                     </Text>
                     <Button
                       size="sm"
                       colorScheme="orange"
                       variant="outline"
-                      onClick={handleResendFailedEmails}
+                      onClick={handleResendFailedNotifications}
                       isLoading={isResending}
                       loadingText="Resending..."
                       isDisabled={
-                        isResending || result.failedEmailsData?.length === 0
+                        isResending ||
+                        result.failedNotificationsData?.length === 0
                       }
                     >
                       Retry Failed
@@ -453,9 +740,9 @@ export function PaymentReminderModal({
                     p={2}
                     borderRadius="md"
                   >
-                    {result.failedEmails.map((email, index) => (
+                    {result.failedNotifications.map((notification, index) => (
                       <Text key={index} fontSize="xs" color="gray.600">
-                        {email}
+                        {notification}
                       </Text>
                     ))}
                   </Box>
@@ -480,25 +767,28 @@ export function PaymentReminderModal({
                 onClick={handleSendReminders}
                 isLoading={isLoading}
                 loadingText="Sending..."
+                isDisabled={debtorCount === 0 || isCounting}
               >
-                Send Reminders
+                {debtorCount !== null && debtorCount > 0
+                  ? `Send to ${getSelectedCount()} Students`
+                  : 'Send Notifications'}
               </Button>
             </HStack>
           )}
 
           {(result || error) && (
             <HStack spacing={3}>
-              {result && result.failedEmails.length > 0 && (
+              {result && result.failedNotifications.length > 0 && (
                 <Button
                   colorScheme="orange"
-                  onClick={handleResendFailedEmails}
+                  onClick={handleResendFailedNotifications}
                   isLoading={isResending}
                   loadingText="Resending..."
                   isDisabled={
-                    isResending || result.failedEmailsData?.length === 0
+                    isResending || result.failedNotificationsData?.length === 0
                   }
                 >
-                  Retry Failed ({result.failedEmails.length})
+                  Retry Failed ({result.failedNotifications.length})
                 </Button>
               )}
               <Button colorScheme="blue" onClick={handleClose}>
