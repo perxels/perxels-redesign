@@ -16,6 +16,7 @@ import {
   InputGroup,
   InputLeftElement,
   Avatar,
+  Select,
 } from '@chakra-ui/react'
 import { MdSearch, MdDelete } from 'react-icons/md'
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -23,6 +24,7 @@ import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { StudentDetailsModal } from './student-details-modal'
 import { DeleteStudentModal } from './delete-student-modal'
+import { classPlans } from '../../../../constant/adminConstants'
 
 interface StudentData {
   uid: string
@@ -49,21 +51,32 @@ interface ClassStudentListProps {
 
 export const ClassStudentList: React.FC<ClassStudentListProps> = ({
   classId,
-  cohortName
+  cohortName,
 }) => {
   const [students, setStudents] = useState<StudentData[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(null)
+  const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(
+    null,
+  )
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedClassPlan, setSelectedClassPlan] = useState<string>('all')
 
   const { portalUser } = usePortalAuth()
   const isAdmin = portalUser?.role === 'admin'
-  
-  const { isOpen: isDetailsOpen, onOpen: onDetailsOpen, onClose: onDetailsClose } = useDisclosure()
-  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
 
-  // Filter students by search term and class
+  const {
+    isOpen: isDetailsOpen,
+    onOpen: onDetailsOpen,
+    onClose: onDetailsClose,
+  } = useDisclosure()
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onClose: onDeleteClose,
+  } = useDisclosure()
+
+  // Filter students by search term, class plan, and class
   const filteredStudents = useMemo(() => {
     let filtered = [...students]
 
@@ -71,12 +84,18 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
     if (searchTerm) {
       filtered = filtered.filter(
         (student) =>
-          student.fullName
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
+          student.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
           student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
           student.phone.includes(searchTerm),
       )
+    }
+
+    // Filter by class plan
+    if (selectedClassPlan && selectedClassPlan !== 'all') {
+      filtered = filtered.filter((student) => {
+        const studentClassPlan = student.schoolFeeInfo?.classPlan || ''
+        return studentClassPlan === selectedClassPlan
+      })
     }
 
     // Filter by class (cohort)
@@ -86,7 +105,7 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
     })
 
     return filtered
-  }, [students, searchTerm, cohortName])
+  }, [students, searchTerm, selectedClassPlan, cohortName])
 
   // Fetch students from Firebase
   const fetchStudents = async () => {
@@ -174,19 +193,19 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
   // Calculate owing status based on payment data
   const calculateOwingStatus = (student: StudentData): string => {
     const schoolFeeInfo = student.schoolFeeInfo
-    
+
     if (!schoolFeeInfo) {
       return 'No Payment Info'
     }
-    
+
     const totalSchoolFee = schoolFeeInfo.totalSchoolFee || 0
     const totalApproved = schoolFeeInfo.totalApproved || 0
-    
+
     // If approved payments equal or exceed total school fee, student is paid
     if (totalApproved >= totalSchoolFee) {
       return 'Paid'
     }
-    
+
     // Otherwise, student is owing
     return 'Owing'
   }
@@ -194,16 +213,16 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
   // Get payment details for display
   const getPaymentDetails = (student: StudentData) => {
     const schoolFeeInfo = student.schoolFeeInfo
-    
+
     if (!schoolFeeInfo) {
       return { totalFee: 0, paid: 0, remaining: 0, progress: 0 }
     }
-    
+
     const totalFee = schoolFeeInfo.totalSchoolFee || 0
     const paid = schoolFeeInfo.totalApproved || 0
     const remaining = Math.max(0, totalFee - paid)
     const progress = totalFee > 0 ? (paid / totalFee) * 100 : 0
-    
+
     return { totalFee, paid, remaining, progress }
   }
 
@@ -248,16 +267,48 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
           </Badge>
         </HStack>
 
-        <InputGroup>
-          <InputLeftElement pointerEvents="none">
-            <MdSearch color="gray.300" />
-          </InputLeftElement>
-          <Input
-            placeholder="Search students by name, email, or phone..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </InputGroup>
+        {/* Filters Row */}
+        <HStack spacing={4} align="center">
+          {/* Class Plan Filter */}
+          <Box minW="250px">
+            <Text fontSize="sm" color="gray.700" mb={2}>
+              Class Plan
+            </Text>
+            <Select
+              value={selectedClassPlan}
+              onChange={(e) => setSelectedClassPlan(e.target.value)}
+              size="md"
+              bg="white"
+              borderColor="gray.300"
+              _hover={{ borderColor: 'gray.400' }}
+              _focus={{ borderColor: 'purple.500', boxShadow: 'outline' }}
+            >
+              <option value="all">All Class Plans</option>
+              {classPlans.map((plan) => (
+                <option key={plan} value={plan}>
+                  {plan}
+                </option>
+              ))}
+            </Select>
+          </Box>
+
+          {/* Search Input */}
+          <Box flex="1">
+            <Text fontSize="sm" color="gray.700" mb={2}>
+              Search
+            </Text>
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <MdSearch color="gray.300" />
+              </InputLeftElement>
+              <Input
+                placeholder="Search students by name, email, or phone..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </InputGroup>
+          </Box>
+        </HStack>
       </VStack>
 
       {/* Loading State */}
@@ -281,7 +332,7 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
           <AlertDescription>
             {students.length === 0
               ? 'No students found in this class. Students will appear here once they register and are assigned to this cohort.'
-              : 'No students match your current search criteria. Try adjusting your search.'}
+              : 'No students match your current search criteria. Try adjusting your search or class plan filter.'}
           </AlertDescription>
         </Alert>
       ) : (
@@ -300,9 +351,17 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
               <Box display={{ base: 'block', md: 'none' }}>
                 <Flex justify="space-between" align="center" mb={3}>
                   <HStack spacing={2}>
-                    <Avatar name={student.fullName} src={student?.growthInfo?.pictureUrl} />
+                    <Avatar
+                      name={student.fullName}
+                      src={student?.growthInfo?.pictureUrl}
+                    />
                     <Box minW="180px">
-                      <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
+                      <Text
+                        fontWeight="bold"
+                        fontSize="md"
+                        mb={1}
+                        noOfLines={1}
+                      >
                         {student.fullName}
                       </Text>
                       <Text fontSize="sm" color="gray.700" noOfLines={1}>
@@ -363,13 +422,31 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                     </Badge>
                   </Flex>
 
+                  {/* Class Plan Display (Mobile) */}
+                  <Flex justify="space-between" align="center">
+                    <Text fontSize="sm" color="gray.600">
+                      Class Plan:
+                    </Text>
+                    <Badge
+                      colorScheme="teal"
+                      variant="subtle"
+                      fontSize="xs"
+                      maxW="120px"
+                      noOfLines={1}
+                    >
+                      {student.schoolFeeInfo?.classPlan || 'Not specified'}
+                    </Badge>
+                  </Flex>
+
                   <Flex justify="space-between" align="center">
                     <Text fontSize="sm" color="gray.600">
                       Status:
                     </Text>
                     <Badge
                       colorScheme={
-                        calculateOwingStatus(student) === 'Paid' ? 'green' : 'red'
+                        calculateOwingStatus(student) === 'Paid'
+                          ? 'green'
+                          : 'red'
                       }
                       variant="subtle"
                       fontSize="xs"
@@ -386,21 +463,34 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                       </Text>
                       <HStack spacing={2} justify="center" fontSize="xs">
                         <VStack spacing={0}>
-                          <Text color="red.600" fontWeight="medium">Owing</Text>
+                          <Text color="red.600" fontWeight="medium">
+                            Owing
+                          </Text>
                           <Text color="red.600">
-                            ₦{getPaymentDetails(student).remaining.toLocaleString()}
+                            ₦
+                            {getPaymentDetails(
+                              student,
+                            ).remaining.toLocaleString()}
                           </Text>
                         </VStack>
                         <Text color="gray.400">|</Text>
                         <VStack spacing={0}>
-                          <Text color="green.600" fontWeight="medium">Paid</Text>
+                          <Text color="green.600" fontWeight="medium">
+                            Paid
+                          </Text>
                           <Text color="green.600">
                             ₦{getPaymentDetails(student).paid.toLocaleString()}
                           </Text>
                         </VStack>
                       </HStack>
                       {/* Progress Bar */}
-                      <Box w="full" bg="gray.200" borderRadius="full" h="2px" mt={1}>
+                      <Box
+                        w="full"
+                        bg="gray.200"
+                        borderRadius="full"
+                        h="2px"
+                        mt={1}
+                      >
                         <Box
                           bg="green.500"
                           h="2px"
@@ -410,7 +500,8 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                         />
                       </Box>
                       <Text fontSize="xs" color="gray.500" textAlign="center">
-                        {getPaymentDetails(student).progress.toFixed(0)}% Complete
+                        {getPaymentDetails(student).progress.toFixed(0)}%
+                        Complete
                       </Text>
                     </VStack>
                   )}
@@ -426,7 +517,10 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
               >
                 {/* Name and Phone */}
                 <HStack spacing={2}>
-                  <Avatar name={student.fullName} src={student?.growthInfo?.pictureUrl} />
+                  <Avatar
+                    name={student.fullName}
+                    src={student?.growthInfo?.pictureUrl}
+                  />
                   <Box minW="180px">
                     <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
                       {student.fullName}
@@ -467,6 +561,13 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                   {student.growthInfo?.profession || 'Banker'}
                 </Text>
 
+                {/* Class Plan */}
+                <Box minW="150px" textAlign="center">
+                  <Text fontSize="sm" color="gray.700" noOfLines={1}>
+                    {student.schoolFeeInfo?.classPlan || 'Not specified'}
+                  </Text>
+                </Box>
+
                 {/* Payment Progress */}
                 <Box minW="120px" textAlign="center">
                   {student.schoolFeeInfo ? (
@@ -476,21 +577,34 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                       </Text>
                       <HStack spacing={2} fontSize="xs">
                         <VStack spacing={0}>
-                          <Text color="red.600" fontWeight="medium">Owing</Text>
+                          <Text color="red.600" fontWeight="medium">
+                            Owing
+                          </Text>
                           <Text color="red.600">
-                            ₦{getPaymentDetails(student).remaining.toLocaleString()}
+                            ₦
+                            {getPaymentDetails(
+                              student,
+                            ).remaining.toLocaleString()}
                           </Text>
                         </VStack>
                         <Text color="gray.400">|</Text>
                         <VStack spacing={0}>
-                          <Text color="green.600" fontWeight="medium">Paid</Text>
+                          <Text color="green.600" fontWeight="medium">
+                            Paid
+                          </Text>
                           <Text color="green.600">
                             ₦{getPaymentDetails(student).paid.toLocaleString()}
                           </Text>
                         </VStack>
                       </HStack>
                       {/* Progress Bar */}
-                      <Box w="full" bg="gray.200" borderRadius="full" h="2px" mt={1}>
+                      <Box
+                        w="full"
+                        bg="gray.200"
+                        borderRadius="full"
+                        h="2px"
+                        mt={1}
+                      >
                         <Box
                           bg="green.500"
                           h="2px"
@@ -500,7 +614,8 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
                         />
                       </Box>
                       <Text fontSize="xs" color="gray.500">
-                        {getPaymentDetails(student).progress.toFixed(0)}% Complete
+                        {getPaymentDetails(student).progress.toFixed(0)}%
+                        Complete
                       </Text>
                     </VStack>
                   ) : (
