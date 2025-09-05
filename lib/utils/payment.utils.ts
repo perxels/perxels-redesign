@@ -301,8 +301,22 @@ export async function addPaymentInstallment(params: AddInstallmentParams): Promi
       }
     }
 
-    // Determine next installment number based on valid payments only
-    const nextInstallmentNumber = (validPayments.length + 1) as 1 | 2 | 3
+    // Find the next available installment number (1, 2, or 3) that doesn't exist yet
+    let nextInstallmentNumber: 1 | 2 | 3 | null = null
+    for (let i = 1; i <= 3; i++) {
+      const existingInstallment = schoolFeeInfo.payments.find(payment => payment.installmentNumber === i)
+      if (!existingInstallment) {
+        nextInstallmentNumber = i as 1 | 2 | 3
+        break
+      }
+    }
+
+    if (!nextInstallmentNumber) {
+      return {
+        success: false,
+        error: 'No available installment slots. All 3 installments have been used.',
+      }
+    }
 
     // Calculate total submitted amount from valid payments only (exclude rejected payments)
     const totalSubmittedFromValidPayments = validPayments.reduce((sum, payment) => sum + payment.amount, 0)

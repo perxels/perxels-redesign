@@ -183,15 +183,17 @@ const SchoolFeesListRow = React.memo(function SchoolFeesListRow({
       {/* Mobile Layout - Compact */}
       <Box display={{ base: 'block', md: 'none' }}>
         <Flex justify="space-between" align="center" mb={3}>
-          <Text
-            fontWeight="medium"
-            fontSize="md"
-            color="black"
-            isTruncated
-            flex="1"
-          >
-            {record.name}
-          </Text>
+          <HStack>
+            <Text
+              fontWeight="medium"
+              fontSize="md"
+              color="black"
+              isTruncated
+              flex="1"
+            >
+              {record.name}
+            </Text>
+          </HStack>
           <VStack align="flex-end" spacing={0} ml={2}>
             <Text fontSize="xs" fontWeight="semibold" color="gray.500">
               Total

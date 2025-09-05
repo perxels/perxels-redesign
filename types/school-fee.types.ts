@@ -105,15 +105,25 @@ export function getTotalPending(schoolFeeInfo: SchoolFeeInfo): number {
 }
 
 export function getNextInstallmentNumber(schoolFeeInfo: SchoolFeeInfo): 1 | 2 | 3 | null {
-  if (!schoolFeeInfo.payments || schoolFeeInfo.payments.length >= 3) {
-    return null
+  // Find the next available installment number (1, 2, or 3) that doesn't exist yet
+  for (let i = 1; i <= 3; i++) {
+    const existingInstallment = schoolFeeInfo.payments.find(payment => payment.installmentNumber === i)
+    if (!existingInstallment) {
+      return i as 1 | 2 | 3
+    }
   }
-  return (schoolFeeInfo.payments.length + 1) as 1 | 2 | 3
+  return null
 }
 
 export function canAddInstallment(schoolFeeInfo: SchoolFeeInfo): boolean {
-  return schoolFeeInfo.payments.length < 3 && 
-         schoolFeeInfo.overallStatus !== OVERALL_STATUSES.COMPLETED
+  // Check if there's an available installment slot (1, 2, or 3) that doesn't exist yet
+  for (let i = 1; i <= 3; i++) {
+    const existingInstallment = schoolFeeInfo.payments.find(payment => payment.installmentNumber === i)
+    if (!existingInstallment) {
+      return true // Found an available slot
+    }
+  }
+  return false // All 3 slots are taken
 }
 
 export function getPaymentSuggestions(totalSchoolFee: number, amountAlreadyPaid: number = 0): number[] {
