@@ -261,17 +261,10 @@ export function PaymentReminderModal({
           )
 
           notificationsSent++
-          console.log(
-            `✅ Payment reminder notification resent to ${debtor.fullName}`,
-          )
 
           // Add a small delay to avoid overwhelming the system
           await new Promise((resolve) => setTimeout(resolve, 100))
         } catch (error) {
-          console.error(
-            `❌ Failed to resend notification to ${debtor.fullName}:`,
-            error,
-          )
           failedNotifications.push(`${debtor.fullName} (${debtor.email})`)
         }
       }

@@ -1,11 +1,11 @@
 import { doc, updateDoc, getDoc, collection, addDoc, query, where, getDocs } from 'firebase/firestore'
 import { portalDb } from '../../portalFirebaseConfig'
-import { PaymentInstallment, SchoolFeeInfo, calculateOverallStatus } from '../../types/school-fee.types'
+import { PaymentInstallment, SchoolFeeInfo, calculateOverallStatus, getNextInstallmentNumber } from '../../types/school-fee.types'
 import { sendPaymentNotificationEmail, generatePaymentApprovedHtml, generatePaymentRejectedHtml, sendStudentHtmlEmail, generateAdmittedHtml, generateRejectedHtml, sendAdmissionEmail, ONBOARDING_FILES } from './email.utils'
 
 interface ReviewInstallmentParams {
   uid: string // student uid
-  installmentNumber: 1 | 2 | 3
+  installmentNumber: 1 | 2 | 3 | 4
   adminUid: string
   action: 'approve' | 'reject'
   rejectionReason?: string
@@ -55,18 +55,8 @@ interface AddInstallmentResult {
 export async function reviewPaymentInstallment(params: ReviewInstallmentParams): Promise<ReviewInstallmentResult> {
   try {
     const { uid, installmentNumber, adminUid, action, rejectionReason } = params
-
-    console.log('🔍 reviewPaymentInstallment called with:', {
-      uid,
-      installmentNumber,
-      adminUid,
-      action,
-      rejectionReason
-    })
-
     // Validate required fields
     if (!uid || !installmentNumber || !adminUid || !action) {
-      console.log('❌ Validation failed:', { uid, installmentNumber, adminUid, action })
       return {
         success: false,
         error: 'Student UID, installment number, admin UID, and action are required',
@@ -81,10 +71,8 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     }
 
     // Verify student exists and get current school fee info
-    console.log('📋 Fetching student document for UID:', uid)
     const userDoc = await getDoc(doc(portalDb, 'users', uid))
     if (!userDoc.exists()) {
-      console.log('❌ Student document not found for UID:', uid)
       return {
         success: false,
         error: 'Student not found',
@@ -92,18 +80,10 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     }
 
     const userData = userDoc.data()
-    console.log('📋 Student data retrieved:', {
-      uid,
-      hasSchoolFeeInfo: !!userData?.schoolFeeInfo,
-      schoolFeeInfoKeys: userData?.schoolFeeInfo ? Object.keys(userData.schoolFeeInfo) : [],
-      paymentsLength: userData?.schoolFeeInfo?.payments?.length || 0
-    })
 
     // Verify admin exists and has admin role
-    console.log('📋 Fetching admin document for UID:', adminUid)
     const adminDoc = await getDoc(doc(portalDb, 'users', adminUid))
     if (!adminDoc.exists()) {
-      console.log('❌ Admin document not found for UID:', adminUid)
       return {
         success: false,
         error: 'Admin not found',
@@ -112,7 +92,6 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
 
     const adminData = adminDoc.data()
     if (adminData?.role !== 'admin') {
-      console.log('❌ User is not an admin:', { adminUid, role: adminData?.role })
       return {
         success: false,
         error: 'Only admins can review payment installments',
@@ -122,22 +101,38 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     const schoolFeeInfo = userData?.schoolFeeInfo as SchoolFeeInfo | undefined
 
     if (!schoolFeeInfo || !schoolFeeInfo.payments || schoolFeeInfo.payments.length === 0) {
-      console.log('❌ No school fee information found:', {
-        hasSchoolFeeInfo: !!schoolFeeInfo,
-        hasPayments: !!schoolFeeInfo?.payments,
-        paymentsLength: schoolFeeInfo?.payments?.length || 0,
-        schoolFeeInfo: schoolFeeInfo
-      })
+
       return {
         success: false,
         error: 'No school fee information found for this student',
       }
     }
 
-    // Find the installment to review
-    const installmentIndex = schoolFeeInfo.payments.findIndex(
-      payment => payment.installmentNumber === installmentNumber
-    )
+    // Find the installment to review - look for the most recent pending payment
+    // If rejecting, we want to find the pending payment to reject
+    // If approving, we want to find the pending payment to approve
+    let installmentIndex = -1
+    
+    if (action === 'reject') {
+      // For rejection, find the most recent pending payment with this installment number
+      const pendingPayments = schoolFeeInfo.payments
+        .map((payment, index) => ({ payment, index }))
+        .filter(({ payment }) => 
+          payment.installmentNumber === installmentNumber && payment.status === 'pending'
+        )
+        .sort((a, b) => 
+          new Date(b.payment.submittedAt).getTime() - new Date(a.payment.submittedAt).getTime()
+        )
+      
+      if (pendingPayments.length > 0) {
+        installmentIndex = pendingPayments[0].index
+      }
+    } else {
+      // For approval, find any pending payment with this installment number
+      installmentIndex = schoolFeeInfo.payments.findIndex(
+        payment => payment.installmentNumber === installmentNumber && payment.status === 'pending'
+      )
+    }
 
     if (installmentIndex === -1) {
       return {
@@ -149,10 +144,19 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     const targetInstallment = schoolFeeInfo.payments[installmentIndex]
 
     // Check if installment is already reviewed
-    if (targetInstallment.status !== 'pending') {
+    // Allow re-rejecting already rejected payments, but prevent re-approving approved ones
+    if (targetInstallment.status === 'approved') {
       return {
         success: false,
-        error: `Installment ${installmentNumber} has already been ${targetInstallment.status}`,
+        error: `Installment ${installmentNumber} has already been approved and cannot be changed`,
+      }
+    }
+    
+    // Allow rejecting already rejected payments (for updating rejection reason)
+    if (targetInstallment.status === 'rejected' && action === 'approve') {
+      return {
+        success: false,
+        error: `Installment ${installmentNumber} has already been rejected and cannot be approved`,
       }
     }
 
@@ -193,10 +197,14 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     }
 
     // Update user document
-    await updateDoc(doc(portalDb, 'users', uid), {
-      schoolFeeInfo: updatedSchoolFeeInfo,
-      schoolFeeInfoUpdatedAt: new Date(),
-    })
+    try {
+      await updateDoc(doc(portalDb, 'users', uid), {
+        schoolFeeInfo: updatedSchoolFeeInfo,
+        schoolFeeInfoUpdatedAt: new Date(),
+      })
+    } catch (dbError) {
+      throw new Error(`Failed to update payment status in database: ${dbError}`)
+    }
 
     // Return data needed for server-side notification/email processing
     const studentEmail = userData?.email || ''
@@ -209,18 +217,6 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     const previouslyApprovedCount = schoolFeeInfo.payments.filter(p => p.status === 'approved').length
     const isFirstApproval = previouslyApprovedCount === 0 && action === 'approve'
     
-    console.log('🔍 Payment Review Debug:', {
-      uid,
-      installmentNumber,
-      action,
-      previouslyApprovedCount,
-      isFirstApproval,
-      studentEmail,
-      studentName,
-      cohort,
-      classPlan,
-      amount
-    })
 
     const actionWord = action === 'approve' ? 'approved' : 'rejected'
     return {
@@ -288,37 +284,23 @@ export async function addPaymentInstallment(params: AddInstallmentParams): Promi
       }
     }
 
-    // Count only approved and pending payments (exclude rejected payments)
-    const validPayments = schoolFeeInfo.payments.filter(payment => 
-      payment.status === 'approved' || payment.status === 'pending'
-    )
-
-    // Check if user has already made 3 valid payments
-    if (validPayments.length >= 3) {
-      return {
-        success: false,
-        error: 'Maximum of 3 installments allowed. You have already submitted all allowed payments.',
-      }
-    }
-
-    // Find the next available installment number (1, 2, or 3) that doesn't exist yet
-    let nextInstallmentNumber: 1 | 2 | 3 | null = null
-    for (let i = 1; i <= 3; i++) {
-      const existingInstallment = schoolFeeInfo.payments.find(payment => payment.installmentNumber === i)
-      if (!existingInstallment) {
-        nextInstallmentNumber = i as 1 | 2 | 3
-        break
-      }
-    }
+    // Use the helper function to find the next available installment number
+    // This properly handles rejected payments and ensures we only count valid slots
+    
+    const nextInstallmentNumber = getNextInstallmentNumber(schoolFeeInfo)
+    
 
     if (!nextInstallmentNumber) {
       return {
         success: false,
-        error: 'No available installment slots. All 3 installments have been used.',
+        error: 'Maximum of 4 installments allowed. You have already submitted all allowed payments.',
       }
     }
 
     // Calculate total submitted amount from valid payments only (exclude rejected payments)
+    const validPayments = schoolFeeInfo.payments.filter(payment => 
+      payment.status === 'approved' || payment.status === 'pending'
+    )
     const totalSubmittedFromValidPayments = validPayments.reduce((sum, payment) => sum + payment.amount, 0)
     
     // Check if total submitted amount (including this new payment) exceeds total school fee
