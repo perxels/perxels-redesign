@@ -7,7 +7,7 @@ import { sendPaymentNotificationEmail, generatePaymentApprovedHtml, generatePaym
 
 interface ReviewPaymentData {
   uid: string
-  installmentNumber: 1 | 2 | 3
+  installmentNumber: 1 | 2 | 3 | 4
   adminUid: string
   action: 'approve' | 'reject'
   rejectionReason?: string
@@ -70,8 +70,14 @@ export const usePaymentReview = () => {
       const targetInstallment = schoolFeeInfo.payments[installmentIndex]
 
       // Check if installment is already reviewed
-      if (targetInstallment.status !== 'pending') {
-        throw new Error(`Installment ${installmentNumber} has already been ${targetInstallment.status}`)
+      // Allow re-rejecting already rejected payments, but prevent re-approving approved ones
+      if (targetInstallment.status === 'approved') {
+        throw new Error(`Installment ${installmentNumber} has already been approved and cannot be changed`)
+      }
+      
+      // Allow rejecting already rejected payments (for updating rejection reason)
+      if (targetInstallment.status === 'rejected' && action === 'approve') {
+        throw new Error(`Installment ${installmentNumber} has already been rejected and cannot be approved`)
       }
 
       // Update the installment

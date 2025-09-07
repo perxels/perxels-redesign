@@ -4,7 +4,7 @@ import { sendPaymentNotificationEmail, generatePaymentApprovedHtml, generatePaym
 
 interface ReviewInstallmentRequest {
   uid: string // student uid
-  installmentNumber: 1 | 2 | 3
+  installmentNumber: 1 | 2 | 3 | 4
   adminUid: string
   action: 'approve' | 'reject'
   rejectionReason?: string
@@ -16,7 +16,7 @@ interface ReviewInstallmentResponse {
   error?: string
   data?: {
     uid: string
-    installmentNumber: 1 | 2 | 3
+    installmentNumber: 1 | 2 | 3 | 4
     adminUid: string
     action: 'approve' | 'reject'
     rejectionReason?: string

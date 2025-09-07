@@ -1,5 +1,5 @@
 export interface PaymentInstallment {
-  installmentNumber: 1 | 2 | 3
+  installmentNumber: 1 | 2 | 3 | 4
   amount: number
   paymentReceiptUrl: string
   status: 'pending' | 'approved' | 'rejected'
@@ -104,26 +104,34 @@ export function getTotalPending(schoolFeeInfo: SchoolFeeInfo): number {
     .reduce((sum, payment) => sum + payment.amount, 0)
 }
 
-export function getNextInstallmentNumber(schoolFeeInfo: SchoolFeeInfo): 1 | 2 | 3 | null {
-  // Find the next available installment number (1, 2, or 3) that doesn't exist yet
-  for (let i = 1; i <= 3; i++) {
-    const existingInstallment = schoolFeeInfo.payments.find(payment => payment.installmentNumber === i)
-    if (!existingInstallment) {
-      return i as 1 | 2 | 3
+export function getNextInstallmentNumber(schoolFeeInfo: SchoolFeeInfo): 1 | 2 | 3 | 4 | null {
+  // Find the next available installment number (1, 2, 3, or 4) that doesn't exist yet
+  // Only consider valid payments (approved and pending), exclude rejected payments
+  for (let i = 1; i <= 4; i++) {
+    const existingValidInstallment = schoolFeeInfo.payments.find(payment => 
+      payment.installmentNumber === i && 
+      (payment.status === 'approved' || payment.status === 'pending')
+    )
+    if (!existingValidInstallment) {
+      return i as 1 | 2 | 3 | 4
     }
   }
   return null
 }
 
 export function canAddInstallment(schoolFeeInfo: SchoolFeeInfo): boolean {
-  // Check if there's an available installment slot (1, 2, or 3) that doesn't exist yet
-  for (let i = 1; i <= 3; i++) {
-    const existingInstallment = schoolFeeInfo.payments.find(payment => payment.installmentNumber === i)
-    if (!existingInstallment) {
+  // Check if there's an available installment slot (1, 2, 3, or 4) that doesn't exist yet
+  // Only consider valid payments (approved and pending), exclude rejected payments
+  for (let i = 1; i <= 4; i++) {
+    const existingValidInstallment = schoolFeeInfo.payments.find(payment => 
+      payment.installmentNumber === i && 
+      (payment.status === 'approved' || payment.status === 'pending')
+    )
+    if (!existingValidInstallment) {
       return true // Found an available slot
     }
   }
-  return false // All 3 slots are taken
+  return false // All 4 slots are taken by valid payments
 }
 
 export function getPaymentSuggestions(totalSchoolFee: number, amountAlreadyPaid: number = 0): number[] {

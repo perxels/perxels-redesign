@@ -484,15 +484,25 @@ export function NotificationsPage() {
       }
       
       // Step 1: Handle Firebase operations (client-side)
+      console.log('🔍 Starting payment review process:', {
+        studentId,
+        installmentNumber: selectedNotification.data.installmentNumber,
+        action: actionType,
+        rejectionReason
+      })
+      
       const result = await reviewPaymentInstallment({
         uid: studentId,
-        installmentNumber: selectedNotification.data.installmentNumber as 1 | 2 | 3,
+        installmentNumber: selectedNotification.data.installmentNumber as 1 | 2 | 3 | 4,
         adminUid: user.uid,
         action: actionType,
         ...(rejectionReason && { rejectionReason }),
       })
 
+      console.log('🔍 Payment review result:', result)
+
       if (!result.success) {
+        console.error('❌ Payment review failed:', result.error)
         throw new Error(result.error || 'Failed to process payment action')
       }
 
