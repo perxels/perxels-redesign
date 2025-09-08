@@ -37,27 +37,6 @@ const LibraryPdfModal = ({
   const trimmedMail = email.trim().toLowerCase()
   const trimmedName = fullName.trim()
 
-  const sendMail = async () => {
-    try {
-      const res = await axios.post(
-        'https://sandbox.api.reni.tech/reni-mail/v1/sendSingleMail',
-        {
-          email: 'sewogoodness111@gmail.com',
-          subject: 'Your Perxels Code:',
-          body: '<p>Your code is: 5687</p>',
-          html: 'true',
-        },
-        {
-          headers: {
-            Authorization: `Bearer reni_prod_UN1FRvrKkQEYKUVYDJBI0_UTrIniiFC9u`,
-          },
-        },
-      )
-    } catch (error: any) {
-      console.log(error.message)
-    }
-  }
-
   // useEffect(() => {
   //   sendMail()
   // }, [])

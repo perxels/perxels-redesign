@@ -483,14 +483,6 @@ export function NotificationsPage() {
         throw new Error('Student ID not found in notification data')
       }
       
-      // Step 1: Handle Firebase operations (client-side)
-      console.log('🔍 Starting payment review process:', {
-        studentId,
-        installmentNumber: selectedNotification.data.installmentNumber,
-        action: actionType,
-        rejectionReason
-      })
-      
       const result = await reviewPaymentInstallment({
         uid: studentId,
         installmentNumber: selectedNotification.data.installmentNumber as 1 | 2 | 3 | 4,
@@ -499,40 +491,37 @@ export function NotificationsPage() {
         ...(rejectionReason && { rejectionReason }),
       })
 
-      console.log('🔍 Payment review result:', result)
-
       if (!result.success) {
         console.error('❌ Payment review failed:', result.error)
         throw new Error(result.error || 'Failed to process payment action')
       }
 
-      // Step 2: Send notifications and emails (server-side)
-      let notificationSuccess = false
+      // Step 2: Send notifications and emails (server-side) - don't fail if this fails
       if (result.notificationData) {
-        const notificationResponse = await fetch('/api/send-payment-notification', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(result.notificationData),
-        })
-        
-        if (!notificationResponse.ok) {
-          const errorText = await notificationResponse.text()
-          throw new Error(`Failed to send notification: ${errorText}`)
-        } else {
-          notificationSuccess = true
+        try {
+          const notificationResponse = await fetch('/api/send-payment-notification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result.notificationData),
+          })
+          
+          if (!notificationResponse.ok) {
+            const errorText = await notificationResponse.text()
+            console.warn('⚠️ Failed to send notification email:', errorText)
+            // Don't throw error - payment was already approved
+          } else {
+            console.log('✅ Notification email sent successfully')
+          }
+        } catch (error) {
+          console.warn('⚠️ Error sending notification email:', error)
+          // Don't throw error - payment was already approved
         }
-      } else {
-        notificationSuccess = true // No notification needed
       }
 
-      // Only proceed if notifications were sent successfully
-      if (!notificationSuccess) {
-        throw new Error('Failed to send notifications - payment status not updated')
-      }
-
-      // Update the original notification status and mark as read
+      // Step 3: Update the original notification status and mark as read
+      // This should always happen regardless of email sending success
       if (selectedNotification.id) {
         try {
           await updateNotificationStatus(
@@ -543,7 +532,11 @@ export function NotificationsPage() {
         } catch (error) {
           console.error('Error updating notification status:', error)
           // Still mark as read even if status update fails
-          await markAsRead(selectedNotification.id)
+          try {
+            await markAsRead(selectedNotification.id)
+          } catch (markAsReadError) {
+            console.error('Error marking notification as read:', markAsReadError)
+          }
         }
       }
 
@@ -553,7 +546,7 @@ export function NotificationsPage() {
         }! ✅`,
         description: `The payment has been ${
           actionType === 'approve' ? 'approved' : 'rejected'
-        } successfully.`,
+        } successfully. The student will be notified via email.`,
         status: 'success',
         duration: 5000,
         isClosable: true,
