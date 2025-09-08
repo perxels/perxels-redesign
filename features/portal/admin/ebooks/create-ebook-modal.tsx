@@ -62,6 +62,8 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
   const [selectedThumbnail, setSelectedThumbnail] = useState<File | null>(null)
   const [fileError, setFileError] = useState('')
   const [thumbnailError, setThumbnailError] = useState('')
+  const [isDragOverFile, setIsDragOverFile] = useState(false)
+  const [isDragOverThumbnail, setIsDragOverThumbnail] = useState(false)
 
   const toast = useToast()
   const { user } = usePortalAuth()
@@ -225,6 +227,86 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
     setThumbnailError('')
   }
 
+  // Drag and drop handlers for ebook file
+  const handleFileDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOverFile(true)
+  }
+
+  const handleFileDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOverFile(false)
+  }
+
+  const handleFileDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOverFile(false)
+    
+    const files = e.dataTransfer.files
+    if (files.length > 0) {
+      const file = files[0]
+      
+      // Validate file type
+      const allowedTypes = [
+        'application/pdf',
+        'application/epub+zip',
+        'text/plain',
+      ]
+      if (!allowedTypes.includes(file.type)) {
+        setFileError('Please select a valid file type (PDF, EPUB, or TXT)')
+        return
+      }
+
+      // Validate file size (50MB limit)
+      const maxSize = 50 * 1024 * 1024 // 50MB
+      if (file.size > maxSize) {
+        setFileError('File size must be less than 50MB')
+        return
+      }
+
+      setSelectedFile(file)
+      setFileError('')
+    }
+  }
+
+  // Drag and drop handlers for thumbnail
+  const handleThumbnailDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOverThumbnail(true)
+  }
+
+  const handleThumbnailDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOverThumbnail(false)
+  }
+
+  const handleThumbnailDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOverThumbnail(false)
+    
+    const files = e.dataTransfer.files
+    if (files.length > 0) {
+      const file = files[0]
+      
+      // Validate image type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+      if (!allowedTypes.includes(file.type)) {
+        setThumbnailError('Please select a valid image type (JPEG, PNG, or WebP)')
+        return
+      }
+
+      // Validate file size (5MB limit)
+      const maxSize = 5 * 1024 * 1024 // 5MB
+      if (file.size > maxSize) {
+        setThumbnailError('Image size must be less than 5MB')
+        return
+      }
+
+      setSelectedThumbnail(file)
+      setThumbnailError('')
+    }
+  }
+
   const uploadFile = async (file: File): Promise<string> => {
     try {
       // Import Firebase storage utility
@@ -252,6 +334,8 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
     setSelectedFile(null)
     setSelectedThumbnail(null)
     setUploadProgress(0)
+    setIsDragOverFile(false)
+    setIsDragOverThumbnail(false)
     formik.resetForm()
     onClose()
   }
@@ -357,15 +441,25 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
                   <FormLabel>Ebook File *</FormLabel>
                   <Box
                     border="2px dashed"
-                    borderColor={selectedFile ? 'green.300' : 'gray.300'}
+                    borderColor={
+                      isDragOverFile
+                        ? 'purple.400'
+                        : selectedFile
+                        ? 'green.300'
+                        : 'gray.300'
+                    }
                     borderRadius="md"
                     p={6}
                     textAlign="center"
                     cursor="pointer"
+                    bg={isDragOverFile ? 'purple.50' : 'transparent'}
                     _hover={{ borderColor: 'purple.300' }}
                     onClick={() =>
                       document.getElementById('file-input')?.click()
                     }
+                    onDragOver={handleFileDragOver}
+                    onDragLeave={handleFileDragLeave}
+                    onDrop={handleFileDrop}
                   >
                     <input
                       id="file-input"
@@ -379,7 +473,9 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
                       <Text fontWeight="medium">
                         {selectedFile
                           ? selectedFile.name
-                          : 'Click to select file'}
+                          : isDragOverFile
+                          ? 'Drop file here'
+                          : 'Click to select or drag & drop file'}
                       </Text>
                       <Text fontSize="sm" color="gray.500">
                         PDF, EPUB, or TXT files up to 50MB
@@ -413,15 +509,25 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
                   <FormLabel>Cover Image (Optional)</FormLabel>
                   <Box
                     border="2px dashed"
-                    borderColor={selectedThumbnail ? 'green.300' : 'gray.300'}
+                    borderColor={
+                      isDragOverThumbnail
+                        ? 'purple.400'
+                        : selectedThumbnail
+                        ? 'green.300'
+                        : 'gray.300'
+                    }
                     borderRadius="md"
                     p={4}
                     textAlign="center"
                     cursor="pointer"
+                    bg={isDragOverThumbnail ? 'purple.50' : 'transparent'}
                     _hover={{ borderColor: 'purple.300' }}
                     onClick={() =>
                       document.getElementById('thumbnail-input')?.click()
                     }
+                    onDragOver={handleThumbnailDragOver}
+                    onDragLeave={handleThumbnailDragLeave}
+                    onDrop={handleThumbnailDrop}
                   >
                     <input
                       id="thumbnail-input"
@@ -435,7 +541,9 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
                       <Text fontSize="sm">
                         {selectedThumbnail
                           ? selectedThumbnail.name
-                          : 'Click to select cover image'}
+                          : isDragOverThumbnail
+                          ? 'Drop image here'
+                          : 'Click to select or drag & drop image'}
                       </Text>
                       <Text fontSize="xs" color="gray.500">
                         JPEG, PNG, or WebP up to 5MB
@@ -487,7 +595,7 @@ export const CreateEbookModal: React.FC<CreateEbookModalProps> = ({
 
           <ModalFooter>
             <Button
-              variant="ghost"
+              variant="outline"
               mr={3}
               onClick={handleClose}
               isDisabled={isSubmitting}

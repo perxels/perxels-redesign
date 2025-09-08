@@ -172,7 +172,7 @@ export async function sendWelcomeEmail(
         <h2 style="font-size: 1.2rem; font-weight: bold; margin: 0 0 24px 0; letter-spacing: 0.5px; color: #6C63FF;">WELCOME TO ${appName.toUpperCase()}, ${name.toUpperCase()}!</h2>
         <div style="color: #222; font-size: 1rem;">
           <p>Thank you for joining us. We're excited to have you on board!</p>
-          <a href="/portal" style="display: inline-block; background: #6C63FF; color: white; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; margin-top: 24px;">Get Started</a>
+          <a href="/portal/login" style="display: inline-block; background: #6C63FF; color: white; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; margin-top: 24px;">Get Started</a>
         </div>
       </div>
     `

@@ -256,7 +256,6 @@ const PaymentConfirmation = ({
               )
               // Don't fail the main request if notification fails
             } else {
-              console.log('Payment notification sent successfully')
             }
           } catch (notificationError) {
             console.error('Payment notification error:', notificationError)
