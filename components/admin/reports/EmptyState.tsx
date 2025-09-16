@@ -23,7 +23,7 @@ export function EmptyState({ onGenerateReport }: EmptyStateProps) {
               Ready to Generate Reports
             </Text>
             <Text fontSize="sm" color="gray.500" textAlign="center" maxW="md">
-              Select your filters and click "Generate Report" to view comprehensive attendance analytics and insights.
+              Select your filters and click &quot;Generate Report&quot; to view comprehensive attendance analytics and insights.
             </Text>
           </VStack>
           <Button

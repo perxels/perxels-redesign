@@ -1,9 +1,11 @@
 import React from 'react'
 import {
+  Box,
   Card,
   CardBody,
   CardHeader,
   Heading,
+  Text,
   Table,
   Thead,
   Tbody,
@@ -33,7 +35,7 @@ export function SessionDetailsReport({ sessionDetails }: SessionDetailsReportPro
       <CardHeader pb={4}>
         <Heading size="md" color="gray.700">📅 Session Details</Heading>
         <Text fontSize="sm" color="gray.500">
-          Detailed breakdown of each session's attendance
+          Detailed breakdown of each session&apos;s attendance
         </Text>
       </CardHeader>
       <CardBody pt={0}>
