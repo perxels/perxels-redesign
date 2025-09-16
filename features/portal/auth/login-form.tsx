@@ -182,7 +182,15 @@ export const LoginForm = () => {
                 />
               </SimpleGrid>
 
-              <HStack w="full" justifyContent="flex-end">
+              <HStack w="full" justifyContent="space-between" alignItems="center">
+                <Text
+                  fontSize="sm"
+                  color="yellow.600"
+                  cursor="pointer"
+                  onClick={() => router.push('/portal/forgot-password')}
+                >
+                  Forgot password?
+                </Text>
                 <Button
                   type="submit"
                   isLoading={isSubmitting}
