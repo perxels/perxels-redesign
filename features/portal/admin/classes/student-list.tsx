@@ -23,6 +23,9 @@ import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { StudentDetailsModal } from './student-details-modal'
 import { DeleteStudentModal } from './delete-student-modal'
+import { useIndividualPaymentReminder } from '../../../../hooks/useIndividualPaymentReminder'
+import { ReminderConfirmationModal } from './student-payment-reminder'
+import { FiBell } from 'react-icons/fi'
 
 interface StudentData {
   uid: string
@@ -59,6 +62,39 @@ export const StudentList = () => {
   const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(
     null,
   )
+  const [reminderStudent, setReminderStudent] = useState<StudentData | null>(
+    null,
+  )
+  const { sendIndividualReminder, isLoading: isReminderLoading } =
+    useIndividualPaymentReminder()
+
+  //  function to check if student has pending payment
+  const hasPendingPayment = (student: StudentData): boolean => {
+    const schoolFeeInfo = student.schoolFeeInfo
+    if (!schoolFeeInfo) return false
+
+    const totalFee = schoolFeeInfo.totalSchoolFee || 0
+    const totalPaid = schoolFeeInfo.totalApproved || 0
+
+    return totalPaid < totalFee
+  }
+
+  // Open reminder modal
+  const handleOpenReminderModal = (student: StudentData) => {
+    setReminderStudent(student) // Use separate state
+    onReminderOpen()
+  }
+
+  // Handle sending reminder
+  const handleSendReminder = async () => {
+    if (!reminderStudent) return
+
+    const result = await sendIndividualReminder(reminderStudent)
+    if (result.success) {
+      onReminderClose()
+      setReminderStudent(null)
+    }
+  }
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1)
@@ -69,6 +105,11 @@ export const StudentList = () => {
   const router = useRouter()
   const isAdmin = portalUser?.role === 'admin'
 
+  const {
+    isOpen: isReminderOpen,
+    onOpen: onReminderOpen,
+    onClose: onReminderClose,
+  } = useDisclosure()
   const {
     isOpen: isDetailsOpen,
     onOpen: onDetailsOpen,
@@ -431,6 +472,23 @@ export const StudentList = () => {
                     </Text>
                   </Box>
                   <HStack spacing={2}>
+                    {hasPendingPayment(student) && (
+                      <Button
+                        size="xs"
+                        bg="orange.500"
+                        color="white"
+                        borderRadius="sm"
+                        px={2}
+                        py={1}
+                        _hover={{ bg: 'orange.600' }}
+                        fontWeight="normal"
+                        fontSize="xs"
+                        onClick={() => handleOpenReminderModal(student)}
+                        isLoading={isReminderLoading}
+                      >
+                        <FiBell size={14} />
+                      </Button>
+                    )}
                     <Button
                       size="xs"
                       bg="gray.700"
@@ -456,7 +514,7 @@ export const StudentList = () => {
                       _hover={{ bg: 'red.600' }}
                       fontSize="xs"
                       fontWeight="normal"
-                      minW="70px"
+                      minW="40px"
                       onClick={() => handleDeleteStudent(student)}
                     >
                       <MdDelete size={14} />
@@ -612,6 +670,23 @@ export const StudentList = () => {
 
                 {/* Action Buttons */}
                 <HStack spacing={2}>
+                  {hasPendingPayment(student) && (
+                    <Button
+                      size="xs"
+                      bg="orange.500"
+                      color="white"
+                      borderRadius="sm"
+                      px={2}
+                      py={1}
+                      _hover={{ bg: 'orange.600' }}
+                      fontSize="sm"
+                      fontWeight="normal"
+                      minW="40px"
+                      onClick={() => handleOpenReminderModal(student)}
+                    >
+                      <FiBell size={16} />
+                    </Button>
+                  )}
                   <Button
                     size="xs"
                     bg="gray.700"
@@ -703,6 +778,15 @@ export const StudentList = () => {
           )}
         </VStack>
       )}
+
+      {/* Student Reminder */}
+      <ReminderConfirmationModal
+        isOpen={isReminderOpen}
+        onClose={onReminderClose}
+        onConfirm={handleSendReminder}
+        student={reminderStudent}
+        isLoading={isReminderLoading}
+      />
 
       {/* Student Details Modal */}
       {selectedStudent && (

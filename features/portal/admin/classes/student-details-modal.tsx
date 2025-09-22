@@ -714,6 +714,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                                 </Td>
                                 <Td>
                                   <Button
+                                    // isDisabled={paymentStats.balance === 0}
                                     size="sm"
                                     colorScheme="purple"
                                     variant="outline"

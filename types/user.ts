@@ -48,3 +48,24 @@ export interface Assignment {
   assignedByName: string
   updatedAt?: any
 }
+export interface StudentData {
+  uid: string
+  email: string
+  fullName: string
+  phone: string
+  branch: string
+  role: string
+  emailVerified: boolean
+  registrationComplete?: boolean
+  onboardingComplete?: boolean
+  createdAt: any
+  schoolFeeInfo?: any
+  growthInfo?: any
+  termsAgreed?: boolean
+  gender?: string
+  occupation?: string
+  owingStatus?: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
+}
