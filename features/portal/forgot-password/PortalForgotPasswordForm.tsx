@@ -43,12 +43,16 @@ export function PortalForgotPasswordForm() {
               handleCodeInApp: true,
             }
 
-            await sendPasswordResetEmail(portalAuth, email, actionCodeSettings as any)
+            await sendPasswordResetEmail(
+              portalAuth,
+              email,
+              actionCodeSettings as any,
+            )
 
             toast({
               title: 'Password reset email sent',
               description:
-                'Open the email on this device to finish resetting in-app.',
+                'Open the email on this device to finish resetting in-app. (Check spam if not found.)',
               status: 'success',
               duration: 5000,
               isClosable: true,
@@ -57,8 +61,10 @@ export function PortalForgotPasswordForm() {
             actions.resetForm()
           } catch (error: any) {
             let description = 'Failed to send reset email. Please try again.'
-            if (error?.code === 'auth/user-not-found') description = 'No user found with this email.'
-            if (error?.code === 'auth/invalid-email') description = 'Please enter a valid email.'
+            if (error?.code === 'auth/user-not-found')
+              description = 'No user found with this email.'
+            if (error?.code === 'auth/invalid-email')
+              description = 'Please enter a valid email.'
 
             toast({
               title: 'Error',
@@ -137,5 +143,3 @@ export function PortalForgotPasswordForm() {
 }
 
 export default PortalForgotPasswordForm
-
-

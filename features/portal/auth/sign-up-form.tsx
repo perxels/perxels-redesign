@@ -17,7 +17,7 @@ import {
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { portalAuth } from '../../../portalFirebaseConfig'
 import { AuthInput } from './auth-input'
-import { FiMail } from 'react-icons/fi'
+import { FiMail, FiMapPin, FiUser, FiPhone } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 import { branchOptions } from '../../../constant/adminConstants'
 
@@ -30,9 +30,12 @@ interface SignUpFormValues {
   password: string
   confirmPassword: string
   branch: string
+  address: string
+  guardianName: string
+  guardianPhone: string
 }
 
-// Enhanced validation schema with better error messages
+// Enhanced validation schema with new fields
 const formSchema = Yup.object().shape({
   firstName: Yup.string()
     .required('First name is required')
@@ -64,17 +67,21 @@ const formSchema = Yup.object().shape({
       /^(\+?[1-9]\d{1,14}|0[789][01]\d{8})$/,
       'Enter a valid phone number (e.g., +1234567890, +2348012345678, or 08012345678)',
     )
-    .test('phone-format', 'Phone number must be in international or Nigerian format', (value) => {
-      if (!value) return false
-      
-      // Nigerian format: +234 or 0 followed by 7,8,9,0,1 and 8 digits
-      const nigerianFormat = /^(\+234|0)[789][01]\d{8}$/
-      
-      // International format: + followed by 1-15 digits
-      const internationalFormat = /^\+[1-9]\d{1,14}$/
-      
-      return nigerianFormat.test(value) || internationalFormat.test(value)
-    })
+    .test(
+      'phone-format',
+      'Phone number must be in international or Nigerian format',
+      (value) => {
+        if (!value) return false
+
+        // Nigerian format: +234 or 0 followed by 7,8,9,0,1 and 8 digits
+        const nigerianFormat = /^(\+234|0)[789][01]\d{8}$/
+
+        // International format: + followed by 1-15 digits
+        const internationalFormat = /^\+[1-9]\d{1,14}$/
+
+        return nigerianFormat.test(value) || internationalFormat.test(value)
+      },
+    )
     .trim(),
 
   password: Yup.string()
@@ -92,12 +99,51 @@ const formSchema = Yup.object().shape({
   branch: Yup.string()
     .required('Please select your preferred branch')
     .oneOf(
-      ['Ibadan', 'Lekki, Lagos', 'Yaba, Lagos', 'Abuja', 'Fully Online Class', 'International'],
+      [
+        'Ibadan',
+        'Lekki, Lagos',
+        'Yaba, Lagos',
+        'Abuja',
+        'Fully Online Class',
+        'International',
+      ],
       'Please select a valid branch',
     ),
+
+  // New fields validation
+  address: Yup.string()
+    .required('Address is required')
+    .min(10, 'Address must be at least 10 characters')
+    .max(200, 'Address must not exceed 200 characters')
+    .trim(),
+
+  guardianName: Yup.string()
+    .required("Parent/Guardian's name is required")
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must not exceed 50 characters')
+    .matches(/^[a-zA-Z\s]*$/, 'Name can only contain letters and spaces')
+    .trim(),
+
+  guardianPhone: Yup.string()
+    .required("Parent/Guardian's phone number is required")
+    .matches(
+      /^(\+?[1-9]\d{1,14}|0[789][01]\d{8})$/,
+      'Enter a valid phone number (e.g., +1234567890, +2348012345678, or 08012345678)',
+    )
+    .test(
+      'guardian-phone-format',
+      'Phone number must be in international or Nigerian format',
+      (value) => {
+        if (!value) return false
+
+        const nigerianFormat = /^(\+234|0)[789][01]\d{8}$/
+        const internationalFormat = /^\+[1-9]\d{1,14}$/
+
+        return nigerianFormat.test(value) || internationalFormat.test(value)
+      },
+    )
+    .trim(),
 })
-
-
 
 export function SignUpForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -117,6 +163,9 @@ export function SignUpForm() {
         fullName: `${values.firstName.trim()} ${values.lastName.trim()}`.trim(),
         phone: values.phone.trim(),
         branch: values.branch,
+        address: values.address.trim(),
+        guardianName: values.guardianName.trim(),
+        guardianPhone: values.guardianPhone.trim(),
       }
 
       // Create account, store user data, and send OTP all in one API call
@@ -131,7 +180,6 @@ export function SignUpForm() {
       const result = await response.json()
 
       if (!response.ok || !result.success) {
-        // Use the user-friendly error message from the API
         throw new Error(result.error || 'Failed to create account')
       }
 
@@ -147,35 +195,35 @@ export function SignUpForm() {
         toast({
           title: 'Account created successfully! 🎉',
           description:
-            result.message || 'Please check your email for the verification code',
+            result.message ||
+            'Please check your email for the verification code',
           status: 'success',
           duration: 8000,
           isClosable: true,
           position: 'top',
         })
-  
+
         // Redirect to OTP verification page
         router.push(
           `/portal/verify?email=${encodeURIComponent(sanitizedData.email)}`,
         )
-
       } catch (signInError) {
         console.error('Failed to sign in after account creation:', signInError)
         // Don't throw here as account was created successfully
-        // User can still proceed to verification
       }
-
     } catch (error: unknown) {
       console.error('Sign up error:', error)
 
       let errorMessage = 'Failed to create account. Please try again.'
 
       if (error instanceof Error) {
-        // Check if it's a network error
-        if (error.message.includes('fetch') || error.message.includes('Network')) {
-          errorMessage = 'Network error. Please check your connection and try again.'
+        if (
+          error.message.includes('fetch') ||
+          error.message.includes('Network')
+        ) {
+          errorMessage =
+            'Network error. Please check your connection and try again.'
         } else {
-          // Use the error message from the API (which is already user-friendly)
           errorMessage = error.message
         }
       }
@@ -213,6 +261,9 @@ export function SignUpForm() {
           password: '',
           confirmPassword: '',
           branch: '',
+          address: '',
+          guardianName: '',
+          guardianPhone: '',
         }}
         validationSchema={formSchema}
         onSubmit={handleSignUp}
@@ -223,6 +274,7 @@ export function SignUpForm() {
           <form onSubmit={formik.handleSubmit} style={{ width: '100%' }}>
             <VStack w="full" alignItems="flex-start" spacing={6}>
               <SimpleGrid columns={2} spacing={[5, 10]} w="full" maxW="750px">
+                {/* Personal Information */}
                 <AuthInput
                   name="firstName"
                   placeholder="First name*"
@@ -246,6 +298,7 @@ export function SignUpForm() {
                 <AuthInput
                   name="phone"
                   placeholder="Phone Number*"
+                  rightElement={<FiPhone />}
                   isDisabled={isSubmitting}
                 />
 
@@ -263,7 +316,42 @@ export function SignUpForm() {
                   isDisabled={isSubmitting}
                 />
 
-                <Box>
+                <Box gridColumn="span 2">
+                  <AuthInput
+                    name="address"
+                    placeholder="Full Address* (Street, City, State)"
+                    rightElement={<FiMapPin />}
+                    isDisabled={isSubmitting}
+                  />
+                </Box>
+
+                {/* Guardian Information */}
+                <Box gridColumn="span 2">
+                  <Text
+                    fontSize="sm"
+                    color="brand.dark.200"
+                    mb={-4}
+                    fontWeight="medium"
+                  >
+                    Parent/Guardian Information
+                  </Text>
+                </Box>
+
+                <AuthInput
+                  name="guardianName"
+                  placeholder="Parent/Guardian Full Name*"
+                  rightElement={<FiUser />}
+                  isDisabled={isSubmitting}
+                />
+
+                <AuthInput
+                  name="guardianPhone"
+                  placeholder="Parent/Guardian Phone Number*"
+                  rightElement={<FiPhone />}
+                  isDisabled={isSubmitting}
+                />
+
+                <Box gridColumn="span 2">
                   <Select
                     h="3.5rem"
                     placeholder="Select Branch*"

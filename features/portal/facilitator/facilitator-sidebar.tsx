@@ -1,40 +1,37 @@
-import { Box, Text, Badge, Spinner } from '@chakra-ui/react'
+import { Box, Text, Spinner } from '@chakra-ui/react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState, useCallback, useEffect } from 'react'
-import { useStudentNotifications } from '../../../hooks/useStudentNotifications'
 
 const sidebarItems = [
   {
-    label: 'Home',
+    label: 'Dashboard',
     icon: '/assets/icons/home.svg',
-    href: '/portal/dashboard',
-  },
-  {
-    label: 'Sch fee',
-    icon: '/assets/icons/wallet.svg',
-    href: '/portal/dashboard/school-fees',
+    href: '/portal/facilitator/dashboard',
   },
   {
     label: 'Attendance',
+    icon: '/assets/icons/attandance.svg',
+    href: '/portal/facilitator/attendance',
+  },
+  {
+    label: 'Students',
+    icon: '/assets/icons/students.svg',
+    href: '/portal/facilitator/students',
+  },
+  {
+    label: 'Tests',
+    icon: '/assets/icons/test.svg',
+    href: '/portal/facilitator/tests',
+  },
+  {
+    label: 'Performance',
     icon: '/assets/icons/graph.svg',
-    href: '/portal/dashboard/attendance-v2',
-  },
-  {
-    label: 'Library',
-    icon: '/assets/icons/video.svg',
-    href: '/portal/dashboard/library',
-  },
-  {
-    label: 'Message',
-    icon: '/assets/icons/notification.svg',
-    href: '/portal/dashboard/messages',
+    href: '/portal/facilitator/performance',
   },
 ]
 
-export const DashboardSidebar = () => {
-  const { unreadCount } = useStudentNotifications()
+export const FacilitatorSidebar = () => {
   const router = useRouter()
   const [loadingItem, setLoadingItem] = useState<string | null>(null)
   const [iconsLoaded, setIconsLoaded] = useState<Record<string, boolean>>({})
@@ -69,19 +66,15 @@ export const DashboardSidebar = () => {
 
   const handleNavigation = useCallback(
     async (href: string, label: string) => {
-      if (router.pathname === href) return // Already on the page
+      if (router.pathname === href) return
 
       setLoadingItem(label)
 
       try {
-        // Add a small delay to show loading state for better UX
         await new Promise((resolve) => setTimeout(resolve, 100))
-
-        // Use router.push for programmatic navigation with error handling
         await router.push(href)
       } catch (error) {
         console.error(`Navigation error to ${href}:`, error)
-        // Fallback to regular link navigation
         window.location.href = href
       } finally {
         setLoadingItem(null)
@@ -90,7 +83,6 @@ export const DashboardSidebar = () => {
     [router],
   )
 
-  // Add keyboard navigation support
   const handleKeyPress = useCallback(
     (event: React.KeyboardEvent, href: string, label: string) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -110,16 +102,16 @@ export const DashboardSidebar = () => {
       display="flex"
       flexDirection="column"
       justifyContent="flex-start"
+      overflowY="auto"
       alignItems="center"
       gap={8}
       py={8}
-      overflowY="auto"
     >
       {sidebarItems.map((item) => {
         const isActive = router.pathname === item.href
         const isHomeActive =
-          item.href === '/portal/dashboard' &&
-          router.pathname === '/portal/dashboard'
+          item.href === '/portal/facilitator/dashboard' &&
+          router.pathname === '/portal/facilitator/dashboard'
         const isLoading = loadingItem === item.label
         const isIconLoaded = iconsLoaded[item.label]
 
@@ -146,33 +138,8 @@ export const DashboardSidebar = () => {
                 ? {
                     bg: 'rgba(255, 255, 255, 0.1)',
                     transform: 'translateY(-2px)',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
                   }
                 : {}
-            }
-            _active={
-              !isLoading
-                ? {
-                    bg: 'rgba(255, 255, 255, 0.2)',
-                    transform: 'translateY(0px)',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-                  }
-                : {}
-            }
-            _before={
-              isActive || isHomeActive
-                ? {
-                    content: '""',
-                    position: 'absolute',
-                    left: 0,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    width: '4px',
-                    height: '60%',
-                    bg: 'white',
-                    borderRadius: '0 4px 4px 0',
-                  }
-                : undefined
             }
             onClick={() =>
               !isLoading && handleNavigation(item.href, item.label)
@@ -181,7 +148,6 @@ export const DashboardSidebar = () => {
             tabIndex={0}
             role="button"
             aria-label={`Navigate to ${item.label}`}
-            aria-pressed={isActive || isHomeActive}
             opacity={isLoading ? 0.7 : 1}
           >
             <Box position="relative">
@@ -205,43 +171,20 @@ export const DashboardSidebar = () => {
                   alt={item.label}
                   width={48}
                   height={48}
-                  priority={item.label === 'Home'} // Prioritize home icon
+                  priority={item.label === 'Dashboard'}
                   style={{
                     filter:
                       isActive || isHomeActive
                         ? 'brightness(1.2)'
                         : 'brightness(1)',
-                    transition: 'filter 0.2s ease-in-out',
                   }}
                 />
-              )}
-              {item.label === 'Message' && unreadCount > 0 && !isLoading && (
-                <Badge
-                  position="absolute"
-                  top="-8px"
-                  right="-8px"
-                  colorScheme="red"
-                  borderRadius="full"
-                  minW="20px"
-                  h="20px"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  fontSize="12px"
-                  fontWeight="bold"
-                  animation={unreadCount > 0 ? 'pulse 2s infinite' : undefined}
-                >
-                  {unreadCount > 99 ? '99+' : unreadCount}
-                </Badge>
               )}
             </Box>
             <Text
               fontSize="1.25rem"
               fontWeight={isActive || isHomeActive ? 'bold' : 'medium'}
               color="brand.white"
-              textAlign="center"
-              transition="all 0.2s ease-in-out"
-              opacity={isActive || isHomeActive ? 1 : 0.9}
             >
               {isLoading ? 'Loading...' : item.label}
             </Text>

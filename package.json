@@ -27,6 +27,7 @@
     "axios": "^1.7.2",
     "cloudinary": "^2.7.0",
     "date-fns": "^4.1.0",
+    "docx": "^9.5.1",
     "emailjs-com": "^3.2.0",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",

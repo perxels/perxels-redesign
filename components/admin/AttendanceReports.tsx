@@ -6,6 +6,8 @@ import {
   getAllSessions,
   getAllStudents,
   didStudentCheckInToSession,
+  getStudentsByCohortsAndPlans,
+  getSessionCheckins,
 } from '../../lib/utils/attendance-v2.utils'
 import {
   ReportFilters,
@@ -66,7 +68,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
 
   // Sync with global filters changes
   useEffect(() => {
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
       dateRange: globalFilters.dateRange || prev.dateRange,
       cohortId: globalFilters.cohortId,
@@ -76,7 +78,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
 
   // Generate report data
   const generateReport = useCallback(async () => {
-    if (!filters.dateRange.start || !filters.dateRange.end) {
+    if (!filters.dateRange?.start || !filters.dateRange?.end) {
       toast({
         title: 'Date range required',
         description: 'Please select both start and end dates',
@@ -87,16 +89,9 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
     }
 
     setLoading(true)
-    try {
-      let sessions: any[] = []
-      let students: any[] = []
-      let totalCheckIns = 0
-      let totalStudents = 0
-      let dailySummary: any[] = []
-      let sessionDetails: any[] = []
-      let cohortPerformance: any[] = []
 
-      // Get sessions based on filters
+    try {
+      // 1. Get filtered sessions
       const sessionFilters: any = {
         dateRange: {
           start: filters.dateRange.start,
@@ -107,79 +102,145 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       if (filters.cohortId) sessionFilters.cohortId = filters.cohortId
       if (filters.planId) sessionFilters.planId = filters.planId
 
-      // Get all sessions and students
-      const allSessions = await getAllSessions()
-      sessions = await getSessionsByFilters(sessionFilters)
-      const allStudents = await getAllStudents()
+      const sessions = await getSessionsByFilters(sessionFilters)
 
-      // Process sessions and students
+      if (sessions.length === 0) {
+        setReportData({
+          totalSessions: 0,
+          totalStudents: 0,
+          totalCheckIns: 0,
+          attendanceRate: 0,
+          sessions: [],
+          students: [],
+          dailySummary: [],
+          sessionDetails: [],
+          cohortPerformance: [],
+        })
+        toast({
+          title: 'No data found',
+          description: 'No sessions match your filters',
+          status: 'info',
+          duration: 3000,
+        })
+        return
+      }
+
+      // 2. Get ALL checkins for these sessions in parallel (CRITICAL FIX)
+      const sessionCheckins = await Promise.all(
+        sessions.map((session) => getSessionCheckins(session.sessionId)),
+      )
+
+      // Create a map for quick lookup: sessionId -> checkins[]
+      const checkinsMap = new Map()
+      sessions.forEach((session, index) => {
+        checkinsMap.set(session.sessionId, sessionCheckins[index])
+      })
+
+      // 3. Get unique cohort-plan combinations to find relevant students
+      const cohortPlanSet = new Set()
+      sessions.forEach((session) => {
+        cohortPlanSet.add(`${session.cohortId}-${session.planId}`)
+      })
+
+      // 4. Get students only for relevant cohorts/plans (not all students!)
+      const cohortPlanArray = Array.from(cohortPlanSet).map((combo) => {
+        const [cohortId, planId] = combo.split('-')
+        return { cohortId, planId }
+      })
+
+      const students = await getStudentsByCohortsAndPlans(cohortPlanArray)
+
+      // 5. Create student map for efficient lookup
       const studentMap = new Map()
+      students.forEach((student) => {
+        studentMap.set(student.id, {
+          ...student,
+          sessions: [],
+          checkIns: 0,
+          totalSessions: 0,
+        })
+      })
+
+      // 6. Create cohort map for cohort performance data
       const cohortMap = new Map()
 
+      // 7. Process each session efficiently
+      let totalCheckIns = 0
+
       for (const session of sessions) {
-        const sessionStudents = allStudents.filter(
-          (student) =>
-            student.schoolFeeInfo?.cohort === session.cohortId &&
-            student.schoolFeeInfo?.classPlan === session.planId,
+        const sessionCheckins = checkinsMap.get(session.sessionId) || []
+        const checkedInStudentIds = new Set(
+          sessionCheckins.filter((c) => c.checkedIn).map((c) => c.studentId),
         )
 
-        // Initialize cohort data
-        if (!cohortMap.has(session.cohortId)) {
-          cohortMap.set(session.cohortId, {
+        // Initialize cohort data if needed
+        const cohortKey = `${session.cohortId}-${session.planId}`
+        if (!cohortMap.has(cohortKey)) {
+          cohortMap.set(cohortKey, {
             cohortId: session.cohortId,
             planId: session.planId,
             totalSessions: 0,
-            totalStudents: sessionStudents.length,
+            totalStudents: 0,
             totalCheckIns: 0,
             sessions: [],
           })
         }
 
-        const cohortData = cohortMap.get(session.cohortId)
+        const cohortData = cohortMap.get(cohortKey)
         cohortData.totalSessions++
         cohortData.sessions.push(session)
 
-        for (const student of sessionStudents) {
-          if (!studentMap.has(student.id)) {
-            studentMap.set(student.id, {
-              ...student,
-              sessions: [],
-              checkIns: 0,
-              totalSessions: 0,
+        // Process each student for this session
+        for (const student of students) {
+          // Only process students who belong to this session's cohort and plan
+          if (
+            student.schoolFeeInfo?.cohort === session.cohortId &&
+            student.schoolFeeInfo?.classPlan === session.planId
+          ) {
+            const studentData = studentMap.get(student.id)
+            studentData.totalSessions++
+
+            const isCheckedIn = checkedInStudentIds.has(student.id)
+            if (isCheckedIn) {
+              studentData.checkIns++
+              totalCheckIns++
+              cohortData.totalCheckIns++
+            }
+
+            studentData.sessions.push({
+              sessionId: session.sessionId,
+              date: session.date,
+              checkedIn: isCheckedIn,
+              checkInTime: sessionCheckins.find(
+                (c) => c.studentId === student.id && c.checkedIn,
+              )?.checkInTime,
+              cohortId: session.cohortId,
+              planId: session.planId,
             })
           }
-
-          const studentData = studentMap.get(student.id)
-          studentData.totalSessions++
-
-          // Check if student checked in
-          const checkinData = await didStudentCheckInToSession(
-            session.sessionId,
-            student.id,
-          )
-          if (checkinData?.checkedIn) {
-            studentData.checkIns++
-            totalCheckIns++
-            cohortData.totalCheckIns++
-          }
-
-          studentData.sessions.push({
-            sessionId: session.sessionId,
-            date: session.date,
-            checkedIn: checkinData?.checkedIn || false,
-            checkInTime: checkinData?.checkInTime,
-            cohortId: session.cohortId,
-            planId: session.planId,
-          })
         }
       }
 
-      students = Array.from(studentMap.values())
-      totalStudents = students.length
+      // Update cohort total students count
+      cohortMap.forEach((cohortData) => {
+        cohortData.totalStudents = students.filter(
+          (s) =>
+            s.schoolFeeInfo?.cohort === cohortData.cohortId &&
+            s.schoolFeeInfo?.classPlan === cohortData.planId,
+        ).length
+      })
 
-      // Generate report-specific data based on report type
+      const studentArray = Array.from(studentMap.values())
+      const totalStudents = studentArray.length
+
+      // 8. Generate report-specific data
+      let dailySummary: any[] = []
+      let sessionDetails: any[] = []
+      let cohortPerformance: any[] = []
+
       if (filters.reportType === 'daily') {
         const dateMap = new Map()
+
         sessions.forEach((session) => {
           if (!dateMap.has(session.date)) {
             dateMap.set(session.date, {
@@ -189,29 +250,47 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
               totalCheckIns: 0,
             })
           }
+
           const dateData = dateMap.get(session.date)
           dateData.sessions.push(session)
-          dateData.totalStudents += students.length
-          dateData.totalCheckIns += students.filter((s) =>
-            s.sessions.some(
-              (sess: any) => sess.date === session.date && sess.checkedIn,
-            ),
-          ).length
+
+          // Count unique students for this date across all sessions
+          const dateStudents = new Set()
+          let dateCheckIns = 0
+
+          studentArray.forEach((student) => {
+            const hasSessionOnDate = student.sessions.some(
+              (s) => s.date === session.date,
+            )
+            if (hasSessionOnDate) {
+              dateStudents.add(student.id)
+              if (
+                student.sessions.some(
+                  (s) => s.date === session.date && s.checkedIn,
+                )
+              ) {
+                dateCheckIns++
+              }
+            }
+          })
+
+          dateData.totalStudents = dateStudents.size
+          dateData.totalCheckIns = dateCheckIns
         })
+
         dailySummary = Array.from(dateMap.values())
       }
 
       if (filters.reportType === 'session') {
         sessionDetails = sessions.map((session) => {
-          const sessionStudents = students.filter((s) =>
-            s.sessions.some(
-              (sess: any) => sess.sessionId === session.sessionId,
-            ),
+          const sessionCheckins = checkinsMap.get(session.sessionId) || []
+          const sessionStudents = studentArray.filter((student) =>
+            student.sessions.some((s) => s.sessionId === session.sessionId),
           )
-          const checkedInStudents = sessionStudents.filter((s) =>
-            s.sessions.some(
-              (sess: any) =>
-                sess.sessionId === session.sessionId && sess.checkedIn,
+
+          const checkedInStudents = sessionStudents.filter((student) =>
+            student.sessions.some(
+              (s) => s.sessionId === session.sessionId && s.checkedIn,
             ),
           )
 
@@ -223,14 +302,13 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
               sessionStudents.length > 0
                 ? (checkedInStudents.length / sessionStudents.length) * 100
                 : 0,
-            students: sessionStudents.map((s) => ({
-              ...s,
-              checkedIn:
-                s.sessions.find(
-                  (sess: any) => sess.sessionId === session.sessionId,
-                )?.checkedIn || false,
-              checkInTime: s.sessions.find(
-                (sess: any) => sess.sessionId === session.sessionId,
+            students: sessionStudents.map((student) => ({
+              ...student,
+              checkedIn: student.sessions.some(
+                (s) => s.sessionId === session.sessionId && s.checkedIn,
+              ),
+              checkInTime: student.sessions.find(
+                (s) => s.sessionId === session.sessionId,
               )?.checkInTime,
             })),
           }
@@ -241,7 +319,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
         cohortPerformance = Array.from(cohortMap.values()).map((cohort) => ({
           ...cohort,
           attendanceRate:
-            cohort.totalStudents > 0
+            cohort.totalStudents > 0 && cohort.totalSessions > 0
               ? (cohort.totalCheckIns /
                   (cohort.totalStudents * cohort.totalSessions)) *
                 100
@@ -250,7 +328,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       }
 
       const attendanceRate =
-        totalStudents > 0
+        totalStudents > 0 && sessions.length > 0
           ? (totalCheckIns / (totalStudents * sessions.length)) * 100
           : 0
 
@@ -260,7 +338,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
         totalCheckIns,
         attendanceRate,
         sessions,
-        students,
+        students: studentArray,
         dailySummary,
         sessionDetails,
         cohortPerformance,
@@ -268,7 +346,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
 
       toast({
         title: 'Report generated successfully!',
-        description: `Found ${sessions.length} sessions and ${totalStudents} students`,
+        description: `Processed ${sessions.length} sessions and ${totalStudents} students`,
         status: 'success',
         duration: 3000,
       })
@@ -323,11 +401,14 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
     <VStack spacing={6} align="stretch">
       <ReportFilters
         filters={{ reportType: filters.reportType }}
-        onFiltersChange={(newFilters) => setFilters(prev => ({ ...prev, ...newFilters }))}
+        onFiltersChange={(newFilters) =>
+          setFilters((prev) => ({ ...prev, ...newFilters }))
+        }
         onGenerateReport={generateReport}
         onExportCSV={exportToCSV}
         loading={loading}
         hasReportData={!!reportData}
+        reportData={reportData || []}
       />
 
       {loading && <LoadingState />}

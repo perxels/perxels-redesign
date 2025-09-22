@@ -33,4 +33,4 @@ export const classStatusOptions = [
   { value: 'active', label: 'Active' },
   { value: 'inactive', label: 'Inactive' },
   { value: 'completed', label: 'Completed' },
-] 
+]

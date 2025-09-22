@@ -58,6 +58,9 @@ interface StudentData {
   gender?: string
   occupation?: string
   owingStatus?: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
 }
 
 interface PaymentRecord {
@@ -424,6 +427,30 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                             </Text>
                             <Text fontWeight="medium">
                               {student.growthInfo?.gender || 'Not specified'}
+                            </Text>
+                          </Box>
+                          <Box>
+                            <Text fontSize="sm" color="gray.600">
+                              Address
+                            </Text>
+                            <Text fontWeight="medium">
+                              {student.address || 'Not specified'}
+                            </Text>
+                          </Box>
+                          <Box>
+                            <Text fontSize="sm" color="gray.600">
+                              Guardian Name
+                            </Text>
+                            <Text fontWeight="medium">
+                              {student.guardianName || 'Not available'}
+                            </Text>
+                          </Box>
+                          <Box>
+                            <Text fontSize="sm" color="gray.600">
+                              Guardian Phone
+                            </Text>
+                            <Text fontWeight="medium">
+                              {student.guardianPhone || 'Not available'}
                             </Text>
                           </Box>
                         </VStack>

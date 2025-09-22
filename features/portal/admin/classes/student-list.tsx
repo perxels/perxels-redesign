@@ -41,6 +41,9 @@ interface StudentData {
   gender?: string
   occupation?: string
   owingStatus?: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
 }
 
 function trimUrl(url: string, maxLength = 25): string {
@@ -166,7 +169,7 @@ export const StudentList = () => {
   useEffect(() => {
     const total = Math.ceil(filteredStudents.length / pageSize)
     setTotalPages(total)
-    
+
     // Reset to first page if current page exceeds total pages
     if (currentPage > total && total > 0) {
       setCurrentPage(1)
@@ -266,6 +269,9 @@ export const StudentList = () => {
           fullName: data.fullName || 'N/A',
           phone: data.phone || 'N/A',
           branch: data.branch || 'Not specified',
+          address: data.address || 'Not specified',
+          guardianName: data.guardianName || 'Not available',
+          guardianPhone: data.guardianPhone || 'Not available',
           role: data.role || 'student',
           emailVerified: data.emailVerified || false,
           registrationComplete: data.registrationComplete || false,
@@ -503,7 +509,10 @@ export const StudentList = () => {
               >
                 {/* Name and Phone */}
                 <HStack spacing={2}>
-                  <Avatar name={student.fullName} src={student?.growthInfo?.pictureUrl} />
+                  <Avatar
+                    name={student.fullName}
+                    src={student?.growthInfo?.pictureUrl}
+                  />
                   <Box minW="180px">
                     <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
                       {student.fullName}
@@ -685,7 +694,9 @@ export const StudentList = () => {
           {filteredStudents.length > 0 && (
             <Flex justify="center" pt={2}>
               <Text fontSize="sm" color="gray.500">
-                Showing {((currentPage - 1) * pageSize) + 1} to {Math.min(currentPage * pageSize, filteredStudents.length)} of {filteredStudents.length} students
+                Showing {(currentPage - 1) * pageSize + 1} to{' '}
+                {Math.min(currentPage * pageSize, filteredStudents.length)} of{' '}
+                {filteredStudents.length} students
                 {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
               </Text>
             </Flex>
