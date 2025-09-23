@@ -30,6 +30,19 @@ interface ReportFilters {
   reportType: 'daily' | 'student' | 'session' | 'cohort'
 }
 
+interface Student {
+  id: string
+  fullName?: string
+  email: string
+  schoolFeeInfo?: {
+    cohort?: string
+    classPlan?: string
+  }
+  totalSessions?: number
+  checkIns?: number
+  sessions?: any[]
+}
+
 interface AttendanceReportData {
   totalSessions: number
   totalStudents: number
@@ -153,7 +166,9 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
         return { cohortId, planId }
       })
 
-      const students = await getStudentsByCohortsAndPlans(cohortPlanArray)
+      const students = (await getStudentsByCohortsAndPlans(
+        cohortPlanArray,
+      )) as Student[]
 
       // 5. Create student map for efficient lookup
       const studentMap = new Map<string, any>()
