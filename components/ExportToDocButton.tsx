@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, useToast } from '@chakra-ui/react'
 import { HiDownload } from 'react-icons/hi'
+import { saveAs } from 'file-saver'
 
 interface ExportToDocButtonProps {
   data: any[]
