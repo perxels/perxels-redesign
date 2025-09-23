@@ -86,7 +86,7 @@ export const AssignToCohortModal: React.FC<AssignToCohortModalProps> = ({
         classPlan: selectedClassPlan,
         assignedAt: new Date(),
         assignedBy: portalUser.uid,
-        assignedByName: portalUser?.displayName || portalUser?.email || 'Admin',
+        assignedByName: portalUser?.fullName || portalUser?.email || 'Admin',
       }
 
       // Update the facilitator's document
@@ -121,7 +121,7 @@ export const AssignToCohortModal: React.FC<AssignToCohortModalProps> = ({
     try {
       // Filter out the assignment to remove
       const updatedAssignments = facilitator.assignments.filter(
-        (a: Assignment) => a.assignmentId !== assignmentId,
+        (a: any) => a.assignmentId !== assignmentId,
       )
 
       await updateDoc(doc(portalDb, 'users', facilitator.uid), {
