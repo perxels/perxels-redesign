@@ -2,12 +2,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { createUserAccount } from '../../lib/utils/auth.utils'
 
 // Types
+// Update your interface to match CreateAccountData
 interface CreateAccountRequest {
   email: string
   password: string
   fullName: string
   phone: string
   branch: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
 }
 
 interface CreateAccountResponse {
@@ -46,7 +50,10 @@ export default async function handler(
       fullName,
       phone,
       branch,
-    })
+      address: '', // Provide default values
+      guardianName: '',
+      guardianPhone: '',
+    } as any)
 
     if (!result.success) {
       return res.status(500).json({

@@ -141,9 +141,9 @@ interface CreateAccountData {
   fullName: string
   phone: string
   branch: string
-  address: string
-  guardianName: string
-  guardianPhone: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
 }
 
 interface CreateAccountResult {
