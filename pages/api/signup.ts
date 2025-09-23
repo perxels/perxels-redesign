@@ -1,14 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createUserAccount, generateOTP, storeOTP } from '../../lib/utils/auth.utils'
+import {
+  createUserAccount,
+  generateOTP,
+  storeOTP,
+} from '../../lib/utils/auth.utils'
 import { sendOTPEmail } from '../../lib/utils/email.utils'
 
-// Types
+// Updated Types with new fields
 interface SignUpRequest {
   email: string
   password: string
   fullName: string
   phone: string
   branch: string
+  address: string
+  guardianName: string
+  guardianPhone: string
 }
 
 interface SignUpResponse {
@@ -25,7 +32,7 @@ export default async function handler(
   console.log('🔍 Signup API called with:', {
     method: req.method,
     body: req.body,
-    headers: req.headers
+    headers: req.headers,
   })
 
   if (req.method !== 'POST') {
@@ -37,24 +44,49 @@ export default async function handler(
   }
 
   try {
-    const { email, password, fullName, phone, branch } = req.body as SignUpRequest
+    // Updated to include new fields
+    const {
+      email,
+      password,
+      fullName,
+      phone,
+      branch,
+      address,
+      guardianName,
+      guardianPhone,
+    } = req.body as SignUpRequest
 
     console.log('📋 Parsed request body:', {
       hasEmail: !!email,
       hasPassword: !!password,
       hasFullName: !!fullName,
       hasPhone: !!phone,
-      hasBranch: !!branch
+      hasBranch: !!branch,
+      hasAddress: !!address, // NEW
+      hasGuardianName: !!guardianName, // NEW
+      hasGuardianPhone: !!guardianPhone, // NEW
     })
 
-    // Validate required fields
-    if (!email || !password || !fullName || !phone || !branch) {
+    // Updated validation to include new fields
+    if (
+      !email ||
+      !password ||
+      !fullName ||
+      !phone ||
+      !branch ||
+      !address ||
+      !guardianName ||
+      !guardianPhone
+    ) {
       console.log('❌ Missing required fields:', {
         hasEmail: !!email,
         hasPassword: !!password,
         hasFullName: !!fullName,
         hasPhone: !!phone,
-        hasBranch: !!branch
+        hasBranch: !!branch,
+        hasAddress: !!address, // NEW
+        hasGuardianName: !!guardianName, // NEW
+        hasGuardianPhone: !!guardianPhone, // NEW
       })
       return res.status(400).json({
         success: false,
@@ -79,13 +111,34 @@ export default async function handler(
       })
     }
 
-    // Sanitize input data
+    // Validate address length
+    if (address.length < 10) {
+      console.log('❌ Address too short')
+      return res.status(400).json({
+        success: false,
+        error: 'Address must be at least 10 characters long',
+      })
+    }
+
+    // Validate guardian name
+    if (guardianName.length < 2) {
+      console.log('❌ Guardian name too short')
+      return res.status(400).json({
+        success: false,
+        error: 'Guardian name must be at least 2 characters long',
+      })
+    }
+
+    // Sanitize input data with new fields
     const sanitizedData = {
       email: email.toLowerCase().trim(),
       password,
       fullName: fullName.trim(),
       phone: phone.trim(),
       branch: branch.trim(),
+      address: address.trim(),
+      guardianName: guardianName.trim(),
+      guardianPhone: guardianPhone.trim(),
     }
 
     console.log('🧹 Sanitized data:', {
@@ -93,16 +146,19 @@ export default async function handler(
       fullName: sanitizedData.fullName,
       phone: sanitizedData.phone,
       branch: sanitizedData.branch,
-      passwordLength: sanitizedData.password.length
+      address: sanitizedData.address,
+      guardianName: sanitizedData.guardianName,
+      guardianPhone: sanitizedData.guardianPhone,
+      passwordLength: sanitizedData.password.length,
     })
 
     // Step 1: Create Firebase account and store user data
     console.log('👤 Creating user account...')
     const accountResult = await createUserAccount(sanitizedData)
-    
+
     if (!accountResult.success) {
       console.error('❌ Account creation failed:', accountResult.error)
-      
+
       return res.status(accountResult.statusCode || 500).json({
         success: false,
         error: accountResult.error || 'Failed to create account',
@@ -116,9 +172,12 @@ export default async function handler(
     const otp = generateOTP()
     console.log('📧 Storing OTP for email:', sanitizedData.email)
     const storeResult = await storeOTP(sanitizedData.email, otp)
-    
+
     if (!storeResult.success) {
-      console.error('❌ Failed to store OTP, but account was created:', storeResult.error)
+      console.error(
+        '❌ Failed to store OTP, but account was created:',
+        storeResult.error,
+      )
       // Account was created but OTP storage failed - this is still a success
       // User can request OTP resend if needed
     } else {
@@ -134,12 +193,16 @@ export default async function handler(
     })
 
     if (!emailResult.success) {
-      console.error('❌ Failed to send OTP email, but account was created:', emailResult.error)
+      console.error(
+        '❌ Failed to send OTP email, but account was created:',
+        emailResult.error,
+      )
       // Account was created but email sending failed
       return res.status(200).json({
         success: true,
         uid: accountResult.uid,
-        message: 'Account created successfully, but verification email failed to send. Please request a new verification code.',
+        message:
+          'Account created successfully, but verification email failed to send. Please request a new verification code.',
       })
     }
 
@@ -150,17 +213,17 @@ export default async function handler(
     return res.status(200).json({
       success: true,
       uid: accountResult.uid,
-      message: 'Account created successfully! Please check your email for the verification code.',
+      message:
+        'Account created successfully! Please check your email for the verification code.',
     })
-
   } catch (error: any) {
     console.error('❌ Signup API error:', {
       error: error.message,
       code: error.code,
       stack: error.stack,
-      body: req.body
+      body: req.body,
     })
-    
+
     let errorMessage = 'Failed to create account'
     let statusCode = 500
 
@@ -175,11 +238,13 @@ export default async function handler(
           statusCode = 400 // Bad Request
           break
         case 'auth/weak-password':
-          errorMessage = 'Password is too weak. Please choose a stronger password.'
+          errorMessage =
+            'Password is too weak. Please choose a stronger password.'
           statusCode = 400 // Bad Request
           break
         case 'auth/network-request-failed':
-          errorMessage = 'Network error. Please check your connection and try again.'
+          errorMessage =
+            'Network error. Please check your connection and try again.'
           statusCode = 503 // Service Unavailable
           break
         case 'auth/too-many-requests':
@@ -187,7 +252,8 @@ export default async function handler(
           statusCode = 429 // Too Many Requests
           break
         case 'auth/operation-not-allowed':
-          errorMessage = 'Email/password accounts are not enabled. Please contact support.'
+          errorMessage =
+            'Email/password accounts are not enabled. Please contact support.'
           statusCode = 403 // Forbidden
           break
         case 'auth/invalid-phone-number':
@@ -200,8 +266,12 @@ export default async function handler(
       }
     } else if (error.message) {
       // Handle other types of errors
-      if (error.message.includes('network') || error.message.includes('connection')) {
-        errorMessage = 'Network error. Please check your connection and try again.'
+      if (
+        error.message.includes('network') ||
+        error.message.includes('connection')
+      ) {
+        errorMessage =
+          'Network error. Please check your connection and try again.'
         statusCode = 503
       } else if (error.message.includes('timeout')) {
         errorMessage = 'Request timeout. Please try again.'
@@ -215,7 +285,7 @@ export default async function handler(
     console.log('📤 Returning error response:', {
       statusCode,
       errorMessage,
-      success: false
+      success: false,
     })
 
     return res.status(statusCode).json({
@@ -223,4 +293,4 @@ export default async function handler(
       error: errorMessage,
     })
   }
-} 
+}

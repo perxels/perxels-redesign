@@ -34,6 +34,7 @@ interface ReminderResult {
   notificationsSent: number
   failedNotifications: string[]
   failedNotificationsData?: Array<{
+    id: string
     email: string
     fullName: string
     schoolFeeInfo: any
@@ -175,6 +176,7 @@ export function PaymentReminderModal({
             )
             return debtor
               ? {
+                  id: debtor.id,
                   email: debtor.email,
                   fullName: debtor.fullName,
                   schoolFeeInfo: debtor.schoolFeeInfo,
@@ -185,6 +187,7 @@ export function PaymentReminderModal({
             (
               item,
             ): item is {
+              id: string
               email: string
               fullName: string
               schoolFeeInfo: any
@@ -245,7 +248,7 @@ export function PaymentReminderModal({
 
           // Create in-app notification for the student using centralized function
           const notificationPayload = createPaymentReminderNotificationPayload(
-            debtor.email, // Using email as identifier for resend
+            debtor.id, // Using email as identifier for resend
             debtor.fullName,
             fee.cohort || '',
             fee.classPlan || '',
@@ -281,6 +284,7 @@ export function PaymentReminderModal({
             )
             return debtor
               ? {
+                  id: debtor.id,
                   email: debtor.email,
                   fullName: debtor.fullName,
                   schoolFeeInfo: debtor.schoolFeeInfo,
@@ -291,6 +295,7 @@ export function PaymentReminderModal({
             (
               item,
             ): item is {
+              id: string
               email: string
               fullName: string
               schoolFeeInfo: any

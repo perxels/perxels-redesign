@@ -58,6 +58,9 @@ interface StudentData {
   gender?: string
   occupation?: string
   owingStatus?: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
 }
 
 interface PaymentRecord {
@@ -426,6 +429,30 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                               {student.growthInfo?.gender || 'Not specified'}
                             </Text>
                           </Box>
+                          <Box>
+                            <Text fontSize="sm" color="gray.600">
+                              Address
+                            </Text>
+                            <Text fontWeight="medium">
+                              {student.address || 'Not specified'}
+                            </Text>
+                          </Box>
+                          <Box>
+                            <Text fontSize="sm" color="gray.600">
+                              Guardian Name
+                            </Text>
+                            <Text fontWeight="medium">
+                              {student.guardianName || 'Not available'}
+                            </Text>
+                          </Box>
+                          <Box>
+                            <Text fontSize="sm" color="gray.600">
+                              Guardian Phone
+                            </Text>
+                            <Text fontWeight="medium">
+                              {student.guardianPhone || 'Not available'}
+                            </Text>
+                          </Box>
                         </VStack>
                       </Box>
                       <Box flex="1" minW="200px">
@@ -687,6 +714,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                                 </Td>
                                 <Td>
                                   <Button
+                                    // isDisabled={paymentStats.balance === 0}
                                     size="sm"
                                     colorScheme="purple"
                                     variant="outline"

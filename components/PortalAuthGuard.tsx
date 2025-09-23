@@ -11,6 +11,7 @@ interface PortalAuthGuardProps {
   requireRegistrationComplete?: boolean
   requireOnboardingComplete?: boolean
   requireAdminRole?: boolean
+  requireFacilitatorRole?: boolean
   requireStudentRole?: boolean
   redirectTo?: string
 }
@@ -23,6 +24,7 @@ export function PortalAuthGuard({
   requireOnboardingComplete = false,
   requireAdminRole = false,
   requireStudentRole = false,
+  requireFacilitatorRole = false,
   redirectTo,
 }: PortalAuthGuardProps) {
   const router = useRouter()
@@ -39,7 +41,7 @@ export function PortalAuthGuard({
 
   useEffect(() => {
     if (loading) return
-
+    const currentUserEmail = user?.email
     // Check authentication requirements
     if (requireAuth && !isAuthenticated) {
       router.push(redirectTo || '/portal/login')
@@ -48,6 +50,12 @@ export function PortalAuthGuard({
 
     // Check role requirements
     if (requireAdminRole && portalUser?.role !== 'admin') {
+      router.push('/portal/login')
+      return
+    }
+
+    //  facilitator role check
+    if (requireFacilitatorRole && portalUser?.role !== 'facilitator') {
       router.push('/portal/login')
       return
     }
@@ -65,8 +73,27 @@ export function PortalAuthGuard({
         router.push('/portal/verify')
         return
       }
-      
+
       // Skip other onboarding requirements for admins
+      setAuthChecked(true)
+      return
+    }
+
+    // For facilitator
+    if (portalUser?.role === 'facilitator') {
+      // Facilitators might not need the same onboarding process as students
+      // Just check email verification for facilitators
+      if (requireEmailVerification && !isEmailVerified) {
+        // Redirect to OTP verification page
+        router.push(
+          `/portal/verify?email=${encodeURIComponent(
+            currentUserEmail || '',
+          )}&role=facilitator`,
+        )
+        return
+      }
+
+      // Skip other onboarding requirements for facilitators
       setAuthChecked(true)
       return
     }
@@ -96,6 +123,7 @@ export function PortalAuthGuard({
     // If we reach here, all checks passed
     setAuthChecked(true)
   }, [
+    user,
     loading,
     isAuthenticated,
     isEmailVerified,
@@ -106,6 +134,7 @@ export function PortalAuthGuard({
     requireRegistrationComplete,
     requireOnboardingComplete,
     requireAdminRole,
+    requireFacilitatorRole,
     requireStudentRole,
     portalUser,
     router,
@@ -147,7 +176,11 @@ export function withPortalAuth<P extends object>(
 }
 
 // Utility components for common use cases
-export const StudentAuthGuard = ({ children }: { children: React.ReactNode }) => {
+export const StudentAuthGuard = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
   return (
     <PortalAuthGuard
       requireAuth={true}
@@ -160,6 +193,21 @@ export const StudentAuthGuard = ({ children }: { children: React.ReactNode }) =>
     </PortalAuthGuard>
   )
 }
+
+// Add FacilitatorAuthGuard component
+export const FacilitatorAuthGuard = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => (
+  <PortalAuthGuard
+    requireAuth={true}
+    requireFacilitatorRole={true}
+    requireEmailVerification={true}
+  >
+    {children}
+  </PortalAuthGuard>
+)
 
 export const AdminAuthGuard = ({ children }: { children: React.ReactNode }) => (
   <PortalAuthGuard

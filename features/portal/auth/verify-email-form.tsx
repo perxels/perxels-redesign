@@ -25,12 +25,14 @@ export const VerifyEmailForm = () => {
 
   // Get email from URL params first, then fall back to authenticated user
   const urlEmail = searchParams.get('email') || ''
+  const urlRole = searchParams.get('role')
   const userEmail = user?.email || portalUser?.email || ''
   const email = urlEmail || userEmail
 
   useEffect(() => {
     // Check if user is authenticated first
     const currentUser = portalAuth.currentUser
+
     if (!currentUser) {
       console.warn('No authenticated user found during verification')
       toast({
@@ -104,8 +106,12 @@ export const VerifyEmailForm = () => {
           isClosable: true,
         })
 
-        // Redirect to school fee info
-        router.push('/portal/school-fee-info')
+        if (urlRole === 'facilitator') {
+          router.push('/portal/facilitator/dashboard')
+        } else {
+          // Redirect to school fee info
+          router.push('/portal/school-fee-info')
+        }
       } else {
         throw new Error(result.error || 'Verification failed')
       }
@@ -194,8 +200,8 @@ export const VerifyEmailForm = () => {
           onChange={setOtp}
         >
           <PinInputField
-            h={["2.5rem", "5rem"]}
-            w={["2.5rem", "5rem"]}
+            h={['2.5rem', '5rem']}
+            w={['2.5rem', '5rem']}
             fontSize="2xl"
             fontWeight="bold"
             color="brand.dark.100"
@@ -222,8 +228,8 @@ export const VerifyEmailForm = () => {
             }}
           />
           <PinInputField
-            h={["2.5rem", "5rem"]}
-            w={["2.5rem", "5rem"]}
+            h={['2.5rem', '5rem']}
+            w={['2.5rem', '5rem']}
             fontSize="2xl"
             fontWeight="bold"
             color="brand.dark.100"
@@ -250,8 +256,8 @@ export const VerifyEmailForm = () => {
             }}
           />
           <PinInputField
-            h={["2.5rem", "5rem"]}
-            w={["2.5rem", "5rem"]}
+            h={['2.5rem', '5rem']}
+            w={['2.5rem', '5rem']}
             fontSize="2xl"
             fontWeight="bold"
             color="brand.dark.100"
@@ -278,8 +284,8 @@ export const VerifyEmailForm = () => {
             }}
           />
           <PinInputField
-            h={["2.5rem", "5rem"]}
-            w={["2.5rem", "5rem"]}
+            h={['2.5rem', '5rem']}
+            w={['2.5rem', '5rem']}
             fontSize="2xl"
             fontWeight="bold"
             color="brand.dark.100"
@@ -306,8 +312,8 @@ export const VerifyEmailForm = () => {
             }}
           />
           <PinInputField
-            h={["2.5rem", "5rem"]}
-            w={["2.5rem", "5rem"]}
+            h={['2.5rem', '5rem']}
+            w={['2.5rem', '5rem']}
             fontSize="2xl"
             fontWeight="bold"
             color="brand.dark.100"
@@ -334,8 +340,8 @@ export const VerifyEmailForm = () => {
             }}
           />
           <PinInputField
-            h={["2.5rem", "5rem"]}
-            w={["2.5rem", "5rem"]}
+            h={['2.5rem', '5rem']}
+            w={['2.5rem', '5rem']}
             fontSize="2xl"
             fontWeight="bold"
             color="brand.dark.100"

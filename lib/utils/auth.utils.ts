@@ -6,122 +6,130 @@ import { sendOTPEmail } from './email.utils'
 /**
  * Firebase Auth error handler - converts Firebase errors to user-friendly messages
  */
-export function handleFirebaseAuthError(error: any): { message: string; statusCode: number } {
+export function handleFirebaseAuthError(error: any): {
+  message: string
+  statusCode: number
+} {
   const errorCode = error.code || 'unknown'
-  
+
   switch (errorCode) {
     // Authentication errors
     case 'auth/email-already-in-use':
       return {
         message: 'Email is already registered. Please try logging in instead.',
-        statusCode: 409
+        statusCode: 409,
       }
     case 'auth/invalid-email':
       return {
         message: 'Please enter a valid email address.',
-        statusCode: 400
+        statusCode: 400,
       }
     case 'auth/weak-password':
       return {
-        message: 'Password is too weak. Please choose a password with at least 6 characters.',
-        statusCode: 400
+        message:
+          'Password is too weak. Please choose a password with at least 6 characters.',
+        statusCode: 400,
       }
     case 'auth/user-not-found':
       return {
-        message: 'No account found with this email. Please check your email or sign up.',
-        statusCode: 404
+        message:
+          'No account found with this email. Please check your email or sign up.',
+        statusCode: 404,
       }
     case 'auth/wrong-password':
       return {
         message: 'Incorrect password. Please try again.',
-        statusCode: 401
+        statusCode: 401,
       }
     case 'auth/user-disabled':
       return {
         message: 'This account has been disabled. Please contact support.',
-        statusCode: 403
+        statusCode: 403,
       }
     case 'auth/too-many-requests':
       return {
         message: 'Too many attempts. Please try again later.',
-        statusCode: 429
+        statusCode: 429,
       }
     case 'auth/network-request-failed':
       return {
         message: 'Network error. Please check your connection and try again.',
-        statusCode: 503
+        statusCode: 503,
       }
     case 'auth/operation-not-allowed':
       return {
-        message: 'Email/password accounts are not enabled. Please contact support.',
-        statusCode: 503
+        message:
+          'Email/password accounts are not enabled. Please contact support.',
+        statusCode: 503,
       }
     case 'auth/invalid-credential':
       return {
         message: 'Invalid credentials. Please check your information.',
-        statusCode: 400
+        statusCode: 400,
       }
     case 'auth/account-exists-with-different-credential':
       return {
-        message: 'An account already exists with this email using a different sign-in method.',
-        statusCode: 409
+        message:
+          'An account already exists with this email using a different sign-in method.',
+        statusCode: 409,
       }
     case 'auth/credential-already-in-use':
       return {
         message: 'This credential is already associated with another account.',
-        statusCode: 409
+        statusCode: 409,
       }
     case 'auth/invalid-verification-code':
       return {
         message: 'Invalid verification code. Please try again.',
-        statusCode: 400
+        statusCode: 400,
       }
     case 'auth/invalid-verification-id':
       return {
         message: 'Invalid verification ID. Please request a new code.',
-        statusCode: 400
+        statusCode: 400,
       }
     case 'auth/quota-exceeded':
       return {
         message: 'Service quota exceeded. Please try again later.',
-        statusCode: 429
+        statusCode: 429,
       }
     case 'auth/unverified-email':
       return {
         message: 'Please verify your email address before proceeding.',
-        statusCode: 403
+        statusCode: 403,
       }
     case 'auth/requires-recent-login':
       return {
         message: 'Please log in again to continue.',
-        statusCode: 401
+        statusCode: 401,
       }
     case 'auth/popup-closed-by-user':
       return {
         message: 'Sign-in was cancelled.',
-        statusCode: 400
+        statusCode: 400,
       }
     case 'auth/popup-blocked':
       return {
-        message: 'Sign-in popup was blocked. Please allow popups and try again.',
-        statusCode: 400
+        message:
+          'Sign-in popup was blocked. Please allow popups and try again.',
+        statusCode: 400,
       }
     case 'auth/cancelled-popup-request':
       return {
         message: 'Sign-in was cancelled.',
-        statusCode: 400
+        statusCode: 400,
       }
     case 'auth/popup-closed-by-user':
       return {
         message: 'Sign-in was cancelled.',
-        statusCode: 400
+        statusCode: 400,
       }
     default:
       // Log the actual error for debugging but don't expose it to user
       console.error('Unhandled Firebase Auth error:', errorCode, error.message)
       return {
         message: 'An error occurred. Please try again.',
-        statusCode: 500
+        statusCode: 500,
       }
   }
 }
@@ -133,6 +141,9 @@ interface CreateAccountData {
   fullName: string
   phone: string
   branch: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
 }
 
 interface CreateAccountResult {
@@ -199,11 +210,14 @@ export async function storeOTP(email: string, otp: string): Promise<OTPResult> {
 /**
  * Verify OTP against stored value
  */
-export async function verifyOTP(email: string, inputOTP: string): Promise<OTPResult> {
+export async function verifyOTP(
+  email: string,
+  inputOTP: string,
+): Promise<OTPResult> {
   try {
     const sanitizedEmail = email.toLowerCase().trim()
     const sanitizedOTP = inputOTP.trim()
-    
+
     const otpDoc = await getDoc(doc(portalDb, 'email_otps', sanitizedEmail))
 
     if (!otpDoc.exists()) {
@@ -214,7 +228,7 @@ export async function verifyOTP(email: string, inputOTP: string): Promise<OTPRes
     }
 
     const otpData = otpDoc.data()
-    
+
     // Handle Firestore Timestamp conversion properly
     let expiresAt: Date
     if (otpData.expiresAt?.toDate) {
@@ -241,7 +255,7 @@ export async function verifyOTP(email: string, inputOTP: string): Promise<OTPRes
 
     // Check if OTP matches (ensure both are strings and trimmed)
     const storedCode = String(otpData.code).trim()
-    
+
     if (storedCode !== sanitizedOTP) {
       return {
         success: false,
@@ -268,9 +282,21 @@ export async function verifyOTP(email: string, inputOTP: string): Promise<OTPRes
 /**
  * Create user account with Firebase Auth and store user data in Firestore
  */
-export async function createUserAccount(userData: CreateAccountData): Promise<CreateAccountResult> {
+export async function createUserAccount(
+  userData: CreateAccountData,
+): Promise<CreateAccountResult> {
   try {
-    const { email, password, fullName, phone, branch } = userData
+    // const { email, password, fullName, phone, branch } = userData
+    const {
+      email,
+      password,
+      fullName,
+      phone,
+      branch,
+      address,
+      guardianName,
+      guardianPhone,
+    } = userData
 
     // Create user with email and password
     const userCredential = await createUserWithEmailAndPassword(
@@ -291,6 +317,9 @@ export async function createUserAccount(userData: CreateAccountData): Promise<Cr
       email,
       phone,
       branch,
+      address,
+      guardianName,
+      guardianPhone,
       role: 'student' as const,
       emailVerified: false, // Will be verified after OTP confirmation
       createdAt: new Date(),
@@ -307,7 +336,7 @@ export async function createUserAccount(userData: CreateAccountData): Promise<Cr
     console.error('Create account error:', error)
 
     const { message, statusCode } = handleFirebaseAuthError(error)
-    
+
     return {
       success: false,
       error: message,

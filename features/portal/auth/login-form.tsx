@@ -98,6 +98,20 @@ export const LoginForm = () => {
             router.push('/portal/admin/overview')
             return
           }
+
+          // Handle facilitator user - NEW
+          if (portalUserData?.role === 'facilitator') {
+            toast({
+              title: 'Login successful! 🎉',
+              description: 'Welcome to facilitator dashboard',
+              status: 'success',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            })
+            router.push('/portal/facilitator/dashboard')
+            return
+          }
         }
       } catch (portalError: any) {
         // Portal auth failed, try regular auth for admin/library users
@@ -182,7 +196,11 @@ export const LoginForm = () => {
                 />
               </SimpleGrid>
 
-              <HStack w="full" justifyContent="space-between" alignItems="center">
+              <HStack
+                w="full"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Text
                   fontSize="sm"
                   color="yellow.600"

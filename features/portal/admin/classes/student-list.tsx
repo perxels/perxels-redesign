@@ -23,6 +23,9 @@ import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { StudentDetailsModal } from './student-details-modal'
 import { DeleteStudentModal } from './delete-student-modal'
+import { useIndividualPaymentReminder } from '../../../../hooks/useIndividualPaymentReminder'
+import { ReminderConfirmationModal } from './student-payment-reminder'
+import { FiBell } from 'react-icons/fi'
 
 interface StudentData {
   uid: string
@@ -41,6 +44,9 @@ interface StudentData {
   gender?: string
   occupation?: string
   owingStatus?: string
+  address?: string
+  guardianName?: string
+  guardianPhone?: string
 }
 
 function trimUrl(url: string, maxLength = 25): string {
@@ -56,6 +62,39 @@ export const StudentList = () => {
   const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(
     null,
   )
+  const [reminderStudent, setReminderStudent] = useState<StudentData | null>(
+    null,
+  )
+  const { sendIndividualReminder, isLoading: isReminderLoading } =
+    useIndividualPaymentReminder()
+
+  //  function to check if student has pending payment
+  const hasPendingPayment = (student: StudentData): boolean => {
+    const schoolFeeInfo = student.schoolFeeInfo
+    if (!schoolFeeInfo) return false
+
+    const totalFee = schoolFeeInfo.totalSchoolFee || 0
+    const totalPaid = schoolFeeInfo.totalApproved || 0
+
+    return totalPaid < totalFee
+  }
+
+  // Open reminder modal
+  const handleOpenReminderModal = (student: StudentData) => {
+    setReminderStudent(student) // Use separate state
+    onReminderOpen()
+  }
+
+  // Handle sending reminder
+  const handleSendReminder = async () => {
+    if (!reminderStudent) return
+
+    const result = await sendIndividualReminder(reminderStudent)
+    if (result.success) {
+      onReminderClose()
+      setReminderStudent(null)
+    }
+  }
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1)
@@ -66,6 +105,11 @@ export const StudentList = () => {
   const router = useRouter()
   const isAdmin = portalUser?.role === 'admin'
 
+  const {
+    isOpen: isReminderOpen,
+    onOpen: onReminderOpen,
+    onClose: onReminderClose,
+  } = useDisclosure()
   const {
     isOpen: isDetailsOpen,
     onOpen: onDetailsOpen,
@@ -166,7 +210,7 @@ export const StudentList = () => {
   useEffect(() => {
     const total = Math.ceil(filteredStudents.length / pageSize)
     setTotalPages(total)
-    
+
     // Reset to first page if current page exceeds total pages
     if (currentPage > total && total > 0) {
       setCurrentPage(1)
@@ -266,6 +310,9 @@ export const StudentList = () => {
           fullName: data.fullName || 'N/A',
           phone: data.phone || 'N/A',
           branch: data.branch || 'Not specified',
+          address: data.address || 'Not specified',
+          guardianName: data.guardianName || 'Not available',
+          guardianPhone: data.guardianPhone || 'Not available',
           role: data.role || 'student',
           emailVerified: data.emailVerified || false,
           registrationComplete: data.registrationComplete || false,
@@ -425,6 +472,23 @@ export const StudentList = () => {
                     </Text>
                   </Box>
                   <HStack spacing={2}>
+                    {hasPendingPayment(student) && (
+                      <Button
+                        size="xs"
+                        bg="orange.500"
+                        color="white"
+                        borderRadius="sm"
+                        px={2}
+                        py={1}
+                        _hover={{ bg: 'orange.600' }}
+                        fontWeight="normal"
+                        fontSize="xs"
+                        onClick={() => handleOpenReminderModal(student)}
+                        isLoading={isReminderLoading}
+                      >
+                        <FiBell size={14} />
+                      </Button>
+                    )}
                     <Button
                       size="xs"
                       bg="gray.700"
@@ -450,7 +514,7 @@ export const StudentList = () => {
                       _hover={{ bg: 'red.600' }}
                       fontSize="xs"
                       fontWeight="normal"
-                      minW="70px"
+                      minW="40px"
                       onClick={() => handleDeleteStudent(student)}
                     >
                       <MdDelete size={14} />
@@ -503,7 +567,10 @@ export const StudentList = () => {
               >
                 {/* Name and Phone */}
                 <HStack spacing={2}>
-                  <Avatar name={student.fullName} src={student?.growthInfo?.pictureUrl} />
+                  <Avatar
+                    name={student.fullName}
+                    src={student?.growthInfo?.pictureUrl}
+                  />
                   <Box minW="180px">
                     <Text fontWeight="bold" fontSize="md" mb={1} noOfLines={1}>
                       {student.fullName}
@@ -603,6 +670,23 @@ export const StudentList = () => {
 
                 {/* Action Buttons */}
                 <HStack spacing={2}>
+                  {hasPendingPayment(student) && (
+                    <Button
+                      size="xs"
+                      bg="orange.500"
+                      color="white"
+                      borderRadius="sm"
+                      px={2}
+                      py={1}
+                      _hover={{ bg: 'orange.600' }}
+                      fontSize="sm"
+                      fontWeight="normal"
+                      minW="40px"
+                      onClick={() => handleOpenReminderModal(student)}
+                    >
+                      <FiBell size={16} />
+                    </Button>
+                  )}
                   <Button
                     size="xs"
                     bg="gray.700"
@@ -685,13 +769,24 @@ export const StudentList = () => {
           {filteredStudents.length > 0 && (
             <Flex justify="center" pt={2}>
               <Text fontSize="sm" color="gray.500">
-                Showing {((currentPage - 1) * pageSize) + 1} to {Math.min(currentPage * pageSize, filteredStudents.length)} of {filteredStudents.length} students
+                Showing {(currentPage - 1) * pageSize + 1} to{' '}
+                {Math.min(currentPage * pageSize, filteredStudents.length)} of{' '}
+                {filteredStudents.length} students
                 {totalPages > 1 && ` (Page ${currentPage} of ${totalPages})`}
               </Text>
             </Flex>
           )}
         </VStack>
       )}
+
+      {/* Student Reminder */}
+      <ReminderConfirmationModal
+        isOpen={isReminderOpen}
+        onClose={onReminderClose}
+        onConfirm={handleSendReminder}
+        student={reminderStudent}
+        isLoading={isReminderLoading}
+      />
 
       {/* Student Details Modal */}
       {selectedStudent && (

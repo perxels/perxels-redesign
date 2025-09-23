@@ -5,33 +5,28 @@ import React from 'react'
 
 const menuItems = [
   {
-    title: 'My Profile',
-    href: '/portal/dashboard/profile',
-    icon: '/assets/icons/profile.svg',
-  },
-  {
-    title: 'My School Fees',
-    href: '/portal/dashboard/school-fees',
-    icon: '/assets/icons/wallet.svg',
-  },
-  {
     title: 'Attendance',
-    href: '/portal/dashboard/attendance-v2',
+    href: '/portal/facilitator/attendance',
     icon: '/assets/icons/attandance.svg',
   },
   {
-    title: 'Library',
-    href: '/portal/dashboard/library',
-    icon: '/assets/icons/video.svg',
+    title: 'Student List',
+    href: '/portal/facilitator/students',
+    icon: '/assets/icons/students.svg',
   },
   {
-    title: 'Syllabus',
-    href: '/portal/dashboard/syllabus',
-    icon: '/assets/icons/syllabus.svg',
+    title: 'Create Test',
+    href: '/portal/facilitator/tests/create',
+    icon: '/assets/icons/test.svg',
+  },
+  {
+    title: 'Performance',
+    href: '/portal/facilitator/performance',
+    icon: '/assets/icons/graph.svg',
   },
 ]
 
-export const DashboardMenu = () => {
+export const FacilitatorDashboardMenu = () => {
   return (
     <SimpleGrid w="100%" gap={[4, 6, 10]} maxW="65rem" columns={[2, 3]} mt={10}>
       {menuItems.map((item) => (
@@ -46,7 +41,6 @@ export const DashboardMenu = () => {
                   height={24}
                 />
               </Center>
-
               <Text fontSize="lg" fontWeight="bold" color="gray.600" mt={4}>
                 {item.title}
               </Text>

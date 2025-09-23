@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { useActiveClasses } from '../../../hooks/useClasses'
 import { classPlans } from '../../../constant/adminConstants'
+import { ExportToDocButton } from '../../ExportToDocButton'
 
 interface ReportFiltersProps {
   filters: {
@@ -51,7 +52,7 @@ export function ReportFilters({
                 Generate comprehensive attendance analytics and insights
               </Text>
             </VStack>
-            
+
             <HStack spacing={3}>
               <Button
                 colorScheme="blue"
@@ -63,7 +64,7 @@ export function ReportFilters({
               >
                 Generate Report
               </Button>
-              
+
               {hasReportData && (
                 <Button
                   variant="outline"
@@ -83,14 +84,24 @@ export function ReportFilters({
             <Text fontSize="sm" fontWeight="medium" color="gray.600" mb={3}>
               Report Options
             </Text>
-            
-            <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={4}>
+
+            <Grid
+              templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }}
+              gap={4}
+            >
               {/* Report Type */}
               <FormControl>
-                <FormLabel fontSize="sm" fontWeight="medium">Report Type</FormLabel>
+                <FormLabel fontSize="sm" fontWeight="medium">
+                  Report Type
+                </FormLabel>
                 <Select
                   value={filters.reportType}
-                  onChange={(e) => onFiltersChange({ ...filters, reportType: e.target.value as any })}
+                  onChange={(e) =>
+                    onFiltersChange({
+                      ...filters,
+                      reportType: e.target.value as any,
+                    })
+                  }
                   bg="white"
                   size="sm"
                 >
@@ -103,31 +114,41 @@ export function ReportFilters({
 
               {/* Quick Actions */}
               <FormControl>
-                <FormLabel fontSize="sm" fontWeight="medium">Quick Actions</FormLabel>
+                <FormLabel fontSize="sm" fontWeight="medium">
+                  Quick Actions
+                </FormLabel>
                 <HStack spacing={2}>
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => onFiltersChange({
-                      ...filters,
-                      dateRange: {
-                        start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        end: today
-                      }
-                    })}
+                    onClick={() =>
+                      onFiltersChange({
+                        ...filters,
+                        dateRange: {
+                          start: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                            .toISOString()
+                            .split('T')[0],
+                          end: today,
+                        },
+                      })
+                    }
                   >
                     Last 7 Days
                   </Button>
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => onFiltersChange({
-                      ...filters,
-                      dateRange: {
-                        start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        end: today
-                      }
-                    })}
+                    onClick={() =>
+                      onFiltersChange({
+                        ...filters,
+                        dateRange: {
+                          start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+                            .toISOString()
+                            .split('T')[0],
+                          end: today,
+                        },
+                      })
+                    }
                   >
                     Last 30 Days
                   </Button>

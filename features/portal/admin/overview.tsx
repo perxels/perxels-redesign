@@ -28,13 +28,18 @@ const menuItems = [
     icon: '/assets/icons/students.svg',
   },
   {
+    title: 'Facilitators',
+    href: '/portal/admin/facilitators',
+    icon: '/assets/icons/facilitatorIcon.png',
+  },
+  {
     title: 'Notifications',
     href: '/portal/admin/notifications',
     icon: '/assets/icons/notification.svg',
   },
   {
     title: 'Attendance',
-    href: '/portal/admin/attendance',
+    href: '/portal/admin/attendance-v2',
     icon: '/assets/icons/attandance.svg',
   },
   {
@@ -47,12 +52,18 @@ const menuItems = [
 export const OverviewWrapper = () => {
   return (
     <VStack w="full" gap={6} alignItems="flex-start">
-      <SimpleGrid w="full" gap={[4, 6, 10]} maxW={["100%", "100%", "60rem"]} columns={[2, 3]} mt={10}>
+      <SimpleGrid
+        w="full"
+        gap={[4, 6, 10]}
+        maxW={['100%', '100%', '60rem']}
+        columns={[2, 3]}
+        mt={10}
+      >
         {menuItems.map((item) => (
           <Link href={item.href} key={item.title}>
-            <Card 
-              borderRadius="xl" 
-              p={6} 
+            <Card
+              borderRadius="xl"
+              p={6}
               cursor="pointer"
               transition="all 0.2s ease-in-out"
               _hover={{
@@ -77,10 +88,10 @@ export const OverviewWrapper = () => {
                     justifyContent="center"
                     p={3}
                   >
-                    <Image 
-                      src={item.icon} 
-                      alt={item.title} 
-                      width={32} 
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={32}
                       height={32}
                       style={{
                         filter: 'brightness(0) invert(1)',
@@ -88,10 +99,10 @@ export const OverviewWrapper = () => {
                     />
                   </Box>
 
-                  <Text 
-                    fontSize="lg" 
-                    fontWeight="bold" 
-                    color="gray.700" 
+                  <Text
+                    fontSize="lg"
+                    fontWeight="bold"
+                    color="gray.700"
                     textAlign="left"
                   >
                     {item.title}

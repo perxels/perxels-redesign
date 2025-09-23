@@ -42,21 +42,25 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
   // Filter students based on search term
   const filteredStudents = useMemo(() => {
     if (!searchTerm.trim()) return students
-    
+
     const term = searchTerm.toLowerCase()
-    return students.filter(student => 
-      (student.fullName || '').toLowerCase().includes(term) ||
-      (student.email || '').toLowerCase().includes(term) ||
-      (student.id || '').toLowerCase().includes(term) ||
-      (student.schoolFeeInfo?.cohort || '').toLowerCase().includes(term) ||
-      (student.schoolFeeInfo?.classPlan || '').toLowerCase().includes(term)
+    return students.filter(
+      (student) =>
+        (student.fullName || '').toLowerCase().includes(term) ||
+        (student.email || '').toLowerCase().includes(term) ||
+        (student.id || '').toLowerCase().includes(term) ||
+        (student.schoolFeeInfo?.cohort || '').toLowerCase().includes(term) ||
+        (student.schoolFeeInfo?.classPlan || '').toLowerCase().includes(term),
     )
   }, [students, searchTerm])
+  console.log({ selectedStudent })
 
   return (
     <Card bg="white" shadow="sm" borderRadius="lg">
       <CardHeader pb={4}>
-        <Heading size="md" color="gray.700">👥 Student Attendance History</Heading>
+        <Heading size="md" color="gray.700">
+          👥 Student Attendance History
+        </Heading>
         <Text fontSize="sm" color="gray.500">
           Comprehensive student attendance tracking and analytics
         </Text>
@@ -70,20 +74,26 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                 Search & Filter Students
               </Text>
               <Text fontSize="xs" color="gray.500">
-                {filteredStudents.length} student{filteredStudents.length !== 1 ? 's' : ''} found
+                {filteredStudents.length} student
+                {filteredStudents.length !== 1 ? 's' : ''} found
               </Text>
             </HStack>
-            
+
             <HStack spacing={4} alignItems="flex-end">
               <FormControl>
-                <FormLabel fontSize="sm" fontWeight="medium">Search Students</FormLabel>
+                <FormLabel fontSize="sm" fontWeight="medium">
+                  Search Students
+                </FormLabel>
                 <Input
                   placeholder="Search by name, email, cohort, or plan..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   bg="white"
                   size="md"
-                  _focus={{ borderColor: "blue.400", boxShadow: "0 0 0 1px blue.400" }}
+                  _focus={{
+                    borderColor: 'blue.400',
+                    boxShadow: '0 0 0 1px blue.400',
+                  }}
                 />
               </FormControl>
 
@@ -109,21 +119,40 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
           <Table variant="simple" size="sm">
             <Thead>
               <Tr bg="gray.50">
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Student</Th>
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Cohort</Th>
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Plan</Th>
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Sessions</Th>
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Check-ins</Th>
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Rate</Th>
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Status</Th>
-                <Th fontSize="sm" fontWeight="semibold" color="gray.600">Actions</Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Student
+                </Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Cohort
+                </Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Plan
+                </Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Sessions
+                </Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Check-ins
+                </Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Rate
+                </Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Status
+                </Th>
+                <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                  Actions
+                </Th>
               </Tr>
             </Thead>
             <Tbody>
-              {filteredStudents.map(student => {
-                const attendanceRate = student.totalSessions > 0 ? (student.checkIns / student.totalSessions) * 100 : 0
+              {filteredStudents.map((student) => {
+                const attendanceRate =
+                  student.totalSessions > 0
+                    ? (student.checkIns / student.totalSessions) * 100
+                    : 0
                 return (
-                  <Tr key={student.id} _hover={{ bg: "gray.50" }}>
+                  <Tr key={student.id} _hover={{ bg: 'gray.50' }}>
                     <Td>
                       <HStack spacing={3}>
                         <Box
@@ -140,13 +169,23 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                           color="white"
                           shadow="sm"
                         >
-                          {(student.fullName || student.email || student.id).charAt(0).toUpperCase()}
+                          {(student.fullName || student.email || student.id)
+                            .charAt(0)
+                            .toUpperCase()}
                         </Box>
                         <VStack align="start" spacing={1}>
-                          <Text fontWeight="medium" fontSize="sm" color="gray.700">
+                          <Text
+                            fontWeight="medium"
+                            fontSize="sm"
+                            color="gray.700"
+                          >
                             {student.fullName || student.email}
                           </Text>
-                          <Text fontSize="xs" color="gray.500" fontFamily="mono">
+                          <Text
+                            fontSize="xs"
+                            color="gray.500"
+                            fontFamily="mono"
+                          >
                             {student.id.substring(0, 8)}...
                           </Text>
                         </VStack>
@@ -173,8 +212,14 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                       </Text>
                     </Td>
                     <Td>
-                      <Badge 
-                        colorScheme={attendanceRate >= 80 ? 'green' : attendanceRate >= 60 ? 'yellow' : 'red'}
+                      <Badge
+                        colorScheme={
+                          attendanceRate >= 80
+                            ? 'green'
+                            : attendanceRate >= 60
+                            ? 'yellow'
+                            : 'red'
+                        }
                         variant="solid"
                         fontSize="xs"
                       >
@@ -182,12 +227,22 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                       </Badge>
                     </Td>
                     <Td>
-                      <Badge 
-                        colorScheme={attendanceRate >= 80 ? 'green' : attendanceRate >= 60 ? 'yellow' : 'red'}
+                      <Badge
+                        colorScheme={
+                          attendanceRate >= 80
+                            ? 'green'
+                            : attendanceRate >= 60
+                            ? 'yellow'
+                            : 'red'
+                        }
                         variant="subtle"
                         fontSize="xs"
                       >
-                        {attendanceRate >= 80 ? 'Excellent' : attendanceRate >= 60 ? 'Good' : 'Poor'}
+                        {attendanceRate >= 80
+                          ? 'Excellent'
+                          : attendanceRate >= 60
+                          ? 'Good'
+                          : 'Poor'}
                       </Badge>
                     </Td>
                     <Td>
@@ -196,7 +251,7 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                         variant="outline"
                         onClick={() => setSelectedStudent(student.id)}
                         colorScheme="blue"
-                        _hover={{ bg: "blue.50" }}
+                        _hover={{ bg: 'blue.50' }}
                       >
                         View Details
                       </Button>
@@ -211,7 +266,9 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
         {filteredStudents.length === 0 && (
           <Box textAlign="center" py={12} bg="gray.50" borderRadius="lg">
             <Text fontSize="lg" color="gray.500" mb={2}>
-              {searchTerm ? '🔍 No students found matching your search.' : '📊 No students found in the selected date range.'}
+              {searchTerm
+                ? '🔍 No students found matching your search.'
+                : '📊 No students found in the selected date range.'}
             </Text>
             <Text fontSize="sm" color="gray.400">
               Try adjusting your filters or search terms

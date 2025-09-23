@@ -31,6 +31,7 @@ import {
   checkInToSession,
   getAttendanceSummary,
   didStudentCheckInToSession,
+  getSessionsByFilters,
 } from '../../../../lib/utils/attendance-v2.utils'
 import { HeaderInfo } from '../../../../features/portal/dashboard/messages/header-info'
 import { formatTime } from '../../../../lib/utils/attendance-formatters'
@@ -156,17 +157,27 @@ const AttendancePageV2 = () => {
       setSummaryLoading(true)
 
       // Get all sessions for this student's cohort and plan
-      const sessions = await getSessionsByDate(today)
-      const studentSessions = sessions.filter(
-        (s) =>
-          s.cohortId === classInfo.cohortId && s.planId === classInfo.planId,
+      // const sessions = await getSessionsByDate(today)
+      // const studentSessions = sessions.filter(
+      //   (s) =>
+      //     s.cohortId === classInfo.cohortId && s.planId === classInfo.planId,
+      // )
+
+      const allSessions = await getSessionsByFilters({
+        cohortId: classInfo.cohortId,
+        planId: classInfo.planId,
+      })
+
+      // Filter only past sessions (including today)
+      const pastSessions = allSessions.filter(
+        (session) => session.date <= today,
       )
 
       let present = 0
       let absent = 0
 
       // For each session, check if student checked in
-      for (const sessionData of studentSessions) {
+      for (const sessionData of pastSessions) {
         const checkinData = await didStudentCheckInToSession(
           sessionData.sessionId,
           user.uid,
@@ -181,7 +192,7 @@ const AttendancePageV2 = () => {
       setStats({
         present,
         absent,
-        totalSessions: studentSessions.length,
+        totalSessions: pastSessions.length,
       })
     } catch (error) {
       setStats({ present: 0, absent: 0, totalSessions: 0 })
@@ -348,7 +359,7 @@ const AttendancePageV2 = () => {
         >
           <Box w="full" textAlign="center" mt={8}>
             <Text color="gray.500" textAlign="left" mb={8}>
-              You&apos;re welcome to class today, please click in
+              You&apos;re welcome to class today, please check in
             </Text>
 
             {session && checkedIn ? (

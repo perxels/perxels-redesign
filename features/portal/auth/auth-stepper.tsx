@@ -21,12 +21,18 @@ interface AuthStepperProps {
 
 export const AuthStepper = ({ currentStep }: AuthStepperProps) => {
   return (
-    <Stepper colorScheme="brand.purple" index={currentStep} maxW="727px" size="lg" my={12}>
+    <Stepper
+      colorScheme="brand.purple"
+      index={currentStep}
+      maxW="727px"
+      size="lg"
+      my={12}
+    >
       {steps.map((step, index) => (
         <Step key={index}>
           <StepIndicator
-            bg={currentStep === index ? "brand.purple.500" : "brand.purple.100"}
-            color={currentStep === index ? "white" : "brand.dark.100"}
+            bg={currentStep === index ? 'brand.purple.500' : 'brand.purple.100'}
+            color={currentStep === index ? 'white' : 'brand.dark.100'}
             fontWeight={700}
             border="none"
           >
