@@ -137,13 +137,15 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       })
 
       // 3. Get unique cohort-plan combinations to find relevant students
-      const cohortPlanSet = new Set()
+      // const cohortPlanSet = new Set()
+      const cohortPlanSet = new Set<string>()
       sessions.forEach((session) => {
         cohortPlanSet.add(`${session.cohortId}-${session.planId}`)
       })
 
       // 4. Get students only for relevant cohorts/plans (not all students!)
-      const cohortPlanArray = Array.from(cohortPlanSet).map((combo) => {
+
+      const cohortPlanArray = Array.from<string>(cohortPlanSet).map((combo) => {
         const [cohortId, planId] = combo.split('-')
         return { cohortId, planId }
       })
