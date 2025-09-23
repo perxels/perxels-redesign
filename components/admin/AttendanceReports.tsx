@@ -286,13 +286,13 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
 
           studentArray.forEach((student) => {
             const hasSessionOnDate = student.sessions.some(
-              (s) => s.date === session.date,
+              (s: any) => s.date === session.date,
             )
             if (hasSessionOnDate) {
               dateStudents.add(student.id)
               if (
                 student.sessions.some(
-                  (s) => s.date === session.date && s.checkedIn,
+                  (s: any) => s.date === session.date && s.checkedIn,
                 )
               ) {
                 dateCheckIns++
@@ -311,12 +311,14 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
         sessionDetails = sessions.map((session) => {
           const sessionCheckins = checkinsMap.get(session.sessionId) || []
           const sessionStudents = studentArray.filter((student) =>
-            student.sessions.some((s) => s.sessionId === session.sessionId),
+            student.sessions.some(
+              (s: any) => s.sessionId === session.sessionId,
+            ),
           )
 
           const checkedInStudents = sessionStudents.filter((student) =>
             student.sessions.some(
-              (s) => s.sessionId === session.sessionId && s.checkedIn,
+              (s: any) => s.sessionId === session.sessionId && s.checkedIn,
             ),
           )
 
@@ -331,10 +333,10 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
             students: sessionStudents.map((student) => ({
               ...student,
               checkedIn: student.sessions.some(
-                (s) => s.sessionId === session.sessionId && s.checkedIn,
+                (s: any) => s.sessionId === session.sessionId && s.checkedIn,
               ),
               checkInTime: student.sessions.find(
-                (s) => s.sessionId === session.sessionId,
+                (s: any) => s.sessionId === session.sessionId,
               )?.checkInTime,
             })),
           }
@@ -436,7 +438,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
         onExportCSV={exportToCSV}
         loading={loading}
         hasReportData={!!reportData}
-        reportData={reportData || []}
+        // reportData={reportData || []}
       />
 
       {loading && <LoadingState />}
