@@ -3,9 +3,6 @@ import { VStack } from '@chakra-ui/react'
 import { useToast } from '@chakra-ui/react'
 import {
   getSessionsByFilters,
-  getAllSessions,
-  getAllStudents,
-  didStudentCheckInToSession,
   getStudentsByCohortsAndPlans,
   getSessionCheckins,
 } from '../../lib/utils/attendance-v2.utils'
@@ -19,6 +16,12 @@ import {
   LoadingState,
   EmptyState,
 } from './reports'
+
+interface Checkin {
+  checkedIn: boolean
+  studentId: string
+  checkInTime?: string
+}
 
 interface ReportFilters {
   dateRange: { start: string; end: string }
@@ -131,7 +134,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       )
 
       // Create a map for quick lookup: sessionId -> checkins[]
-      const checkinsMap = new Map()
+      const checkinsMap = new Map<string, any[]>()
       sessions.forEach((session, index) => {
         checkinsMap.set(session.sessionId, sessionCheckins[index])
       })
@@ -153,7 +156,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       const students = await getStudentsByCohortsAndPlans(cohortPlanArray)
 
       // 5. Create student map for efficient lookup
-      const studentMap = new Map()
+      const studentMap = new Map<string, any>()
       students.forEach((student) => {
         studentMap.set(student.id, {
           ...student,
@@ -164,7 +167,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       })
 
       // 6. Create cohort map for cohort performance data
-      const cohortMap = new Map()
+      const cohortMap = new Map<string, any>()
 
       // 7. Process each session efficiently
       let totalCheckIns = 0
@@ -172,7 +175,9 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       for (const session of sessions) {
         const sessionCheckins = checkinsMap.get(session.sessionId) || []
         const checkedInStudentIds = new Set(
-          sessionCheckins.filter((c) => c.checkedIn).map((c) => c.studentId),
+          sessionCheckins
+            .filter((c: any) => c.checkedIn)
+            .map((c: any) => c.studentId),
         )
 
         // Initialize cohort data if needed
@@ -189,6 +194,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
         }
 
         const cohortData = cohortMap.get(cohortKey)
+        if (!cohortData) continue
         cohortData.totalSessions++
         cohortData.sessions.push(session)
 
@@ -199,7 +205,10 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
             student.schoolFeeInfo?.cohort === session.cohortId &&
             student.schoolFeeInfo?.classPlan === session.planId
           ) {
+            // const studentData = studentMap.get(student.id)
+            // studentData.totalSessions++
             const studentData = studentMap.get(student.id)
+            if (!studentData) continue
             studentData.totalSessions++
 
             const isCheckedIn = checkedInStudentIds.has(student.id)
@@ -214,7 +223,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
               date: session.date,
               checkedIn: isCheckedIn,
               checkInTime: sessionCheckins.find(
-                (c) => c.studentId === student.id && c.checkedIn,
+                (c: any) => c.studentId === student.id && c.checkedIn,
               )?.checkInTime,
               cohortId: session.cohortId,
               planId: session.planId,
@@ -224,7 +233,7 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       }
 
       // Update cohort total students count
-      cohortMap.forEach((cohortData) => {
+      cohortMap.forEach((cohortData: any) => {
         cohortData.totalStudents = students.filter(
           (s) =>
             s.schoolFeeInfo?.cohort === cohortData.cohortId &&
@@ -318,15 +327,17 @@ export function AttendanceReports({ globalFilters }: AttendanceReportsProps) {
       }
 
       if (filters.reportType === 'cohort') {
-        cohortPerformance = Array.from(cohortMap.values()).map((cohort) => ({
-          ...cohort,
-          attendanceRate:
-            cohort.totalStudents > 0 && cohort.totalSessions > 0
-              ? (cohort.totalCheckIns /
-                  (cohort.totalStudents * cohort.totalSessions)) *
-                100
-              : 0,
-        }))
+        cohortPerformance = Array.from(cohortMap.values()).map(
+          (cohort: any) => ({
+            ...cohort,
+            attendanceRate:
+              cohort.totalStudents > 0 && cohort.totalSessions > 0
+                ? (cohort.totalCheckIns /
+                    (cohort.totalStudents * cohort.totalSessions)) *
+                  100
+                : 0,
+          }),
+        )
       }
 
       const attendanceRate =
