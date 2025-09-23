@@ -35,7 +35,7 @@ export interface FacilitatorData {
   gender?: string
   pictureUrl?: string
   address?: string
-  assignments: string[]
+  assignments: Assignment[]
   isActive: boolean
 }
 

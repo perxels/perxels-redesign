@@ -31,7 +31,7 @@ import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { FacilitatorDetailsModal } from './facilitator-details-modal'
 import { DeleteFacilitatorModal } from './delete-facilitator-modal'
 import { AssignToCohortModal } from './assign-to-cohort-modal'
-import { FacilitatorData } from '../../../../types/user'
+import { Assignment, FacilitatorData } from '../../../../types/user'
 
 function trimUrl(url: string, maxLength = 25): string {
   if (!url) return ''
@@ -213,7 +213,7 @@ export const FacilitatorList = () => {
           isActive: data.isActive !== false,
           termsAgreed: data.termsAgreed || false,
           termsAgreedAt: data.createdAt,
-          assignments: data.assignments || [],
+          assignments: (data.assignments as Assignment[]) || [],
         })
       })
 
@@ -547,7 +547,7 @@ export const FacilitatorList = () => {
                         .slice(0, 2)
                         .map((assignedCohort) => (
                           <Badge
-                            key={assignedCohort.id}
+                            key={assignedCohort.assignmentId}
                             colorScheme="blue"
                             mr={1}
                             mb={1}
