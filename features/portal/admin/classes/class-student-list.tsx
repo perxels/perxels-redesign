@@ -670,6 +670,7 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
           isOpen={isDetailsOpen}
           onClose={onDetailsClose}
           student={selectedStudent}
+          adminUser={portalUser}
         />
       )}
 
