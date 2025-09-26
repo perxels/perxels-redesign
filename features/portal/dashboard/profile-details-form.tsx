@@ -63,22 +63,23 @@ export const ProfileDetailsForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const toast = useToast()
   const { portalUser } = usePortalAuth()
-  const { updateProfileDetails, isLoading: isProfileLoading } = useProfileOperations()
+  const { updateProfileDetails, isLoading: isProfileLoading } =
+    useProfileOperations()
 
   // Helper function to safely convert Firestore timestamp to date string
   const formatDateForInput = (dateValue: any): string => {
     if (!dateValue) return ''
-    
+
     try {
       // Handle Firestore Timestamp objects
       if (dateValue && typeof dateValue === 'object' && dateValue.seconds) {
         return new Date(dateValue.seconds * 1000).toISOString().split('T')[0]
       }
-      
+
       // Handle regular Date objects or date strings
       const date = new Date(dateValue)
       if (isNaN(date.getTime())) return ''
-      
+
       return date.toISOString().split('T')[0]
     } catch (error) {
       console.error('Error formatting date:', error)
@@ -92,7 +93,9 @@ export const ProfileDetailsForm = () => {
     phone: portalUser?.phone || '',
     gender: portalUser?.growthInfo?.gender || '',
     dateOfBirth: portalUser?.growthInfo?.dateOfBirth || '',
-    dateOfEnrollment: portalUser?.growthInfo?.dateOfEnrollment || formatDateForInput(portalUser?.createdAt),
+    dateOfEnrollment:
+      portalUser?.growthInfo?.dateOfEnrollment ||
+      formatDateForInput(portalUser?.createdAt),
     classCohort: portalUser?.schoolFeeInfo?.classPlan || '',
   }
 
@@ -278,10 +281,12 @@ export const ProfileDetailsForm = () => {
                     name="dateOfEnrollment"
                     value={values.dateOfEnrollment}
                     onChange={(date) => {
-                      return;
+                      return
                     }}
                     onBlur={() => handleBlur('dateOfEnrollment')}
-                    isInvalid={!!(touched.dateOfEnrollment && errors.dateOfEnrollment)}
+                    isInvalid={
+                      !!(touched.dateOfEnrollment && errors.dateOfEnrollment)
+                    }
                     errorMessage={errors.dateOfEnrollment}
                     maxDate={new Date()}
                     isDisabled={true}

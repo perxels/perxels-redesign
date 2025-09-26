@@ -28,7 +28,11 @@ import { FiLock, FiBook } from 'react-icons/fi'
 import { EbookCard } from './ebook-card'
 import { PortalEbook } from '../../../../types/ebook.types'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
-import { getAllEbooksWithAccessStatus, grantEbookAccess, recordEbookDownload } from '../../../../lib/utils/ebook.utils'
+import {
+  getAllEbooksWithAccessStatus,
+  grantEbookAccess,
+  recordEbookDownload,
+} from '../../../../lib/utils/ebook.utils'
 
 export const EbookLibrary = () => {
   const router = useRouter()
@@ -75,10 +79,37 @@ export const EbookLibrary = () => {
   }, [user?.uid])
 
   const handleGrantAccess = async () => {
-    if (!user?.uid || !accessCode.trim()) {
+    // Old code
+    // if (!user?.uid || !accessCode.trim()) {
+    //   toast({
+    //     title: 'Error',
+    //     description: 'Please enter an access code',
+    //     status: 'error',
+    //     duration: 3000,
+    //   })
+    //   return
+    // }
+    if (!user?.uid) {
       toast({
         title: 'Error',
-        description: 'Please enter an access code',
+        description: 'Please log in first',
+        status: 'error',
+        duration: 3000,
+      })
+      return
+    }
+
+    // Enhanced sanitization
+    const sanitizedCode = accessCode
+      .trim()
+      .toUpperCase()
+      .replace(/\s/g, '')
+      .replace(/[^A-Z0-9]/g, '')
+
+    if (!sanitizedCode) {
+      toast({
+        title: 'Error',
+        description: 'Please enter a valid access code',
         status: 'error',
         duration: 3000,
       })
@@ -90,7 +121,7 @@ export const EbookLibrary = () => {
       const result = await grantEbookAccess({
         ebookId: '', // Will be determined by access code
         studentId: user.uid,
-        accessCode: accessCode.trim().toUpperCase(),
+        accessCode: sanitizedCode,
       })
 
       if (result.success) {
@@ -214,8 +245,12 @@ export const EbookLibrary = () => {
         <HStack spacing={3}>
           <Icon as={FiBook} boxSize={8} color="purple.500" />
           <VStack align="start" spacing={0}>
-            <Text fontSize="2xl" fontWeight="bold">Ebook Library</Text>
-            <Text color="gray.600">Access and download your assigned ebooks</Text>
+            <Text fontSize="2xl" fontWeight="bold">
+              Ebook Library
+            </Text>
+            <Text color="gray.600">
+              Access and download your assigned ebooks
+            </Text>
           </VStack>
         </HStack>
       </VStack>
@@ -228,7 +263,9 @@ export const EbookLibrary = () => {
               <Text fontSize="2xl" fontWeight="bold" color="blue.600">
                 {stats.totalEbooks}
               </Text>
-              <Text fontSize="sm" color="gray.600">Total Ebooks</Text>
+              <Text fontSize="sm" color="gray.600">
+                Total Ebooks
+              </Text>
             </VStack>
           </CardBody>
         </Card>
@@ -238,7 +275,9 @@ export const EbookLibrary = () => {
               <Text fontSize="2xl" fontWeight="bold" color="green.600">
                 {stats.unlockedEbooks}
               </Text>
-              <Text fontSize="sm" color="gray.600">Unlocked</Text>
+              <Text fontSize="sm" color="gray.600">
+                Unlocked
+              </Text>
             </VStack>
           </CardBody>
         </Card>
@@ -248,7 +287,9 @@ export const EbookLibrary = () => {
               <Text fontSize="2xl" fontWeight="bold" color="orange.600">
                 {stats.lockedEbooks}
               </Text>
-              <Text fontSize="sm" color="gray.600">Locked</Text>
+              <Text fontSize="sm" color="gray.600">
+                Locked
+              </Text>
             </VStack>
           </CardBody>
         </Card>
@@ -258,7 +299,9 @@ export const EbookLibrary = () => {
               <Text fontSize="2xl" fontWeight="bold" color="purple.600">
                 {stats.categories}
               </Text>
-              <Text fontSize="sm" color="gray.600">Categories</Text>
+              <Text fontSize="sm" color="gray.600">
+                Categories
+              </Text>
             </VStack>
           </CardBody>
         </Card>
@@ -273,8 +316,9 @@ export const EbookLibrary = () => {
               <Text fontWeight="semibold">How to Access Ebooks</Text>
             </HStack>
             <Text fontSize="sm" color="gray.600">
-              Use the access codes provided by your instructor to unlock ebooks. 
-              Once unlocked, you can download them to your device for offline reading.
+              Use the access codes provided by your instructor to unlock ebooks.
+              Once unlocked, you can download them to your device for offline
+              reading.
             </Text>
           </VStack>
         </CardBody>
@@ -306,8 +350,8 @@ export const EbookLibrary = () => {
                   No Ebooks Available
                 </Text>
                 <Text color="gray.400" fontSize="sm" textAlign="center">
-                  Your instructor hasn&apos;t assigned any ebooks yet. 
-                  Check back later or contact your instructor for access codes.
+                  Your instructor hasn&apos;t assigned any ebooks yet. Check
+                  back later or contact your instructor for access codes.
                 </Text>
               </VStack>
             </VStack>
@@ -352,7 +396,7 @@ export const EbookLibrary = () => {
                   </CardBody>
                 </Card>
               )}
-              
+
               <FormControl>
                 <FormLabel>Access Code</FormLabel>
                 <Input

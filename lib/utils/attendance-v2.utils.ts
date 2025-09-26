@@ -9,6 +9,7 @@ import {
   orderBy,
   deleteDoc,
   writeBatch,
+  updateDoc,
 } from 'firebase/firestore'
 import { portalDb } from '../../portalFirebaseConfig'
 import {
@@ -208,7 +209,7 @@ export async function getSessionsByFilters(filters: {
   planId?: string
   status?: string
 }): Promise<Session[]> {
-  console.log('🔍 getSessionsByFilters called with:', filters)
+  // console.log('🔍 getSessionsByFilters called with:', filters)
 
   // Set default date range (last 6 months to today) if not provided
   const defaultEndDate = new Date().toISOString().split('T')[0]
@@ -228,21 +229,21 @@ export async function getSessionsByFilters(filters: {
     orderBy('date', 'desc'),
   )
 
-  console.log('🔍 Using date range:', effectiveDateRange)
+  // console.log('🔍 Using date range:', effectiveDateRange)
 
   const snapshot = await getDocs(q)
   let sessions = snapshot.docs.map((doc) => ({ ...doc.data() } as Session))
 
-  console.log('🔍 Query result:', {
-    totalDocs: snapshot.docs.length,
-    sessions: sessions.map((s) => ({
-      sessionId: s.sessionId,
-      date: s.date,
-      cohortId: s.cohortId,
-      planId: s.planId,
-      status: s.status,
-    })),
-  })
+  // console.log('🔍 Query result:', {
+  //   totalDocs: snapshot.docs.length,
+  //   sessions: sessions.map((s) => ({
+  //     sessionId: s.sessionId,
+  //     date: s.date,
+  //     cohortId: s.cohortId,
+  //     planId: s.planId,
+  //     status: s.status,
+  //   })),
+  // })
 
   // Apply other filters client-side
   if (filters.cohortId) {
@@ -262,21 +263,21 @@ export async function getSessionsByFilters(filters: {
 
 // Debug function to check all sessions
 export async function getAllSessions(): Promise<Session[]> {
-  console.log('🔍 getAllSessions - Checking all sessions in database')
+  // console.log('🔍 getAllSessions - Checking all sessions in database')
   const q = query(collection(portalDb, 'sessions'), orderBy('date', 'desc'))
   const snapshot = await getDocs(q)
   const sessions = snapshot.docs.map((doc) => ({ ...doc.data() } as Session))
 
-  console.log('🔍 getAllSessions result:', {
-    totalDocs: snapshot.docs.length,
-    sessions: sessions.map((s) => ({
-      sessionId: s.sessionId,
-      date: s.date,
-      cohortId: s.cohortId,
-      planId: s.planId,
-      status: s.status,
-    })),
-  })
+  // console.log('🔍 getAllSessions result:', {
+  //   totalDocs: snapshot.docs.length,
+  //   sessions: sessions.map((s) => ({
+  //     sessionId: s.sessionId,
+  //     date: s.date,
+  //     cohortId: s.cohortId,
+  //     planId: s.planId,
+  //     status: s.status,
+  //   })),
+  // })
 
   return sessions
 }
@@ -292,6 +293,11 @@ export async function getSessionById(
 export async function deleteSession(sessionId: string) {
   const sessionRef = doc(portalDb, 'sessions', sessionId)
   await deleteDoc(sessionRef)
+}
+
+export async function updateSession(sessionId: string, updates: any) {
+  const sessionRef = doc(portalDb, 'sessions', sessionId)
+  await updateDoc(sessionRef, updates)
 }
 
 export async function deleteMultipleSessions(sessionIds: string[]) {
@@ -344,10 +350,10 @@ export async function getStudentsByCohortAndPlan(
   cohortId: string,
   planId: string,
 ) {
-  console.log('🔍 getStudentsByCohortAndPlan called with:', {
-    cohortId,
-    planId,
-  })
+  // console.log('🔍 getStudentsByCohortAndPlan called with:', {
+  //   cohortId,
+  //   planId,
+  // })
 
   const usersQuery = query(
     collection(portalDb, 'users'),
@@ -364,18 +370,19 @@ export async function getStudentsByCohortAndPlan(
       } as any),
   )
 
-  console.log('🔍 getStudentsByCohortAndPlan result:', {
-    cohortId,
-    planId,
-    totalStudents: students.length,
-    students: students.map((s) => ({
-      id: s.id,
-      fullName: s.fullName,
-      email: s.email,
-      cohort: s.schoolFeeInfo?.cohort,
-      classPlan: s.schoolFeeInfo?.classPlan,
-    })),
-  })
+  // console.log('🔍 getStudentsByCohortAndPlan result:', {
+  //   cohortId,
+  //   planId,
+  //   totalStudents: students.length,
+  //   students: students.map((s) => ({
+  //     id: s.id,
+  //     fullName: s.fullName,
+  //     // phone: s.phone,
+  //     email: s.email,
+  //     cohort: s.schoolFeeInfo?.cohort,
+  //     classPlan: s.schoolFeeInfo?.classPlan,
+  //   })),
+  // })
 
   return students
 }
@@ -418,7 +425,7 @@ export async function getStudentsByCohortsAndPlans(
 
 // Get all students for attendance reports (without filtering by cohort/plan)
 export async function getAllStudents() {
-  console.log('🔍 getAllStudents called')
+  // console.log('🔍 getAllStudents called')
 
   const usersQuery = query(
     collection(portalDb, 'users'),
@@ -433,16 +440,17 @@ export async function getAllStudents() {
       } as any),
   )
 
-  console.log('🔍 getAllStudents result:', {
-    totalStudents: students.length,
-    students: students.map((s) => ({
-      id: s.id,
-      fullName: s.fullName,
-      email: s.email,
-      cohort: s.schoolFeeInfo?.cohort,
-      classPlan: s.schoolFeeInfo?.classPlan,
-    })),
-  })
+  // console.log('🔍 getAllStudents result:', {
+  //   totalStudents: students.length,
+  //   students: students.map((s) => ({
+  //     id: s.id,
+  //     fullName: s.fullName,
+  //     // phone: s.phone,
+  //     email: s.email,
+  //     cohort: s.schoolFeeInfo?.cohort,
+  //     classPlan: s.schoolFeeInfo?.classPlan,
+  //   })),
+  // })
 
   return students
 }

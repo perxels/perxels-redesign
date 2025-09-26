@@ -24,13 +24,18 @@ import {
 import { FiLock, FiBook } from 'react-icons/fi'
 import { PortalEbook } from '../../../../types/ebook.types'
 
-  import { usePortalAuth } from '../../../../hooks/usePortalAuth'
+import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { EbookCard } from './ebook-card'
-import { getAllEbooksWithAccessStatus, grantEbookAccess } from '../../../../lib/utils/ebook.utils'
+import {
+  getAllEbooksWithAccessStatus,
+  grantEbookAccess,
+} from '../../../../lib/utils/ebook.utils'
 
 export const EbookLibrary = () => {
   const router = useRouter()
-  const [ebooks, setEbooks] = useState<Array<PortalEbook & { hasAccess: boolean }>>([])
+  const [ebooks, setEbooks] = useState<
+    Array<PortalEbook & { hasAccess: boolean }>
+  >([])
   const [loading, setLoading] = useState(true)
   const [accessCode, setAccessCode] = useState('')
   const [grantingAccess, setGrantingAccess] = useState(false)
@@ -118,8 +123,6 @@ export const EbookLibrary = () => {
       setGrantingAccess(false)
     }
   }
-
-
 
   const handleUnlockEbook = (ebook: PortalEbook) => {
     setEbookToUnlock(ebook)
@@ -239,6 +242,16 @@ export const EbookLibrary = () => {
                   placeholder="Enter code (e.g., ABC123)"
                   value={accessCode}
                   onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
+                  onPaste={(e) => {
+                    // Handle paste events
+                    e.preventDefault()
+                    const pastedText = e.clipboardData.getData('text')
+                    const sanitized = pastedText
+                      .toUpperCase()
+                      .replace(/[^A-Z0-9]/g, '')
+                      .slice(0, 10)
+                    setAccessCode(sanitized)
+                  }}
                   onKeyPress={handleKeyPress}
                   textAlign="center"
                   fontSize="lg"

@@ -140,6 +140,7 @@ export const VideoLibrary = () => {
     }
   }
 
+  const unlockVideos = videos.filter((v) => v.hasAccess)
   const getStats = () => {
     const totalVideos = videos.length
     const unlockedVideos = videos.filter((v) => v.hasAccess).length
@@ -192,8 +193,6 @@ export const VideoLibrary = () => {
                   {stats.lockedVideos}
                 </Text>
               </Box>
-
-
             </HStack>
           </VStack>
         )}
@@ -210,16 +209,40 @@ export const VideoLibrary = () => {
             </Text>
           </Box>
         ) : (
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-            {videos.map((video) => (
-              <VideoCard
-                key={video.id}
-                video={video}
-                onPlay={() => handleVideoSelect(video)}
-                onUnlock={() => handleUnlockVideo(video)}
-              />
-            ))}
-          </SimpleGrid>
+          <>
+            {/* Unlocked Videos */}
+            {unlockVideos.length > 0 && (
+              <>
+                <Text color="gray.600" mb={-3} fontSize="lg" fontWeight="bold">
+                  Unlocked Videos
+                </Text>
+                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+                  {unlockVideos.map((video) => (
+                    <VideoCard
+                      key={video.id}
+                      video={video}
+                      onPlay={() => handleVideoSelect(video)}
+                      onUnlock={() => handleUnlockVideo(video)}
+                    />
+                  ))}
+                </SimpleGrid>
+              </>
+            )}
+
+            <Text color="gray.600" mb={-3} fontSize="lg" fontWeight="bold">
+              All Videos
+            </Text>
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+              {videos.map((video) => (
+                <VideoCard
+                  key={video.id}
+                  video={video}
+                  onPlay={() => handleVideoSelect(video)}
+                  onUnlock={() => handleUnlockVideo(video)}
+                />
+              ))}
+            </SimpleGrid>
+          </>
         )}
       </VStack>
 

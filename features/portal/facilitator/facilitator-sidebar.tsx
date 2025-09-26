@@ -12,7 +12,7 @@ const sidebarItems = [
   {
     label: 'Attendance',
     icon: '/assets/icons/attandance.svg',
-    href: '/portal/facilitator/attendance',
+    href: '/portal/facilitator/attendance-v2',
   },
   {
     label: 'Students',

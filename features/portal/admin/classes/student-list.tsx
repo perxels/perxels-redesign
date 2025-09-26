@@ -26,6 +26,7 @@ import { DeleteStudentModal } from './delete-student-modal'
 import { useIndividualPaymentReminder } from '../../../../hooks/useIndividualPaymentReminder'
 import { ReminderConfirmationModal } from './student-payment-reminder'
 import { FiBell } from 'react-icons/fi'
+import { ExportStudentsButton } from '../../../../components/ExportStudentsButton'
 
 interface StudentData {
   uid: string
@@ -413,14 +414,22 @@ export const StudentList = () => {
         </Box>
 
         {!loading && filteredStudents.length > 0 && (
-          <Button
-            variant="outline"
-            colorScheme="blue"
-            size="sm"
-            onClick={fetchStudents}
-          >
-            Refresh
-          </Button>
+          <Box display={'flex'} alignItems="center" gap={2}>
+            <Button
+              variant="outline"
+              colorScheme="blue"
+              size="sm"
+              onClick={fetchStudents}
+            >
+              Refresh
+            </Button>
+            <ExportStudentsButton
+              students={filteredStudents}
+              filters={filters}
+              variant="button"
+              size="sm"
+            />
+          </Box>
         )}
       </Flex>
 
@@ -794,6 +803,7 @@ export const StudentList = () => {
           isOpen={isDetailsOpen}
           onClose={onDetailsClose}
           student={selectedStudent}
+          adminUser={portalUser} // Pass the admin user
         />
       )}
 

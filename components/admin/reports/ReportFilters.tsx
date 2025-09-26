@@ -66,15 +66,17 @@ export function ReportFilters({
               </Button>
 
               {hasReportData && (
-                <Button
-                  variant="outline"
-                  onClick={onExportCSV}
-                  leftIcon={<span>📥</span>}
-                  size="md"
-                  px={6}
-                >
-                  Export CSV
-                </Button>
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={onExportCSV}
+                    leftIcon={<span>📥</span>}
+                    size="md"
+                    px={6}
+                  >
+                    Export CSV
+                  </Button>
+                </>
               )}
             </HStack>
           </HStack>

@@ -32,8 +32,26 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
+  FormControl,
+  FormLabel,
+  Select,
+  HStack,
+  useDisclosure,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
 } from '@chakra-ui/react'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import {
   ImagePreviewModal,
@@ -87,18 +105,32 @@ interface StudentDetailsModalProps {
   isOpen: boolean
   onClose: () => void
   student: StudentData
+  adminUser: any // Add admin user prop
+}
+
+// Add this interface for cohort change
+interface CohortChange {
+  oldCohort: string
+  newCohort: string
+  changedAt: Date
+  changedBy: string
+  reason?: string
 }
 
 export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   isOpen,
   onClose,
   student,
+  adminUser,
 }) => {
   const [payments, setPayments] = useState<PaymentRecord[]>([])
   const [attendance, setAttendance] = useState<AttendanceRecord[]>([])
   const [loadingPayments, setLoadingPayments] = useState(false)
   const [loadingAttendance, setLoadingAttendance] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
+  const [availableCohorts, setAvailableCohorts] = useState<string[]>([])
+  const [selectedCohort, setSelectedCohort] = useState('')
+  const [isChangingCohort, setIsChangingCohort] = useState(false)
   const toast = useToast()
   const {
     isOpen: isImageOpen,
@@ -109,6 +141,14 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   } = useImagePreview()
   const { sendPaymentNotification, isLoading: isNotificationLoading } =
     usePaymentNotifications()
+
+  // Cohort change confirmation dialog
+  const {
+    isOpen: isCohortDialogOpen,
+    onOpen: onCohortDialogOpen,
+    onClose: onCohortDialogClose,
+  } = useDisclosure()
+  const cancelRef = React.useRef<HTMLButtonElement>(null)
 
   // Fetch payment records from schoolFeeInfo
   const fetchPayments = async () => {
@@ -263,11 +303,145 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
     }
   }
 
+  // Fetch available cohorts from your system
+  const fetchAvailableCohorts = async () => {
+    try {
+      // You might have a cohorts collection or get them from existing students
+      const studentsQuery = query(
+        collection(portalDb, 'users'),
+        where('role', '==', 'student'),
+      )
+
+      const querySnapshot = await getDocs(studentsQuery)
+      const cohorts = new Set<string>()
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data()
+        if (data.schoolFeeInfo?.cohort) {
+          cohorts.add(data.schoolFeeInfo.cohort)
+        }
+      })
+
+      // Add common cohorts if needed
+      const commonCohorts = [
+        'COHORT 62',
+        'COHORT 61',
+        'COHORT 60',
+        'COHORT 59',
+        'COHORT 58',
+        'COHORT 57',
+        'COHORT 56',
+        'COHORT 55',
+      ]
+
+      commonCohorts.forEach((cohort) => cohorts.add(cohort))
+
+      setAvailableCohorts(Array.from(cohorts).sort().reverse()) // Latest first
+    } catch (error) {
+      console.error('Error fetching cohorts:', error)
+    }
+  }
+
+  // Update cohort function
+  const updateStudentCohort = async (newCohort: string, reason?: string) => {
+    if (!adminUser) {
+      toast({
+        title: 'Authentication required',
+        description: 'You must be logged in as admin to change cohorts',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    if (!student.schoolFeeInfo) {
+      toast({
+        title: 'No school fee info',
+        description: 'Student does not have school fee information',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    }
+
+    setIsChangingCohort(true)
+
+    try {
+      const studentRef = doc(portalDb, 'users', student.uid)
+      const oldCohort = student.schoolFeeInfo.cohort || 'Not assigned'
+
+      await updateDoc(studentRef, {
+        'schoolFeeInfo.cohort': newCohort,
+        'schoolFeeInfo.updatedAt': new Date(),
+        'schoolFeeInfo.cohortHistory': [
+          ...(student.schoolFeeInfo.cohortHistory || []),
+          {
+            oldCohort,
+            newCohort,
+            changedAt: new Date(),
+            changedBy: adminUser.uid,
+            changedByName: adminUser.fullName || adminUser.email,
+            reason: reason || 'Admin manual change',
+          },
+        ],
+      })
+
+      toast({
+        title: 'Cohort updated successfully!',
+        description: `${student.fullName} moved from ${oldCohort} to ${newCohort}`,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      })
+
+      return true
+    } catch (error) {
+      console.error('Error updating cohort:', error)
+      toast({
+        title: 'Failed to update cohort',
+        description: 'Please try again or contact support',
+        status: 'error',
+        duration: 3000,
+      })
+      return false
+    } finally {
+      setIsChangingCohort(false)
+      onCohortDialogClose()
+    }
+  }
+
+  // Handle cohort change confirmation
+  const handleCohortChange = async () => {
+    if (!selectedCohort || selectedCohort === student.schoolFeeInfo?.cohort) {
+      toast({
+        title: 'Invalid cohort',
+        description: 'Please select a different cohort',
+        status: 'warning',
+        duration: 3000,
+      })
+      return
+    }
+
+    const success = await updateStudentCohort(
+      selectedCohort,
+      'Admin manual adjustment',
+    )
+    if (success) {
+      setSelectedCohort('')
+      // Refresh parent component if needed
+      if ((window as any).refreshStudentList) {
+        ;(window as any).refreshStudentList()
+      }
+    }
+  }
+
   // Load data when modal opens
   useEffect(() => {
     if (isOpen) {
       fetchPayments()
       fetchAttendance()
+      fetchAvailableCohorts()
+      setSelectedCohort(student.schoolFeeInfo?.cohort || '')
     }
   }, [isOpen, student.uid])
 
@@ -367,6 +541,113 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
     }
   }
 
+  // Add a new tab for Cohort Management
+  const CohortManagementTab = () => (
+    <VStack spacing={6} align="stretch">
+      {/* Current Cohort Info */}
+      <Box bg="blue.50" p={4} borderRadius="lg">
+        <Text fontSize="lg" fontWeight="bold" mb={3} color="blue.800">
+          Current Cohort Information
+        </Text>
+        <Flex gap={6} wrap="wrap">
+          <Box>
+            <Text fontSize="sm" color="blue.600" fontWeight="medium">
+              Current Cohort
+            </Text>
+            <Text fontSize="xl" fontWeight="bold" color="blue.900">
+              {student.schoolFeeInfo?.cohort || 'Not assigned'}
+            </Text>
+          </Box>
+          <Box>
+            <Text fontSize="sm" color="blue.600" fontWeight="medium">
+              Class Plan
+            </Text>
+            <Text fontSize="lg" color="blue.900">
+              {student.schoolFeeInfo?.classPlan || 'Not specified'}
+            </Text>
+          </Box>
+          <Box>
+            <Text fontSize="sm" color="blue.600" fontWeight="medium">
+              Assignment Date
+            </Text>
+            <Text fontSize="lg" color="blue.900">
+              {student.schoolFeeInfo?.createdAt
+                ? new Date(
+                    student.schoolFeeInfo.createdAt.seconds * 1000,
+                  ).toLocaleDateString()
+                : 'Unknown'}
+            </Text>
+          </Box>
+        </Flex>
+      </Box>
+
+      {/* Cohort Change Form */}
+      <Box
+        bg="white"
+        p={6}
+        borderRadius="lg"
+        border="1px"
+        borderColor="gray.200"
+      >
+        <Text fontSize="lg" fontWeight="bold" mb={4}>
+          Change Student Cohort
+        </Text>
+
+        <FormControl>
+          <FormLabel>Select New Cohort</FormLabel>
+          <Select
+            value={selectedCohort}
+            onChange={(e) => setSelectedCohort(e.target.value)}
+            placeholder="Choose a cohort..."
+            bg="white"
+          >
+            {availableCohorts.map((cohort) => (
+              <option key={cohort} value={cohort}>
+                {cohort}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Alert status="info" mt={4} borderRadius="md">
+          <AlertIcon />
+          <Box>
+            <Text fontWeight="medium">Important Notes:</Text>
+            <Text fontSize="sm">
+              • Changing cohort will affect attendance tracking and class
+              assignments
+              <br />
+              • This action will be recorded in the change history
+              <br />• Notify the student about this change if necessary
+            </Text>
+          </Box>
+        </Alert>
+
+        <HStack spacing={3} mt={6}>
+          <Button
+            colorScheme="blue"
+            onClick={onCohortDialogOpen}
+            isDisabled={
+              !selectedCohort ||
+              selectedCohort === student.schoolFeeInfo?.cohort
+            }
+            isLoading={isChangingCohort}
+          >
+            Change Cohort
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              setSelectedCohort(student.schoolFeeInfo?.cohort || '')
+            }
+          >
+            Reset
+          </Button>
+        </HStack>
+      </Box>
+    </VStack>
+  )
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="6xl" scrollBehavior="inside">
       <ModalOverlay />
@@ -377,6 +658,10 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
               {student.fullName}
             </Text>
             <Text fontSize="sm" color="gray.600">
+              Student Email: {student.email}
+            </Text>
+            <Text fontSize="sm" color="gray.600">
+              Cohort: {student.schoolFeeInfo?.cohort || 'Not assigned'} ||
               Student ID: {student.uid}
             </Text>
           </VStack>
@@ -389,6 +674,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
               <Tab>Overview</Tab>
               <Tab>Payment History</Tab>
               <Tab>Attendance</Tab>
+              <Tab>Cohort Management</Tab>
             </TabList>
 
             <TabPanels>
@@ -790,6 +1076,11 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                   </Box>
                 </VStack>
               </TabPanel>
+
+              {/* New Cohort Management Tab */}
+              <TabPanel>
+                <CohortManagementTab />
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </ModalBody>
@@ -800,6 +1091,54 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
           </Button>
         </ModalFooter>
       </ModalContent>
+
+      {/* Cohort Change Confirmation Dialog */}
+      <AlertDialog
+        isOpen={isCohortDialogOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onCohortDialogClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Confirm Cohort Change
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              <Text mb={4}>
+                Are you sure you want to move{' '}
+                <strong>{student.fullName}</strong> from{' '}
+                <Badge colorScheme="orange">
+                  {student.schoolFeeInfo?.cohort || 'Not assigned'}
+                </Badge>{' '}
+                to <Badge colorScheme="green">{selectedCohort}</Badge>?
+              </Text>
+
+              <Alert status="warning" borderRadius="md">
+                <AlertIcon />
+                <Text fontSize="sm">
+                  This action will affect the student's class assignments and
+                  attendance tracking. Please ensure this change is necessary.
+                </Text>
+              </Alert>
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onCohortDialogClose}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="blue"
+                onClick={handleCohortChange}
+                ml={3}
+                isLoading={isChangingCohort}
+              >
+                Confirm Change
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
 
       <ImagePreviewModal
         isOpen={isImageOpen}

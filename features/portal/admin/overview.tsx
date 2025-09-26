@@ -18,10 +18,11 @@ const menuItems = [
     icon: '/assets/icons/wallet.svg',
   },
   {
-    title: 'Classes',
-    href: '/portal/admin/classes',
-    icon: '/assets/icons/graph.svg',
+    title: 'Attendance',
+    href: '/portal/admin/attendance-v2',
+    icon: '/assets/icons/attandance.svg',
   },
+
   {
     title: 'Students',
     href: '/portal/admin/students',
@@ -33,15 +34,21 @@ const menuItems = [
     icon: '/assets/icons/facilitatorIcon.png',
   },
   {
+    title: 'Tests & Results',
+    href: '/portal/admin/tests',
+    icon: '/assets/icons/facilitatorIcon.png',
+  },
+  {
     title: 'Notifications',
     href: '/portal/admin/notifications',
     icon: '/assets/icons/notification.svg',
   },
   {
-    title: 'Attendance',
-    href: '/portal/admin/attendance-v2',
-    icon: '/assets/icons/attandance.svg',
+    title: 'Classes',
+    href: '/portal/admin/classes',
+    icon: '/assets/icons/graph.svg',
   },
+
   {
     title: 'Library',
     href: '/portal/admin/library',

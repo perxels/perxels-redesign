@@ -2,10 +2,10 @@ import { format } from 'date-fns'
 
 export const formatDate = (dateValue: any): string => {
   if (!dateValue) return 'N/A'
-  
+
   try {
     let date: Date
-    
+
     // Handle Firestore Timestamp objects
     if (dateValue && typeof dateValue === 'object' && dateValue.seconds) {
       date = new Date(dateValue.seconds * 1000)
@@ -14,10 +14,10 @@ export const formatDate = (dateValue: any): string => {
     } else {
       date = new Date(dateValue)
     }
-    
+
     // Check if date is valid
     if (isNaN(date.getTime())) return 'N/A'
-    
+
     return format(date, 'MMM dd, yyyy')
   } catch (error) {
     console.error('Error formatting date:', error)
@@ -27,10 +27,10 @@ export const formatDate = (dateValue: any): string => {
 
 export const formatTime = (dateValue: any): string => {
   if (!dateValue) return 'N/A'
-  
+
   try {
     let date: Date
-    
+
     // Handle Firestore Timestamp objects
     if (dateValue && typeof dateValue === 'object' && dateValue.seconds) {
       date = new Date(dateValue.seconds * 1000)
@@ -39,10 +39,10 @@ export const formatTime = (dateValue: any): string => {
     } else {
       date = new Date(dateValue)
     }
-    
+
     // Check if date is valid
     if (isNaN(date.getTime())) return 'N/A'
-    
+
     return format(date, 'HH:mm')
   } catch (error) {
     console.error('Error formatting time:', error)
@@ -50,13 +50,31 @@ export const formatTime = (dateValue: any): string => {
   }
 }
 
+export const formatTimeForInput = (timeString: string): string => {
+  if (!timeString) return ''
+
+  try {
+    const date = new Date(timeString)
+    return date.toTimeString().slice(0, 5)
+  } catch (error) {
+    console.error('Error formatting time for input:', error)
+    return ''
+  }
+}
+
 export const getStatusColor = (status: string) => {
   switch (status) {
-    case 'active': return 'green'
-    case 'expired': return 'red'
-    case 'open': return 'blue'
-    case 'closed': return 'gray'
-    case 'cancelled': return 'red'
-    default: return 'gray'
+    case 'active':
+      return 'green'
+    case 'expired':
+      return 'red'
+    case 'open':
+      return 'blue'
+    case 'closed':
+      return 'gray'
+    case 'cancelled':
+      return 'red'
+    default:
+      return 'gray'
   }
 }
