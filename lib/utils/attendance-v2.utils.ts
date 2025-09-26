@@ -18,6 +18,8 @@ import {
   SessionCheckin,
   AttendanceSummary,
 } from '../../types/attendance-v2.types'
+import { toZonedTime } from 'date-fns-tz'
+import { parseSessionTime } from './timeParser'
 
 // Daily Code Operations
 export async function createDailyCode(dailyCode: Omit<DailyCode, 'createdAt'>) {
@@ -548,10 +550,11 @@ export async function validateStudentCheckIn(
       throw new Error('No active session found for your class plan today')
     }
 
-    // Check time window
+    // Robust time parsing as frontend (Import from lib)
+    // Check time window with robust parsing
     const now = new Date()
-    const sessionStart = new Date(matchingSession.startsAt)
-    const sessionEnd = new Date(matchingSession.endsAt)
+    const sessionStart = parseSessionTime(matchingSession.startsAt)
+    const sessionEnd = parseSessionTime(matchingSession.endsAt)
 
     if (now < sessionStart || now > sessionEnd) {
       throw new Error('Check-in is only allowed during class time')

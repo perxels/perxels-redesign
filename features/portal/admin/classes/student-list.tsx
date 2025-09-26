@@ -803,7 +803,7 @@ export const StudentList = () => {
           isOpen={isDetailsOpen}
           onClose={onDetailsClose}
           student={selectedStudent}
-          adminUser={portalUser} // Pass the admin user
+          adminUser={portalUser}
         />
       )}
 

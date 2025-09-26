@@ -35,6 +35,7 @@ import {
 } from '../../../../lib/utils/attendance-v2.utils'
 import { HeaderInfo } from '../../../../features/portal/dashboard/messages/header-info'
 import { formatTime } from '../../../../lib/utils/attendance-formatters'
+import { parseSessionTime } from '../../../../lib/utils/timeParser'
 
 // Memoize today's date to prevent unnecessary recalculations
 const getToday = () => {
@@ -280,48 +281,19 @@ const AttendancePageV2 = () => {
     }
   }, [today])
 
+  // Time comparison
   // Check if current time is within session window
   const isWithinSessionTime = useMemo(() => {
     if (!session) return false
 
     try {
       const now = new Date()
-
-      // Convert Firestore Timestamps to Date objects
-      let sessionStart: Date
-      let sessionEnd: Date
-
-      if (
-        session.startsAt &&
-        typeof session.startsAt === 'object' &&
-        'toDate' in session.startsAt
-      ) {
-        // Firestore Timestamp
-        sessionStart = (session.startsAt as any).toDate()
-      } else {
-        // Regular Date object or string
-        sessionStart = new Date(session.startsAt)
-      }
-
-      if (
-        session.endsAt &&
-        typeof session.endsAt === 'object' &&
-        'toDate' in session.endsAt
-      ) {
-        // Firestore Timestamp
-        sessionEnd = (session.endsAt as any).toDate()
-      } else {
-        // Regular Date object or string
-        sessionEnd = new Date(session.endsAt)
-      }
-
-      // Check if dates are valid
-      if (isNaN(sessionStart.getTime()) || isNaN(sessionEnd.getTime())) {
-        return false
-      }
+      const sessionStart = parseSessionTime(session.startsAt)
+      const sessionEnd = parseSessionTime(session.endsAt)
 
       return now >= sessionStart && now <= sessionEnd
     } catch (error) {
+      console.error('Time comparison error:', error)
       return false
     }
   }, [session])
@@ -513,19 +485,11 @@ const AttendancePageV2 = () => {
                   Check-in is only allowed during class time:{' '}
                   {(() => {
                     try {
-                      const startTime =
-                        session.startsAt &&
-                        typeof session.startsAt === 'object' &&
-                        'toDate' in session.startsAt
-                          ? (session.startsAt as any).toDate()
-                          : new Date(session.startsAt)
-                      const endTime =
-                        session.endsAt &&
-                        typeof session.endsAt === 'object' &&
-                        'toDate' in session.endsAt
-                          ? (session.endsAt as any).toDate()
-                          : new Date(session.endsAt)
-                      return `${formatTime(startTime)} - ${formatTime(endTime)}`
+                      const sessionStart = parseSessionTime(session.startsAt)
+                      const sessionEnd = parseSessionTime(session.endsAt)
+                      return `${formatTime(sessionStart)} - ${formatTime(
+                        sessionEnd,
+                      )}`
                     } catch (error) {
                       return 'Invalid Time Range'
                     }
