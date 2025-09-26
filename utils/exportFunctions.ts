@@ -19,7 +19,8 @@ export const exportToCSV = (students: any[], filters: any, toast: any) => {
     // Add data rows
     flattenedData.forEach((student) => {
       const row = headers.map((header) => {
-        const value = student[header]
+        // const value = student[header]
+        const value = student[header as keyof typeof student]
         return `"${escapeCSVValue(value)}"`
       })
       csvContent += row.join(',') + '\r\n'
