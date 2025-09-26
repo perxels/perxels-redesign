@@ -343,7 +343,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   }
 
   // Update cohort function
-  const updateStudentCohort = async (newCohort: string, reason?: string) => {
+  const updateStudentCohort = async (newCohort: string) => {
     if (!adminUser) {
       toast({
         title: 'Authentication required',
@@ -373,17 +373,6 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
       await updateDoc(studentRef, {
         'schoolFeeInfo.cohort': newCohort,
         'schoolFeeInfo.updatedAt': new Date(),
-        'schoolFeeInfo.cohortHistory': [
-          ...(student.schoolFeeInfo.cohortHistory || []),
-          {
-            oldCohort,
-            newCohort,
-            changedAt: new Date(),
-            changedBy: adminUser.uid,
-            changedByName: adminUser.fullName || adminUser.email,
-            reason: reason || 'Admin manual change',
-          },
-        ],
       })
 
       toast({
@@ -422,10 +411,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
       return
     }
 
-    const success = await updateStudentCohort(
-      selectedCohort,
-      'Admin manual adjustment',
-    )
+    const success = await updateStudentCohort(selectedCohort)
     if (success) {
       setSelectedCohort('')
       // Refresh parent component if needed
