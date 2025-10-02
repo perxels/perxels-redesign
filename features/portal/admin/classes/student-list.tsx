@@ -27,6 +27,7 @@ import { useIndividualPaymentReminder } from '../../../../hooks/useIndividualPay
 import { ReminderConfirmationModal } from './student-payment-reminder'
 import { FiBell } from 'react-icons/fi'
 import { ExportStudentsButton } from '../../../../components/ExportStudentsButton'
+import { StudentActivationModal } from './StudentActivationModal'
 
 interface StudentData {
   uid: string
@@ -38,6 +39,8 @@ interface StudentData {
   emailVerified: boolean
   registrationComplete?: boolean
   onboardingComplete?: boolean
+  isStudentActive?: boolean
+  deactivationReason?: string
   createdAt: any
   schoolFeeInfo?: any
   growthInfo?: any
@@ -66,6 +69,8 @@ export const StudentList = () => {
   const [reminderStudent, setReminderStudent] = useState<StudentData | null>(
     null,
   )
+  const [activationStudent, setActivationStudent] =
+    useState<StudentData | null>(null)
   const { sendIndividualReminder, isLoading: isReminderLoading } =
     useIndividualPaymentReminder()
 
@@ -106,6 +111,7 @@ export const StudentList = () => {
   const router = useRouter()
   const isAdmin = portalUser?.role === 'admin'
 
+  // Modal disclosures
   const {
     isOpen: isReminderOpen,
     onOpen: onReminderOpen,
@@ -120,6 +126,11 @@ export const StudentList = () => {
     isOpen: isDeleteOpen,
     onOpen: onDeleteOpen,
     onClose: onDeleteClose,
+  } = useDisclosure()
+  const {
+    isOpen: isActivationOpen,
+    onOpen: onActivationOpen,
+    onClose: onActivationClose,
   } = useDisclosure()
 
   // Get filters from query string
@@ -318,6 +329,8 @@ export const StudentList = () => {
           emailVerified: data.emailVerified || false,
           registrationComplete: data.registrationComplete || false,
           onboardingComplete: data.onboardingComplete || false,
+          isStudentActive: data.isStudentActive || false,
+          deactivationReason: data.deactivationReason,
           createdAt: data.createdAt,
           schoolFeeInfo: data.schoolFeeInfo,
           growthInfo: data.growthInfo,
@@ -378,6 +391,16 @@ export const StudentList = () => {
   const handleDeleteStudent = (student: StudentData) => {
     setSelectedStudent(student)
     onDeleteOpen()
+  }
+
+  // Handle activation toggle
+  const handleActivationToggle = (student: StudentData) => {
+    setActivationStudent(student)
+    onActivationOpen()
+  }
+  // Handle status change (refresh data after activation/deactivation)
+  const handleStatusChange = () => {
+    fetchStudents() // Refresh the student list
   }
 
   const handleStudentDeleted = () => {
@@ -564,6 +587,34 @@ export const StudentList = () => {
                       {student.owingStatus || 'Owing'}
                     </Badge>
                   </Flex>
+                  <Flex justify="space-between" align="center">
+                    <Badge
+                      colorScheme={
+                        student.isStudentActive !== false ? 'green' : 'red'
+                      }
+                      variant="subtle"
+                      fontSize="xs"
+                    >
+                      Student is{' '}
+                      {student.isStudentActive !== false
+                        ? 'Active'
+                        : 'Inactive'}
+                    </Badge>
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      colorScheme={
+                        student.isStudentActive !== false ? 'red' : 'green'
+                      }
+                      onClick={() => handleActivationToggle(student)}
+                      fontSize="xs"
+                      minW="50px"
+                    >
+                      {student.isStudentActive !== false
+                        ? 'Deactivate'
+                        : 'Activate'}
+                    </Button>
+                  </Flex>
                 </VStack>
               </Box>
 
@@ -611,14 +662,26 @@ export const StudentList = () => {
                 </Text>
 
                 {/* Occupation */}
-                <Text
-                  minW="100px"
-                  fontSize="sm"
-                  color="gray.700"
-                  textAlign="center"
-                >
-                  {student.growthInfo?.profession || 'Banker'}
-                </Text>
+                <Box>
+                  <Text
+                    minW="100px"
+                    fontSize="sm"
+                    color="gray.700"
+                    textAlign="center"
+                  >
+                    {student.growthInfo?.profession || 'Banker'}
+                  </Text>
+                  <Badge
+                    colorScheme={
+                      student.isStudentActive !== false ? 'green' : 'red'
+                    }
+                    variant="subtle"
+                    fontSize="xs"
+                  >
+                    Student is{' '}
+                    {student.isStudentActive !== false ? 'Active' : 'Inactive'}
+                  </Badge>
+                </Box>
 
                 {/* Payment Progress */}
                 <Box minW="120px" textAlign="center">
@@ -710,6 +773,20 @@ export const StudentList = () => {
                     onClick={() => handleViewDetails(student)}
                   >
                     See Details
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    colorScheme={
+                      student.isStudentActive !== false ? 'red' : 'green'
+                    }
+                    onClick={() => handleActivationToggle(student)}
+                    fontSize="xs"
+                    minW="50px"
+                  >
+                    {student.isStudentActive !== false
+                      ? 'Deactivate'
+                      : 'Activate'}
                   </Button>
                   <Button
                     size="xs"
@@ -804,6 +881,16 @@ export const StudentList = () => {
           onClose={onDetailsClose}
           student={selectedStudent}
           adminUser={portalUser}
+        />
+      )}
+
+      {/* Student Activation Modal */}
+      {activationStudent && (
+        <StudentActivationModal
+          isOpen={isActivationOpen}
+          onClose={onActivationClose}
+          student={activationStudent}
+          onStatusChange={handleStatusChange}
         />
       )}
 

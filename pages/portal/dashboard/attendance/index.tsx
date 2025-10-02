@@ -30,6 +30,7 @@ import {
   checkInStudent,
 } from '../../../../lib/utils/attendance.utils'
 import { HeaderInfo } from '../../../../features/portal/dashboard/messages/header-info'
+import StudentStatusGuard from '../../../../components/StudentStatusGuard'
 
 // Memoize today's date to prevent unnecessary recalculations
 const getToday = () => {
@@ -117,10 +118,13 @@ const AttendancePage = () => {
           ...snapshot.docs[0].data(),
         } as AttendanceData
         setAttendance(attendanceData)
-        
+
         // Check if student has already checked in for this attendance
         if (user?.uid) {
-          const hasCheckedIn = await didStudentCheckIn(attendanceData.id, user.uid)
+          const hasCheckedIn = await didStudentCheckIn(
+            attendanceData.id,
+            user.uid,
+          )
           setCheckedIn(hasCheckedIn?.checkedIn || false)
         }
       } else {
@@ -237,7 +241,7 @@ const AttendancePage = () => {
       setCheckedIn(true)
       setAttendanceCode('')
       onClose()
-      
+
       toast({
         title: 'Check-in successful! ✅',
         description: 'You have been marked present for today',
@@ -296,282 +300,311 @@ const AttendancePage = () => {
   return (
     <StudentAuthGuard>
       <DashboardLayout>
-        <HeaderInfo title="Attendance" />
-        <VStack
-          w="full"
-          gap={8}
-          alignItems="flex-start"
-          justifyContent="flex-start"
-        >
-          <Box w="full" textAlign="center" mt={8}>
-            <Text color="gray.500" textAlign="left" mb={8}>
-              You&apos;re welcome to class today, please click in
-            </Text>
+        <StudentStatusGuard>
+          <HeaderInfo title="Attendance" />
+          <VStack
+            w="full"
+            gap={8}
+            alignItems="flex-start"
+            justifyContent="flex-start"
+          >
+            <Box w="full" textAlign="center" mt={8}>
+              <Text color="gray.500" textAlign="left" mb={8}>
+                You&apos;re welcome to class today, please click in
+              </Text>
 
-            {attendance && checkedIn ? (
-              <Box
-                as="section"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                w="full"
-                px={{ base: 4, md: 12 }}
-                py={{ base: 4, md: 8 }}
-                bg="#F7F7FF"
-                borderRadius="3xl"
-                boxShadow="none"
-                mb={8}
-                style={{ minHeight: 120, borderRadius: 40 }}
-              >
-                <HStack w="full" spacing={0} alignItems="center" justifyContent="center">
-                  <Box display="flex" alignItems="center" w="full" justifyContent="center" gap={4}>
-                    <Box as="span" color="#363576" fontSize="3xl">
-                      {/* Checkmark icon (can use emoji or Chakra Icon) */}
-                      <span role="img" aria-label="checked in">✅</span>
-                    </Box>
-                    <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold" color="#363576">
-                      You have checked in for today!
-                    </Text>
-                  </Box>
-                </HStack>
-              </Box>
-            ) : attendance ? (
-              <Box
-                as="section"
-                display="flex"
-                alignItems="center"
-                justifyContent="between"
-                w="full"
-                px={{ base: 4, md: 12 }}
-                py={{ base: 4, md: 8 }}
-                bg="#F7F7FF"
-                borderRadius="3xl"
-                boxShadow="none"
-                mb={8}
-                style={{ minHeight: 120, borderRadius: 40 }}
-              >
-                <HStack
-                  w="full"
-                  spacing={0}
+              {attendance && checkedIn ? (
+                <Box
+                  as="section"
+                  display="flex"
                   alignItems="center"
-                  justifyContent="flex-start"
+                  justifyContent="center"
+                  w="full"
+                  px={{ base: 4, md: 12 }}
+                  py={{ base: 4, md: 8 }}
+                  bg="#F7F7FF"
+                  borderRadius="3xl"
+                  boxShadow="none"
+                  mb={8}
+                  style={{ minHeight: 120, borderRadius: 40 }}
                 >
-                  <Box
-                    display="flex"
-                    alignItems="center"
+                  <HStack
                     w="full"
-                    gap={{ base: 4, md: 12 }}
+                    spacing={0}
+                    alignItems="center"
+                    justifyContent="center"
                   >
-                    <VStack>
-                      <label style={{ fontSize: '16px' }}>Time</label>
-                      <Text
-                        fontSize={{ base: '2xl', md: '3xl', lg: '48px' }}
-                        fontWeight="bold"
-                        color="#333"
-                        letterSpacing="0.02em"
-                        minW="180px"
-                        textAlign="center"
-                        textTransform="uppercase"
-                      >
-                        {timeDisplay}
-                      </Text>
-                    </VStack>
                     <Box
-                      h={{ base: '40px', md: '60px' }}
-                      borderLeft="2px solid #222"
-                      mx={{ base: 2, md: 6 }}
-                    />
-                    <VStack>
-                      <label style={{ fontSize: '16px' }}>Date</label>
-                    <Text
-                      fontSize={{ base: '2xl', md: '3xl', lg: '48px' }}
-                      fontWeight="bold"
-                      color="#333"
-                      letterSpacing="0.02em"
-                      minW="260px"
-                      textAlign="center"
+                      display="flex"
+                      alignItems="center"
+                      w="full"
+                      justifyContent="center"
+                      gap={4}
                     >
-                      {dateDisplay}
-                    </Text>
-                    </VStack>
-                  </Box>
+                      <Box as="span" color="#363576" fontSize="3xl">
+                        {/* Checkmark icon (can use emoji or Chakra Icon) */}
+                        <span role="img" aria-label="checked in">
+                          ✅
+                        </span>
+                      </Box>
+                      <Text
+                        fontSize={{ base: 'xl', md: '2xl' }}
+                        fontWeight="bold"
+                        color="#363576"
+                      >
+                        You have checked in for today!
+                      </Text>
+                    </Box>
+                  </HStack>
+                </Box>
+              ) : attendance ? (
+                <Box
+                  as="section"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="between"
+                  w="full"
+                  px={{ base: 4, md: 12 }}
+                  py={{ base: 4, md: 8 }}
+                  bg="#F7F7FF"
+                  borderRadius="3xl"
+                  boxShadow="none"
+                  mb={8}
+                  style={{ minHeight: 120, borderRadius: 40 }}
+                >
+                  <HStack
+                    w="full"
+                    spacing={0}
+                    alignItems="center"
+                    justifyContent="flex-start"
+                  >
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      w="full"
+                      gap={{ base: 4, md: 12 }}
+                    >
+                      <VStack>
+                        <label style={{ fontSize: '16px' }}>Time</label>
+                        <Text
+                          fontSize={{ base: '2xl', md: '3xl', lg: '48px' }}
+                          fontWeight="bold"
+                          color="#333"
+                          letterSpacing="0.02em"
+                          minW="180px"
+                          textAlign="center"
+                          textTransform="uppercase"
+                        >
+                          {timeDisplay}
+                        </Text>
+                      </VStack>
+                      <Box
+                        h={{ base: '40px', md: '60px' }}
+                        borderLeft="2px solid #222"
+                        mx={{ base: 2, md: 6 }}
+                      />
+                      <VStack>
+                        <label style={{ fontSize: '16px' }}>Date</label>
+                        <Text
+                          fontSize={{ base: '2xl', md: '3xl', lg: '48px' }}
+                          fontWeight="bold"
+                          color="#333"
+                          letterSpacing="0.02em"
+                          minW="260px"
+                          textAlign="center"
+                        >
+                          {dateDisplay}
+                        </Text>
+                      </VStack>
+                    </Box>
+                    <Button
+                      bg="#363576"
+                      color="white"
+                      _hover={{ bg: '#28235c' }}
+                      px={{ base: 8, md: 16 }}
+                      py={{ base: 4, md: 8 }}
+                      fontSize={{ base: 'md', md: 'xl' }}
+                      borderRadius="lg"
+                      minW="160px"
+                      minH="56px"
+                      ml={{ base: 4, md: 12 }}
+                      onClick={handleCheckinClick}
+                      isDisabled={checkedIn}
+                      fontWeight="medium"
+                      style={{ borderRadius: 16 }}
+                    >
+                      {checkedIn ? 'Checked In' : 'Check In'}
+                    </Button>
+                  </HStack>
+                </Box>
+              ) : (
+                <Box
+                  bg="gray.50"
+                  borderRadius="2xl"
+                  px={12}
+                  py={8}
+                  mb={8}
+                  textAlign="center"
+                >
+                  <Text color="gray.500" fontSize="lg">
+                    No attendance session available for today
+                  </Text>
+                </Box>
+              )}
+
+              <HStack
+                spacing={8}
+                mt={attendance ? 0 : 16}
+                justifyContent="flex-start"
+              >
+                <Box
+                  bg="#E9E8F9"
+                  borderRadius="2xl"
+                  px={12}
+                  py={8}
+                  minW="180px"
+                  textAlign="center"
+                  position="relative"
+                >
+                  {summaryLoading && (
+                    <Box
+                      position="absolute"
+                      top="50%"
+                      left="50%"
+                      transform="translate(-50%, -50%)"
+                    >
+                      <Spinner size="sm" color="#363576" />
+                    </Box>
+                  )}
+                  <Text color="#363576" fontWeight="medium" mb={2}>
+                    Present
+                  </Text>
+                  <Text
+                    fontSize="3xl"
+                    fontWeight="bold"
+                    opacity={summaryLoading ? 0.5 : 1}
+                  >
+                    {stats.present}
+                  </Text>
+                </Box>
+                <Box
+                  bg="#FFE6EA"
+                  borderRadius="2xl"
+                  px={12}
+                  py={8}
+                  minW="180px"
+                  textAlign="center"
+                  position="relative"
+                >
+                  {summaryLoading && (
+                    <Box
+                      position="absolute"
+                      top="50%"
+                      left="50%"
+                      transform="translate(-50%, -50%)"
+                    >
+                      <Spinner size="sm" color="#D32F2F" />
+                    </Box>
+                  )}
+                  <Text color="#D32F2F" fontWeight="medium" mb={2}>
+                    {attendance ? 'Absent (Past Days)' : 'Absent'}
+                  </Text>
+                  <Text
+                    fontSize="3xl"
+                    fontWeight="bold"
+                    opacity={summaryLoading ? 0.5 : 1}
+                  >
+                    {stats.absent}
+                  </Text>
+                  {attendance &&
+                    normalizeDate(attendance.date) === today &&
+                    !checkedIn && (
+                      <Text fontSize="xs" color="#D32F2F" mt={1}>
+                        Today&apos;s attendance still open
+                      </Text>
+                    )}
+                </Box>
+              </HStack>
+            </Box>
+          </VStack>
+
+          {/* Attendance Code Modal */}
+          <Modal isOpen={isOpen} onClose={onClose} isCentered>
+            <ModalOverlay />
+            <ModalContent mx={4} borderRadius="xl">
+              <ModalHeader textAlign="center" color="#363576">
+                Enter Attendance Code
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <VStack spacing={6}>
+                  <Text color="gray.600" textAlign="center" fontSize="sm">
+                    Please enter the attendance code provided by your instructor
+                    to check in for today&apos;s class.
+                  </Text>
+
+                  <FormControl isInvalid={!!codeError}>
+                    <FormLabel
+                      fontSize="sm"
+                      fontWeight="medium"
+                      color="gray.700"
+                    >
+                      Attendance Code
+                    </FormLabel>
+                    <Input
+                      value={attendanceCode}
+                      onChange={(e) =>
+                        setAttendanceCode(e.target.value.toUpperCase())
+                      }
+                      placeholder="e.g., COP1234"
+                      textTransform="uppercase"
+                      fontSize="lg"
+                      fontWeight="bold"
+                      textAlign="center"
+                      letterSpacing="0.1em"
+                      bg="gray.50"
+                      border="2px solid"
+                      borderColor={codeError ? 'red.300' : 'yellow.300'}
+                      borderRadius="lg"
+                      h="3.5rem"
+                      _focus={{
+                        borderColor: codeError ? 'red.500' : 'yellow.400',
+                        bg: 'white',
+                        boxShadow: '0 0 0 1px rgba(245, 158, 11, 0.2)',
+                      }}
+                      _hover={{
+                        borderColor: codeError ? 'red.500' : 'yellow.400',
+                      }}
+                    />
+                    <FormErrorMessage>{codeError}</FormErrorMessage>
+                  </FormControl>
+
                   <Button
                     bg="#363576"
                     color="white"
                     _hover={{ bg: '#28235c' }}
-                    px={{ base: 8, md: 16 }}
-                    py={{ base: 4, md: 8 }}
-                    fontSize={{ base: 'md', md: 'xl' }}
-                    borderRadius="lg"
-                    minW="160px"
-                    minH="56px"
-                    ml={{ base: 4, md: 12 }}
-                    onClick={handleCheckinClick}
-                    isDisabled={checkedIn}
-                    fontWeight="medium"
-                    style={{ borderRadius: 16 }}
-                  >
-                    {checkedIn ? 'Checked In' : 'Check In'}
-                  </Button>
-                </HStack>
-              </Box>
-            ) : (
-              <Box
-                bg="gray.50"
-                borderRadius="2xl"
-                px={12}
-                py={8}
-                mb={8}
-                textAlign="center"
-              >
-                <Text color="gray.500" fontSize="lg">
-                  No attendance session available for today
-                </Text>
-              </Box>
-            )}
-
-            <HStack
-              spacing={8}
-              mt={attendance ? 0 : 16}
-              justifyContent="flex-start"
-            >
-              <Box
-                bg="#E9E8F9"
-                borderRadius="2xl"
-                px={12}
-                py={8}
-                minW="180px"
-                textAlign="center"
-                position="relative"
-              >
-                {summaryLoading && (
-                  <Box
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                  >
-                    <Spinner size="sm" color="#363576" />
-                  </Box>
-                )}
-                <Text color="#363576" fontWeight="medium" mb={2}>
-                  Present
-                </Text>
-                <Text
-                  fontSize="3xl"
-                  fontWeight="bold"
-                  opacity={summaryLoading ? 0.5 : 1}
-                >
-                  {stats.present}
-                </Text>
-              </Box>
-              <Box
-                bg="#FFE6EA"
-                borderRadius="2xl"
-                px={12}
-                py={8}
-                minW="180px"
-                textAlign="center"
-                position="relative"
-              >
-                {summaryLoading && (
-                  <Box
-                    position="absolute"
-                    top="50%"
-                    left="50%"
-                    transform="translate(-50%, -50%)"
-                  >
-                    <Spinner size="sm" color="#D32F2F" />
-                  </Box>
-                )}
-                <Text color="#D32F2F" fontWeight="medium" mb={2}>
-                  {attendance ? 'Absent (Past Days)' : 'Absent'}
-                </Text>
-                <Text
-                  fontSize="3xl"
-                  fontWeight="bold"
-                  opacity={summaryLoading ? 0.5 : 1}
-                >
-                  {stats.absent}
-                </Text>
-                {attendance && normalizeDate(attendance.date) === today && !checkedIn && (
-                  <Text fontSize="xs" color="#D32F2F" mt={1}>
-                    Today&apos;s attendance still open
-                  </Text>
-                )}
-              </Box>
-            </HStack>
-          </Box>
-        </VStack>
-
-        {/* Attendance Code Modal */}
-        <Modal isOpen={isOpen} onClose={onClose} isCentered>
-          <ModalOverlay />
-          <ModalContent mx={4} borderRadius="xl">
-            <ModalHeader textAlign="center" color="#363576">
-              Enter Attendance Code
-            </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <VStack spacing={6}>
-                <Text color="gray.600" textAlign="center" fontSize="sm">
-                  Please enter the attendance code provided by your instructor to check in for today&apos;s class.
-                </Text>
-                
-                <FormControl isInvalid={!!codeError}>
-                  <FormLabel fontSize="sm" fontWeight="medium" color="gray.700">
-                    Attendance Code
-                  </FormLabel>
-                  <Input
-                    value={attendanceCode}
-                    onChange={(e) => setAttendanceCode(e.target.value.toUpperCase())}
-                    placeholder="e.g., COP1234"
-                    textTransform="uppercase"
+                    px={8}
+                    py={4}
                     fontSize="lg"
-                    fontWeight="bold"
-                    textAlign="center"
-                    letterSpacing="0.1em"
-                    bg="gray.50"
-                    border="2px solid"
-                    borderColor={codeError ? 'red.300' : 'yellow.300'}
                     borderRadius="lg"
-                    h="3.5rem"
-                    _focus={{
-                      borderColor: codeError ? 'red.500' : 'yellow.400',
-                      bg: 'white',
-                      boxShadow: '0 0 0 1px rgba(245, 158, 11, 0.2)',
-                    }}
-                    _hover={{
-                      borderColor: codeError ? 'red.500' : 'yellow.400',
-                    }}
-                  />
-                  <FormErrorMessage>{codeError}</FormErrorMessage>
-                </FormControl>
+                    w="full"
+                    onClick={handleCheckin}
+                    isLoading={loading}
+                    isDisabled={!attendanceCode.trim()}
+                    fontWeight="medium"
+                  >
+                    Confirm Check-in
+                  </Button>
 
-                <Button
-                  bg="#363576"
-                  color="white"
-                  _hover={{ bg: '#28235c' }}
-                  px={8}
-                  py={4}
-                  fontSize="lg"
-                  borderRadius="lg"
-                  w="full"
-                  onClick={handleCheckin}
-                  isLoading={loading}
-                  isDisabled={!attendanceCode.trim()}
-                  fontWeight="medium"
-                >
-                  Confirm Check-in
-                </Button>
-
-                <Text fontSize="xs" color="gray.500" textAlign="center">
-                  Make sure you have the correct code from your instructor before proceeding.
-                </Text>
-              </VStack>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
+                  <Text fontSize="xs" color="gray.500" textAlign="center">
+                    Make sure you have the correct code from your instructor
+                    before proceeding.
+                  </Text>
+                </VStack>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        </StudentStatusGuard>
       </DashboardLayout>
     </StudentAuthGuard>
   )

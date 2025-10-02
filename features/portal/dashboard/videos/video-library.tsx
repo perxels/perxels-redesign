@@ -20,6 +20,11 @@ import {
   Spinner,
   FormControl,
   FormLabel,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react'
 import { FiLock } from 'react-icons/fi'
 import { MdSchool } from 'react-icons/md'
@@ -40,6 +45,7 @@ export const VideoLibrary = () => {
   const [accessCode, setAccessCode] = useState('')
   const [grantingAccess, setGrantingAccess] = useState(false)
   const [videoToUnlock, setVideoToUnlock] = useState<PortalVideo | null>(null)
+  const [activeTab, setActiveTab] = useState(0)
 
   const {
     isOpen: isCodeModalOpen,
@@ -100,10 +106,11 @@ export const VideoLibrary = () => {
           status: 'success',
           duration: 5000,
         })
+        router.push(`/portal/dashboard/videos/${videoToUnlock?.id}`)
         setAccessCode('')
         setVideoToUnlock(null)
         onCodeModalClose()
-        fetchVideos() // Refresh the video list
+        // fetchVideos() // Refresh the video list
       } else {
         toast({
           title: 'Access Denied',
@@ -141,6 +148,7 @@ export const VideoLibrary = () => {
   }
 
   const unlockVideos = videos.filter((v) => v.hasAccess)
+  const lockVideos = videos.filter((v) => !v.hasAccess)
   const getStats = () => {
     const totalVideos = videos.length
     const unlockedVideos = videos.filter((v) => v.hasAccess).length
@@ -164,60 +172,82 @@ export const VideoLibrary = () => {
 
   return (
     <Box>
-      <VStack spacing={6} align="stretch">
-        {/* Stats */}
-        {videos.length > 0 && (
-          <VStack spacing={4} align="stretch">
-            <HStack spacing={6} flexWrap="wrap">
-              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-                <Text fontSize="sm" color="gray.500">
-                  Total Videos
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold" color="purple.600">
-                  {stats.totalVideos}
-                </Text>
-              </Box>
-              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-                <Text fontSize="sm" color="gray.500">
-                  Unlocked
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold" color="green.600">
-                  {stats.unlockedVideos}
-                </Text>
-              </Box>
-              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-                <Text fontSize="sm" color="gray.500">
-                  Locked
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold" color="orange.600">
-                  {stats.lockedVideos}
-                </Text>
-              </Box>
-            </HStack>
-          </VStack>
-        )}
+      <Tabs
+        index={activeTab}
+        onChange={setActiveTab}
+        variant="soft-rounded"
+        colorScheme="purple"
+      >
+        <TabList mb={6}>
+          <Tab
+            opacity={0.8}
+            _selected={{
+              opacity: '100%',
+            }}
+          >
+            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
+              <Text fontSize="sm" color="gray.500">
+                Total Videos
+              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="purple.600">
+                {stats.totalVideos}
+              </Text>
+            </Box>
+          </Tab>
+          <Tab
+            opacity={0.8}
+            _selected={{
+              opacity: '100%',
+            }}
+          >
+            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
+              <Text fontSize="sm" color="gray.500">
+                Unlocked
+              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="green.600">
+                {stats.unlockedVideos}
+              </Text>
+            </Box>
+          </Tab>
+          <Tab
+            opacity={0.8}
+            _selected={{
+              opacity: '100%',
+            }}
+          >
+            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
+              <Text fontSize="sm" color="gray.500">
+                Locked
+              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="orange.600">
+                {stats.lockedVideos}
+              </Text>
+            </Box>
+          </Tab>
+        </TabList>
 
-        {/* Video Grid */}
-        {videos.length === 0 ? (
-          <Box textAlign="center" py={12}>
-            <FiLock size={48} color="#E2E8F0" />
-            <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
-              No videos available yet
-            </Text>
-            <Text color="gray.400" mb={6}>
-              Videos will appear here once they are added by your instructors
-            </Text>
-          </Box>
-        ) : (
-          <>
-            {/* Unlocked Videos */}
-            {unlockVideos.length > 0 && (
+        <TabPanels>
+          <TabPanel p={0}>
+            {/* Video Grid */}
+            {videos.length === 0 ? (
+              <Box textAlign="center" py={12}>
+                <FiLock size={48} color="#E2E8F0" />
+                <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
+                  No videos available yet
+                </Text>
+                <Text color="gray.400" mb={6}>
+                  Videos will appear here once they are added by your
+                  instructors
+                </Text>
+              </Box>
+            ) : (
               <>
-                <Text color="gray.600" mb={-3} fontSize="lg" fontWeight="bold">
-                  Unlocked Videos
+                {/* All Videos */}
+                <Text color="gray.600" mb={2} fontSize="lg" fontWeight="bold">
+                  All Videos
                 </Text>
                 <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-                  {unlockVideos.map((video) => (
+                  {videos.map((video) => (
                     <VideoCard
                       key={video.id}
                       video={video}
@@ -228,23 +258,86 @@ export const VideoLibrary = () => {
                 </SimpleGrid>
               </>
             )}
-
-            <Text color="gray.600" mb={-3} fontSize="lg" fontWeight="bold">
-              All Videos
-            </Text>
-            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-              {videos.map((video) => (
-                <VideoCard
-                  key={video.id}
-                  video={video}
-                  onPlay={() => handleVideoSelect(video)}
-                  onUnlock={() => handleUnlockVideo(video)}
-                />
-              ))}
-            </SimpleGrid>
-          </>
-        )}
-      </VStack>
+          </TabPanel>
+          <TabPanel p={0}>
+            {/* Video Grid */}
+            {unlockVideos.length === 0 ? (
+              <Box textAlign="center" py={12}>
+                <FiLock size={48} color="#E2E8F0" />
+                <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
+                  No videos available yet
+                </Text>
+                <Text color="gray.400" mb={6}>
+                  Videos will appear here once you have unlocked some videos
+                </Text>
+              </Box>
+            ) : (
+              <>
+                {/* Unlocked Videos */}
+                {unlockVideos.length > 0 && (
+                  <>
+                    <Text
+                      color="gray.600"
+                      mb={2}
+                      fontSize="lg"
+                      fontWeight="bold"
+                    >
+                      Unlocked Videos
+                    </Text>
+                    <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+                      {unlockVideos.map((video) => (
+                        <VideoCard
+                          key={video.id}
+                          video={video}
+                          onPlay={() => handleVideoSelect(video)}
+                          onUnlock={() => handleUnlockVideo(video)}
+                        />
+                      ))}
+                    </SimpleGrid>
+                  </>
+                )}
+              </>
+            )}
+          </TabPanel>
+          <TabPanel p={0}>
+            {/* Video Grid */}
+            {lockVideos.length === 0 ? (
+              <Box textAlign="center" py={12}>
+                <FiLock size={48} color="#E2E8F0" />
+                <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
+                  No videos available yet
+                </Text>
+              </Box>
+            ) : (
+              <>
+                {/* Locked Videos */}
+                {lockVideos.length > 0 && (
+                  <>
+                    <Text
+                      color="gray.600"
+                      mb={2}
+                      fontSize="lg"
+                      fontWeight="bold"
+                    >
+                      Locked Videos
+                    </Text>
+                    <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+                      {lockVideos.map((video) => (
+                        <VideoCard
+                          key={video.id}
+                          video={video}
+                          onPlay={() => handleVideoSelect(video)}
+                          onUnlock={() => handleUnlockVideo(video)}
+                        />
+                      ))}
+                    </SimpleGrid>
+                  </>
+                )}
+              </>
+            )}
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
 
       {/* Access Code Modal */}
       <Modal isOpen={isCodeModalOpen} onClose={onCodeModalClose}>

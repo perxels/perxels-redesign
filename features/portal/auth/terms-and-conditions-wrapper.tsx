@@ -45,6 +45,9 @@ export const TermsAndConditionsWrapper = () => {
         // Mark onboarding as fully complete
         onboardingComplete: true,
         onboardingCompletedAt: new Date(),
+        // Activate Student once onboarding is Completed.
+        isStudentActive: true,
+        studentActivatedAt: new Date(),
       })
 
       // Show success message

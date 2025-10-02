@@ -41,6 +41,7 @@ import {
   MdLink,
   MdCalendarToday,
 } from 'react-icons/md'
+import StudentStatusGuard from '../../../components/StudentStatusGuard'
 
 interface ClassData {
   id: string
@@ -235,322 +236,326 @@ const StudentSyllabusPage = () => {
   return (
     <StudentAuthGuard>
       <DashboardLayout>
-        <VStack w="full" align="stretch" spacing={6}>
-          {error ? (
-            <Alert status="error">
-              <AlertIcon />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          ) : syllabus ? (
-            <>
-              {/* Syllabus Header */}
-              <Card>
-                <CardHeader>
-                  <VStack align="start" spacing={3}>
-                    <HStack justify="space-between" w="full">
-                      <Heading size="lg">{syllabus.name}</Heading>
-                      <HStack spacing={2}>
-                        <Badge colorScheme="purple" variant="subtle">
-                          v{syllabus.version}
+        <StudentStatusGuard>
+          <VStack w="full" align="stretch" spacing={6}>
+            {error ? (
+              <Alert status="error">
+                <AlertIcon />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            ) : syllabus ? (
+              <>
+                {/* Syllabus Header */}
+                <Card>
+                  <CardHeader>
+                    <VStack align="start" spacing={3}>
+                      <HStack justify="space-between" w="full">
+                        <Heading size="lg">{syllabus.name}</Heading>
+                        <HStack spacing={2}>
+                          <Badge colorScheme="purple" variant="subtle">
+                            v{syllabus.version}
+                          </Badge>
+                          <Badge colorScheme="green" variant="subtle">
+                            Active
+                          </Badge>
+                        </HStack>
+                      </HStack>
+                      <Text color="gray.600" fontSize="lg">
+                        {syllabus.description}
+                      </Text>
+                      <HStack spacing={4}>
+                        <Badge colorScheme="blue" variant="subtle">
+                          <HStack spacing={1}>
+                            <MdAccessTime />
+                            <Text>{syllabus.totalWeeks} Weeks</Text>
+                          </HStack>
                         </Badge>
                         <Badge colorScheme="green" variant="subtle">
-                          Active
+                          <HStack spacing={1}>
+                            <MdSchool />
+                            <Text>{syllabus.totalDays} Days</Text>
+                          </HStack>
                         </Badge>
                       </HStack>
-                    </HStack>
-                    <Text color="gray.600" fontSize="lg">
-                      {syllabus.description}
-                    </Text>
-                    <HStack spacing={4}>
-                      <Badge colorScheme="blue" variant="subtle">
-                        <HStack spacing={1}>
-                          <MdAccessTime />
-                          <Text>{syllabus.totalWeeks} Weeks</Text>
+                      {classData && (
+                        <HStack spacing={4} fontSize="sm" color="gray.600">
+                          <Text>
+                            Cohort: <strong>{classData.cohortName}</strong>
+                          </Text>
+                          <Text>
+                            Start Date:{' '}
+                            <strong>{formatDate(classData.startDate)}</strong>
+                          </Text>
+                          <Text>
+                            End Date:{' '}
+                            <strong>{formatDate(classData.endDate)}</strong>
+                          </Text>
                         </HStack>
-                      </Badge>
-                      <Badge colorScheme="green" variant="subtle">
-                        <HStack spacing={1}>
-                          <MdSchool />
-                          <Text>{syllabus.totalDays} Days</Text>
-                        </HStack>
-                      </Badge>
-                    </HStack>
-                    {classData && (
-                      <HStack spacing={4} fontSize="sm" color="gray.600">
-                        <Text>
-                          Cohort: <strong>{classData.cohortName}</strong>
-                        </Text>
-                        <Text>
-                          Start Date:{' '}
-                          <strong>{formatDate(classData.startDate)}</strong>
-                        </Text>
-                        <Text>
-                          End Date:{' '}
-                          <strong>{formatDate(classData.endDate)}</strong>
-                        </Text>
-                      </HStack>
-                    )}
-                  </VStack>
-                </CardHeader>
-              </Card>
-
-              {/* Syllabus Content */}
-              <Card>
-                <CardHeader>
-                  <Heading size="md">Course Content</Heading>
-                </CardHeader>
-                <CardBody>
-                  <VStack spacing={4} align="stretch">
-                    {/* Full Syllabus List */}
-                    <VStack spacing={6} align="stretch">
-                      {syllabus.weeks.map((week, weekIndex) => (
-                        <Card key={week.id || weekIndex} variant="outline">
-                          <CardHeader>
-                            <HStack justify="space-between" align="center">
-                              <VStack align="start" spacing={1}>
-                                <Heading size="md">{week.title}</Heading>
-                                <Text fontSize="sm" color="gray.600">
-                                  {week.days.length} days • Week{' '}
-                                  {week.weekNumber}
-                                </Text>
-                              </VStack>
-                              <Badge colorScheme="blue" variant="subtle">
-                                {week.days.length} days
-                              </Badge>
-                            </HStack>
-                          </CardHeader>
-                          <CardBody>
-                            <VStack spacing={4} align="stretch">
-                              {week.days.map((day, dayIndex) => {
-                                const status = getDayStatus(day)
-                                const scheduled = getScheduledDay(day.id)
-
-                                return (
-                                  <Box
-                                    key={day.id || dayIndex}
-                                    p={4}
-                                    border="1px solid"
-                                    borderColor="gray.200"
-                                    borderRadius="lg"
-                                    bg="white"
-                                  >
-                                    <VStack spacing={4} align="stretch">
-                                      {/* Day Header */}
-                                      <HStack
-                                        justify="space-between"
-                                        align="start"
-                                      >
-                                        <VStack
-                                          align="start"
-                                          spacing={1}
-                                          flex="1"
-                                        >
-                                          <Text
-                                            fontWeight="bold"
-                                            fontSize="lg"
-                                            color="purple.600"
-                                          >
-                                            Day {day.dayNumber}: {day.title}
-                                          </Text>
-                                          <Text
-                                            fontSize="sm"
-                                            color="gray.700"
-                                            whiteSpace="pre-line"
-                                            lineHeight="1.5"
-                                          >
-                                            {day.content}
-                                          </Text>
-                                          <HStack spacing={2} mt={2}>
-                                            {day.duration && (
-                                              <Badge
-                                                colorScheme="purple"
-                                                variant="subtle"
-                                                fontSize="xs"
-                                              >
-                                                <HStack spacing={1}>
-                                                  <MdAccessTime />
-                                                  <Text>{day.duration}</Text>
-                                                </HStack>
-                                              </Badge>
-                                            )}
-                                            {/* Show class type if available */}
-                                            {(day as any).classType && (
-                                              <Badge
-                                                colorScheme={
-                                                  (day as any).classType ===
-                                                  'online'
-                                                    ? 'blue'
-                                                    : 'orange'
-                                                }
-                                                variant="subtle"
-                                                fontSize="xs"
-                                              >
-                                                <HStack spacing={1}>
-                                                  {(day as any).classType ===
-                                                  'online' ? (
-                                                    <MdComputer />
-                                                  ) : (
-                                                    <MdSchool />
-                                                  )}
-                                                  <Text>
-                                                    {(day as any).classType}
-                                                  </Text>
-                                                </HStack>
-                                              </Badge>
-                                            )}
-                                          </HStack>
-                                        </VStack>
-                                        <VStack align="end" spacing={2}>
-                                          <Badge
-                                            colorScheme={getStatusColor(status)}
-                                            variant="subtle"
-                                          >
-                                            {getStatusText(status)}
-                                          </Badge>
-                                        </VStack>
-                                      </HStack>
-
-                                      {/* Scheduled Date Display */}
-                                      {scheduled && (
-                                        <Box
-                                          p={3}
-                                          bg="blue.50"
-                                          borderRadius="md"
-                                          border="1px solid"
-                                          borderColor="blue.200"
-                                        >
-                                          <HStack spacing={2} align="center">
-                                            <MdCalendarToday color="#3182CE" />
-                                            <Text
-                                              fontSize="sm"
-                                              fontWeight="medium"
-                                              color="blue.700"
-                                            >
-                                              Scheduled for:{' '}
-                                              {formatScheduledDate(
-                                                scheduled.scheduledDate,
-                                              )}
-                                            </Text>
-                                            {scheduled.isCompleted && (
-                                              <Badge
-                                                colorScheme="green"
-                                                variant="subtle"
-                                                size="sm"
-                                              >
-                                                Completed
-                                              </Badge>
-                                            )}
-                                          </HStack>
-                                          {scheduled.notes && (
-                                            <Text
-                                              fontSize="xs"
-                                              color="blue.600"
-                                              mt={1}
-                                              ml={6}
-                                            >
-                                              Note: {scheduled.notes}
-                                            </Text>
-                                          )}
-                                        </Box>
-                                      )}
-
-                                      {/* Assignments */}
-                                      {day.assignments &&
-                                        day.assignments.length > 0 && (
-                                          <Box>
-                                            <Text
-                                              fontWeight="semibold"
-                                              fontSize="sm"
-                                              color="gray.700"
-                                              mb={2}
-                                            >
-                                              <HStack spacing={1}>
-                                                <MdAssignment />
-                                                <Text>Assignments</Text>
-                                              </HStack>
-                                            </Text>
-                                            <List spacing={1}>
-                                              {day.assignments.map(
-                                                (assignment, idx) => (
-                                                  <ListItem
-                                                    key={idx}
-                                                    fontSize="sm"
-                                                    color="gray.600"
-                                                  >
-                                                    <ListIcon
-                                                      as={MdCheckCircle}
-                                                      color="green.500"
-                                                    />
-                                                    {assignment}
-                                                  </ListItem>
-                                                ),
-                                              )}
-                                            </List>
-                                          </Box>
-                                        )}
-
-                                      {/* Resources */}
-                                      {day.resources &&
-                                        day.resources.length > 0 && (
-                                          <Box>
-                                            <Text
-                                              fontWeight="semibold"
-                                              fontSize="sm"
-                                              color="gray.700"
-                                              mb={2}
-                                            >
-                                              <HStack spacing={1}>
-                                                <MdLink />
-                                                <Text>Resources</Text>
-                                              </HStack>
-                                            </Text>
-                                            <List spacing={1}>
-                                              {day.resources.map(
-                                                (resource, idx) => (
-                                                  <ListItem
-                                                    key={idx}
-                                                    fontSize="sm"
-                                                    color="blue.600"
-                                                  >
-                                                    <ListIcon
-                                                      as={MdLink}
-                                                      color="blue.500"
-                                                    />
-                                                    <a
-                                                      href={resource}
-                                                      target="_blank"
-                                                      rel="noopener noreferrer"
-                                                    >
-                                                      {resource}
-                                                    </a>
-                                                  </ListItem>
-                                                ),
-                                              )}
-                                            </List>
-                                          </Box>
-                                        )}
-                                    </VStack>
-                                  </Box>
-                                )
-                              })}
-                            </VStack>
-                          </CardBody>
-                        </Card>
-                      ))}
+                      )}
                     </VStack>
-                  </VStack>
-                </CardBody>
-              </Card>
-            </>
-          ) : (
-            <Alert status="info">
-              <AlertIcon />
-              <AlertDescription>
-                No syllabus available for your class yet.
-              </AlertDescription>
-            </Alert>
-          )}
-        </VStack>
+                  </CardHeader>
+                </Card>
+
+                {/* Syllabus Content */}
+                <Card>
+                  <CardHeader>
+                    <Heading size="md">Course Content</Heading>
+                  </CardHeader>
+                  <CardBody>
+                    <VStack spacing={4} align="stretch">
+                      {/* Full Syllabus List */}
+                      <VStack spacing={6} align="stretch">
+                        {syllabus.weeks.map((week, weekIndex) => (
+                          <Card key={week.id || weekIndex} variant="outline">
+                            <CardHeader>
+                              <HStack justify="space-between" align="center">
+                                <VStack align="start" spacing={1}>
+                                  <Heading size="md">{week.title}</Heading>
+                                  <Text fontSize="sm" color="gray.600">
+                                    {week.days.length} days • Week{' '}
+                                    {week.weekNumber}
+                                  </Text>
+                                </VStack>
+                                <Badge colorScheme="blue" variant="subtle">
+                                  {week.days.length} days
+                                </Badge>
+                              </HStack>
+                            </CardHeader>
+                            <CardBody>
+                              <VStack spacing={4} align="stretch">
+                                {week.days.map((day, dayIndex) => {
+                                  const status = getDayStatus(day)
+                                  const scheduled = getScheduledDay(day.id)
+
+                                  return (
+                                    <Box
+                                      key={day.id || dayIndex}
+                                      p={4}
+                                      border="1px solid"
+                                      borderColor="gray.200"
+                                      borderRadius="lg"
+                                      bg="white"
+                                    >
+                                      <VStack spacing={4} align="stretch">
+                                        {/* Day Header */}
+                                        <HStack
+                                          justify="space-between"
+                                          align="start"
+                                        >
+                                          <VStack
+                                            align="start"
+                                            spacing={1}
+                                            flex="1"
+                                          >
+                                            <Text
+                                              fontWeight="bold"
+                                              fontSize="lg"
+                                              color="purple.600"
+                                            >
+                                              Day {day.dayNumber}: {day.title}
+                                            </Text>
+                                            <Text
+                                              fontSize="sm"
+                                              color="gray.700"
+                                              whiteSpace="pre-line"
+                                              lineHeight="1.5"
+                                            >
+                                              {day.content}
+                                            </Text>
+                                            <HStack spacing={2} mt={2}>
+                                              {day.duration && (
+                                                <Badge
+                                                  colorScheme="purple"
+                                                  variant="subtle"
+                                                  fontSize="xs"
+                                                >
+                                                  <HStack spacing={1}>
+                                                    <MdAccessTime />
+                                                    <Text>{day.duration}</Text>
+                                                  </HStack>
+                                                </Badge>
+                                              )}
+                                              {/* Show class type if available */}
+                                              {(day as any).classType && (
+                                                <Badge
+                                                  colorScheme={
+                                                    (day as any).classType ===
+                                                    'online'
+                                                      ? 'blue'
+                                                      : 'orange'
+                                                  }
+                                                  variant="subtle"
+                                                  fontSize="xs"
+                                                >
+                                                  <HStack spacing={1}>
+                                                    {(day as any).classType ===
+                                                    'online' ? (
+                                                      <MdComputer />
+                                                    ) : (
+                                                      <MdSchool />
+                                                    )}
+                                                    <Text>
+                                                      {(day as any).classType}
+                                                    </Text>
+                                                  </HStack>
+                                                </Badge>
+                                              )}
+                                            </HStack>
+                                          </VStack>
+                                          <VStack align="end" spacing={2}>
+                                            <Badge
+                                              colorScheme={getStatusColor(
+                                                status,
+                                              )}
+                                              variant="subtle"
+                                            >
+                                              {getStatusText(status)}
+                                            </Badge>
+                                          </VStack>
+                                        </HStack>
+
+                                        {/* Scheduled Date Display */}
+                                        {scheduled && (
+                                          <Box
+                                            p={3}
+                                            bg="blue.50"
+                                            borderRadius="md"
+                                            border="1px solid"
+                                            borderColor="blue.200"
+                                          >
+                                            <HStack spacing={2} align="center">
+                                              <MdCalendarToday color="#3182CE" />
+                                              <Text
+                                                fontSize="sm"
+                                                fontWeight="medium"
+                                                color="blue.700"
+                                              >
+                                                Scheduled for:{' '}
+                                                {formatScheduledDate(
+                                                  scheduled.scheduledDate,
+                                                )}
+                                              </Text>
+                                              {scheduled.isCompleted && (
+                                                <Badge
+                                                  colorScheme="green"
+                                                  variant="subtle"
+                                                  size="sm"
+                                                >
+                                                  Completed
+                                                </Badge>
+                                              )}
+                                            </HStack>
+                                            {scheduled.notes && (
+                                              <Text
+                                                fontSize="xs"
+                                                color="blue.600"
+                                                mt={1}
+                                                ml={6}
+                                              >
+                                                Note: {scheduled.notes}
+                                              </Text>
+                                            )}
+                                          </Box>
+                                        )}
+
+                                        {/* Assignments */}
+                                        {day.assignments &&
+                                          day.assignments.length > 0 && (
+                                            <Box>
+                                              <Text
+                                                fontWeight="semibold"
+                                                fontSize="sm"
+                                                color="gray.700"
+                                                mb={2}
+                                              >
+                                                <HStack spacing={1}>
+                                                  <MdAssignment />
+                                                  <Text>Assignments</Text>
+                                                </HStack>
+                                              </Text>
+                                              <List spacing={1}>
+                                                {day.assignments.map(
+                                                  (assignment, idx) => (
+                                                    <ListItem
+                                                      key={idx}
+                                                      fontSize="sm"
+                                                      color="gray.600"
+                                                    >
+                                                      <ListIcon
+                                                        as={MdCheckCircle}
+                                                        color="green.500"
+                                                      />
+                                                      {assignment}
+                                                    </ListItem>
+                                                  ),
+                                                )}
+                                              </List>
+                                            </Box>
+                                          )}
+
+                                        {/* Resources */}
+                                        {day.resources &&
+                                          day.resources.length > 0 && (
+                                            <Box>
+                                              <Text
+                                                fontWeight="semibold"
+                                                fontSize="sm"
+                                                color="gray.700"
+                                                mb={2}
+                                              >
+                                                <HStack spacing={1}>
+                                                  <MdLink />
+                                                  <Text>Resources</Text>
+                                                </HStack>
+                                              </Text>
+                                              <List spacing={1}>
+                                                {day.resources.map(
+                                                  (resource, idx) => (
+                                                    <ListItem
+                                                      key={idx}
+                                                      fontSize="sm"
+                                                      color="blue.600"
+                                                    >
+                                                      <ListIcon
+                                                        as={MdLink}
+                                                        color="blue.500"
+                                                      />
+                                                      <a
+                                                        href={resource}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                      >
+                                                        {resource}
+                                                      </a>
+                                                    </ListItem>
+                                                  ),
+                                                )}
+                                              </List>
+                                            </Box>
+                                          )}
+                                      </VStack>
+                                    </Box>
+                                  )
+                                })}
+                              </VStack>
+                            </CardBody>
+                          </Card>
+                        ))}
+                      </VStack>
+                    </VStack>
+                  </CardBody>
+                </Card>
+              </>
+            ) : (
+              <Alert status="info">
+                <AlertIcon />
+                <AlertDescription>
+                  No syllabus available for your class yet.
+                </AlertDescription>
+              </Alert>
+            )}
+          </VStack>
+        </StudentStatusGuard>
       </DashboardLayout>
     </StudentAuthGuard>
   )
