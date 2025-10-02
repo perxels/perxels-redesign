@@ -41,7 +41,10 @@ interface PaymentConfirmationFormValues {
 }
 
 const formSchema = Yup.object().shape({
-  amountPaid: Yup.number().required('Amount paid is required'),
+  amountPaid: Yup.number()
+    .required('Amount paid is required')
+    .min(20000, 'Amount paid must be at least ₦20,000')
+    .positive('Amount paid must be positive'),
   amountOwed: Yup.number().required('Amount owed is required'),
   paymentReceipt: Yup.mixed()
     .required('Payment receipt is required')
@@ -153,10 +156,14 @@ const PaymentConfirmation = ({
   const router = useRouter()
   const { sendPaymentNotification } = usePaymentNotifications()
 
-  const initialAmountOwed = useMemo(() => 
-    (portalUser?.schoolFeeInfo?.totalSchoolFee || 0) -
-    (portalUser?.schoolFeeInfo?.totalApproved || 0), 
-    [portalUser?.schoolFeeInfo?.totalSchoolFee, portalUser?.schoolFeeInfo?.totalApproved]
+  const initialAmountOwed = useMemo(
+    () =>
+      (portalUser?.schoolFeeInfo?.totalSchoolFee || 0) -
+      (portalUser?.schoolFeeInfo?.totalApproved || 0),
+    [
+      portalUser?.schoolFeeInfo?.totalSchoolFee,
+      portalUser?.schoolFeeInfo?.totalApproved,
+    ],
   )
 
   async function handlePaymentConfirmationSubmit(
@@ -180,7 +187,7 @@ const PaymentConfirmation = ({
         formData.append('file', paymentReceiptFile)
         formData.append('uid', uid)
         formData.append('type', 'payment_receipt')
-        
+
         const uploadResponse = await fetch('/api/upload-receipt', {
           method: 'POST',
           body: formData,
@@ -189,21 +196,20 @@ const PaymentConfirmation = ({
             accept: 'application/json',
           },
         })
-        
+
         if (!uploadResponse.ok) {
           const errorData = await uploadResponse.json().catch(() => null)
           console.error('Upload error:', errorData || uploadResponse.statusText)
           throw new Error(
-            errorData?.error || 
-            'Failed to upload receipt. Please try again.'
+            errorData?.error || 'Failed to upload receipt. Please try again.',
           )
         }
-        
+
         const uploadResult = await uploadResponse.json()
         if (!uploadResult.success || !uploadResult.url) {
           throw new Error(uploadResult.error || 'Invalid upload response')
         }
-        
+
         paymentReceiptUrl = uploadResult.url
       } catch (uploadError: any) {
         console.error('Receipt upload error:', uploadError)

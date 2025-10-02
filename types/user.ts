@@ -69,3 +69,11 @@ export interface StudentData {
   guardianName?: string
   guardianPhone?: string
 }
+
+interface Student {
+  isStudentActive: boolean
+  studentActivatedAt?: Date // Keep your existing field
+  studentDeactivatedAt?: Date // Add this for deactivation timestamp
+  deactivationReason?: string // Reason for deactivation
+  lastStatusUpdatedAt?: Date // Track any status change
+}

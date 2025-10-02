@@ -20,6 +20,11 @@ import {
   Spinner,
   FormControl,
   FormLabel,
+  Tabs,
+  Tab,
+  TabList,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react'
 import { FiLock, FiBook } from 'react-icons/fi'
 import { PortalEbook } from '../../../../types/ebook.types'
@@ -40,6 +45,7 @@ export const EbookLibrary = () => {
   const [accessCode, setAccessCode] = useState('')
   const [grantingAccess, setGrantingAccess] = useState(false)
   const [ebookToUnlock, setEbookToUnlock] = useState<PortalEbook | null>(null)
+  const [activeTab, setActiveTab] = useState(0)
 
   const {
     isOpen: isCodeModalOpen,
@@ -135,6 +141,8 @@ export const EbookLibrary = () => {
     }
   }
 
+  const unlockedEbooks = ebooks.filter((e) => e.hasAccess)
+  const lockedEbooks = ebooks.filter((e) => !e.hasAccess)
   const getStats = () => {
     const totalEbooks = ebooks.length
     const unlockedEbooks = ebooks.filter((e) => e.hasAccess).length
@@ -161,66 +169,181 @@ export const EbookLibrary = () => {
       <VStack spacing={6} align="stretch">
         {/* Stats */}
         {ebooks.length > 0 && (
-          <VStack spacing={4} align="stretch">
-            <HStack spacing={6} flexWrap="wrap">
-              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-                <Text fontSize="sm" color="gray.500">
-                  Total Ebooks
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold" color="purple.600">
-                  {stats.totalEbooks}
-                </Text>
-              </Box>
-              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-                <Text fontSize="sm" color="gray.500">
-                  Unlocked
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold" color="green.600">
-                  {stats.unlockedEbooks}
-                </Text>
-              </Box>
-              <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-                <Text fontSize="sm" color="gray.500">
-                  Locked
-                </Text>
-                <Text fontSize="2xl" fontWeight="bold" color="orange.600">
-                  {stats.lockedEbooks}
-                </Text>
-              </Box>
-            </HStack>
-          </VStack>
-        )}
+          <Tabs
+            index={activeTab}
+            onChange={setActiveTab}
+            variant="soft-rounded"
+            colorScheme="purple"
+          >
+            <TabList mb={6}>
+              <Tab
+                opacity={0.76}
+                _selected={{
+                  opacity: '100%',
+                }}
+              >
+                <Box
+                  bg="white"
+                  p={4}
+                  borderRadius="lg"
+                  shadow="sm"
+                  minW="150px"
+                >
+                  <Text fontSize="sm" color="gray.500">
+                    Total Ebooks
+                  </Text>
+                  <Text fontSize="2xl" fontWeight="bold" color="purple.600">
+                    {stats.totalEbooks}
+                  </Text>
+                </Box>
+              </Tab>
+              <Tab
+                opacity={0.76}
+                _selected={{
+                  opacity: '100%',
+                }}
+              >
+                <Box
+                  bg="white"
+                  p={4}
+                  borderRadius="lg"
+                  shadow="sm"
+                  minW="150px"
+                >
+                  <Text fontSize="sm" color="gray.500">
+                    Unlocked
+                  </Text>
+                  <Text fontSize="2xl" fontWeight="bold" color="green.600">
+                    {stats.unlockedEbooks}
+                  </Text>
+                </Box>
+              </Tab>
+              <Tab
+                opacity={0.76}
+                _selected={{
+                  opacity: '100%',
+                }}
+              >
+                <Box
+                  bg="white"
+                  p={4}
+                  borderRadius="lg"
+                  shadow="sm"
+                  minW="150px"
+                >
+                  <Text fontSize="sm" color="gray.500">
+                    Locked
+                  </Text>
+                  <Text fontSize="2xl" fontWeight="bold" color="orange.600">
+                    {stats.lockedEbooks}
+                  </Text>
+                </Box>
+              </Tab>
+            </TabList>
 
-        {/* Ebook Grid */}
-        {ebooks.length === 0 ? (
-          <Box textAlign="center" py={12}>
-            <FiBook size={48} color="#E2E8F0" />
-            <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
-              No ebooks available yet
-            </Text>
-            <Text color="gray.400" mb={6}>
-              Ebooks will appear here once they are added by your instructors
-            </Text>
-            <Button
-              colorScheme="purple"
-              onClick={onCodeModalOpen}
-              leftIcon={<FiLock />}
-            >
-              Unlock with Access Code
-            </Button>
-          </Box>
-        ) : (
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-            {ebooks.map((ebook) => (
-              <EbookCard
-                key={ebook.id}
-                ebook={ebook}
-                onDownload={() => {}} // Download is handled directly in the card
-                onUnlock={() => handleUnlockEbook(ebook)}
-                userId={user?.uid}
-              />
-            ))}
-          </SimpleGrid>
+            <TabPanels>
+              <TabPanel p={0}>
+                {/* EBook Grid */}
+                {ebooks.length === 0 ? (
+                  <Box textAlign="center" py={12}>
+                    <FiBook size={48} color="#E2E8F0" />
+                    <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
+                      No ebooks available yet
+                    </Text>
+                    <Text color="gray.400" mb={6}>
+                      Ebooks will appear here once they are added by your
+                      instructors
+                    </Text>
+                    <Button
+                      colorScheme="purple"
+                      onClick={onCodeModalOpen}
+                      leftIcon={<FiLock />}
+                    >
+                      Unlock with Access Code
+                    </Button>
+                  </Box>
+                ) : (
+                  <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+                    {ebooks.map((ebook) => (
+                      <EbookCard
+                        key={ebook.id}
+                        ebook={ebook}
+                        onDownload={() => {}} // Download is handled directly in the card
+                        onUnlock={() => handleUnlockEbook(ebook)}
+                        userId={user?.uid}
+                      />
+                    ))}
+                  </SimpleGrid>
+                )}
+              </TabPanel>
+              <TabPanel p={0}>
+                {/* EBook Grid */}
+                {unlockedEbooks.length === 0 ? (
+                  <Box textAlign="center" py={12}>
+                    <FiBook size={48} color="#E2E8F0" />
+                    <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
+                      No unlocked ebooks available yet
+                    </Text>
+                    <Text color="gray.400" mb={6}>
+                      Ebooks will appear here once unlock atleast one.
+                    </Text>
+                    <Button
+                      colorScheme="purple"
+                      onClick={onCodeModalOpen}
+                      leftIcon={<FiLock />}
+                    >
+                      Unlock with Access Code
+                    </Button>
+                  </Box>
+                ) : (
+                  <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+                    {unlockedEbooks.map((ebook) => (
+                      <EbookCard
+                        key={ebook.id}
+                        ebook={ebook}
+                        onDownload={() => {}} // Download is handled directly in the card
+                        onUnlock={() => handleUnlockEbook(ebook)}
+                        userId={user?.uid}
+                      />
+                    ))}
+                  </SimpleGrid>
+                )}
+              </TabPanel>
+              <TabPanel p={0}>
+                {/* EBook Grid */}
+                {lockedEbooks.length === 0 ? (
+                  <Box textAlign="center" py={12}>
+                    <FiBook size={48} color="#E2E8F0" />
+                    <Text fontSize="xl" color="gray.500" mt={4} mb={2}>
+                      No locked ebooks available yet
+                    </Text>
+                    {/* <Text color="gray.400" mb={6}>
+                      Ebooks will appear here once unlock atleast one.
+                    </Text> */}
+                    {/* <Button
+                      colorScheme="purple"
+                      onClick={onCodeModalOpen}
+                      leftIcon={<FiLock />}
+                    >
+                      Unlock with Access Code
+                    </Button> */}
+                  </Box>
+                ) : (
+                  <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+                    {lockedEbooks.map((ebook) => (
+                      <EbookCard
+                        key={ebook.id}
+                        ebook={ebook}
+                        onDownload={() => {}} // Download is handled directly in the card
+                        onUnlock={() => handleUnlockEbook(ebook)}
+                        userId={user?.uid}
+                      />
+                    ))}
+                  </SimpleGrid>
+                )}
+              </TabPanel>{' '}
+            </TabPanels>
+          </Tabs>
         )}
       </VStack>
 

@@ -69,17 +69,19 @@ function VideoWatchPageContent() {
   // Track video view after a delay to ensure actual viewing
   useEffect(() => {
     if (!video || !user?.uid) return
-    
+
     const timer = setTimeout(async () => {
       try {
         await incrementVideoView(video.id, user.uid)
         // Update local state to reflect the view
-        setVideo(prev => prev ? { ...prev, viewCount: (prev.viewCount || 0) + 1 } : null)
+        setVideo((prev) =>
+          prev ? { ...prev, viewCount: (prev.viewCount || 0) + 1 } : null,
+        )
       } catch (error) {
         console.error('Error tracking video view:', error)
       }
     }, 10000) // Wait 10 seconds before counting as a view
-    
+
     return () => clearTimeout(timer)
   }, [video?.id, user?.uid])
 
@@ -198,7 +200,7 @@ function VideoWatchPageContent() {
         <Button
           leftIcon={<FiArrowLeft />}
           variant="outline"
-                          onClick={() => router.push('/portal/dashboard/library')}
+          onClick={() => router.push('/portal/dashboard/library')}
         >
           Back to Video Library
         </Button>
@@ -208,6 +210,16 @@ function VideoWatchPageContent() {
 
   return (
     <VStack spacing={3} align="stretch">
+      <Box>
+        <Button
+          leftIcon={<FiArrowLeft />}
+          variant="outline"
+          size="md"
+          onClick={() => router.push('/portal/dashboard/library')}
+        >
+          Back
+        </Button>
+      </Box>
       {/* Video Player */}
       <VideoPlayerFull video={video} studentId={user?.uid || ''} />
 

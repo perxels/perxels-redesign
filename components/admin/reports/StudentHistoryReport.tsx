@@ -154,12 +154,21 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                   <Th fontSize="sm" fontWeight="semibold" color="gray.600">
                     Check-ins
                   </Th>
-                  <Th fontSize="sm" fontWeight="semibold" color="gray.600">
-                    Present
-                  </Th>
-                  <Th fontSize="sm" fontWeight="semibold" color="gray.600">
-                    Absent
-                  </Th>
+                  {filteredStudents[0]?.totalSessions === 1 ? (
+                    <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                      Status
+                    </Th>
+                  ) : (
+                    <>
+                      <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                        Present
+                      </Th>
+                      <Th fontSize="sm" fontWeight="semibold" color="gray.600">
+                        Absent
+                      </Th>
+                    </>
+                  )}
+
                   {/* <Th fontSize="sm" fontWeight="semibold" color="gray.600">
                   Rate
                 </Th>
@@ -294,32 +303,61 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                     </Td> */}
 
                       {/* Present and Absent */}
-                      <Td>
-                        <Text
-                          fontSize="sm"
-                          fontWeight="medium"
-                          color="green.600"
-                        >
-                          {student.checkIns}
-                        </Text>
-                      </Td>
-                      <Td>
-                        <Badge
-                          colorScheme={
-                            student.checkIns >
-                            student.totalSessions - student.checkIns
-                              ? 'green'
-                              : student.checkIns ==
+                      {student.totalSessions === 1 ? (
+                        <>
+                          {student.totalSessions === student.checkIns ? (
+                            <Td>
+                              <Text
+                                fontSize="sm"
+                                fontWeight="medium"
+                                color="green.600"
+                              >
+                                Present
+                              </Text>
+                            </Td>
+                          ) : (
+                            <Td>
+                              <Text
+                                fontSize="sm"
+                                fontWeight="medium"
+                                color="red"
+                              >
+                                Absent
+                              </Text>
+                            </Td>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <Td>
+                            <Text
+                              fontSize="sm"
+                              fontWeight="medium"
+                              color="green.600"
+                            >
+                              {student.checkIns}
+                            </Text>
+                          </Td>
+                          <Td>
+                            <Badge
+                              colorScheme={
+                                student.checkIns >
                                 student.totalSessions - student.checkIns
-                              ? 'yellow'
-                              : 'red'
-                          }
-                          variant="solid"
-                          fontSize="xs"
-                        >
-                          {student.totalSessions - student.checkIns}
-                        </Badge>
-                      </Td>
+                                  ? 'green'
+                                  : student.checkIns ==
+                                    student.totalSessions - student.checkIns
+                                  ? 'yellow'
+                                  : 'red'
+                              }
+                              variant="solid"
+                              fontSize="xs"
+                            >
+                              {student.totalSessions - student.checkIns}
+                            </Badge>
+                          </Td>
+                        </>
+                      )}
+
                       <Td>
                         <Button
                           size="xs"
@@ -433,22 +471,40 @@ export function StudentHistoryReport({ students }: StudentHistoryReportProps) {
                   {selectedStudent.checkIns || 0}
                 </Text>
               </HStack>
-              <HStack align="center" justifyContent="space-between" spacing={4}>
-                <Text fontSize="md" color="gray.600" fontWeight="bold">
-                  Present:
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium">
-                  {selectedStudent.checkIns || 0}
-                </Text>
-              </HStack>
-              <HStack align="center" justifyContent="space-between" spacing={4}>
-                <Text fontSize="md" color="gray.600" fontWeight="bold">
-                  Absent:
-                </Text>
-                <Text fontSize="sm" color="gray.600" fontWeight="medium">
-                  {selectedStudent.totalSessions - selectedStudent.checkIns}
-                </Text>
-              </HStack>
+              <VStack mt={3} spacing={2}>
+                <Text>Session Details</Text>
+                {selectedStudent.sessions &&
+                  selectedStudent.sessions.map((session: any) => (
+                    <HStack
+                      align="center"
+                      justifyContent="space-between"
+                      spacing={2}
+                      width={'100%'}
+                      key={session.sessionId}
+                    >
+                      <Box display={'flex'} alignItems="center" gap={1}>
+                        <Text fontSize="md" color="gray.600" fontWeight="bold">
+                          Day:
+                        </Text>
+
+                        <Text
+                          fontSize="sm"
+                          color="gray.600"
+                          fontWeight="medium"
+                        >
+                          {session.date}
+                        </Text>
+                      </Box>
+                      <Text
+                        fontSize="md"
+                        fontWeight="bold"
+                        color={session.checkedIn ? 'green' : 'red'}
+                      >
+                        {session.checkedIn ? 'Present' : 'Absent'}
+                      </Text>
+                    </HStack>
+                  ))}
+              </VStack>
             </VStack>
           </ModalBody>
         </ModalContent>

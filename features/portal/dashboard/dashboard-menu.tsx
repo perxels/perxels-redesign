@@ -29,6 +29,11 @@ const menuItems = [
     href: '/portal/dashboard/syllabus',
     icon: '/assets/icons/syllabus.svg',
   },
+  {
+    title: 'Tests',
+    href: '/portal/dashboard/tests',
+    icon: '/assets/icons/test.png',
+  },
 ]
 
 export const DashboardMenu = () => {

@@ -36,7 +36,12 @@ const menuItems = [
   {
     title: 'Tests & Results',
     href: '/portal/admin/tests',
-    icon: '/assets/icons/facilitatorIcon.png',
+    icon: '/assets/icons/test.png',
+  },
+  {
+    title: 'Student Of The Week',
+    href: '/portal/admin/sotw',
+    icon: '/assets/icons/sotw.png',
   },
   {
     title: 'Notifications',
