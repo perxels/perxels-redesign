@@ -74,13 +74,13 @@ export class StudentActivationService {
         }
         // SAFER: Only activate if not explicitly deactivated
         // Incase User has been DeActivated..
-        // const shouldActivate =
-        //   !userData.isStudentActive && !userData.studentDeactivatedAt
+        const shouldActivate =
+          !userData.isStudentActive && !userData.studentDeactivatedAt
 
-        // if (!shouldActivate) {
-        //   skippedCount++
-        //   continue
-        // }
+        if (!shouldActivate) {
+          skippedCount++
+          continue
+        }
 
         // Determine activation date (use createdAt as onboardingCompletedAt doesn't exist)
         const activationDate = userData.createdAt?.seconds

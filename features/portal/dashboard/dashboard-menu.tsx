@@ -47,8 +47,11 @@ export const DashboardMenu = () => {
                 <Image
                   src={item.icon}
                   alt={item.title}
-                  width={24}
-                  height={24}
+                  width={28}
+                  height={28}
+                  style={{
+                    filter: 'brightness(0) invert(1)',
+                  }}
                 />
               </Center>
 
