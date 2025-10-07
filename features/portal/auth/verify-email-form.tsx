@@ -26,6 +26,7 @@ export const VerifyEmailForm = () => {
   // Get email from URL params first, then fall back to authenticated user
   const urlEmail = searchParams.get('email') || ''
   const urlRole = searchParams.get('role')
+  const userRole = urlRole || portalUser?.email || ''
   const userEmail = user?.email || portalUser?.email || ''
   const email = urlEmail || userEmail
 

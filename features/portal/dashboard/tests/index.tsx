@@ -153,50 +153,71 @@ export const StudentTestsWrapper = () => {
         colorScheme="blue"
       >
         <TabList mb={6}>
-          <Tab>
-            <Box
-              bg="white"
-              p={4}
-              borderRadius="lg"
-              shadow="sm"
-              minWidth={'50px'}
-            >
-              <Text fontSize="sm" color="gray.500">
+          <Tab
+            bg="white"
+            p={4}
+            borderRadius="lg"
+            shadow="sm"
+            mr={4}
+            minWidth={'80px'}
+            _selected={{
+              // backgroundColor: '#44337A',
+              backgroundColor: '#E9D8FD',
+              color: '#44337A',
+            }}
+          >
+            <Box>
+              <Text
+                fontSize="md"
+                // color="gray.800"
+                fontWeight="bold"
+              >
                 Available Tests
               </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="blue.600">
+              <Text fontSize="2xl" fontWeight="bold" mt={1}>
                 {stats.totalTests}
               </Text>
             </Box>
           </Tab>
-          <Tab>
-            <Box
-              bg="white"
-              p={4}
-              borderRadius="lg"
-              shadow="sm"
-              minWidth={'50px'}
-            >
-              <Text fontSize="sm" color="gray.500">
+          <Tab
+            bg="white"
+            color={'#22543D'}
+            p={4}
+            borderRadius="lg"
+            shadow="sm"
+            mr={4}
+            minWidth={'80px'}
+            _selected={{
+              backgroundColor: '#C6F6D5',
+              color: '#22543D',
+            }}
+          >
+            <Box>
+              <Text fontSize="md" fontWeight="bold">
                 Completed
               </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="green.600">
+              <Text fontSize="2xl" fontWeight="bold" mt={1}>
                 {stats.completedTests}
               </Text>
             </Box>
           </Tab>
-          <Tab>
-            <Box
-              bg="white"
-              p={4}
-              borderRadius="lg"
-              shadow="sm"
-              minWidth={'50px'}
-            >
-              <Text fontSize="sm" color="gray.500">
+          <Tab
+            bg="white"
+            color="purple.700"
+            p={4}
+            borderRadius="lg"
+            shadow="sm"
+            minWidth={'100px'}
+            _selected={{
+              backgroundColor: 'purple.200',
+              color: 'purple.700',
+            }}
+          >
+            <Box>
+              <Text fontSize="md" fontWeight="bold">
                 Passed
               </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="purple.600">
+              <Text fontSize="2xl" fontWeight="bold" mt={1}>
                 {stats.passedTests}
               </Text>
             </Box>

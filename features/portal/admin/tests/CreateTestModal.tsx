@@ -25,6 +25,8 @@ import {
   AlertTitle,
   AlertDescription,
   useToast,
+  SimpleGrid,
+  Switch,
 } from '@chakra-ui/react'
 import { MdAdd, MdDelete } from 'react-icons/md'
 import { createTest } from '../../../../lib/firebase/tests'
@@ -55,6 +57,10 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
     isActive: true,
     status: 'active' as 'active' | 'inactive' | 'draft',
     allowRetakes: false,
+    // Security settings
+    shuffleQuestions: false,
+    shuffleOptions: false,
+    maxTabSwitches: 2, // 0 = disabled by default
   })
 
   const [questions, setQuestions] = useState([
@@ -119,6 +125,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
       return
     }
 
+    // To Validate all questions
     for (let index = 0; index < questions.length; index++) {
       const question = questions[index]
 
@@ -197,6 +204,9 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
       isActive: true,
       status: 'active',
       allowRetakes: false,
+      shuffleQuestions: false,
+      shuffleOptions: false,
+      maxTabSwitches: 2,
     })
     setQuestions([
       {
@@ -267,7 +277,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                   />
                 </FormControl>
 
-                <HStack width="100%" spacing={4}>
+                <SimpleGrid columns={[1, 2, 3]} spacing={4} mb={4}>
                   <FormControl>
                     <FormLabel>Duration (minutes)</FormLabel>
                     <NumberInput
@@ -317,7 +327,90 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                       <NumberInputField />
                     </NumberInput>
                   </FormControl>
-                </HStack>
+                </SimpleGrid>
+
+                {/* Security Settings Section */}
+                <Box mt={6} p={4} bg="gray.50" borderRadius="md">
+                  <Text fontWeight="bold" mb={4}>
+                    Security Settings
+                  </Text>
+
+                  <SimpleGrid columns={[1, 2]} spacing={4}>
+                    <FormControl display="flex" alignItems="center">
+                      <FormLabel htmlFor="shuffle-questions" mb="0">
+                        Shuffle Questions
+                      </FormLabel>
+                      <Switch
+                        id="shuffle-questions"
+                        isChecked={testData.shuffleQuestions}
+                        onChange={(e) =>
+                          setTestData({
+                            ...testData,
+                            shuffleQuestions: e.target.checked,
+                          })
+                        }
+                        colorScheme="blue"
+                      />
+                    </FormControl>
+
+                    <FormControl display="flex" alignItems="center">
+                      <FormLabel htmlFor="shuffle-options" mb="0">
+                        Shuffle Options
+                      </FormLabel>
+                      <Switch
+                        id="shuffle-options"
+                        isChecked={testData.shuffleOptions}
+                        onChange={(e) =>
+                          setTestData({
+                            ...testData,
+                            shuffleOptions: e.target.checked,
+                          })
+                        }
+                        colorScheme="blue"
+                      />
+                    </FormControl>
+
+                    <FormControl>
+                      <FormLabel>Max Tab Switches</FormLabel>
+                      <NumberInput
+                        min={0}
+                        max={10}
+                        value={testData.maxTabSwitches}
+                        onChange={(valueString, valueNumber) =>
+                          setTestData({
+                            ...testData,
+                            maxTabSwitches: valueNumber || 0,
+                          })
+                        }
+                      >
+                        <NumberInputField />
+                      </NumberInput>
+                      <Text fontSize="sm" color="gray.600" mt={1}>
+                        {testData.maxTabSwitches === 0
+                          ? 'Tab switching disabled'
+                          : `Test auto-submits after ${testData.maxTabSwitches} tab switches`}
+                      </Text>
+                    </FormControl>
+                  </SimpleGrid>
+
+                  <Alert status="info" mt={4} size="sm">
+                    <AlertIcon />
+                    <Box>
+                      <Text fontSize="sm" fontWeight="medium">
+                        Security Features
+                      </Text>
+                      <Text fontSize="xs">
+                        • Shuffle Questions: Randomizes question order for each
+                        student
+                        <br />
+                        • Shuffle Options: Randomizes answer choices for each
+                        question
+                        <br />• Tab Switching: Prevents students from leaving
+                        the test window
+                      </Text>
+                    </Box>
+                  </Alert>
+                </Box>
 
                 <HStack width="100%" spacing={4} mt={4}>
                   <FormControl>
@@ -331,13 +424,13 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                         })
                       }
                     >
-                      <option value="draft">Draft</option>
+                      {/* <option value="draft">Draft</option> */}
                       <option value="active">Active</option>
                       <option value="inactive">Inactive</option>
                     </Select>
                   </FormControl>
 
-                  <FormControl>
+                  {/* <FormControl>
                     <FormLabel>Allow Retakes</FormLabel>
                     <Select
                       value={testData.allowRetakes ? 'yes' : 'no'}
@@ -351,7 +444,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                       <option value="no">No</option>
                       <option value="yes">Yes</option>
                     </Select>
-                  </FormControl>
+                  </FormControl> */}
                 </HStack>
               </Box>
 

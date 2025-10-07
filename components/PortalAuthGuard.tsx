@@ -98,11 +98,21 @@ export function PortalAuthGuard({
       return
     }
 
-    // Student-specific checks (existing logic)
+    // Student-specific checks (existing logic)()
     if (requireEmailVerification && !isEmailVerified) {
       router.push('/portal/verify')
       return
     }
+    // if (portalUser?.role === 'student') {
+    //   if (requireEmailVerification && !isEmailVerified) {
+    //     router.push(
+    //       `/portal/verify?email=${encodeURIComponent(
+    //         currentUserEmail || '',
+    //       )}&role=student`,
+    //     )
+    //     return
+    //   }
+    // }
 
     if (requireRegistrationComplete && !isRegistrationComplete) {
       // Determine where to redirect based on current progress

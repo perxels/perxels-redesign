@@ -22,6 +22,7 @@ import {
   TestAttempt,
   TestResult,
   TestParticipant,
+  StudentRemark,
 } from '../../types/test'
 import { StudentData } from '../../types/user'
 
@@ -569,4 +570,75 @@ export const getTestByAccessCode = async (
   )
   const snapshot = await getDocs(q)
   return snapshot.empty ? null : (snapshot.docs[0].data() as Test)
+}
+
+// Add remark for a student
+export const addStudentRemark = async (
+  remarkData: Omit<StudentRemark, 'remarkId' | 'createdAt'>,
+) => {
+  try {
+    const remarkRef = await addDoc(collection(portalDb, 'studentRemarks'), {
+      ...remarkData,
+      createdAt: Timestamp.now(),
+      isVisibleToStudent: true, // Default to visible
+    })
+
+    return remarkRef.id
+  } catch (error) {
+    console.error('Error adding student remark:', error)
+    throw error
+  }
+}
+
+// Get remarks for a specific student and test
+export const getStudentRemarks = async (
+  studentId: string,
+  testId: string,
+): Promise<StudentRemark[]> => {
+  try {
+    const q = query(
+      collection(portalDb, 'studentRemarks'),
+      where('studentId', '==', studentId),
+      where('testId', '==', testId),
+      orderBy('createdAt', 'desc'),
+    )
+
+    const snapshot = await getDocs(q)
+    return snapshot.docs.map(
+      (doc) =>
+        ({
+          remarkId: doc.id,
+          ...doc.data(),
+        } as StudentRemark),
+    )
+  } catch (error) {
+    console.error('Error getting student remarks:', error)
+    return []
+  }
+}
+
+// Update a remark
+export const updateStudentRemark = async (
+  remarkId: string,
+  updates: Partial<StudentRemark>,
+) => {
+  try {
+    await updateDoc(doc(portalDb, 'studentRemarks', remarkId), {
+      ...updates,
+      updatedAt: Timestamp.now(),
+    })
+  } catch (error) {
+    console.error('Error updating student remark:', error)
+    throw error
+  }
+}
+
+// Delete a remark
+export const deleteStudentRemark = async (remarkId: string) => {
+  try {
+    await deleteDoc(doc(portalDb, 'studentRemarks', remarkId))
+  } catch (error) {
+    console.error('Error deleting student remark:', error)
+    throw error
+  }
 }

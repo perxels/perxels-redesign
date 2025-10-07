@@ -180,46 +180,70 @@ export const VideoLibrary = () => {
       >
         <TabList mb={6}>
           <Tab
+            color="purple.600"
             opacity={0.8}
+            borderRadius="lg"
+            shadow="sm"
+            bg={'white'}
+            minW="150px"
+            p={4}
+            mr={4}
             _selected={{
-              opacity: '100%',
+              color: 'white',
+              backgroundColor: 'purple.600',
             }}
           >
-            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-              <Text fontSize="sm" color="gray.500">
+            <Box>
+              <Text fontSize="md" color="gray.700" fontWeight="bold">
                 Total Videos
               </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="purple.600">
+              <Text fontSize="2xl" fontWeight="bold" mt={1}>
                 {stats.totalVideos}
               </Text>
             </Box>
           </Tab>
+
           <Tab
+            color="green.600"
             opacity={0.8}
+            borderRadius="lg"
+            shadow="sm"
+            bg={'white'}
+            minW="150px"
+            p={4}
+            mr={4}
             _selected={{
-              opacity: '100%',
+              color: 'white',
+              backgroundColor: 'green.400',
             }}
           >
-            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-              <Text fontSize="sm" color="gray.500">
+            <Box>
+              <Text fontSize="md" color="gray.700" fontWeight="bold">
                 Unlocked
               </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="green.600">
+              <Text fontSize="2xl" fontWeight="bold" mt={1}>
                 {stats.unlockedVideos}
               </Text>
             </Box>
           </Tab>
           <Tab
+            color="orange.600"
             opacity={0.8}
+            borderRadius="lg"
+            shadow="sm"
+            bg={'white'}
+            minW="150px"
+            p={4}
             _selected={{
-              opacity: '100%',
+              color: 'white',
+              backgroundColor: 'orange.400',
             }}
           >
-            <Box bg="white" p={4} borderRadius="lg" shadow="sm" minW="150px">
-              <Text fontSize="sm" color="gray.500">
+            <Box>
+              <Text fontSize="md" color="gray.700" fontWeight="bold">
                 Locked
               </Text>
-              <Text fontSize="2xl" fontWeight="bold" color="orange.600">
+              <Text fontSize="2xl" fontWeight="bold" mt={1}>
                 {stats.lockedVideos}
               </Text>
             </Box>
