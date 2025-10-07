@@ -15,6 +15,10 @@ export interface Test {
   totalParticipants: number
   isActive: boolean
   allowRetakes?: boolean
+  // Test security settings
+  shuffleQuestions?: boolean
+  shuffleOptions?: boolean
+  maxTabSwitches?: number // 0 = disabled, 1+ = number of allowed switches
   analytics?: {
     totalAttempts: number
     totalParticipants: number
@@ -53,6 +57,11 @@ export interface TestAttempt {
   timeSpent?: number // in seconds
   passed: boolean
   passingScore: number
+  // Security tracking
+  tabSwitchCount?: number
+  wasAutoSubmitted?: boolean
+  autoSubmitReason?: string
+  wasShuffled?: boolean
 }
 
 export interface TestResult {
@@ -80,4 +89,15 @@ export interface TestParticipant {
   lastAttemptDate?: any
   cohort?: string
   classPlan?: string
+}
+export interface StudentRemark {
+  remarkId: string
+  testId: string
+  studentId: string
+  addedBy: string // admin/facilitator ID
+  addedByName: string // admin/facilitator name
+  remark: string
+  createdAt: any
+  updatedAt?: any
+  isVisibleToStudent?: boolean
 }

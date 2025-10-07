@@ -212,3 +212,47 @@ video {
     margin-bottom: 15px;
   }
 }
+
+.btnQuest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  font-size: 14px;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+.btnQuestOutlineB {
+  color: #34296b;
+  outline: 2px solid #34296b;
+}
+.btnQuestOutlineB:hover {
+  color: white;
+  background: #34296b;
+}
+.btnQuestOutlineG {
+  color: rgba(140, 6, 6, 0.8);
+  outline: 2px solid rgba(140, 6, 6, 0.8);
+}
+.btnQuestOutlineG:hover {
+  color: white;
+  background: rgba(140, 6, 6, 0.8);
+}
+
+.btnQuestsolidB {
+  color: #fff;
+  background-color: #34296b;
+  outline: 2px solid #34296b;
+}
+.btnQuestsolidB:hover {
+  opacity: 0.9;
+}
+
+.btnQuestsolidG {
+  color: #fff;
+  background-color: rgba(140, 6, 6, 0.8);
+  outline: 2px solid rgba(140, 6, 6, 0.8);
+}
+.btnQuestsolidG:hover {
+  opacity: 0.9;
+}

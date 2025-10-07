@@ -19,15 +19,23 @@ import {
   Alert,
   AlertIcon,
   Button,
+  AlertDescription,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import {
   getTestById,
   getStudentAttempts,
   getTestQuestions,
+  getStudentRemarks,
 } from '../../../../lib/firebase/tests'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
-import { Test, TestAttempt, Question } from '../../../../types/test'
+import {
+  Test,
+  TestAttempt,
+  Question,
+  StudentRemark,
+} from '../../../../types/test'
+import { FiArrowLeft, FiMessageSquare } from 'react-icons/fi'
 
 interface TestResultsProps {
   testId: string
@@ -39,6 +47,7 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
   const [test, setTest] = useState<Test | null>(null)
   const [attempts, setAttempts] = useState<TestAttempt[]>([])
   const [questions, setQuestions] = useState<Question[]>([])
+  const [remarks, setRemarks] = useState<StudentRemark[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
@@ -51,11 +60,13 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
   const loadResults = async () => {
     try {
       setLoading(true)
-      const [testData, attemptsData, questionsData] = await Promise.all([
-        getTestById(testId),
-        getStudentAttempts(user!.uid, testId),
-        getTestQuestions(testId),
-      ])
+      const [testData, attemptsData, questionsData, remarksData] =
+        await Promise.all([
+          getTestById(testId),
+          getStudentAttempts(user!.uid, testId),
+          getTestQuestions(testId),
+          getStudentRemarks(user!.uid, testId),
+        ])
 
       if (!testData) {
         setError('Test not found')
@@ -65,12 +76,33 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
       setTest(testData)
       setAttempts(attemptsData)
       setQuestions(questionsData)
+      setRemarks(remarksData.filter((remark) => remark.isVisibleToStudent)) // Only show visible remarks
     } catch (error) {
       console.error('Error loading results:', error)
       setError('Failed to load test results')
     } finally {
       setLoading(false)
     }
+  }
+
+  // Function to format remarks
+  const formatRemarks = (remarks: StudentRemark[]) => {
+    return (
+      <Box display={'flex'} flexWrap={'wrap'} gap={5}>
+        {remarks.map((remark) => (
+          <Card key={remark.remarkId} variant="outline" mt={2}>
+            <CardBody>
+              <VStack align="start" spacing={2}>
+                <Text fontSize="sm" color="gray.600">
+                  From {remark.addedByName} • {formatDate(remark.createdAt)}
+                </Text>
+                <Text>{remark.remark}</Text>
+              </VStack>
+            </CardBody>
+          </Card>
+        ))}
+      </Box>
+    )
   }
 
   const getLatestAttempt = () => {
@@ -109,17 +141,39 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
 
   const latestAttempt = getLatestAttempt()
   const bestAttempt = getBestAttempt()
+  const visibleRemarks = remarks.filter((remark) => remark.isVisibleToStudent)
 
   return (
     <Box maxW="6xl" mx="auto">
+      <Box mb={3}>
+        <Button
+          leftIcon={<FiArrowLeft />}
+          variant="outline"
+          size="sm"
+          onClick={() => router.push('/portal/dashboard/tests')}
+        >
+          Back
+        </Button>
+      </Box>
       <VStack spacing={6} align="stretch">
         {/* Test Header */}
         <Card>
           <CardBody>
             <VStack align="start" spacing={4}>
-              <Text fontSize="2xl" fontWeight="bold">
-                {test.testName}
-              </Text>
+              <HStack justify="space-between" width="100%">
+                <Text fontSize="2xl" fontWeight="bold">
+                  {test.testName}
+                </Text>
+                {visibleRemarks.length > 0 && (
+                  <Badge colorScheme="blue" variant="subtle" fontSize="md">
+                    <HStack spacing={1}>
+                      <FiMessageSquare />
+                      <Text>{visibleRemarks.length} Remark(s)</Text>
+                    </HStack>
+                  </Badge>
+                )}
+              </HStack>
+
               {test.testDescription && (
                 <Text color="gray.600">{test.testDescription}</Text>
               )}
@@ -160,6 +214,30 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
             </VStack>
           </CardBody>
         </Card>
+
+        {/* Instructor Remarks Section */}
+        {visibleRemarks.length > 0 && (
+          <Card>
+            <CardBody>
+              <VStack align="start" spacing={4}>
+                <HStack>
+                  <FiMessageSquare />
+                  <Text fontSize="xl" fontWeight="bold">
+                    Instructor Remarks & Recommendations
+                  </Text>
+                </HStack>
+                <Alert status="info" variant="subtle">
+                  <AlertIcon />
+                  <AlertDescription>
+                    Your instructor has provided feedback and recommendations
+                    for your performance.
+                  </AlertDescription>
+                </Alert>
+                {formatRemarks(visibleRemarks)}
+              </VStack>
+            </CardBody>
+          </Card>
+        )}
 
         {/* Attempt History */}
         <Card>
@@ -260,10 +338,14 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
                           <Text>{question.questionText}</Text>
 
                           <VStack align="start" spacing={1}>
-                            <Text fontSize="sm" color="gray.600">
+                            <Text fontSize="sm" color="gray.700">
                               Your answer: {studentAnswer || 'Not answered'}
                             </Text>
-                            <Text fontSize="sm" color="gray.600">
+                            <Text
+                              fontSize="md"
+                              color="green.500"
+                              fontWeight={'bold'}
+                            >
                               Correct answer: {question.correctAnswer}
                             </Text>
                           </VStack>
@@ -302,3 +384,20 @@ const StatCard = ({ label, value, color }: any) => (
     </Text>
   </Box>
 )
+
+// HELPER FUNCTION
+const formatDate = (date: any) => {
+  if (!date) return 'Unknown date'
+  try {
+    const dateObj = date.toDate ? date.toDate() : new Date(date)
+    return dateObj.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  } catch {
+    return 'Invalid Date'
+  }
+}

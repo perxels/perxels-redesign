@@ -24,6 +24,8 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Switch,
+  SimpleGrid,
 } from '@chakra-ui/react'
 import {
   updateTest,
@@ -62,6 +64,9 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
     isActive: test.isActive,
     status: test.status,
     allowRetakes: test.allowRetakes || false,
+    shuffleQuestions: test.shuffleQuestions || false,
+    shuffleOptions: test.shuffleOptions || false,
+    maxTabSwitches: test.maxTabSwitches || 0,
   })
   const [newQuestion, setNewQuestion] = useState({
     questionText: '',
@@ -74,9 +79,23 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
 
   useEffect(() => {
     if (isOpen) {
+      // To Reset testData when modal opens with a new test
+      setTestData({
+        testName: test.testName,
+        testDescription: test.testDescription || '',
+        duration: test.duration,
+        maxAttempts: test.maxAttempts,
+        passingScore: test.passingScore,
+        isActive: test.isActive,
+        status: test.status,
+        allowRetakes: test.allowRetakes || false,
+        shuffleQuestions: test.shuffleQuestions || false,
+        shuffleOptions: test.shuffleOptions || false,
+        maxTabSwitches: test.maxTabSwitches || 0,
+      })
       loadQuestions()
     }
-  }, [isOpen])
+  }, [isOpen, test]) //Added test to dependency array
 
   const loadQuestions = async () => {
     try {
@@ -341,7 +360,7 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                   <FormLabel>Max Attempts</FormLabel>
                   <NumberInput
                     min={1}
-                    max={5}
+                    max={10} // To be changed
                     value={testData.maxAttempts}
                     onChange={(value) =>
                       setTestData({
@@ -419,7 +438,70 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                 </Box>
               </Alert>
             </Box>
+            {/* More Updates */}
+            <Box mt={6} p={4} bg="gray.50" borderRadius="md">
+              <Text fontWeight="bold" mb={4}>
+                Security Settings
+              </Text>
 
+              <SimpleGrid columns={[1, 2]} spacing={4}>
+                <FormControl display="flex" alignItems="center">
+                  <FormLabel htmlFor="shuffle-questions" mb="0">
+                    Shuffle Questions
+                  </FormLabel>
+                  <Switch
+                    id="shuffle-questions"
+                    isChecked={testData.shuffleQuestions}
+                    onChange={(e) =>
+                      setTestData({
+                        ...testData,
+                        shuffleQuestions: e.target.checked,
+                      })
+                    }
+                    colorScheme="blue"
+                  />
+                </FormControl>
+
+                <FormControl display="flex" alignItems="center">
+                  <FormLabel htmlFor="shuffle-options" mb="0">
+                    Shuffle Options
+                  </FormLabel>
+                  <Switch
+                    id="shuffle-options"
+                    isChecked={testData.shuffleOptions}
+                    onChange={(e) =>
+                      setTestData({
+                        ...testData,
+                        shuffleOptions: e.target.checked,
+                      })
+                    }
+                    colorScheme="blue"
+                  />
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel>Max Tab Switches</FormLabel>
+                  <NumberInput
+                    min={0}
+                    max={10}
+                    value={testData.maxTabSwitches}
+                    onChange={(valueString, valueNumber) =>
+                      setTestData({
+                        ...testData,
+                        maxTabSwitches: valueNumber || 0,
+                      })
+                    }
+                  >
+                    <NumberInputField />
+                  </NumberInput>
+                  <Text fontSize="sm" color="gray.600" mt={1}>
+                    {testData.maxTabSwitches === 0
+                      ? 'Tab switching disabled'
+                      : `Test auto-submits after ${testData.maxTabSwitches} tab switches`}
+                  </Text>
+                </FormControl>
+              </SimpleGrid>
+            </Box>
             {/* Existing Questions */}
             <Box>
               <Text fontWeight="bold" mb={4}>
@@ -449,7 +531,6 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                 </VStack>
               )}
             </Box>
-
             {/* Add New Question */}
             <Box p={4} borderWidth={1} borderRadius="md" borderStyle="dashed">
               <Text fontWeight="bold" mb={4}>
@@ -506,7 +587,7 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                 <FormLabel>Points</FormLabel>
                 <NumberInput
                   min={1}
-                  max={10}
+                  max={20}
                   value={newQuestion.points}
                   onChange={(value) =>
                     setNewQuestion({

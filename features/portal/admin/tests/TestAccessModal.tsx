@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -32,13 +32,40 @@ import {
   InputLeftElement,
   SimpleGrid,
   Select,
+  FormControl,
+  Textarea,
+  FormLabel,
+  Switch,
+  Card,
+  CardBody,
+  Tooltip,
+  IconButton,
+  useDisclosure,
 } from '@chakra-ui/react'
-import { FiSearch, FiUser, FiMail, FiCalendar, FiAward } from 'react-icons/fi'
-import { Test, TestParticipant } from '../../../../types/test'
+import {
+  FiSearch,
+  FiUser,
+  FiMail,
+  FiCalendar,
+  FiAward,
+  FiFilter,
+  FiX,
+  FiEye,
+  FiEyeOff,
+  FiTrash2,
+  FiMessageSquare,
+  FiMessageCircle,
+} from 'react-icons/fi' // Added FiFilter and FiX
+import { Test, TestParticipant, StudentRemark } from '../../../../types/test'
 import {
   getTestParticipants,
   getTestAnalytics,
+  addStudentRemark,
+  getStudentRemarks,
+  updateStudentRemark,
+  deleteStudentRemark,
 } from '../../../../lib/firebase/tests'
+import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 
 interface TestAccessModalProps {
   isOpen: boolean
@@ -46,11 +73,251 @@ interface TestAccessModalProps {
   test: Test
 }
 
+//  Add Remark Modal Component
+const AddRemarkModal: React.FC<{
+  isOpen: boolean
+  onClose: () => void
+  student: TestParticipant
+  test: Test
+  onRemarkAdded: () => void
+}> = ({ isOpen, onClose, student, test, onRemarkAdded }) => {
+  const { portalUser } = usePortalAuth()
+  const [remark, setRemark] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [isVisibleToStudent, setIsVisibleToStudent] = useState(true)
+
+  const handleSubmit = async () => {
+    if (!remark.trim() || !portalUser) return
+
+    setLoading(true)
+    try {
+      await addStudentRemark({
+        testId: test.testId,
+        studentId: student.studentId,
+        addedBy: portalUser.uid,
+        addedByName: portalUser.fullName || 'Admin',
+        remark: remark.trim(),
+        isVisibleToStudent,
+      })
+
+      setRemark('')
+      onRemarkAdded()
+      onClose()
+    } catch (error) {
+      console.error('Error adding remark:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} size="lg">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Add Remark for {student.studentName}</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <VStack spacing={4}>
+            <FormControl>
+              <FormLabel>Remark/Recommendation</FormLabel>
+              <Textarea
+                value={remark}
+                onChange={(e) => setRemark(e.target.value)}
+                placeholder="Enter your remarks or recommendations for this student..."
+                rows={6}
+              />
+            </FormControl>
+
+            {/* <FormControl display="flex" alignItems="center">
+              <FormLabel htmlFor="visible-to-student" mb="0">
+                Visible to student
+              </FormLabel>
+              <Switch
+                id="visible-to-student"
+                isChecked={isVisibleToStudent}
+                onChange={(e) => setIsVisibleToStudent(e.target.checked)}
+                colorScheme="blue"
+              />
+            </FormControl> */}
+
+            {/* {!isVisibleToStudent && (
+              <Alert status="info" size="sm">
+                <AlertIcon />
+                This remark will only be visible to admins and facilitators
+              </Alert>
+            )} */}
+          </VStack>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="ghost" mr={3} onClick={onClose}>
+            Cancel
+          </Button>
+          <Button
+            colorScheme="blue"
+            onClick={handleSubmit}
+            isLoading={loading}
+            isDisabled={!remark.trim()}
+          >
+            Add Remark
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  )
+}
+
+//  View Remarks Modal Component
+const ViewRemarksModal: React.FC<{
+  isOpen: boolean
+  onClose: () => void
+  student: TestParticipant
+  test: Test
+}> = ({ isOpen, onClose, student, test }) => {
+  const { portalUser } = usePortalAuth()
+  const [remarks, setRemarks] = useState<StudentRemark[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (isOpen) {
+      loadRemarks()
+    }
+  }, [isOpen])
+
+  const loadRemarks = async () => {
+    try {
+      setLoading(true)
+      const remarksData = await getStudentRemarks(
+        student.studentId,
+        test.testId,
+      )
+      setRemarks(remarksData)
+    } catch (error) {
+      console.error('Error loading remarks:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleToggleVisibility = async (
+    remarkId: string,
+    currentVisibility: boolean,
+  ) => {
+    try {
+      await updateStudentRemark(remarkId, {
+        isVisibleToStudent: !currentVisibility,
+      })
+      loadRemarks() // Reload to reflect changes
+    } catch (error) {
+      console.error('Error updating remark visibility:', error)
+    }
+  }
+
+  const handleDeleteRemark = async (remarkId: string) => {
+    if (!confirm('Are you sure you want to delete this remark?')) return
+
+    try {
+      await deleteStudentRemark(remarkId)
+      loadRemarks() // Reload to reflect changes
+    } catch (error) {
+      console.error('Error deleting remark:', error)
+    }
+  }
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Remarks for {student.studentName}</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          {loading ? (
+            <Box textAlign="center" py={4}>
+              <Spinner size="lg" />
+              <Text mt={2}>Loading remarks...</Text>
+            </Box>
+          ) : remarks.length === 0 ? (
+            <Alert status="info">
+              <AlertIcon />
+              No remarks added for this student yet.
+            </Alert>
+          ) : (
+            <VStack spacing={4} align="stretch">
+              {remarks.map((remark) => (
+                <Card key={remark.remarkId} variant="outline">
+                  <CardBody>
+                    <VStack align="start" spacing={3}>
+                      <HStack justify="space-between" width="100%">
+                        <Text fontSize="sm" color="gray.600">
+                          By {remark.addedByName} •{' '}
+                          {formatDate(remark.createdAt)}
+                        </Text>
+                        <HStack>
+                          <Tooltip
+                            label={
+                              remark.isVisibleToStudent
+                                ? 'Hide from student'
+                                : 'Show to student'
+                            }
+                          >
+                            <IconButton
+                              aria-label="Toggle visibility"
+                              icon={
+                                remark.isVisibleToStudent ? (
+                                  <FiEye />
+                                ) : (
+                                  <FiEyeOff />
+                                )
+                              }
+                              size="sm"
+                              variant="ghost"
+                              colorScheme={
+                                remark.isVisibleToStudent ? 'green' : 'gray'
+                              }
+                              onClick={() =>
+                                handleToggleVisibility(
+                                  remark.remarkId,
+                                  remark.isVisibleToStudent || false,
+                                )
+                              }
+                            />
+                          </Tooltip>
+                          <IconButton
+                            aria-label="Delete remark"
+                            icon={<FiTrash2 />}
+                            size="sm"
+                            variant="ghost"
+                            colorScheme="red"
+                            onClick={() => handleDeleteRemark(remark.remarkId)}
+                          />
+                        </HStack>
+                      </HStack>
+                      <Text>{remark.remark}</Text>
+                      {!remark.isVisibleToStudent && (
+                        <Badge colorScheme="orange" variant="subtle">
+                          Private (Student cannot see this)
+                        </Badge>
+                      )}
+                    </VStack>
+                  </CardBody>
+                </Card>
+              ))}
+            </VStack>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={onClose}>Close</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  )
+}
+
 export const TestAccessModal: React.FC<TestAccessModalProps> = ({
   isOpen,
   onClose,
   test,
 }) => {
+  const { portalUser } = usePortalAuth()
   const [participants, setParticipants] = useState<TestParticipant[]>([])
   const [analytics, setAnalytics] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -58,6 +325,22 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
   const [filterPassed, setFilterPassed] = useState<'all' | 'passed' | 'failed'>(
     'all',
   )
+  const [filterCohort, setFilterCohort] = useState('all')
+  const [filterClassPlan, setFilterClassPlan] = useState('all')
+  // State for remark modals
+  const [selectedStudent, setSelectedStudent] =
+    useState<TestParticipant | null>(null)
+
+  const {
+    isOpen: isAddRemarkOpen,
+    onOpen: onAddRemarkOpen,
+    onClose: onAddRemarkClose,
+  } = useDisclosure()
+  const {
+    isOpen: isViewRemarksOpen,
+    onOpen: onViewRemarksOpen,
+    onClose: onViewRemarksClose,
+  } = useDisclosure()
 
   useEffect(() => {
     if (isOpen && test.testId) {
@@ -81,25 +364,83 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
     }
   }
 
-  // Filter participants based on search and status
-  const filteredParticipants = participants.filter((participant) => {
-    const matchesSearch =
-      participant.studentName
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      participant.studentEmail
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      participant.cohort?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      participant.classPlan?.toLowerCase().includes(searchTerm.toLowerCase())
+  // Handle adding remark
+  const handleAddRemark = (student: TestParticipant) => {
+    setSelectedStudent(student)
+    onAddRemarkOpen()
+  }
 
-    const matchesStatus =
-      filterPassed === 'all' ||
-      (filterPassed === 'passed' && participant.passed) ||
-      (filterPassed === 'failed' && !participant.passed)
+  // Handle viewing remarks
+  const handleViewRemarks = (student: TestParticipant) => {
+    setSelectedStudent(student)
+    onViewRemarksOpen()
+  }
 
-    return matchesSearch && matchesStatus
-  })
+  // Refresh data after remark is added
+  const handleRemarkAdded = () => {
+    // Might want to refresh participant data or show a success message
+  }
+
+  // Get unique values for cohort and class plan filters
+  const { uniqueCohorts, uniqueClassPlans } = useMemo(() => {
+    const cohorts = new Set<string>()
+    const classPlans = new Set<string>()
+
+    participants.forEach((participant) => {
+      if (participant.cohort) cohorts.add(participant.cohort)
+      if (participant.classPlan) classPlans.add(participant.classPlan)
+    })
+
+    return {
+      uniqueCohorts: Array.from(cohorts).sort(),
+      uniqueClassPlans: Array.from(classPlans).sort(),
+    }
+  }, [participants])
+
+  //  Filter participants based on all criteria(search, status, cohort Class plan etc...)
+  const filteredParticipants = useMemo(() => {
+    return participants.filter((participant) => {
+      const matchesSearch =
+        participant.studentName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        participant.studentEmail
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        participant.cohort?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        participant.classPlan?.toLowerCase().includes(searchTerm.toLowerCase())
+
+      const matchesStatus =
+        filterPassed === 'all' ||
+        (filterPassed === 'passed' && participant.passed) ||
+        (filterPassed === 'failed' && !participant.passed)
+
+      // Cohort filter
+      const matchesCohort =
+        filterCohort === 'all' || participant.cohort === filterCohort
+
+      // Class plan filter
+      const matchesClassPlan =
+        filterClassPlan === 'all' || participant.classPlan === filterClassPlan
+
+      return matchesSearch && matchesStatus && matchesCohort && matchesClassPlan
+    })
+  }, [participants, searchTerm, filterPassed, filterCohort, filterClassPlan])
+
+  // Check if any filters are active
+  const hasActiveFilters =
+    filterPassed !== 'all' ||
+    filterCohort !== 'all' ||
+    filterClassPlan !== 'all' ||
+    searchTerm !== ''
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSearchTerm('')
+    setFilterPassed('all')
+    setFilterCohort('all')
+    setFilterClassPlan('all')
+  }
 
   const formatDate = (date: any) => {
     if (!date) return 'Never'
@@ -251,33 +592,118 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                   <Alert status="info" borderRadius="md">
                     <AlertIcon />
                     No students have accessed this test yet. Share the access
-                    code <strong> {test.accessCode} </strong> with your
-                    students.
+                    code <strong>{test.accessCode}</strong> with your students.
                   </Alert>
                 ) : (
                   <VStack spacing={4} align="stretch">
-                    {/* Filters */}
-                    <HStack spacing={4}>
-                      <InputGroup maxW="300px">
-                        <InputLeftElement pointerEvents="none">
-                          <FiSearch color="gray.300" />
-                        </InputLeftElement>
-                        <Input
-                          placeholder="Search participants..."
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                      </InputGroup>
-                      <Select
-                        value={filterPassed}
-                        onChange={(e) => setFilterPassed(e.target.value as any)}
-                        maxW="150px"
-                      >
-                        <option value="all">All Status</option>
-                        <option value="passed">Passed</option>
-                        <option value="failed">Failed</option>
-                      </Select>
-                    </HStack>
+                    {/* Filters Section */}
+                    <VStack spacing={4} align="stretch">
+                      {/* Search and Filter Controls */}
+                      <HStack spacing={4} wrap="wrap">
+                        <InputGroup maxW="300px">
+                          <InputLeftElement pointerEvents="none">
+                            <FiSearch color="gray.300" />
+                          </InputLeftElement>
+                          <Input
+                            placeholder="Search participants..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                          />
+                        </InputGroup>
+
+                        <Select
+                          value={filterPassed}
+                          onChange={(e) =>
+                            setFilterPassed(e.target.value as any)
+                          }
+                          maxW="150px"
+                        >
+                          <option value="all">All Status</option>
+                          <option value="passed">Passed</option>
+                          <option value="failed">Failed</option>
+                        </Select>
+
+                        {/* Cohort Filter */}
+                        <Select
+                          value={filterCohort}
+                          onChange={(e) => setFilterCohort(e.target.value)}
+                          maxW="180px"
+                        >
+                          <option value="all">All Cohorts</option>
+                          {uniqueCohorts.map((cohort) => (
+                            <option key={cohort} value={cohort}>
+                              {cohort}
+                            </option>
+                          ))}
+                        </Select>
+
+                        {/* Class Plan Filter */}
+                        <Select
+                          value={filterClassPlan}
+                          onChange={(e) => setFilterClassPlan(e.target.value)}
+                          maxW="180px"
+                        >
+                          <option value="all">All Class Plans</option>
+                          {uniqueClassPlans.map((classPlan) => (
+                            <option key={classPlan} value={classPlan}>
+                              {classPlan}
+                            </option>
+                          ))}
+                        </Select>
+
+                        {/* Clear Filters Button */}
+                        {hasActiveFilters && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            leftIcon={<FiX />}
+                            onClick={clearAllFilters}
+                            colorScheme="gray"
+                          >
+                            Clear Filters
+                          </Button>
+                        )}
+                      </HStack>
+
+                      {/* Active Filters Display */}
+                      {hasActiveFilters && (
+                        <HStack spacing={2} flexWrap="wrap">
+                          <Text
+                            fontSize="md"
+                            color="gray.600"
+                            fontWeight="bold"
+                          >
+                            Active Filters:
+                          </Text>
+                          {filterPassed !== 'all' && (
+                            <Badge colorScheme="blue" variant="subtle">
+                              Status: {filterPassed}
+                            </Badge>
+                          )}
+                          {filterCohort !== 'all' && (
+                            <Badge colorScheme="green" variant="subtle">
+                              Cohort: {filterCohort}
+                            </Badge>
+                          )}
+                          {filterClassPlan !== 'all' && (
+                            <Badge colorScheme="purple" variant="subtle">
+                              Class Plan: {filterClassPlan}
+                            </Badge>
+                          )}
+                          {searchTerm && (
+                            <Badge colorScheme="orange" variant="subtle">
+                              Search: &apos;{searchTerm}&apos;
+                            </Badge>
+                          )}
+                        </HStack>
+                      )}
+
+                      {/* Results Count */}
+                      <Text fontSize="sm" color="gray.600">
+                        Showing {filteredParticipants.length} of{' '}
+                        {participants.length} participants
+                      </Text>
+                    </VStack>
 
                     {/* Participants Table */}
                     <Box
@@ -296,6 +722,7 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                             <Th>Attempts</Th>
                             <Th>Best Score</Th>
                             <Th>Status</Th>
+                            <Th>Remarks</Th>
                           </Tr>
                         </Thead>
                         <Tbody>
@@ -361,16 +788,46 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                                   {participant.passed ? 'Passed' : 'Failed'}
                                 </Badge>
                               </Td>
+                              {/* Remarks Column */}
+                              <Td>
+                                <HStack spacing={1}>
+                                  <Tooltip label="Add Remark">
+                                    <IconButton
+                                      aria-label="Add remark"
+                                      icon={<FiMessageCircle />}
+                                      size="sm"
+                                      colorScheme="blue"
+                                      variant="ghost"
+                                      onClick={() =>
+                                        handleAddRemark(participant)
+                                      }
+                                    />
+                                  </Tooltip>
+                                  <Tooltip label="View Remarks">
+                                    <IconButton
+                                      aria-label="View remarks"
+                                      icon={<FiEye />}
+                                      size="sm"
+                                      variant="ghost"
+                                      onClick={() =>
+                                        handleViewRemarks(participant)
+                                      }
+                                    />
+                                  </Tooltip>
+                                </HStack>
+                              </Td>
                             </Tr>
                           ))}
                         </Tbody>
                       </Table>
                     </Box>
 
-                    {filteredParticipants.length === 0 && searchTerm && (
+                    {filteredParticipants.length === 0 && (
                       <Alert status="info">
                         <AlertIcon />
-                        No participants match your search criteria.
+                        {hasActiveFilters
+                          ? 'No participants match your filter criteria.'
+                          : 'No participants found for this test.'}
                       </Alert>
                     )}
                   </VStack>
@@ -426,6 +883,25 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
           <Button onClick={onClose}>Close</Button>
         </ModalFooter>
       </ModalContent>
+
+      {/* Remark Modals */}
+      {selectedStudent && (
+        <>
+          <AddRemarkModal
+            isOpen={isAddRemarkOpen}
+            onClose={onAddRemarkClose}
+            student={selectedStudent}
+            test={test}
+            onRemarkAdded={handleRemarkAdded}
+          />
+          <ViewRemarksModal
+            isOpen={isViewRemarksOpen}
+            onClose={onViewRemarksClose}
+            student={selectedStudent}
+            test={test}
+          />
+        </>
+      )}
     </Modal>
   )
 }
@@ -455,3 +931,20 @@ const InfoItem = ({ label, value }: { label: string; value: string }) => (
     <Text fontWeight="medium">{value}</Text>
   </Box>
 )
+
+// HELPER FUNCTION
+const formatDate = (date: any) => {
+  if (!date) return 'Unknown date'
+  try {
+    const dateObj = date.toDate ? date.toDate() : new Date(date)
+    return dateObj.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  } catch {
+    return 'Invalid Date'
+  }
+}
