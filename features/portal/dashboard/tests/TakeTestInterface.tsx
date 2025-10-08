@@ -322,17 +322,13 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
     await submitTest(true, message) // Changed to true for auto-submit
   }
 
+  // Check if all questions are answered
+  const unanswered = shuffledQuestions.filter((q) => !answers[q.questionId])
   const handleSubmit = async () => {
     if (!user) return
+    onOpen()
 
-    // Check if all questions are answered
-    const unanswered = shuffledQuestions.filter((q) => !answers[q.questionId])
-    if (unanswered.length > 0) {
-      onOpen()
-      return
-    }
-
-    await submitTest(false)
+    // await submitTest(false)
   }
 
   if (loadingQuestions) {
@@ -556,15 +552,32 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Unanswered Questions</ModalHeader>
-          <ModalBody>
-            <Text>
-              You have unanswered questions. Are you sure you want to submit?
-            </Text>
-            <Text mt={2} fontSize="sm" color="gray.600">
-              You can still go back and answer them before submitting.
-            </Text>
-          </ModalBody>
+          {unanswered.length > 0 ? (
+            <>
+              <ModalHeader>Unanswered Questions</ModalHeader>
+              <ModalBody>
+                <Text>
+                  You have unanswered questions. Are you sure you want to
+                  submit?
+                </Text>
+                <Text mt={2} fontSize="sm" color="gray.600">
+                  You can still go back and answer them before submitting.
+                </Text>
+              </ModalBody>
+            </>
+          ) : (
+            <>
+              <ModalHeader>All Questions Answered</ModalHeader>
+              <ModalBody>
+                <Text>Are you sure you want to submit?</Text>
+                <Text mt={2} fontSize="sm" color="gray.600">
+                  You can still go back and review your answers before
+                  submitting.
+                </Text>
+              </ModalBody>
+            </>
+          )}
+
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onClose}>
               Go Back

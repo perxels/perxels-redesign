@@ -335,7 +335,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                     Security Settings
                   </Text>
 
-                  <SimpleGrid columns={[1, 2]} spacing={4}>
+                  <SimpleGrid columns={[1]} spacing={4}>
                     <FormControl display="flex" alignItems="center">
                       <FormLabel htmlFor="shuffle-questions" mb="0">
                         Shuffle Questions
@@ -353,7 +353,8 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                       />
                     </FormControl>
 
-                    <FormControl display="flex" alignItems="center">
+                    {/* Shuffle Options */}
+                    {/* <FormControl display="flex" alignItems="center">
                       <FormLabel htmlFor="shuffle-options" mb="0">
                         Shuffle Options
                       </FormLabel>
@@ -368,7 +369,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                         }
                         colorScheme="blue"
                       />
-                    </FormControl>
+                    </FormControl> */}
 
                     <FormControl>
                       <FormLabel>Max Tab Switches</FormLabel>
@@ -402,9 +403,9 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                       <Text fontSize="xs">
                         • Shuffle Questions: Randomizes question order for each
                         student
-                        <br />
+                        {/* <br />
                         • Shuffle Options: Randomizes answer choices for each
-                        question
+                        question */}
                         <br />• Tab Switching: Prevents students from leaving
                         the test window
                       </Text>

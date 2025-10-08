@@ -46,7 +46,10 @@ export function generatePaymentReminderHtml(
           </div>
         </div>
         
-        <p>To avoid any disruption to your learning experience, please complete your payment as soon as possible. You can make your payment through the student portal.</p>
+        <p>To avoid any disruption to your learning experience, please complete your payment as soon as possible.</p>
+        <div style="display: flex; margin: 2px 0;">
+         <p><strong>Do not message or call any staff to request an extension, as such requests will not be considered.</strong></p>
+        </div>
         
         <div style="margin: 24px 0;">
           <a href="/portal/dashboard/school-fees" style="display: inline-block; background: #6C63FF; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px;">Complete Payment</a>

@@ -197,7 +197,7 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
                 <StatCard
                   label="Passing Score"
                   value={`${test.passingScore}%`}
-                  color="orange"
+                  color="green"
                 />
               </SimpleGrid>
 

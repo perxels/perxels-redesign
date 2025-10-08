@@ -386,7 +386,7 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                       })
                     }
                   >
-                    <option value="draft">Draft</option>
+                    {/* <option value="draft">Draft</option> */}
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </Select>
@@ -408,7 +408,7 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                   </Select>
                 </FormControl>
 
-                <FormControl>
+                {/* <FormControl>
                   <FormLabel>Active Status</FormLabel>
                   <Select
                     value={testData.isActive ? 'active' : 'inactive'}
@@ -422,7 +422,7 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                   </Select>
-                </FormControl>
+                </FormControl> */}
               </HStack>
 
               <Alert status="info" mt={4} borderRadius="md">
@@ -444,7 +444,8 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                 Security Settings
               </Text>
 
-              <SimpleGrid columns={[1, 2]} spacing={4}>
+              {/* Change to [1, 2] later after adding shuffle options */}
+              <SimpleGrid columns={[1]} spacing={4}>
                 <FormControl display="flex" alignItems="center">
                   <FormLabel htmlFor="shuffle-questions" mb="0">
                     Shuffle Questions
@@ -462,7 +463,8 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                   />
                 </FormControl>
 
-                <FormControl display="flex" alignItems="center">
+                {/*  Shuffle Options */}
+                {/* <FormControl display="flex" alignItems="center">
                   <FormLabel htmlFor="shuffle-options" mb="0">
                     Shuffle Options
                   </FormLabel>
@@ -477,7 +479,7 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
                     }
                     colorScheme="blue"
                   />
-                </FormControl>
+                </FormControl> */}
 
                 <FormControl>
                   <FormLabel>Max Tab Switches</FormLabel>
