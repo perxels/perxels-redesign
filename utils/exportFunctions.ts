@@ -58,7 +58,7 @@ export const exportToExcel = (students: any[], filters: any, toast: any) => {
 
     // Set optimal column widths based on content
     const colWidths = [
-      { wch: 28 }, // Student ID
+      { wch: 25 }, // Student ID
       { wch: 25 }, // Full Name
       { wch: 30 }, // Email
       { wch: 15 }, // Phone

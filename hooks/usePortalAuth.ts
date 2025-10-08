@@ -11,6 +11,7 @@ interface PortalUser {
   branch: string
   role: string
   emailVerified: boolean
+  isStudentActive?: boolean
   registrationComplete?: boolean
   onboardingComplete?: boolean
   schoolFeeInfo?: any
@@ -71,16 +72,18 @@ export function usePortalAuth(): UsePortalAuthReturn {
   }, [])
 
   // Determine if registration is complete based on actual data
-  const isRegistrationComplete = portalUser ? (
-    portalUser.registrationComplete === true || 
-    (portalUser.schoolFeeInfo && portalUser.growthInfo)
-  ) : false
+  const isRegistrationComplete = portalUser
+    ? portalUser.registrationComplete === true ||
+      (portalUser.schoolFeeInfo && portalUser.growthInfo)
+    : false
 
   // Determine if onboarding is complete based on actual data
-  const isOnboardingComplete = portalUser ? (
-    portalUser.onboardingComplete === true || 
-    (portalUser.schoolFeeInfo && portalUser.growthInfo && portalUser.termsAgreed)
-  ) : false
+  const isOnboardingComplete = portalUser
+    ? portalUser.onboardingComplete === true ||
+      (portalUser.schoolFeeInfo &&
+        portalUser.growthInfo &&
+        portalUser.termsAgreed)
+    : false
 
   return {
     user,

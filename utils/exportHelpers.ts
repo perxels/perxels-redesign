@@ -19,7 +19,7 @@ export const flattenStudentData = (students: any[]) => {
 
     return {
       // Basic Information
-      'Student ID': student.uid || 'N/A',
+      // 'Student ID': student.uid || 'N/A',
       'Full Name': student.fullName || 'Not provided',
       Email: student.email || 'N/A',
       Phone: student.phone || 'Not provided',
@@ -32,26 +32,26 @@ export const flattenStudentData = (students: any[]) => {
       'Total Paid': formatCurrency(totalPaid),
       Balance: formatCurrency(balance),
       'Payment Status': student.owingStatus || 'Unknown',
-      'Overall Status': student.schoolFeeInfo?.overallStatus || 'N/A',
-      'Number of Payments': payments.length,
+      // 'Overall Status': student.schoolFeeInfo?.overallStatus || 'N/A',
+      // 'Number of Payments': payments.length,
 
       // Growth Information
       Profession: student.growthInfo?.profession || 'Not provided',
       Gender: student.growthInfo?.gender || 'Not specified',
-      'Class Outcome': student.growthInfo?.classOutcome || 'Not specified',
-      'Why Class': student.growthInfo?.whyClass || 'Not specified',
+      // 'Class Outcome': student.growthInfo?.classOutcome || 'Not specified',
+      // 'Why Class': student.growthInfo?.whyClass || 'Not specified',
       'Date of Enrollment': student.growthInfo?.dateOfEnrollment || 'N/A',
 
       // Attendance Information (if available)
-      'Total Sessions': student.totalSessions || 0,
-      'Check-ins': student.checkIns || 0,
-      'Attendance Rate':
-        student.totalSessions > 0 ? `${attendanceRate.toFixed(1)}%` : 'N/A',
+      // 'Total Sessions': student.totalSessions || 0,
+      // 'Check-ins': student.checkIns || 0,
+      // 'Attendance Rate':
+      //   student.totalSessions > 0 ? `${attendanceRate.toFixed(1)}%` : 'N/A',
 
       // Status Flags
       'Email Verified': student.emailVerified ? 'Yes' : 'No',
-      'Registration Complete': student.registrationComplete ? 'Yes' : 'No',
-      'Onboarding Complete': student.onboardingComplete ? 'Yes' : 'No',
+      // 'Registration Complete': student.registrationComplete ? 'Yes' : 'No',
+      // 'Onboarding Complete': student.onboardingComplete ? 'Yes' : 'No',
       'Terms Agreed': student.termsAgreed ? 'Yes' : 'No',
 
       // Timestamps

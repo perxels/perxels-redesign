@@ -58,6 +58,7 @@ import {
   useImagePreview,
 } from '../../../../components/ImagePreviewModal'
 import { usePaymentNotifications } from '../../../../hooks/usePaymentNotifications'
+import { classPlans } from '../../../../constant/adminConstants'
 
 interface StudentData {
   uid: string
@@ -112,6 +113,8 @@ interface StudentDetailsModalProps {
 interface CohortChange {
   oldCohort: string
   newCohort: string
+  oldClassPlan: string
+  newClassPlan: string
   changedAt: Date
   changedBy: string
   reason?: string
@@ -130,6 +133,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   const [activeTab, setActiveTab] = useState(0)
   const [availableCohorts, setAvailableCohorts] = useState<string[]>([])
   const [selectedCohort, setSelectedCohort] = useState('')
+  const [selectedClassPlan, setSelectedClassPlan] = useState('')
   const [isChangingCohort, setIsChangingCohort] = useState(false)
   const toast = useToast()
   const {
@@ -343,7 +347,10 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   }
 
   // Update cohort function
-  const updateStudentCohort = async (newCohort: string) => {
+  const updateStudentCohort = async (
+    newCohort: string,
+    newClassPlan: string,
+  ) => {
     if (!adminUser) {
       toast({
         title: 'Authentication required',
@@ -369,15 +376,17 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
     try {
       const studentRef = doc(portalDb, 'users', student.uid)
       const oldCohort = student.schoolFeeInfo.cohort || 'Not assigned'
+      const oldClassPlan = student.schoolFeeInfo.classPlan || 'Not assigned'
 
       await updateDoc(studentRef, {
         'schoolFeeInfo.cohort': newCohort,
+        'schoolFeeInfo.classPlan': newClassPlan,
         'schoolFeeInfo.updatedAt': new Date(),
       })
 
       toast({
         title: 'Cohort updated successfully!',
-        description: `${student.fullName} moved from ${oldCohort} to ${newCohort}`,
+        description: `${student.fullName} moved from ${oldCohort} : ${oldClassPlan} to ${newCohort} : ${newClassPlan}`,
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -401,19 +410,24 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
 
   // Handle cohort change confirmation
   const handleCohortChange = async () => {
-    if (!selectedCohort || selectedCohort === student.schoolFeeInfo?.cohort) {
+    if (
+      (!selectedCohort && !selectedClassPlan) ||
+      (selectedCohort === student.schoolFeeInfo?.cohort &&
+        selectedClassPlan === student.schoolFeeInfo?.classPlan)
+    ) {
       toast({
         title: 'Invalid cohort',
-        description: 'Please select a different cohort',
+        description: 'Please select a different cohort or class plan',
         status: 'warning',
         duration: 3000,
       })
       return
     }
 
-    const success = await updateStudentCohort(selectedCohort)
+    const success = await updateStudentCohort(selectedCohort, selectedClassPlan)
     if (success) {
       setSelectedCohort('')
+      setSelectedClassPlan('')
       // Refresh parent component if needed
       if ((window as any).refreshStudentList) {
         ;(window as any).refreshStudentList()
@@ -428,6 +442,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
       fetchAttendance()
       fetchAvailableCohorts()
       setSelectedCohort(student.schoolFeeInfo?.cohort || '')
+      setSelectedClassPlan(student.schoolFeeInfo?.classPlan || '')
     }
   }, [isOpen, student.uid])
 
@@ -576,24 +591,41 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
         borderColor="gray.200"
       >
         <Text fontSize="lg" fontWeight="bold" mb={4}>
-          Change Student Cohort
+          Change Student Cohort & Class Plan
         </Text>
 
-        <FormControl>
-          <FormLabel>Select New Cohort</FormLabel>
-          <Select
-            value={selectedCohort}
-            onChange={(e) => setSelectedCohort(e.target.value)}
-            placeholder="Choose a cohort..."
-            bg="white"
-          >
-            {availableCohorts.map((cohort) => (
-              <option key={cohort} value={cohort}>
-                {cohort}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+        <Box display={'flex'} gap={4}>
+          <FormControl>
+            <FormLabel>Select New Cohort</FormLabel>
+            <Select
+              value={selectedCohort}
+              onChange={(e) => setSelectedCohort(e.target.value)}
+              placeholder="Choose a cohort..."
+              bg="white"
+            >
+              {availableCohorts.map((cohort) => (
+                <option key={cohort} value={cohort}>
+                  {cohort}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Select New Class Plan</FormLabel>
+            <Select
+              value={selectedClassPlan}
+              onChange={(e) => setSelectedClassPlan(e.target.value)}
+              placeholder="Choose a class plan..."
+              bg="white"
+            >
+              {classPlans.map((plan) => (
+                <option key={plan} value={plan}>
+                  {plan}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
 
         <Alert status="info" mt={4} borderRadius="md">
           <AlertIcon />
@@ -610,22 +642,25 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
         </Alert>
 
         <HStack spacing={3} mt={6}>
+          {/* //  */}
           <Button
             colorScheme="blue"
             onClick={onCohortDialogOpen}
             isDisabled={
-              !selectedCohort ||
-              selectedCohort === student.schoolFeeInfo?.cohort
+              (!selectedCohort && !selectedClassPlan) ||
+              (selectedCohort === student.schoolFeeInfo?.cohort &&
+                selectedClassPlan === student.schoolFeeInfo?.classPlan)
             }
             isLoading={isChangingCohort}
           >
-            Change Cohort
+            Change
           </Button>
           <Button
             variant="outline"
-            onClick={() =>
+            onClick={() => {
               setSelectedCohort(student.schoolFeeInfo?.cohort || '')
-            }
+              setSelectedClassPlan(student.schoolFeeInfo?.classPlan || '')
+            }}
           >
             Reset
           </Button>
@@ -1087,7 +1122,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Confirm Cohort Change
+              Confirm Cohort/Class Plan Change
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -1095,16 +1130,22 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                 Are you sure you want to move{' '}
                 <strong>{student.fullName}</strong> from{' '}
                 <Badge colorScheme="orange">
-                  {student.schoolFeeInfo?.cohort || 'Not assigned'}
+                  {student.schoolFeeInfo?.cohort || 'Not assigned'} {':'}{' '}
+                  {student.schoolFeeInfo?.classPlan || 'Not assigned'}
                 </Badge>{' '}
-                to <Badge colorScheme="green">{selectedCohort}</Badge>?
+                to{' '}
+                <Badge colorScheme="green">
+                  {selectedCohort} : {selectedClassPlan}
+                </Badge>
+                ?
               </Text>
 
               <Alert status="warning" borderRadius="md">
                 <AlertIcon />
                 <Text fontSize="sm">
-                  This action will affect the student's class assignments and
-                  attendance tracking. Please ensure this change is necessary.
+                  This action will affect the student&apos;s class assignments
+                  and attendance tracking. Please ensure this change is
+                  necessary.
                 </Text>
               </Alert>
             </AlertDialogBody>
