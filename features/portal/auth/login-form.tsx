@@ -60,8 +60,6 @@ export const LoginForm = () => {
       // Sanitize email
       const email = values.email.toLowerCase().trim()
 
-      console.log(email)
-
       // First, try portal authentication (primary use case)
       try {
         const portalCredential = await signInWithEmailAndPassword(
