@@ -23,7 +23,7 @@ import { FiTrash2, FiAlertTriangle } from 'react-icons/fi'
 import {
   deleteFacilitatorCompletely,
   getFacilitatorDeletionSummary,
-} from '../../../../lib/utils/facilitator.utils' // We'll create this
+} from '../../../../lib/utils/facilitator.utils'
 import { FacilitatorData } from '../../../../types/user'
 
 interface DeleteFacilitatorModalProps {

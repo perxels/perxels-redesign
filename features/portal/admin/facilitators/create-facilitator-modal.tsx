@@ -143,6 +143,7 @@ export const CreateFacilitatorModal: React.FC<CreateFacilitatorModalProps> = ({
         termsAgreed: true,
         termsAgreedAt: serverTimestamp(),
         isActive: true,
+        firstLogin: true,
       }
 
       // 6. Create the document in the 'users' collection

@@ -5,30 +5,30 @@ import React, { useState, useCallback, useEffect } from 'react'
 
 const sidebarItems = [
   {
-    label: 'Dashboard',
+    label: 'Home',
     icon: '/assets/icons/home.svg',
     href: '/portal/facilitator/dashboard',
   },
   {
+    label: 'Profile',
+    icon: '/assets/icons/profile.svg',
+    href: '/portal/facilitator/profile',
+  },
+  {
     label: 'Attendance',
     icon: '/assets/icons/attandance.svg',
-    href: '/portal/facilitator/attendance-v2',
+    href: '/portal/facilitator/attendance',
   },
   {
     label: 'Students',
     icon: '/assets/icons/students.svg',
     href: '/portal/facilitator/students',
   },
-  {
-    label: 'Tests',
-    icon: '/assets/icons/test.svg',
-    href: '/portal/facilitator/tests',
-  },
-  {
-    label: 'Performance',
-    icon: '/assets/icons/graph.svg',
-    href: '/portal/facilitator/performance',
-  },
+  // {
+  //   label: 'Notifications',
+  //   icon: '/assets/icons/notification.svg',
+  //   href: '/portal/facilitator/notifications',
+  // },
 ]
 
 export const FacilitatorSidebar = () => {
@@ -128,6 +128,7 @@ export const FacilitatorSidebar = () => {
             position="relative"
             borderRadius="xl"
             transition="all 0.2s ease-in-out"
+            minWidth={'100px'}
             bg={
               isActive || isHomeActive
                 ? 'rgba(255, 255, 255, 0.15)'
@@ -138,6 +139,16 @@ export const FacilitatorSidebar = () => {
                 ? {
                     bg: 'rgba(255, 255, 255, 0.1)',
                     transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  }
+                : {}
+            }
+            _active={
+              !isLoading
+                ? {
+                    bg: 'rgba(255, 255, 255, 0.2)',
+                    transform: 'translateY(0px)',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
                   }
                 : {}
             }
@@ -171,12 +182,12 @@ export const FacilitatorSidebar = () => {
                   alt={item.label}
                   width={48}
                   height={48}
-                  priority={item.label === 'Dashboard'}
+                  priority={item.label === 'Home'}
                   style={{
                     filter:
                       isActive || isHomeActive
                         ? 'brightness(1.2)'
-                        : 'brightness(1)',
+                        : 'brightness(0) invert(1)',
                   }}
                 />
               )}

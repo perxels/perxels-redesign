@@ -34,3 +34,9 @@ export const classStatusOptions = [
   { value: 'inactive', label: 'Inactive' },
   { value: 'completed', label: 'Completed' },
 ]
+
+export const studentStatusOptions = [
+  { value: 'all', label: 'All Status' },
+  { value: 'active', label: 'Active' },
+  { value: 'inactive', label: 'Inactive' },
+]

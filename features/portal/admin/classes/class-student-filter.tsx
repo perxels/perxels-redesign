@@ -26,6 +26,7 @@ import {
   branchOptions,
   classPlans,
   paymentStatusOptions,
+  studentStatusOptions,
 } from '../../../../constant/adminConstants'
 
 interface ClassData {
@@ -46,6 +47,7 @@ interface FiltersState {
   classPlan: string
   branch: string
   paymentStatus: string
+  isStudentActive: string
 }
 
 function FilterControls({
@@ -134,6 +136,24 @@ function FilterControls({
             ))}
           </Select>
         </Box>
+
+        {/* Student Status Filter*/}
+        <Box>
+          <Text fontSize="sm" fontWeight="medium" mb={2}>
+            Student Status
+          </Text>
+          <Select
+            value={filters.isStudentActive}
+            onChange={(e) => onFilterChange('isStudentActive', e.target.value)}
+            bg="white"
+          >
+            {studentStatusOptions.map((status) => (
+              <option key={status.value} value={status.value}>
+                {status.label}
+              </option>
+            ))}
+          </Select>
+        </Box>
       </SimpleGrid>
       <HStack justifyContent="space-between" align="center">
         {/* Filter Status Indicators */}
@@ -161,6 +181,17 @@ function FilterControls({
                 {
                   paymentStatusOptions.find(
                     (p) => p.value === filters.paymentStatus,
+                  )?.label
+                }
+              </Badge>
+            )}
+            {/* Student Status Badge */}
+            {filters.isStudentActive !== 'all' && (
+              <Badge colorScheme="orange" variant="subtle">
+                Status:{' '}
+                {
+                  studentStatusOptions.find(
+                    (s) => s.value === filters.isStudentActive,
                   )?.label
                 }
               </Badge>
@@ -201,6 +232,7 @@ export const ClassStudentFilter = () => {
       classPlan: (router.query.classPlan as string) || '',
       branch: (router.query.branch as string) || 'all',
       paymentStatus: (router.query.paymentStatus as string) || 'all',
+      isStudentActive: (router.query.isStudentActive as string) || 'all',
     }
   }, [router.query])
 
@@ -245,6 +277,7 @@ export const ClassStudentFilter = () => {
     Boolean(filters.classPlan) ||
     filters.branch !== 'all' ||
     filters.paymentStatus !== 'all'
+  filters.isStudentActive !== 'all'
 
   // Mobile: Drawer layout
   if (isMobile) {
@@ -280,6 +313,17 @@ export const ClassStudentFilter = () => {
                 {
                   paymentStatusOptions.find(
                     (p) => p.value === filters.paymentStatus,
+                  )?.label
+                }
+              </Badge>
+            )}
+            {/* Student status badge for mobile */}
+            {filters.isStudentActive !== 'all' && (
+              <Badge colorScheme="orange" variant="subtle">
+                Status:{' '}
+                {
+                  studentStatusOptions.find(
+                    (s) => s.value === filters.isStudentActive,
                   )?.label
                 }
               </Badge>

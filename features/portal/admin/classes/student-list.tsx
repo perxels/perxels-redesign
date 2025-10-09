@@ -110,6 +110,7 @@ export const StudentList = () => {
   const { portalUser } = usePortalAuth()
   const router = useRouter()
   const isAdmin = portalUser?.role === 'admin'
+  const isFacilitator = portalUser?.role === 'facilitator'
 
   // Modal disclosures
   const {
@@ -142,6 +143,7 @@ export const StudentList = () => {
       branch: (router.query.branch as string) || 'all',
       paymentStatus: (router.query.paymentStatus as string) || 'all',
       status: (router.query.status as string) || 'all',
+      isStudentActive: (router.query.isStudentActive as string) || 'all',
     }
   }, [router.query])
 
@@ -204,6 +206,18 @@ export const StudentList = () => {
         }
 
         return mappedStatus === filters.paymentStatus
+      })
+    }
+
+    // Filter by Student active status
+    if (filters.isStudentActive && filters.isStudentActive !== 'all') {
+      filtered = filtered.filter((student) => {
+        if (filters.isStudentActive === 'active') {
+          return student.isStudentActive !== false
+        } else if (filters.isStudentActive === 'inactive') {
+          return student.isStudentActive === false
+        }
+        return true
       })
     }
 
@@ -296,7 +310,7 @@ export const StudentList = () => {
 
   // Fetch students from Firebase
   const fetchStudents = async () => {
-    if (!isAdmin) {
+    if (!isAdmin && isFacilitator) {
       setError('Only administrators can view student list')
       setIsLoading(false)
       return
@@ -446,12 +460,14 @@ export const StudentList = () => {
             >
               Refresh
             </Button>
-            <ExportStudentsButton
-              students={filteredStudents}
-              filters={filters}
-              variant="button"
-              size="sm"
-            />
+            {isAdmin && (
+              <ExportStudentsButton
+                students={filteredStudents}
+                filters={filters}
+                variant="button"
+                size="sm"
+              />
+            )}
           </Box>
         )}
       </Flex>
@@ -504,7 +520,7 @@ export const StudentList = () => {
                     </Text>
                   </Box>
                   <HStack spacing={2}>
-                    {hasPendingPayment(student) && (
+                    {hasPendingPayment(student) && isAdmin && (
                       <Button
                         size="xs"
                         bg="orange.500"
@@ -536,21 +552,23 @@ export const StudentList = () => {
                     >
                       Details
                     </Button>
-                    <Button
-                      size="xs"
-                      bg="red.500"
-                      color="white"
-                      borderRadius="sm"
-                      px={3}
-                      py={1}
-                      _hover={{ bg: 'red.600' }}
-                      fontSize="xs"
-                      fontWeight="normal"
-                      minW="40px"
-                      onClick={() => handleDeleteStudent(student)}
-                    >
-                      <MdDelete size={14} />
-                    </Button>
+                    {isAdmin && (
+                      <Button
+                        size="xs"
+                        bg="red.500"
+                        color="white"
+                        borderRadius="sm"
+                        px={3}
+                        py={1}
+                        _hover={{ bg: 'red.600' }}
+                        fontSize="xs"
+                        fontWeight="normal"
+                        minW="40px"
+                        onClick={() => handleDeleteStudent(student)}
+                      >
+                        <MdDelete size={14} />
+                      </Button>
+                    )}
                   </HStack>
                 </Flex>
 
@@ -600,20 +618,22 @@ export const StudentList = () => {
                         ? 'Active'
                         : 'Inactive'}
                     </Badge>
-                    <Button
-                      size="xs"
-                      variant="outline"
-                      colorScheme={
-                        student.isStudentActive !== false ? 'red' : 'green'
-                      }
-                      onClick={() => handleActivationToggle(student)}
-                      fontSize="xs"
-                      minW="50px"
-                    >
-                      {student.isStudentActive !== false
-                        ? 'Deactivate'
-                        : 'Activate'}
-                    </Button>
+                    {isAdmin && (
+                      <Button
+                        size="xs"
+                        variant="outline"
+                        colorScheme={
+                          student.isStudentActive !== false ? 'red' : 'green'
+                        }
+                        onClick={() => handleActivationToggle(student)}
+                        fontSize="xs"
+                        minW="50px"
+                      >
+                        {student.isStudentActive !== false
+                          ? 'Deactivate'
+                          : 'Activate'}
+                      </Button>
+                    )}
                   </Flex>
                 </VStack>
               </Box>
@@ -742,7 +762,7 @@ export const StudentList = () => {
 
                 {/* Action Buttons */}
                 <HStack spacing={2}>
-                  {hasPendingPayment(student) && (
+                  {hasPendingPayment(student) && isAdmin && (
                     <Button
                       size="xs"
                       bg="orange.500"
@@ -774,35 +794,39 @@ export const StudentList = () => {
                   >
                     See Details
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    colorScheme={
-                      student.isStudentActive !== false ? 'red' : 'green'
-                    }
-                    onClick={() => handleActivationToggle(student)}
-                    fontSize="xs"
-                    minW="50px"
-                  >
-                    {student.isStudentActive !== false
-                      ? 'Deactivate'
-                      : 'Activate'}
-                  </Button>
-                  <Button
-                    size="xs"
-                    bg="red.500"
-                    color="white"
-                    borderRadius="sm"
-                    px={3}
-                    py={1}
-                    _hover={{ bg: 'red.600' }}
-                    fontSize="xs"
-                    fontWeight="normal"
-                    minW="70px"
-                    onClick={() => handleDeleteStudent(student)}
-                  >
-                    <MdDelete size={14} />
-                  </Button>
+                  {isAdmin && (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        colorScheme={
+                          student.isStudentActive !== false ? 'red' : 'green'
+                        }
+                        onClick={() => handleActivationToggle(student)}
+                        fontSize="xs"
+                        minW="50px"
+                      >
+                        {student.isStudentActive !== false
+                          ? 'Deactivate'
+                          : 'Activate'}
+                      </Button>
+                      <Button
+                        size="xs"
+                        bg="red.500"
+                        color="white"
+                        borderRadius="sm"
+                        px={3}
+                        py={1}
+                        _hover={{ bg: 'red.600' }}
+                        fontSize="xs"
+                        fontWeight="normal"
+                        minW="70px"
+                        onClick={() => handleDeleteStudent(student)}
+                      >
+                        <MdDelete size={14} />
+                      </Button>
+                    </>
+                  )}
                 </HStack>
               </Flex>
             </Box>

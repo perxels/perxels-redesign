@@ -60,6 +60,8 @@ export const LoginForm = () => {
       // Sanitize email
       const email = values.email.toLowerCase().trim()
 
+      console.log(email)
+
       // First, try portal authentication (primary use case)
       try {
         const portalCredential = await signInWithEmailAndPassword(
@@ -88,7 +90,7 @@ export const LoginForm = () => {
             })
 
             // Determine next step in onboarding process
-            const redirectPath = getRedirectPath(portalUserData as any)
+            const redirectPath = getRedirectPath(portalUserData as any, email)
             router.push(redirectPath)
             return
           }
