@@ -18,6 +18,14 @@ interface PortalUser {
   growthInfo?: any
   termsAgreed?: boolean
   createdAt?: Date | { seconds: number; nanoseconds: number }
+
+  // For Facilitator
+  gender?: string
+  profession?: string
+  dateOfBirth?: string
+  address?: string
+  // Fields for profile tracking
+  profileCompleted?: boolean
 }
 
 interface UsePortalAuthReturn {

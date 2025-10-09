@@ -9,10 +9,11 @@ interface PortalUserData {
 /**
  * Determine where user should be redirected based on their registration status
  */
-export function getRedirectPath(userData: PortalUserData): string {
+export function getRedirectPath(userData: PortalUserData, email: any): string {
   // If email not verified, go to verification
   if (!userData.emailVerified) {
-    return '/portal/verify'
+    // return '/portal/verify'
+    return `/portal/verify?email=${encodeURIComponent(email)}`
   }
 
   // If school fee info not provided, go to school fee form
@@ -37,4 +38,4 @@ export function getRedirectPath(userData: PortalUserData): string {
 
   // Default fallback
   return '/portal/terms-and-conditions'
-} 
+}

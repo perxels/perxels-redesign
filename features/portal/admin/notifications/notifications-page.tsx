@@ -34,6 +34,7 @@ import {
 } from '../../../../types/notification.types'
 import Image from 'next/image'
 import { reviewPaymentInstallment } from '../../../../lib/utils/payment.utils'
+import { StudentActivationButton } from '../../../../components/student/StudentActivationButton'
 
 interface PaymentActionModalProps {
   isOpen: boolean
@@ -147,7 +148,7 @@ function NotificationRow({
   onReject,
   getStatus,
 }: {
-  notification: any;
+  notification: any
   onApprove: (notification: AdminNotification) => void
   onReject: (notification: AdminNotification) => void
   getStatus: (notification: AdminNotification) => string
@@ -182,39 +183,43 @@ function NotificationRow({
   }
 
   const formattedDate = formatDateToDesign(notification.createdAt)
-  
+
   // Check if notification needs action (unread payment submissions only)
-  const needsAction = !notification.read && notification.type === 'payment_submitted'
-  
+  const needsAction =
+    !notification.read && notification.type === 'payment_submitted'
+
   // Determine background color based on notification type, status, and read status
   const getBackgroundColor = () => {
     if (notification.read) {
       // For read notifications, check the status field for payment_submitted
-      if (notification.type === 'payment_submitted' && notification.data.status) {
+      if (
+        notification.type === 'payment_submitted' &&
+        notification.data.status
+      ) {
         switch (notification.data.status) {
           case 'approved':
-            return { bg: "green.50", hover: "green.100" }
+            return { bg: 'green.50', hover: 'green.100' }
           case 'rejected':
-            return { bg: "red.50", hover: "red.100" }
+            return { bg: 'red.50', hover: 'red.100' }
           default:
-            return { bg: "gray.50", hover: "gray.100" }
+            return { bg: 'gray.50', hover: 'gray.100' }
         }
       } else {
         // For other notification types
         switch (notification.type) {
           case 'payment_approved':
-            return { bg: "green.50", hover: "green.100" }
+            return { bg: 'green.50', hover: 'green.100' }
           case 'payment_rejected':
-            return { bg: "red.50", hover: "red.100" }
+            return { bg: 'red.50', hover: 'red.100' }
           default:
-            return { bg: "gray.50", hover: "gray.100" }
+            return { bg: 'gray.50', hover: 'gray.100' }
         }
       }
     } else {
-      return { bg: "blue.50", hover: "blue.100" }
+      return { bg: 'blue.50', hover: 'blue.100' }
     }
   }
-  
+
   const { bg: bgColor, hover: hoverBgColor } = getBackgroundColor()
 
   return (
@@ -224,8 +229,8 @@ function NotificationRow({
       p={{ base: 3, md: 4 }}
       _hover={{ bg: hoverBgColor }}
       transition="all 0.2s"
-      borderLeft={!notification.read ? "4px solid" : "none"}
-      borderLeftColor={!notification.read ? "blue.500" : "transparent"}
+      borderLeft={!notification.read ? '4px solid' : 'none'}
+      borderLeftColor={!notification.read ? 'blue.500' : 'transparent'}
       position="relative"
     >
       {/* Mobile Layout */}
@@ -254,15 +259,23 @@ function NotificationRow({
               ₦{(notification.data.amount || 0).toLocaleString()}
             </Text>
           </Flex>
-          
-          <Text 
-            fontWeight={notification.read ? "medium" : "bold"} 
-            color="black" 
+
+          <Text
+            fontWeight={notification.read ? 'medium' : 'bold'}
+            color="black"
             fontSize="md"
           >
             {notification.data.studentName}
           </Text>
-          
+          <Text
+            fontWeight={notification.read ? 'medium' : 'bold'}
+            color="black"
+            fontSize="md"
+            mt={-2}
+          >
+            {notification.data.studentEmail}
+          </Text>
+
           {notification.data.paymentReceiptUrl && (
             <Link
               href={notification.data.paymentReceiptUrl}
@@ -274,42 +287,66 @@ function NotificationRow({
               View Receipt
             </Link>
           )}
-          
+
           {/* Status Display for Mobile */}
-          {!needsAction && (
-            <Text fontSize="sm" color="gray.500" fontStyle="italic" textAlign="center">
-              {getStatus(notification)}
-            </Text>
-          )}
-          
-          {needsAction && (
-            <HStack spacing={2} justify="center">
-              <Button
-                size="sm"
-                colorScheme="purple"
-                onClick={() => onApprove(notification)}
-                flex="1"
-                maxW="120px"
+          <Box
+            display={'flex'}
+            justifyContent={'space-between'}
+            alignItems={'center'}
+          >
+            {!needsAction && (
+              <Text
+                fontSize="sm"
+                color="gray.500"
+                fontStyle="italic"
+                textAlign="center"
               >
-                Approve
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                colorScheme="red"
-                onClick={() => onReject(notification)}
-                flex="1"
-                maxW="120px"
-              >
-                Reject
-              </Button>
-            </HStack>
-          )}
+                {getStatus(notification)}
+              </Text>
+            )}
+
+            {needsAction && (
+              <HStack spacing={2} justify="center">
+                <Button
+                  size="sm"
+                  colorScheme="purple"
+                  onClick={() => onApprove(notification)}
+                  flex="1"
+                  maxW="120px"
+                >
+                  Approve
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  colorScheme="red"
+                  onClick={() => onReject(notification)}
+                  flex="1"
+                  maxW="120px"
+                >
+                  Reject
+                </Button>
+              </HStack>
+            )}
+
+            {/* Button */}
+            <Box ml={3}>
+              <StudentActivationButton
+                studentId={notification.data.studentId}
+                size="xs"
+              />
+            </Box>
+          </Box>
         </VStack>
       </Box>
 
       {/* Desktop Layout */}
-      <HStack display={{ base: 'none', md: 'flex' }} justify="space-between" align="center" w="full">
+      <HStack
+        display={{ base: 'none', md: 'flex' }}
+        justify="space-between"
+        align="center"
+        w="full"
+      >
         {/* Date */}
         <HStack spacing={2} minW="120px">
           <Text color="black" fontSize="sm">
@@ -330,14 +367,23 @@ function NotificationRow({
           )}
         </HStack>
 
-        {/* Student Name */}
-        <Text 
-          fontWeight={notification.read ? "medium" : "bold"} 
-          color="black" 
-          minW="150px"
-        >
-          {notification.data.studentName}
-        </Text>
+        {/* Student Name & Email */}
+        <Box>
+          <Text
+            fontWeight={notification.read ? 'medium' : 'bold'}
+            color="black"
+            minW="150px"
+          >
+            {notification.data.studentName}
+          </Text>
+          <Text
+            fontWeight={notification.read ? 'medium' : 'bold'}
+            color="black"
+            minW="150px"
+          >
+            {notification.data.studentEmail}
+          </Text>
+        </Box>
 
         {/* Amount */}
         <Text fontWeight="bold" color="black" minW="100px">
@@ -362,7 +408,7 @@ function NotificationRow({
         </Box>
 
         {/* Action Buttons or Status */}
-        <Box minW="160px">
+        <Box minW="160px" display={'flex'}>
           {needsAction ? (
             <HStack spacing={3}>
               <Button
@@ -388,6 +434,13 @@ function NotificationRow({
               {getStatus(notification)}
             </Text>
           )}
+
+          <Box ml={3}>
+            <StudentActivationButton
+              studentId={notification.data.studentId}
+              size="xs"
+            />
+          </Box>
         </Box>
       </HStack>
     </Box>
@@ -396,18 +449,18 @@ function NotificationRow({
 
 export function NotificationsPage() {
   const { user } = usePortalAuth()
-  const { 
-    notifications, 
-    isLoading, 
+  const {
+    notifications,
+    isLoading,
     isLoadingMore,
-    hasMore, 
-    currentPage, 
+    hasMore,
+    currentPage,
     pageSize,
-    markAsRead, 
+    markAsRead,
     updateNotificationStatus,
     markAllAsRead,
-    loadMore, 
-    refreshNotifications 
+    loadMore,
+    refreshNotifications,
   } = useAdminNotifications()
   const [actionLoading, setActionLoading] = useState(false)
   const [selectedNotification, setSelectedNotification] =
@@ -423,7 +476,7 @@ export function NotificationsPage() {
         if (notification.data.status === 'approved') {
           return 'Approved ✅'
         } else if (notification.data.status === 'rejected') {
-          return notification.data.rejectionReason 
+          return notification.data.rejectionReason
             ? `Rejected ❌ - ${notification.data.rejectionReason}`
             : 'Rejected ❌'
         } else {
@@ -440,8 +493,10 @@ export function NotificationsPage() {
 
   // Show all payment-related notifications (submitted, approved, rejected)
   // Unread notifications are already prioritized by the hook
-  const paymentNotifications = notifications.filter(
-    (n) => ['payment_submitted', 'payment_approved', 'payment_rejected'].includes(n.type)
+  const paymentNotifications = notifications.filter((n) =>
+    ['payment_submitted', 'payment_approved', 'payment_rejected'].includes(
+      n.type,
+    ),
   )
 
   const handleApprove = (notification: AdminNotification) => {
@@ -458,7 +513,7 @@ export function NotificationsPage() {
 
   const handleLoadMore = async () => {
     if (!hasMore || isLoadingMore) return
-    
+
     try {
       await loadMore()
     } catch (error) {
@@ -482,10 +537,14 @@ export function NotificationsPage() {
       if (!studentId) {
         throw new Error('Student ID not found in notification data')
       }
-      
+
       const result = await reviewPaymentInstallment({
         uid: studentId,
-        installmentNumber: selectedNotification.data.installmentNumber as 1 | 2 | 3 | 4,
+        installmentNumber: selectedNotification.data.installmentNumber as
+          | 1
+          | 2
+          | 3
+          | 4,
         adminUid: user.uid,
         action: actionType,
         ...(rejectionReason && { rejectionReason }),
@@ -499,14 +558,17 @@ export function NotificationsPage() {
       // Step 2: Send notifications and emails (server-side) - don't fail if this fails
       if (result.notificationData) {
         try {
-          const notificationResponse = await fetch('/api/send-payment-notification', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+          const notificationResponse = await fetch(
+            '/api/send-payment-notification',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(result.notificationData),
             },
-            body: JSON.stringify(result.notificationData),
-          })
-          
+          )
+
           if (!notificationResponse.ok) {
             const errorText = await notificationResponse.text()
             console.warn('⚠️ Failed to send notification email:', errorText)
@@ -527,7 +589,7 @@ export function NotificationsPage() {
           await updateNotificationStatus(
             selectedNotification.id,
             actionType === 'approve' ? 'approved' : 'rejected',
-            actionType === 'reject' ? rejectionReason : undefined
+            actionType === 'reject' ? rejectionReason : undefined,
           )
         } catch (error) {
           console.error('Error updating notification status:', error)
@@ -535,7 +597,10 @@ export function NotificationsPage() {
           try {
             await markAsRead(selectedNotification.id)
           } catch (markAsReadError) {
-            console.error('Error marking notification as read:', markAsReadError)
+            console.error(
+              'Error marking notification as read:',
+              markAsReadError,
+            )
           }
         }
       }
@@ -579,7 +644,7 @@ export function NotificationsPage() {
           px={{ base: 4, md: 6 }}
           py={{ base: 3, md: 4 }}
           borderRadius="lg"
-          maxW={{ base: "full", md: "300px" }}
+          maxW={{ base: 'full', md: '300px' }}
         >
           <VStack spacing={3}>
             <Box w={{ base: 8, md: 12 }} h={{ base: 8, md: 12 }}>
@@ -590,7 +655,10 @@ export function NotificationsPage() {
                 height={48}
               />
             </Box>
-            <Text fontSize={{ base: "xl", md: "2xl", lg: "3xl" }} fontWeight={600}>
+            <Text
+              fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }}
+              fontWeight={600}
+            >
               Notifications
             </Text>
           </VStack>
@@ -613,7 +681,7 @@ export function NotificationsPage() {
               colorScheme="green"
               size="sm"
               onClick={markAllAsRead}
-              isDisabled={notifications.filter(n => !n.read).length === 0}
+              isDisabled={notifications.filter((n) => !n.read).length === 0}
             >
               Mark All as Read
             </Button>
@@ -649,7 +717,7 @@ export function NotificationsPage() {
                   getStatus={getNotificationStatus}
                 />
               ))}
-              
+
               {/* Load More Button */}
               {hasMore && !isLoadingMore && (
                 <Flex justify="center" pt={4}>
@@ -665,7 +733,7 @@ export function NotificationsPage() {
                   </Button>
                 </Flex>
               )}
-              
+
               {/* Pagination Info */}
               {paymentNotifications.length > 0 && (
                 <Flex justify="center" pt={2}>

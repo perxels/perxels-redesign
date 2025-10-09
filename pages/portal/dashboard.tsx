@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, VStack } from '@chakra-ui/react'
 import { StudentAuthGuard } from '../../components/PortalAuthGuard'
 import { DashboardLayout } from '../../features/portal/dashboard/dashboard-layout'
 import { Welcome } from '../../features/portal/dashboard/welcome'
@@ -16,6 +9,7 @@ import {
   NotificationBadge,
 } from '../../components/NotificationBadge'
 import { usePortalAuth } from '../../hooks/usePortalAuth'
+import DeactivatedStudentAlert from '../../components/student/DeactivatedStudentAlert'
 
 const PortalDashboardPage = () => {
   const { user, portalUser } = usePortalAuth()
@@ -33,26 +27,7 @@ const PortalDashboardPage = () => {
             text="YOU HAVE A MESSAGE IN YOUR INBOX"
           />
           <Box width={'100%'}>
-            {!isActive && (
-              <Box width={'50%'}>
-                <Alert
-                  status="warning"
-                  borderRadius="md"
-                  mb={2}
-                  variant="subtle"
-                  flexDirection="column"
-                  alignItems="flex-start"
-                >
-                  <Box display="flex" alignItems="center" mb={1}>
-                    <AlertIcon />
-                    <AlertTitle>Account Inactive</AlertTitle>
-                  </Box>
-                  <AlertDescription>
-                    You are not currently an Active Student.
-                  </AlertDescription>
-                </Alert>
-              </Box>
-            )}
+            {!isActive && <DeactivatedStudentAlert />}
             <DashboardMenu />
           </Box>
         </VStack>

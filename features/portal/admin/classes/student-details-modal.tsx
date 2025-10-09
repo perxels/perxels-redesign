@@ -153,6 +153,7 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
     onClose: onCohortDialogClose,
   } = useDisclosure()
   const cancelRef = React.useRef<HTMLButtonElement>(null)
+  const isFacilitator = adminUser?.role === 'facilitator'
 
   // Fetch payment records from schoolFeeInfo
   const fetchPayments = async () => {
@@ -693,9 +694,13 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
           <Tabs index={activeTab} onChange={setActiveTab} variant="enclosed">
             <TabList>
               <Tab>Overview</Tab>
-              <Tab>Payment History</Tab>
-              <Tab>Attendance</Tab>
-              <Tab>Cohort Management</Tab>
+              {!isFacilitator && (
+                <>
+                  <Tab>Payment History</Tab>
+                  <Tab>Attendance</Tab>
+                  <Tab>Cohort Management</Tab>
+                </>
+              )}
             </TabList>
 
             <TabPanels>
@@ -944,164 +949,172 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                   </Box>
                 </VStack>
               </TabPanel>
+              {!isFacilitator && (
+                <>
+                  {/* Payment History Tab */}
+                  <TabPanel>
+                    <VStack spacing={4} align="stretch">
+                      <Box>
+                        <Text fontSize="lg" fontWeight="bold" mb={4}>
+                          Payment History
+                        </Text>
+                        {loadingPayments ? (
+                          <Box textAlign="center" py={8}>
+                            <Spinner size="lg" color="purple.500" />
+                            <Text mt={4}>Loading payment records...</Text>
+                          </Box>
+                        ) : payments.length === 0 ? (
+                          <Alert status="info">
+                            <AlertIcon />
+                            No payment records found for this student.
+                          </Alert>
+                        ) : (
+                          <Box overflowX="auto">
+                            <Table variant="simple" size="sm">
+                              <Thead>
+                                <Tr>
+                                  <Th>Date</Th>
+                                  <Th>Amount</Th>
+                                  <Th>Installment</Th>
+                                  <Th>Type</Th>
+                                  <Th>Receipt</Th>
+                                  <Th>Actions</Th>
+                                </Tr>
+                              </Thead>
+                              <Tbody>
+                                {payments.map((payment) => (
+                                  <Tr key={payment.id}>
+                                    <Td>{formatDate(payment.date)}</Td>
+                                    <Td fontWeight="bold">
+                                      {formatCurrency(payment.amount)}
+                                    </Td>
+                                    <Td>
+                                      <Badge
+                                        colorScheme="blue"
+                                        variant="subtle"
+                                      >
+                                        #{payment.installmentNumber}
+                                      </Badge>
+                                    </Td>
+                                    <Td>
+                                      <Badge
+                                        colorScheme={
+                                          payment.type === 'initial'
+                                            ? 'blue'
+                                            : 'purple'
+                                        }
+                                      >
+                                        {payment.type}
+                                      </Badge>
+                                    </Td>
+                                    <Td>
+                                      {payment.receiptUrl ? (
+                                        <Button
+                                          size="xs"
+                                          colorScheme="blue"
+                                          variant="outline"
+                                          onClick={() =>
+                                            openImagePreview(
+                                              payment.receiptUrl!,
+                                              `${student.fullName} - Payment Receipt #${payment.installmentNumber}`,
+                                            )
+                                          }
+                                        >
+                                          View
+                                        </Button>
+                                      ) : (
+                                        <Text fontSize="sm" color="gray.500">
+                                          No receipt
+                                        </Text>
+                                      )}
+                                    </Td>
+                                    <Td>
+                                      <Button
+                                        // isDisabled={paymentStats.balance === 0}
+                                        size="sm"
+                                        colorScheme="purple"
+                                        variant="outline"
+                                        isLoading={isNotificationLoading}
+                                        onClick={() =>
+                                          handleSendPaymentNotification(payment)
+                                        }
+                                      >
+                                        Resend notification
+                                      </Button>
+                                    </Td>
+                                  </Tr>
+                                ))}
+                              </Tbody>
+                            </Table>
+                          </Box>
+                        )}
+                      </Box>
+                    </VStack>
+                  </TabPanel>
 
-              {/* Payment History Tab */}
-              <TabPanel>
-                <VStack spacing={4} align="stretch">
-                  <Box>
-                    <Text fontSize="lg" fontWeight="bold" mb={4}>
-                      Payment History
-                    </Text>
-                    {loadingPayments ? (
-                      <Box textAlign="center" py={8}>
-                        <Spinner size="lg" color="purple.500" />
-                        <Text mt={4}>Loading payment records...</Text>
+                  {/* Attendance Tab */}
+                  <TabPanel>
+                    <VStack spacing={4} align="stretch">
+                      <Box>
+                        <Text fontSize="lg" fontWeight="bold" mb={4}>
+                          Attendance Records
+                        </Text>
+                        {loadingAttendance ? (
+                          <Box textAlign="center" py={8}>
+                            <Spinner size="lg" color="purple.500" />
+                            <Text mt={4}>Loading attendance records...</Text>
+                          </Box>
+                        ) : attendance.length === 0 ? (
+                          <Alert status="info">
+                            <AlertIcon />
+                            No attendance records found for this student.
+                          </Alert>
+                        ) : (
+                          <Box overflowX="auto">
+                            <Table variant="simple" size="sm">
+                              <Thead>
+                                <Tr>
+                                  <Th>Date</Th>
+                                  <Th>Class</Th>
+                                  <Th>Status</Th>
+                                  <Th>Notes</Th>
+                                </Tr>
+                              </Thead>
+                              <Tbody>
+                                {attendance.map((record) => (
+                                  <Tr key={record.id}>
+                                    <Td>{formatDate(record.date)}</Td>
+                                    <Td>{record.class}</Td>
+                                    <Td>
+                                      <Badge
+                                        colorScheme={getStatusColor(
+                                          record.status,
+                                        )}
+                                      >
+                                        {record.status}
+                                      </Badge>
+                                    </Td>
+                                    <Td>
+                                      <Text fontSize="sm" color="gray.600">
+                                        {record.notes || '-'}
+                                      </Text>
+                                    </Td>
+                                  </Tr>
+                                ))}
+                              </Tbody>
+                            </Table>
+                          </Box>
+                        )}
                       </Box>
-                    ) : payments.length === 0 ? (
-                      <Alert status="info">
-                        <AlertIcon />
-                        No payment records found for this student.
-                      </Alert>
-                    ) : (
-                      <Box overflowX="auto">
-                        <Table variant="simple" size="sm">
-                          <Thead>
-                            <Tr>
-                              <Th>Date</Th>
-                              <Th>Amount</Th>
-                              <Th>Installment</Th>
-                              <Th>Type</Th>
-                              <Th>Receipt</Th>
-                              <Th>Actions</Th>
-                            </Tr>
-                          </Thead>
-                          <Tbody>
-                            {payments.map((payment) => (
-                              <Tr key={payment.id}>
-                                <Td>{formatDate(payment.date)}</Td>
-                                <Td fontWeight="bold">
-                                  {formatCurrency(payment.amount)}
-                                </Td>
-                                <Td>
-                                  <Badge colorScheme="blue" variant="subtle">
-                                    #{payment.installmentNumber}
-                                  </Badge>
-                                </Td>
-                                <Td>
-                                  <Badge
-                                    colorScheme={
-                                      payment.type === 'initial'
-                                        ? 'blue'
-                                        : 'purple'
-                                    }
-                                  >
-                                    {payment.type}
-                                  </Badge>
-                                </Td>
-                                <Td>
-                                  {payment.receiptUrl ? (
-                                    <Button
-                                      size="xs"
-                                      colorScheme="blue"
-                                      variant="outline"
-                                      onClick={() =>
-                                        openImagePreview(
-                                          payment.receiptUrl!,
-                                          `${student.fullName} - Payment Receipt #${payment.installmentNumber}`,
-                                        )
-                                      }
-                                    >
-                                      View
-                                    </Button>
-                                  ) : (
-                                    <Text fontSize="sm" color="gray.500">
-                                      No receipt
-                                    </Text>
-                                  )}
-                                </Td>
-                                <Td>
-                                  <Button
-                                    // isDisabled={paymentStats.balance === 0}
-                                    size="sm"
-                                    colorScheme="purple"
-                                    variant="outline"
-                                    isLoading={isNotificationLoading}
-                                    onClick={() =>
-                                      handleSendPaymentNotification(payment)
-                                    }
-                                  >
-                                    Resend notification
-                                  </Button>
-                                </Td>
-                              </Tr>
-                            ))}
-                          </Tbody>
-                        </Table>
-                      </Box>
-                    )}
-                  </Box>
-                </VStack>
-              </TabPanel>
+                    </VStack>
+                  </TabPanel>
 
-              {/* Attendance Tab */}
-              <TabPanel>
-                <VStack spacing={4} align="stretch">
-                  <Box>
-                    <Text fontSize="lg" fontWeight="bold" mb={4}>
-                      Attendance Records
-                    </Text>
-                    {loadingAttendance ? (
-                      <Box textAlign="center" py={8}>
-                        <Spinner size="lg" color="purple.500" />
-                        <Text mt={4}>Loading attendance records...</Text>
-                      </Box>
-                    ) : attendance.length === 0 ? (
-                      <Alert status="info">
-                        <AlertIcon />
-                        No attendance records found for this student.
-                      </Alert>
-                    ) : (
-                      <Box overflowX="auto">
-                        <Table variant="simple" size="sm">
-                          <Thead>
-                            <Tr>
-                              <Th>Date</Th>
-                              <Th>Class</Th>
-                              <Th>Status</Th>
-                              <Th>Notes</Th>
-                            </Tr>
-                          </Thead>
-                          <Tbody>
-                            {attendance.map((record) => (
-                              <Tr key={record.id}>
-                                <Td>{formatDate(record.date)}</Td>
-                                <Td>{record.class}</Td>
-                                <Td>
-                                  <Badge
-                                    colorScheme={getStatusColor(record.status)}
-                                  >
-                                    {record.status}
-                                  </Badge>
-                                </Td>
-                                <Td>
-                                  <Text fontSize="sm" color="gray.600">
-                                    {record.notes || '-'}
-                                  </Text>
-                                </Td>
-                              </Tr>
-                            ))}
-                          </Tbody>
-                        </Table>
-                      </Box>
-                    )}
-                  </Box>
-                </VStack>
-              </TabPanel>
-
-              {/* New Cohort Management Tab */}
-              <TabPanel>
-                <CohortManagementTab />
-              </TabPanel>
+                  {/* Cohort Management Tab */}
+                  <TabPanel>
+                    <CohortManagementTab />
+                  </TabPanel>
+                </>
+              )}
             </TabPanels>
           </Tabs>
         </ModalBody>
