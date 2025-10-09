@@ -117,7 +117,7 @@ export function PortalAuthGuard({
     if (requireRegistrationComplete && !isRegistrationComplete) {
       // Determine where to redirect based on current progress
       if (portalUser) {
-        const correctPath = getRedirectPath(portalUser)
+        const correctPath = getRedirectPath(portalUser, currentUserEmail)
         router.push(correctPath)
       } else {
         router.push('/portal')
