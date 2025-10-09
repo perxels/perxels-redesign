@@ -166,7 +166,7 @@ export const TakeTestWrapper: React.FC<TakeTestWrapperProps> = ({ testId }) => {
           </Alert>
 
           {/* This still allows retakes after Test has expired */}
-          {test && (
+          {/* {test && (
             <Card width="100%">
               <CardBody>
                 <VStack spacing={4}>
@@ -213,7 +213,7 @@ export const TakeTestWrapper: React.FC<TakeTestWrapperProps> = ({ testId }) => {
                 </VStack>
               </CardBody>
             </Card>
-          )}
+          )} */}
 
           <Button as="a" href="/portal/dashboard/tests" colorScheme="blue">
             Back to Tests
