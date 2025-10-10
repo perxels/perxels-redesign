@@ -160,7 +160,7 @@ export const TakeTestWrapper: React.FC<TakeTestWrapperProps> = ({ testId }) => {
           <Alert status="error">
             <AlertIcon />
             <Box>
-              <AlertTitle>Access Required</AlertTitle>
+              <AlertTitle>You have Completed this Test..!!</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Box>
           </Alert>

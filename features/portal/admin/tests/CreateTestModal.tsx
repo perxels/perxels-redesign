@@ -190,6 +190,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
       })
     } finally {
       setLoading(false)
+      onClose()
     }
   }
 
@@ -260,6 +261,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                       setTestData({ ...testData, testName: e.target.value })
                     }
                     placeholder="Enter test name"
+                    autoComplete="off"
                   />
                 </FormControl>
 
@@ -554,7 +556,7 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
           {!createdTest && (
             <>
               <Button
-                variant="ghost"
+                variant="blue"
                 mr={3}
                 onClick={handleClose}
                 isDisabled={loading}
