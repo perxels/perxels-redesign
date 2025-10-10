@@ -153,7 +153,7 @@ export const StudentTestsWrapper = () => {
         colorScheme="blue"
       >
         <TabList mb={6}>
-          <Tab
+          {/* <Tab
             bg="white"
             p={4}
             borderRadius="lg"
@@ -178,7 +178,7 @@ export const StudentTestsWrapper = () => {
                 {stats.totalTests}
               </Text>
             </Box>
-          </Tab>
+          </Tab> */}
           <Tab
             bg="white"
             color={'#22543D'}
@@ -307,9 +307,15 @@ export const StudentTestsWrapper = () => {
                         shadow="md"
                         _hover={{ shadow: 'lg' }}
                         transition="shadow 0.2s"
+                        height={'fit-content'}
                       >
                         <CardBody>
-                          <VStack align="start" spacing={3}>
+                          <Box
+                            display={'flex'}
+                            flexDirection={'column'}
+                            alignItems={'stretch'}
+                            gap={4}
+                          >
                             <Text fontWeight="bold" fontSize="lg" noOfLines={2}>
                               {test.testName}
                             </Text>
@@ -318,7 +324,7 @@ export const StudentTestsWrapper = () => {
                               <Text
                                 color="gray.600"
                                 fontSize="sm"
-                                noOfLines={3}
+                                noOfLines={8}
                               >
                                 {test.testDescription}
                               </Text>
@@ -332,23 +338,20 @@ export const StudentTestsWrapper = () => {
                                 <Badge colorScheme="purple">
                                   {test.passingScore}% to pass
                                 </Badge>
-                                <Badge colorScheme="orange">
-                                  {test.maxAttempts} max attempts
-                                </Badge>
                               </HStack>
 
                               {/* Show test status */}
-                              {hasTaken && (
+                              {/* {hasTaken && (
                                 <Badge colorScheme="green">
                                   Previously Taken
                                 </Badge>
-                              )}
+                              )} */}
 
-                              {!accessInfo.canTake && (
+                              {/* {!accessInfo.canTake && (
                                 <Badge colorScheme="red">
                                   Access Restricted
                                 </Badge>
-                              )}
+                              )} */}
                             </VStack>
 
                             {accessInfo.canTake ? (
@@ -370,22 +373,18 @@ export const StudentTestsWrapper = () => {
                               </Button>
                             ) : (
                               <Button
-                                colorScheme={
-                                  accessInfo.canTake ? 'blue' : 'gray'
-                                }
+                                as={Link}
+                                href={`/portal/dashboard/tests/results/${test.testId}`}
+                                colorScheme="blue"
+                                variant="outline"
                                 width="full"
-                                isDisabled={!accessInfo.canTake}
-                                title={accessInfo.reason}
+                                size="sm"
                               >
-                                {accessInfo.canTake
-                                  ? hasTaken
-                                    ? 'Retake Test'
-                                    : 'Take Test'
-                                  : 'Cannot Take Test'}
+                                View Result
                               </Button>
                             )}
 
-                            {!accessInfo.canTake && accessInfo.reason && (
+                            {/* {!accessInfo.canTake && accessInfo.reason && (
                               <Text
                                 fontSize="sm"
                                 color="red.500"
@@ -394,8 +393,8 @@ export const StudentTestsWrapper = () => {
                               >
                                 {accessInfo.reason}
                               </Text>
-                            )}
-                          </VStack>
+                            )} */}
+                          </Box>
                         </CardBody>
                       </Card>
                     )
@@ -491,7 +490,7 @@ export const StudentTestsWrapper = () => {
                             width="full"
                             size="sm"
                           >
-                            View Details
+                            View Result
                           </Button>
                         </VStack>
                       </CardBody>

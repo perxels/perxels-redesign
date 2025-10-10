@@ -239,6 +239,36 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
     return () => clearInterval(timer)
   }, [timeLeft, submitting])
 
+  // Trying to disable screenshot
+
+  useEffect(() => {
+    // Block print screen key (partial prevention)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'PrintScreen') {
+        e.preventDefault()
+        // Show warning
+        alert('Screenshots are prohibited during tests!')
+      }
+    }
+
+    // Detect screenshot attempts via clipboard
+    const handleCopy = (e: ClipboardEvent) => {
+      if (window.getSelection()?.toString()) {
+        // User might be trying to copy content
+        e.preventDefault()
+        alert('Copying test content is not allowed!')
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('copy', handleCopy)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('copy', handleCopy)
+    }
+  }, [])
+
   // Improved question loading and shuffling
   const loadQuestions = async () => {
     try {
@@ -371,7 +401,7 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
       <Card mb={6}>
         <CardBody>
           <VStack align="stretch" spacing={4}>
-            <HStack justify="space-between" wrap="wrap">
+            <HStack justify="space-between">
               <VStack align="start" spacing={1}>
                 <Text fontSize="2xl" fontWeight="bold">
                   {test.testName}
@@ -381,13 +411,13 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
                 )}
 
                 {/* Shuffle status */}
-                {(test.shuffleQuestions || test.shuffleOptions) && (
+                {/* {(test.shuffleQuestions || test.shuffleOptions) && (
                   <Badge colorScheme="purple" variant="subtle">
                     {test.shuffleQuestions && 'Questions Shuffled'}
                     {test.shuffleQuestions && test.shuffleOptions && ' • '}
                     {test.shuffleOptions && 'Options Shuffled'}
                   </Badge>
-                )}
+                )} */}
               </VStack>
 
               <VStack align="end" spacing={1}>
@@ -397,7 +427,7 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
                 >
                   Time: {formatTime(timeLeft)}
                 </Badge>
-                <Text fontSize="sm" color="gray.600">
+                <Text fontSize="sm" color="gray.600" align="end">
                   {answeredCount}/{shuffledQuestions.length} questions answered
                 </Text>
                 <Text fontSize="sm" color="gray.600">
@@ -457,8 +487,6 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
             <Progress value={progress} colorScheme="blue" size="lg" />
             <Text fontSize="sm" textAlign="center">
               Question {currentQuestion + 1} of {shuffledQuestions.length}
-              {test.shuffleQuestions && ' • Questions are shuffled'}
-              {test.shuffleOptions && ' • Options are shuffled'}
             </Text>
           </VStack>
         </CardBody>
@@ -579,7 +607,7 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
           )}
 
           <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onClose}>
+            <Button variant="blue" mr={3} onClick={onClose}>
               Go Back
             </Button>
             <Button

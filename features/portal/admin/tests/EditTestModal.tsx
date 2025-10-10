@@ -616,7 +616,7 @@ export const EditTestModal: React.FC<EditTestModalProps> = ({
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="ghost" mr={3} onClick={onClose} isDisabled={saving}>
+          <Button variant="blue" mr={3} onClick={onClose} isDisabled={saving}>
             Cancel
           </Button>
           <Button
