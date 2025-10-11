@@ -261,7 +261,6 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                       setTestData({ ...testData, testName: e.target.value })
                     }
                     placeholder="Enter test name"
-                    autoComplete="off"
                   />
                 </FormControl>
 
@@ -405,9 +404,9 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
                       <Text fontSize="xs">
                         • Shuffle Questions: Randomizes question order for each
                         student
-                        {/* <br />
+                        <br />
                         • Shuffle Options: Randomizes answer choices for each
-                        question */}
+                        question
                         <br />• Tab Switching: Prevents students from leaving
                         the test window
                       </Text>

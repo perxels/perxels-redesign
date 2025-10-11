@@ -106,8 +106,11 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
   }
 
   const getLatestAttempt = () => {
-    return attempts.length > 0 ? attempts[attempts.length - 1] : null
+    return attempts.length > 0 ? attempts[0] : null
   }
+  // const getLatestAttempt = () => {
+  //   return attempts.length > 0 ? attempts[attempts.length - 1] : null
+  // }
 
   const getBestAttempt = () => {
     if (attempts.length === 0) return null
@@ -179,18 +182,30 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
               )}
 
               <SimpleGrid columns={[2, 3, 4]} spacing={6} width="100%">
+                {attempts.length > 1 && (
+                  <>
+                    <StatCard
+                      label="Total Attempts"
+                      value={attempts.length.toString()}
+                      color="blue"
+                    />
+                    <StatCard
+                      label="Best Score"
+                      value={`${bestAttempt?.percentage || 0}%`}
+                      color="green"
+                    />
+                  </>
+                )}
+                {attempts.length === 1 && (
+                  <StatCard
+                    label="Your Points"
+                    value={`${latestAttempt?.score}/${latestAttempt?.totalPoints}`}
+                    color="purple"
+                  />
+                )}
+
                 <StatCard
-                  label="Total Attempts"
-                  value={attempts.length.toString()}
-                  color="blue"
-                />
-                <StatCard
-                  label="Best Score"
-                  value={`${bestAttempt?.percentage || 0}%`}
-                  color="green"
-                />
-                <StatCard
-                  label="Latest Score"
+                  label="Your Score"
                   value={`${latestAttempt?.percentage || 0}%`}
                   color="purple"
                 />
@@ -199,18 +214,20 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
                   value={`${test.passingScore}%`}
                   color="green"
                 />
-              </SimpleGrid>
 
-              {bestAttempt && (
-                <Badge
-                  colorScheme={bestAttempt.passed ? 'green' : 'red'}
-                  fontSize="lg"
-                  px={3}
-                  py={1}
-                >
-                  {bestAttempt.passed ? 'PASSED' : 'NOT PASSED'}
-                </Badge>
-              )}
+                {bestAttempt && (
+                  <Badge
+                    colorScheme={bestAttempt.passed ? 'green' : 'red'}
+                    fontSize="lg"
+                    px={4}
+                    py={2}
+                    width={'fit-content'}
+                    height={'fit-content'}
+                  >
+                    {bestAttempt.passed ? 'PASSED' : 'NOT PASSED'}
+                  </Badge>
+                )}
+              </SimpleGrid>
             </VStack>
           </CardBody>
         </Card>
@@ -240,79 +257,82 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
         )}
 
         {/* Attempt History */}
-        <Card>
-          <CardBody>
-            <Text fontSize="xl" fontWeight="bold" mb={4}>
-              Attempt History
-            </Text>
+        {attempts.length > 1 && (
+          <Card>
+            <CardBody>
+              <Text fontSize="xl" fontWeight="bold" mb={4}>
+                Attempt History
+              </Text>
 
-            {attempts.length === 0 ? (
-              <Alert status="info">
-                <AlertIcon />
-                No attempts found for this test.
-              </Alert>
-            ) : (
-              <Table variant="simple">
-                <Thead>
-                  <Tr>
-                    <Th>Attempt Date</Th>
-                    <Th>Score</Th>
-                    <Th>Percentage</Th>
-                    <Th>Time Spent</Th>
-                    <Th>Status</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {attempts.map((attempt, index) => (
-                    <Tr key={attempt.attemptId}>
-                      <Td>
-                        {attempt.submittedAt?.toDate
-                          ? new Date(
-                              attempt.submittedAt.toDate(),
-                            ).toLocaleString()
-                          : 'N/A'}
-                      </Td>
-                      <Td>
-                        {attempt.score}/{attempt.totalPoints}
-                      </Td>
-                      <Td>
-                        <Badge
-                          colorScheme={
-                            attempt.percentage &&
-                            attempt.percentage >= test.passingScore
-                              ? 'green'
-                              : 'red'
-                          }
-                        >
-                          {attempt.percentage}%
-                        </Badge>
-                      </Td>
-                      <Td>
-                        {attempt.timeSpent
-                          ? `${Math.floor(attempt.timeSpent / 60)}m ${
-                              attempt.timeSpent % 60
-                            }s`
-                          : 'N/A'}
-                      </Td>
-                      <Td>
-                        <Badge colorScheme={attempt.passed ? 'green' : 'red'}>
-                          {attempt.passed ? 'Passed' : 'Failed'}
-                        </Badge>
-                      </Td>
+              {attempts.length === 0 ? (
+                <Alert status="info">
+                  <AlertIcon />
+                  No attempts found for this test.
+                </Alert>
+              ) : (
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      <Th>Attempt Date</Th>
+                      <Th>Score</Th>
+                      <Th>Percentage</Th>
+                      <Th>Time Spent</Th>
+                      <Th>Status</Th>
                     </Tr>
-                  ))}
-                </Tbody>
-              </Table>
-            )}
-          </CardBody>
-        </Card>
+                  </Thead>
+                  <Tbody>
+                    {attempts.map((attempt, index) => (
+                      <Tr key={attempt.attemptId}>
+                        <Td>
+                          {attempt.submittedAt?.toDate
+                            ? new Date(
+                                attempt.submittedAt.toDate(),
+                              ).toLocaleString()
+                            : 'N/A'}
+                        </Td>
+                        <Td>
+                          {attempt.score}/{attempt.totalPoints}
+                        </Td>
+                        <Td>
+                          <Badge
+                            colorScheme={
+                              attempt.percentage &&
+                              attempt.percentage >= test.passingScore
+                                ? 'green'
+                                : 'red'
+                            }
+                          >
+                            {attempt.percentage}%
+                          </Badge>
+                        </Td>
+                        <Td>
+                          {attempt.timeSpent
+                            ? `${Math.floor(attempt.timeSpent / 60)}m ${
+                                attempt.timeSpent % 60
+                              }s`
+                            : 'N/A'}
+                        </Td>
+                        <Td>
+                          <Badge colorScheme={attempt.passed ? 'green' : 'red'}>
+                            {attempt.passed ? 'Passed' : 'Failed'}
+                          </Badge>
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              )}
+            </CardBody>
+          </Card>
+        )}
 
         {/* Question Review */}
         {latestAttempt && questions.length > 0 && (
           <Card>
             <CardBody>
               <Text fontSize="xl" fontWeight="bold" mb={4}>
-                Question Review (Latest Attempt)
+                Question Review{' '}
+                {attempts.length > 1 && <span>(Latest Attempt)</span>}
               </Text>
               <VStack spacing={4}>
                 {questions.map((question, index) => {
