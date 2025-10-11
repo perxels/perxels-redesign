@@ -37,6 +37,7 @@ export const TakeTestWrapper: React.FC<TakeTestWrapperProps> = ({ testId }) => {
   const [test, setTest] = useState<Test | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [needRead, setNeedRead] = useState(true)
   const [hasTakenTest, setHasTakenTest] = useState(false)
   const [accessGranted, setAccessGranted] = useState(false)
   const [accessCode, setAccessCode] = useState('')
@@ -241,7 +242,49 @@ export const TakeTestWrapper: React.FC<TakeTestWrapperProps> = ({ testId }) => {
     )
   }
 
-  if (accessGranted && test) {
+  if (needRead) {
+    return (
+      <Box
+        py={10}
+        display={'flex'}
+        flexDirection={'column'}
+        gap={2}
+        maxW={'600px'}
+        mx="auto"
+      >
+        <Alert status="info" mb={4}>
+          <AlertIcon />
+          <AlertTitle>Important Instructions</AlertTitle>
+        </Alert>
+
+        <div>{test.testDescription}</div>
+        <div>
+          <Text mt={2} mb={1} fontSize="medium">
+            • Ensure to read all instructions carefully before starting the test
+          </Text>
+          <Text mb={1}>
+            • Your time begins immediately when you click{' '}
+            <strong>&apos;Start Test&apos;</strong>
+          </Text>
+          <Text>
+            • The <strong>Test</strong> will <strong>Auto-submit</strong> when
+            time expires
+          </Text>
+        </div>
+
+        <Button
+          colorScheme="blue"
+          onClick={() => {
+            setNeedRead(false)
+          }}
+        >
+          Start Test
+        </Button>
+      </Box>
+    )
+  }
+
+  if (accessGranted && test && !needRead) {
     return <TakeTestInterface test={test} testId={testId} />
   }
 

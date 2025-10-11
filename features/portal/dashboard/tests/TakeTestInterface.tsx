@@ -49,6 +49,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 interface ShuffledQuestion extends Question {
   originalOptions?: string[]
   optionMap?: { [original: string]: string } // Maps original option to shuffled option
+  correctShuffledAnswer?: string // Store the correct answer in shuffled format
 }
 
 export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
@@ -118,12 +119,12 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
         const studentAnswer = answers[question.questionId]
 
         // Handle shuffled options
+        // Simple and accurate scoring logic
         let isCorrect = false
-        if (test.shuffleOptions && question.optionMap) {
-          // For shuffled options, map the student's answer back to original
-          const originalStudentAnswer =
-            question.optionMap[studentAnswer] || studentAnswer
-          isCorrect = originalStudentAnswer === question.correctAnswer
+
+        if (test.shuffleOptions && question.correctShuffledAnswer) {
+          // For shuffled options, compare with the pre-calculated correct shuffled answer
+          isCorrect = studentAnswer === question.correctShuffledAnswer
         } else {
           // For non-shuffled options, compare directly
           isCorrect = studentAnswer === question.correctAnswer
@@ -293,12 +294,18 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
           question.options.forEach((originalOption, index) => {
             optionMap[shuffledOptions[index]] = originalOption
           })
+          // Find which shuffled option corresponds to the correct answer
+          const correctShuffledAnswer = shuffledOptions.find(
+            (shuffledOption) =>
+              optionMap[shuffledOption] === question.correctAnswer,
+          )
 
           return {
             ...question,
             options: shuffledOptions,
             originalOptions: question.options, // Store original order
             optionMap, // Store mapping for answer validation
+            correctShuffledAnswer, // Store the correct answer in shuffled format
           }
         })
       }
@@ -349,6 +356,7 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
       message = 'Test submitted automatically due to excessive tab switching.'
     }
 
+    onSuccessOpen()
     await submitTest(true, message) // Changed to true for auto-submit
   }
 
@@ -398,7 +406,7 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
   return (
     <Box maxW="4xl" mx="auto">
       {/* Test Header */}
-      <Card mb={6}>
+      <Card>
         <CardBody>
           <VStack align="stretch" spacing={4}>
             <HStack justify="space-between">
@@ -424,6 +432,7 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
                 <Badge
                   colorScheme={timeLeft < 300 ? 'red' : 'green'}
                   fontSize="lg"
+                  size={'xl'}
                 >
                   Time: {formatTime(timeLeft)}
                 </Badge>
@@ -491,9 +500,23 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
           </VStack>
         </CardBody>
       </Card>
+      {timeLeft < 180 && (
+        <Box
+          display={'flex'}
+          flexDirection={'row'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          w={'100%'}
+          mt={4}
+        >
+          <Badge colorScheme="red" fontSize={'48px'}>
+            Time Left : {formatTime(timeLeft)}
+          </Badge>
+        </Box>
+      )}
 
       {/* Question Card */}
-      <Card mb={6}>
+      <Card my={6}>
         <CardBody>
           <VStack align="stretch" spacing={6}>
             <Text fontSize="xl" fontWeight="bold">
@@ -517,21 +540,22 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
 
             {/* Navigation */}
             <HStack justify="space-between" pt={4}>
-              <Button
-                onClick={handlePrevious}
-                isDisabled={currentQuestion === 0}
-                colorScheme="gray"
-              >
-                Previous
-              </Button>
-
-              <HStack>
+              <HStack spacing={3}>
+                <Button
+                  onClick={handlePrevious}
+                  isDisabled={currentQuestion === 0}
+                  colorScheme="gray"
+                >
+                  Previous
+                </Button>
                 {currentQuestion < shuffledQuestions.length - 1 ? (
                   <Button onClick={handleNext} colorScheme="blue">
                     Next Question
                   </Button>
                 ) : null}
+              </HStack>
 
+              <HStack>
                 <Button
                   onClick={handleSubmit}
                   colorScheme="green"

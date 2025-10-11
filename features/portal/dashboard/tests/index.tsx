@@ -153,7 +153,7 @@ export const StudentTestsWrapper = () => {
         colorScheme="blue"
       >
         <TabList mb={6}>
-          {/* <Tab
+          <Tab
             bg="white"
             p={4}
             borderRadius="lg"
@@ -178,8 +178,8 @@ export const StudentTestsWrapper = () => {
                 {stats.totalTests}
               </Text>
             </Box>
-          </Tab> */}
-          <Tab
+          </Tab>
+          {/* <Tab
             bg="white"
             color={'#22543D'}
             p={4}
@@ -200,7 +200,7 @@ export const StudentTestsWrapper = () => {
                 {stats.completedTests}
               </Text>
             </Box>
-          </Tab>
+          </Tab> */}
           <Tab
             bg="white"
             color="purple.700"
