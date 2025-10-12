@@ -456,6 +456,25 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
     }
   }
 
+  const getPerformanceLabel = (percentage: any) => {
+    if (percentage >= 80) {
+      return '🏅 Excellent'
+    } else if (percentage >= 60) {
+      return '💪🏽 Good'
+    } else if (percentage >= 40) {
+      return '⚖️ Fair'
+    } else {
+      return '❌ Poor'
+    }
+  }
+
+  const getPerformanceColor = (percentage: any) => {
+    if (percentage >= 80) return 'green'
+    if (percentage >= 60) return 'blue'
+    if (percentage >= 40) return 'orange'
+    return 'red'
+  }
+
   const getScoreColor = (percentage?: number) => {
     if (!percentage) return 'gray'
     if (percentage < test.passingScore) return 'red'
@@ -779,13 +798,27 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                                 )}
                               </Td>
                               <Td>
-                                <Badge
+                                {/* <Badge
                                   colorScheme={
                                     participant.passed ? 'green' : 'red'
                                   }
                                   variant="subtle"
                                 >
                                   {participant.passed ? 'Passed' : 'Failed'}
+                                </Badge> */}
+                                <Badge
+                                  colorScheme={getPerformanceColor(
+                                    participant.bestPercentage,
+                                  )}
+                                  fontSize="lg"
+                                  px={4}
+                                  py={2}
+                                  width={'fit-content'}
+                                  height={'fit-content'}
+                                >
+                                  {getPerformanceLabel(
+                                    participant.bestPercentage,
+                                  )}
                                 </Badge>
                               </Td>
                               {/* Remarks Column */}

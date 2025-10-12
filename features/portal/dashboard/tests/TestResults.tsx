@@ -142,6 +142,25 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
     )
   }
 
+  const getPerformanceLabel = (percentage: any) => {
+    if (percentage >= 80) {
+      return '🏅 Excellent'
+    } else if (percentage >= 60) {
+      return '💪🏽 Good'
+    } else if (percentage >= 40) {
+      return '⚖️ Fair'
+    } else {
+      return '❌ Poor'
+    }
+  }
+
+  const getPerformanceColor = (percentage: any) => {
+    if (percentage >= 80) return 'green'
+    if (percentage >= 60) return 'blue'
+    if (percentage >= 40) return 'orange'
+    return 'red'
+  }
+
   const latestAttempt = getLatestAttempt()
   const bestAttempt = getBestAttempt()
   const visibleRemarks = remarks.filter((remark) => remark.isVisibleToStudent)
@@ -217,14 +236,15 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
 
                 {bestAttempt && (
                   <Badge
-                    colorScheme={bestAttempt.passed ? 'green' : 'red'}
+                    colorScheme={getPerformanceColor(bestAttempt.percentage)}
                     fontSize="lg"
                     px={4}
                     py={2}
                     width={'fit-content'}
                     height={'fit-content'}
                   >
-                    {bestAttempt.passed ? 'PASSED' : 'NOT PASSED'}
+                    {/* {bestAttempt.passed ? 'PASSED' : 'NOT PASSED'} */}
+                    {getPerformanceLabel(bestAttempt.percentage)}
                   </Badge>
                 )}
               </SimpleGrid>

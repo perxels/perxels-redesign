@@ -693,7 +693,7 @@ export function generateAdmittedHtml(
         <ul style="margin-left: 1.2em;">
           <li>Join the Slack channel using the PDF guide attached to this email</li>
           <li>Sign up on Figma using the document attached to this email</li>
-          <li>Attend Perxels Orientation on the Sunday at 7 pm (This is very compulsory), and here is the link to join the session: <a href="https://meet.google.com/zii-mtkx-vkd" target="_blank" style="color: #6C63FF; text-decoration: underline;">https://meet.google.com/zii-mtkx-vkd</a></li>
+          <li>Attend Perxels Orientation on Sunday at 7 pm (This is very compulsory), and here is the link to join the session: <a href="https://bit.ly/4h7IDJS" target="_blank" style="color: #6C63FF; text-decoration: underline;">https://meet.google.com/zii-mtkx-vkd</a></li>
         </ul>
         <p>You can also join via: <a href="https://bit.ly/3xk97VM" target="_blank" style="color: #767474; text-decoration: underline;">https://bit.ly/3xk97VM</a></p>
         <p style="margin-top: 18px; font-weight: bold;">PLEASE REPLY TO THIS EMAIL WITH 'I HAVE COMPLETED THE INSTRUCTIONS'</p>
@@ -1008,7 +1008,6 @@ export async function sendAdmissionEmail(
   options: EmailOptions = {},
 ): Promise<EmailResponse> {
   try {
-
     const resend = getResendClient()
 
     // Create the admission HTML content
@@ -1061,5 +1060,3 @@ export async function sendAdmissionEmail(
     }
   }
 }
-
-
