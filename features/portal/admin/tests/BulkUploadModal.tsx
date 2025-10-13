@@ -99,7 +99,8 @@ export const BulkUploadModal: React.FC<BulkUploadModalProps> = ({
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
 
         // Parse questions
-        const result = BulkQuestionParser.parseExcelData(jsonData)
+        // const result = BulkQuestionParser.parseExcelData(jsonData)
+        const result = BulkQuestionParser.parseExcelData(jsonData as any[][])
         setParsingResult(result)
 
         // Show validation results
