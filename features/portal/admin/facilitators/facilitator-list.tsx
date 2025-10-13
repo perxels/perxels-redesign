@@ -365,7 +365,7 @@ export const FacilitatorList = () => {
           <AlertIcon />
           <AlertDescription>
             {facilitator.length === 0
-              ? 'No facilitator found. Facilitator will appear here once they register.'
+              ? 'No facilitator found. Facilitator will appear here once you create.'
               : 'No facilitator match your current filters. Try adjusting your search criteria.'}
           </AlertDescription>
         </Alert>

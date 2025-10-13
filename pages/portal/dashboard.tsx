@@ -10,6 +10,7 @@ import {
 } from '../../components/NotificationBadge'
 import { usePortalAuth } from '../../hooks/usePortalAuth'
 import DeactivatedStudentAlert from '../../components/student/DeactivatedStudentAlert'
+import { SOTWDashboardCard } from '../../features/portal/dashboard/sotw/SOTWDashboardCard'
 
 const PortalDashboardPage = () => {
   const { user, portalUser } = usePortalAuth()
@@ -26,6 +27,7 @@ const PortalDashboardPage = () => {
             show={hasUnread}
             text="YOU HAVE A MESSAGE IN YOUR INBOX"
           />
+          <SOTWDashboardCard />
           <Box width={'100%'}>
             {!isActive && <DeactivatedStudentAlert />}
             <DashboardMenu />

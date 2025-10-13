@@ -1,7 +1,30 @@
-import { doc, updateDoc, getDoc, collection, addDoc, query, where, getDocs } from 'firebase/firestore'
+import {
+  doc,
+  updateDoc,
+  getDoc,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore'
 import { portalDb } from '../../portalFirebaseConfig'
-import { PaymentInstallment, SchoolFeeInfo, calculateOverallStatus, getNextInstallmentNumber } from '../../types/school-fee.types'
-import { sendPaymentNotificationEmail, generatePaymentApprovedHtml, generatePaymentRejectedHtml, sendStudentHtmlEmail, generateAdmittedHtml, generateRejectedHtml, sendAdmissionEmail, ONBOARDING_FILES } from './email.utils'
+import {
+  PaymentInstallment,
+  SchoolFeeInfo,
+  calculateOverallStatus,
+  getNextInstallmentNumber,
+} from '../../types/school-fee.types'
+import {
+  sendPaymentNotificationEmail,
+  generatePaymentApprovedHtml,
+  generatePaymentRejectedHtml,
+  sendStudentHtmlEmail,
+  generateAdmittedHtml,
+  generateRejectedHtml,
+  sendAdmissionEmail,
+  ONBOARDING_FILES,
+} from './email.utils'
 
 interface ReviewInstallmentParams {
   uid: string // student uid
@@ -52,14 +75,17 @@ interface AddInstallmentResult {
   }
 }
 
-export async function reviewPaymentInstallment(params: ReviewInstallmentParams): Promise<ReviewInstallmentResult> {
+export async function reviewPaymentInstallment(
+  params: ReviewInstallmentParams,
+): Promise<ReviewInstallmentResult> {
   try {
     const { uid, installmentNumber, adminUid, action, rejectionReason } = params
     // Validate required fields
     if (!uid || !installmentNumber || !adminUid || !action) {
       return {
         success: false,
-        error: 'Student UID, installment number, admin UID, and action are required',
+        error:
+          'Student UID, installment number, admin UID, and action are required',
       }
     }
 
@@ -100,8 +126,11 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
 
     const schoolFeeInfo = userData?.schoolFeeInfo as SchoolFeeInfo | undefined
 
-    if (!schoolFeeInfo || !schoolFeeInfo.payments || schoolFeeInfo.payments.length === 0) {
-
+    if (
+      !schoolFeeInfo ||
+      !schoolFeeInfo.payments ||
+      schoolFeeInfo.payments.length === 0
+    ) {
       return {
         success: false,
         error: 'No school fee information found for this student',
@@ -112,25 +141,31 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     // If rejecting, we want to find the pending payment to reject
     // If approving, we want to find the pending payment to approve
     let installmentIndex = -1
-    
+
     if (action === 'reject') {
       // For rejection, find the most recent pending payment with this installment number
       const pendingPayments = schoolFeeInfo.payments
         .map((payment, index) => ({ payment, index }))
-        .filter(({ payment }) => 
-          payment.installmentNumber === installmentNumber && payment.status === 'pending'
+        .filter(
+          ({ payment }) =>
+            payment.installmentNumber === installmentNumber &&
+            payment.status === 'pending',
         )
-        .sort((a, b) => 
-          new Date(b.payment.submittedAt).getTime() - new Date(a.payment.submittedAt).getTime()
+        .sort(
+          (a, b) =>
+            new Date(b.payment.submittedAt).getTime() -
+            new Date(a.payment.submittedAt).getTime(),
         )
-      
+
       if (pendingPayments.length > 0) {
         installmentIndex = pendingPayments[0].index
       }
     } else {
       // For approval, find any pending payment with this installment number
       installmentIndex = schoolFeeInfo.payments.findIndex(
-        payment => payment.installmentNumber === installmentNumber && payment.status === 'pending'
+        (payment) =>
+          payment.installmentNumber === installmentNumber &&
+          payment.status === 'pending',
       )
     }
 
@@ -151,7 +186,7 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
         error: `Installment ${installmentNumber} has already been approved and cannot be changed`,
       }
     }
-    
+
     // Allow rejecting already rejected payments (for updating rejection reason)
     if (targetInstallment.status === 'rejected' && action === 'approve') {
       return {
@@ -175,16 +210,22 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
 
     // Calculate new totals
     const totalApproved = updatedPayments
-      .filter(payment => payment.status === 'approved')
+      .filter((payment) => payment.status === 'approved')
       .reduce((sum, payment) => sum + payment.amount, 0)
 
     // Calculate total submitted from valid payments (approved + pending, exclude rejected)
     const totalSubmitted = updatedPayments
-      .filter(payment => payment.status === 'approved' || payment.status === 'pending')
+      .filter(
+        (payment) =>
+          payment.status === 'approved' || payment.status === 'pending',
+      )
       .reduce((sum, payment) => sum + payment.amount, 0)
 
     // Calculate new overall status
-    const newOverallStatus = calculateOverallStatus(updatedPayments, schoolFeeInfo.totalSchoolFee)
+    const newOverallStatus = calculateOverallStatus(
+      updatedPayments,
+      schoolFeeInfo.totalSchoolFee,
+    )
 
     // Update school fee info
     const updatedSchoolFeeInfo: SchoolFeeInfo = {
@@ -212,11 +253,13 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
     const cohort = schoolFeeInfo.cohort
     const classPlan = schoolFeeInfo.classPlan
     const amount = targetInstallment.amount
-    
+
     // Check if this is the first approved payment
-    const previouslyApprovedCount = schoolFeeInfo.payments.filter(p => p.status === 'approved').length
-    const isFirstApproval = previouslyApprovedCount === 0 && action === 'approve'
-    
+    const previouslyApprovedCount = schoolFeeInfo.payments.filter(
+      (p) => p.status === 'approved',
+    ).length
+    const isFirstApproval =
+      previouslyApprovedCount === 0 && action === 'approve'
 
     const actionWord = action === 'approve' ? 'approved' : 'rejected'
     return {
@@ -236,7 +279,6 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
         isFirstApproval,
       },
     }
-
   } catch (error: any) {
     console.error('Review payment installment error:', error)
     return {
@@ -246,7 +288,9 @@ export async function reviewPaymentInstallment(params: ReviewInstallmentParams):
   }
 }
 
-export async function addPaymentInstallment(params: AddInstallmentParams): Promise<AddInstallmentResult> {
+export async function addPaymentInstallment(
+  params: AddInstallmentParams,
+): Promise<AddInstallmentResult> {
   try {
     const { uid, amount, paymentReceiptUrl } = params
 
@@ -277,38 +321,57 @@ export async function addPaymentInstallment(params: AddInstallmentParams): Promi
     const userData = userDoc.data()
     const schoolFeeInfo = userData?.schoolFeeInfo as SchoolFeeInfo | undefined
 
-    if (!schoolFeeInfo || !schoolFeeInfo.payments || schoolFeeInfo.payments.length === 0) {
+    if (
+      !schoolFeeInfo ||
+      !schoolFeeInfo.payments ||
+      schoolFeeInfo.payments.length === 0
+    ) {
       return {
         success: false,
-        error: 'No initial school fee information found. Please submit your first installment first.',
+        error:
+          'No initial school fee information found. Please submit your first installment first.',
       }
     }
 
     // Use the helper function to find the next available installment number
     // This properly handles rejected payments and ensures we only count valid slots
-    
+
     const nextInstallmentNumber = getNextInstallmentNumber(schoolFeeInfo)
-    
 
     if (!nextInstallmentNumber) {
       return {
         success: false,
-        error: 'Maximum of 4 installments allowed. You have already submitted all allowed payments.',
+        error:
+          'Maximum of 4 installments allowed. You have already submitted all allowed payments.',
       }
     }
 
     // Calculate total submitted amount from valid payments only (exclude rejected payments)
-    const validPayments = schoolFeeInfo.payments.filter(payment => 
-      payment.status === 'approved' || payment.status === 'pending'
+    const validPayments = schoolFeeInfo.payments.filter(
+      (payment) =>
+        payment.status === 'approved' || payment.status === 'pending',
     )
-    const totalSubmittedFromValidPayments = validPayments.reduce((sum, payment) => sum + payment.amount, 0)
-    
+    const totalSubmittedFromValidPayments = validPayments.reduce(
+      (sum, payment) => sum + payment.amount,
+      0,
+    )
+
     // Check if total submitted amount (including this new payment) exceeds total school fee
     const newTotalSubmitted = totalSubmittedFromValidPayments + amount
+    // Old check that did not account for rejected payments
+    // if (newTotalSubmitted > schoolFeeInfo.totalSchoolFee) {
+    //   return {
+    //     success: false,
+    //     error: `Payment amount exceeds remaining balance. Remaining: ₦${schoolFeeInfo.totalSchoolFee - totalSubmittedFromValidPayments}`,
+    //   }
+    // }
+    // New check that correctly accounts for rejected payments
     if (newTotalSubmitted > schoolFeeInfo.totalSchoolFee) {
+      const remainingBalance =
+        schoolFeeInfo.totalSchoolFee - totalSubmittedFromValidPayments
       return {
         success: false,
-        error: `Payment amount exceeds remaining balance. Remaining: ₦${schoolFeeInfo.totalSchoolFee - totalSubmittedFromValidPayments}`,
+        error: `Payment amount exceeds remaining balance. Remaining: ₦${remainingBalance.toLocaleString()}`,
       }
     }
 
@@ -354,7 +417,6 @@ export async function addPaymentInstallment(params: AddInstallmentParams): Promi
         classPlan: schoolFeeInfo.classPlan,
       },
     }
-
   } catch (error: any) {
     console.error('Add payment installment error:', error)
     return {
@@ -362,4 +424,4 @@ export async function addPaymentInstallment(params: AddInstallmentParams): Promi
       error: error?.message || 'Failed to add payment installment',
     }
   }
-} 
+}

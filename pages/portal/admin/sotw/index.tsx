@@ -1,15 +1,18 @@
 import React from 'react'
 import { AdminAuthGuard } from '../../../../components/PortalAuthGuard'
 import { PortalAdminLayout } from '../../../../features/portal/admin/admin-layout'
+import { SOTWAdminView } from '../../../../features/portal/admin/sotw/SOTWAdminView'
+import { SOTWHistoryAdmin } from '../../../../features/portal/admin/sotw/SOTWHistoryAdmin'
 
-const StudentOfTheWeekPage = () => {
+const AdminSOTWPage = () => {
   return (
     <AdminAuthGuard>
       <PortalAdminLayout>
-        <div>StudentOfTheWeekPage</div>
+        <SOTWAdminView />
+        <SOTWHistoryAdmin />
       </PortalAdminLayout>
     </AdminAuthGuard>
   )
 }
 
-export default StudentOfTheWeekPage
+export default AdminSOTWPage
