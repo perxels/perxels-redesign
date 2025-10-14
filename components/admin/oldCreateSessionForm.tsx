@@ -103,61 +103,70 @@ export function CreateSessionForm({
         throw new Error('Select at least one class plan')
 
       // Create sessions for each cohort + plan combination
+      // Old Code - REMOVE
+      // const sessionsToCreate: Omit<Session, 'sessionId' | 'createdAt'>[] = []
+
+      // formData.cohortIds.forEach((cohortId) => {
+      //   formData.planIds.forEach((planId) => {
+      //     // Check if session already exists
+      //     const exists = existingSessions.some(
+      //       (session) =>
+      //         session.cohortId === cohortId && session.planId === planId,
+      //     )
+
+      //     if (!exists) {
+      //       const startDateTime = new Date(
+      //         `${formData.date}T${formData.startsAt}:00`,
+      //       )
+      //       const endDateTime = new Date(
+      //         `${formData.date}T${formData.endsAt}:00`,
+      //       )
+
+      //       sessionsToCreate.push({
+      //         dailyCodeId: formData.date,
+      //         cohortId,
+      //         planId,
+      //         date: formData.date,
+      //         startsAt: startDateTime,
+      //         endsAt: endDateTime,
+      //         status: 'open',
+      //         createdBy: 'admin', // TODO: Get from auth context
+      //       })
+      //     }
+      //   })
+      // })
+
+      // if (sessionsToCreate.length === 0) {
+      //   throw new Error(
+      //     'All selected cohort/plan combinations already have sessions for this date',
+      //   )
+      // }
+
       const sessionsToCreate = formData.cohortIds.flatMap((cohortId) =>
-        formData.planIds
-          .map((planId) => {
-            // Check if session already exists
-            const exists = existingSessions.some(
-              (session) =>
-                session.cohortId === cohortId && session.planId === planId,
-            )
+        formData.planIds.map((planId) => {
+          // Create date objects in local timezone, they'll be converted to UTC ISO strings
+          const startDateTime = new Date(
+            `${formData.date}T${formData.startsAt}`,
+          )
+          const endDateTime = new Date(`${formData.date}T${formData.endsAt}`)
 
-            if (exists) {
-              return null // Skip existing sessions
-            }
+          // Validate dates
+          if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime())) {
+            throw new Error('Invalid date/time format')
+          }
 
-            // Create date objects in local timezone
-            const startDateTime = new Date(
-              `${formData.date}T${formData.startsAt}`,
-            )
-            const endDateTime = new Date(`${formData.date}T${formData.endsAt}`)
-
-            // Validate dates
-            if (
-              isNaN(startDateTime.getTime()) ||
-              isNaN(endDateTime.getTime())
-            ) {
-              throw new Error('Invalid date/time format')
-            }
-
-            // Validate time order
-            if (endDateTime <= startDateTime) {
-              throw new Error('End time must be after start time')
-            }
-
-            return {
-              dailyCodeId: formData.date,
-              cohortId,
-              planId,
-              date: formData.date,
-              startsAt: startDateTime, // Will be stored as ISO string
-              endsAt: endDateTime, // Will be stored as ISO string
-              status: 'open' as const, // FIX: Use literal type
-              createdBy: 'admin',
-            }
-          })
-          .filter(
-            (session): session is NonNullable<typeof session> =>
-              session !== null,
-          ),
+          return {
+            dailyCodeId: formData.date,
+            cohortId,
+            planId,
+            date: formData.date,
+            startsAt: startDateTime, // Will be stored as ISO string
+            endsAt: endDateTime, // Will be stored as ISO string
+            status: 'open',
+            createdBy: 'admin',
+          }
+        }),
       )
-
-      if (sessionsToCreate.length === 0) {
-        throw new Error(
-          'All selected cohort/plan combinations already have sessions for this date',
-        )
-      }
-
       await createMultipleSessions(sessionsToCreate)
 
       toast({

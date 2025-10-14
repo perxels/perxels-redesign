@@ -311,6 +311,7 @@ export const ProfileDetailsForm = () => {
                     borderColor="yellow.300"
                     borderRadius="md"
                     h="3.5rem"
+                    isDisabled={true}
                     _focus={{
                       borderColor: errors.classCohort
                         ? 'red.500'

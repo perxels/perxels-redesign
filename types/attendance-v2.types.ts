@@ -7,17 +7,38 @@ export interface DailyCode {
   expiresAt?: Date
 }
 
+// Old Interface
+// export interface Session {
+//   sessionId: string
+//   dailyCodeId: string // Reference to dailyCodes/{date}
+//   cohortId: string
+//   planId: string
+//   date: string // YYYY-MM-DD format
+//   startsAt: Date
+//   endsAt: Date
+//   status: 'scheduled' | 'open' | 'closed' | 'cancelled'
+//   createdBy: string
+//   createdAt: Date
+// }
+
+// types/attendance-v2.types.ts - UPDATE INTERFACES
 export interface Session {
   sessionId: string
-  dailyCodeId: string // Reference to dailyCodes/{date}
+  dailyCodeId: string
   cohortId: string
   planId: string
   date: string // YYYY-MM-DD format
-  startsAt: Date
-  endsAt: Date
+  startsAt: string | Date // Store as ISO string, parse as Date
+  endsAt: string | Date // Store as ISO string, parse as Date
   status: 'scheduled' | 'open' | 'closed' | 'cancelled'
   createdBy: string
-  createdAt: Date
+  createdAt: string | Date // Store as ISO string
+}
+
+// Helper type for creating sessions
+export type SessionCreateData = Omit<Session, 'sessionId' | 'createdAt'> & {
+  startsAt: Date
+  endsAt: Date
 }
 
 export interface SessionCheckin {

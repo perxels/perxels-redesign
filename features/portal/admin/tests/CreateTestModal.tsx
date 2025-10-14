@@ -248,7 +248,12 @@ export const CreateTestModal: React.FC<CreateTestModalProps> = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={handleClose} size="4xl">
+      <Modal
+        isOpen={isOpen}
+        onClose={handleClose}
+        size="4xl"
+        blockScrollOnMount={false}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>

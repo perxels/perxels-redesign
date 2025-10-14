@@ -162,13 +162,14 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
 
       if (!isAutoSubmit) {
         onSuccessOpen()
-      } else {
-        router.push(
-          `/portal/dashboard/tests?submitted=true&message=${encodeURIComponent(
-            autoSubmitMessage,
-          )}`,
-        )
       }
+      //  else {
+      //   router.push(
+      //     `/portal/dashboard/tests?submitted=true&message=${encodeURIComponent(
+      //       autoSubmitMessage,
+      //     )}`,
+      //   )
+      // }
     } catch (error) {
       console.error('Error submitting test:', error)
       setError('Failed to submit test. Please try again.')
@@ -539,23 +540,21 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
             </RadioGroup>
 
             {/* Navigation */}
-            <HStack justify="space-between" pt={4}>
-              <HStack spacing={3}>
-                <Button
-                  onClick={handlePrevious}
-                  isDisabled={currentQuestion === 0}
-                  colorScheme="gray"
-                >
-                  Previous
+            <HStack justify="space-between" pt={4} spacing={4}>
+              <Button
+                onClick={handlePrevious}
+                isDisabled={currentQuestion === 0}
+                colorScheme="gray"
+              >
+                Previous
+              </Button>
+              {currentQuestion < shuffledQuestions.length - 1 ? (
+                <Button onClick={handleNext} colorScheme="blue">
+                  Next Question
                 </Button>
-                {currentQuestion < shuffledQuestions.length - 1 ? (
-                  <Button onClick={handleNext} colorScheme="blue">
-                    Next Question
-                  </Button>
-                ) : null}
-              </HStack>
+              ) : null}
 
-              <HStack>
+              {/* <HStack>
                 <Button
                   onClick={handleSubmit}
                   colorScheme="green"
@@ -564,7 +563,7 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
                 >
                   Submit Test
                 </Button>
-              </HStack>
+              </HStack> */}
             </HStack>
           </VStack>
         </CardBody>
@@ -597,6 +596,21 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
               </button>
             ))}
           </SimpleGrid>
+          <Box
+            width={'100%'}
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'end'}
+          >
+            <Button
+              onClick={handleSubmit}
+              colorScheme="green"
+              isLoading={submitting}
+              loadingText="Submitting..."
+            >
+              Submit Test
+            </Button>
+          </Box>
         </CardBody>
       </Card>
 
