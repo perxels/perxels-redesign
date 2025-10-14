@@ -167,7 +167,7 @@ export function CreateSessionForm({
           }
         }),
       )
-      await createMultipleSessions(sessionsToCreate)
+      // await createMultipleSessions(sessionsToCreate)
 
       toast({
         title: 'Sessions created successfully!',

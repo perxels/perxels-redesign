@@ -160,7 +160,8 @@ const AttendancePageV2 = () => {
     } finally {
       setSessionLoading(false)
     }
-  }, [classInfo.cohortId, classInfo.planId, today, user?.uid, portalUser])
+  }, [classInfo.cohortId, classInfo.planId, today, user?.uid])
+  // }, [classInfo.cohortId, classInfo.planId, today, user?.uid, portalUser])
 
   // Memoized summary fetching function
   const fetchSummary = useCallback(async () => {
