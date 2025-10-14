@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { parseSessionTime } from '../lib/utils/timeParser'
+import { Session } from '../types/attendance-v2.types'
 
 interface UseSessionTimeReturn {
   isWithinSessionTime: boolean
