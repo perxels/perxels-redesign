@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useCallback } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -51,12 +51,34 @@ export const BulkUploadModal: React.FC<BulkUploadModalProps> = ({
   const [uploading, setUploading] = useState(false)
   const [fileName, setFileName] = useState<string>('')
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [isDragActive, setIsDragActive] = useState(false)
   const toast = useToast()
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
+  // Drag & Drop Handlers
+  const handleDrag = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
 
+    if (e.type === 'dragenter' || e.type === 'dragover') {
+      setIsDragActive(true)
+    } else if (e.type === 'dragleave') {
+      setIsDragActive(false)
+    }
+  }, [])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragActive(false)
+
+    const files = e.dataTransfer.files
+    if (files && files[0]) {
+      handleFile(files[0])
+    }
+  }, [])
+
+  // Shared file handler for both drag & drop and click
+  const handleFile = (file: File) => {
     setFileName(file.name)
     setParsingResult(null)
 
@@ -83,6 +105,13 @@ export const BulkUploadModal: React.FC<BulkUploadModalProps> = ({
     parseExcelFile(file)
   }
 
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      handleFile(file)
+    }
+  }
+
   const parseExcelFile = (file: File) => {
     const reader = new FileReader()
 
@@ -99,7 +128,6 @@ export const BulkUploadModal: React.FC<BulkUploadModalProps> = ({
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
 
         // Parse questions
-        // const result = BulkQuestionParser.parseExcelData(jsonData)
         const result = BulkQuestionParser.parseExcelData(jsonData as any[][])
         setParsingResult(result)
 
@@ -180,6 +208,7 @@ export const BulkUploadModal: React.FC<BulkUploadModalProps> = ({
   const handleClose = () => {
     setParsingResult(null)
     setFileName('')
+    setIsDragActive(false) // Reset drag state on close
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -198,20 +227,29 @@ export const BulkUploadModal: React.FC<BulkUploadModalProps> = ({
         <ModalCloseButton />
         <ModalBody>
           <VStack spacing={6} align="stretch">
-            {/* File Upload Section */}
+            {/* File Upload Section with Drag & Drop */}
             <Card variant="outline">
               <CardBody>
                 <VStack spacing={4}>
                   <Box
                     border="2px dashed"
-                    borderColor="gray.300"
+                    borderColor={isDragActive ? 'blue.500' : 'gray.300'}
                     borderRadius="lg"
                     p={8}
                     textAlign="center"
                     width="100%"
                     cursor="pointer"
                     onClick={triggerFileInput}
-                    _hover={{ borderColor: 'blue.500', bg: 'blue.50' }}
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleDrop}
+                    bg={isDragActive ? 'blue.50' : 'transparent'}
+                    transition="all 0.2s"
+                    _hover={{
+                      borderColor: 'blue.500',
+                      bg: 'blue.50',
+                    }}
                   >
                     <Input
                       type="file"
@@ -221,13 +259,28 @@ export const BulkUploadModal: React.FC<BulkUploadModalProps> = ({
                       style={{ display: 'none' }}
                     />
 
-                    <FiUpload size={48} color="#CBD5E0" />
+                    <FiUpload
+                      size={48}
+                      color={isDragActive ? '#3182CE' : '#CBD5E0'}
+                    />
                     <Text fontSize="lg" fontWeight="medium" mt={2}>
-                      {fileName ? fileName : 'Click to upload Excel/CSV file'}
+                      {fileName
+                        ? fileName
+                        : 'Drag & drop or click to upload Excel/CSV file'}
                     </Text>
                     <Text fontSize="sm" color="gray.600" mt={1}>
                       Supports .xlsx, .xls, .csv formats
                     </Text>
+                    {isDragActive && (
+                      <Text
+                        fontSize="sm"
+                        color="blue.500"
+                        fontWeight="medium"
+                        mt={2}
+                      >
+                        Drop your file here...
+                      </Text>
+                    )}
                   </Box>
 
                   {/* File Requirements */}

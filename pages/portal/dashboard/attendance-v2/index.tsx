@@ -34,9 +34,9 @@ import {
   getSessionsByFilters,
 } from '../../../../lib/utils/attendance-v2.utils'
 import { HeaderInfo } from '../../../../features/portal/dashboard/messages/header-info'
-import { formatTime } from '../../../../lib/utils/attendance-formatters'
-import { parseSessionTime } from '../../../../lib/utils/timeParser'
 import StudentStatusGuard from '../../../../components/StudentStatusGuard'
+import { useSessionTime } from '../../../../hooks/useSessionTime'
+import { Session } from '../../../../types/attendance-v2.types'
 
 // Memoize today's date to prevent unnecessary recalculations
 const getToday = () => {
@@ -45,17 +45,6 @@ const getToday = () => {
   const month = String(now.getMonth() + 1).padStart(2, '0')
   const day = String(now.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
-}
-
-interface SessionData {
-  sessionId: string
-  cohortId: string
-  planId: string
-  date: string
-  startsAt: Date
-  endsAt: Date
-  status: string
-  location?: string
 }
 
 interface AttendanceStats {
@@ -67,7 +56,7 @@ interface AttendanceStats {
 const AttendancePageV2 = () => {
   const { user, portalUser } = usePortalAuth()
   const [time, setTime] = useState(new Date())
-  const [session, setSession] = useState<SessionData | null>(null)
+  const [session, setSession] = useState<Session | null>(null) // Use Session type instead of SessionData
   const [checkedIn, setCheckedIn] = useState(false)
   const [loading, setLoading] = useState(false)
   const [sessionLoading, setSessionLoading] = useState(true)
@@ -93,6 +82,9 @@ const AttendancePageV2 = () => {
     }),
     [portalUser?.schoolFeeInfo?.cohort, portalUser?.schoolFeeInfo?.classPlan],
   )
+
+  // Use session time hook - only destructure what you need
+  const { isWithinSessionTime, formattedTimeRange } = useSessionTime(session)
 
   // Optimized time updater - only update every second
   useEffect(() => {
@@ -145,7 +137,7 @@ const AttendancePageV2 = () => {
     } finally {
       setSessionLoading(false)
     }
-  }, [classInfo.cohortId, classInfo.planId, today, user?.uid, portalUser])
+  }, [classInfo.cohortId, classInfo.planId, today, user?.uid])
 
   // Memoized summary fetching function
   const fetchSummary = useCallback(async () => {
@@ -157,13 +149,6 @@ const AttendancePageV2 = () => {
 
     try {
       setSummaryLoading(true)
-
-      // Get all sessions for this student's cohort and plan
-      // const sessions = await getSessionsByDate(today)
-      // const studentSessions = sessions.filter(
-      //   (s) =>
-      //     s.cohortId === classInfo.cohortId && s.planId === classInfo.planId,
-      // )
 
       const allSessions = await getSessionsByFilters({
         cohortId: classInfo.cohortId,
@@ -281,23 +266,6 @@ const AttendancePageV2 = () => {
       return 'Invalid Date'
     }
   }, [today])
-
-  // Time comparison
-  // Check if current time is within session window
-  const isWithinSessionTime = useMemo(() => {
-    if (!session) return false
-
-    try {
-      const now = new Date()
-      const sessionStart = parseSessionTime(session.startsAt)
-      const sessionEnd = parseSessionTime(session.endsAt)
-
-      return now >= sessionStart && now <= sessionEnd
-    } catch (error) {
-      console.error('Time comparison error:', error)
-      return false
-    }
-  }, [session])
 
   // Loading state
   if (sessionLoading) {
@@ -485,17 +453,7 @@ const AttendancePageV2 = () => {
                   <AlertIcon />
                   <Text fontSize="sm">
                     Check-in is only allowed during class time:{' '}
-                    {(() => {
-                      try {
-                        const sessionStart = parseSessionTime(session.startsAt)
-                        const sessionEnd = parseSessionTime(session.endsAt)
-                        return `${formatTime(sessionStart)} - ${formatTime(
-                          sessionEnd,
-                        )}`
-                      } catch (error) {
-                        return 'Invalid Time Range'
-                      }
-                    })()}
+                    {formattedTimeRange}
                   </Text>
                 </Alert>
               )}

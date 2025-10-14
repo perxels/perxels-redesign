@@ -100,18 +100,63 @@ export async function deleteDailyCode(date: string) {
 }
 
 // Session Operations
+// Old createSession function and createMultipleSessions function
+// export async function createSession(
+//   session: Omit<Session, 'sessionId' | 'createdAt'>,
+// ) {
+//   const sessionRef = doc(collection(portalDb, 'sessions'))
+//   await setDoc(sessionRef, {
+//     ...session,
+//     sessionId: sessionRef.id,
+//     createdAt: new Date(),
+//   })
+//   return sessionRef.id
+// }
+
+// export async function createMultipleSessions(
+//   sessions: Omit<Session, 'sessionId' | 'createdAt'>[],
+// ) {
+//   const batch = writeBatch(portalDb)
+
+//   sessions.forEach((sessionData) => {
+//     const sessionRef = doc(collection(portalDb, 'sessions'))
+//     batch.set(sessionRef, {
+//       ...sessionData,
+//       sessionId: sessionRef.id,
+//       createdAt: new Date(),
+//     })
+//   })
+
+//   await batch.commit()
+// }
+
+// New createSession function and createMultipleSessions function
+// Standardize date storage to UTC ISO strings
 export async function createSession(
   session: Omit<Session, 'sessionId' | 'createdAt'>,
 ) {
   const sessionRef = doc(collection(portalDb, 'sessions'))
-  await setDoc(sessionRef, {
+
+  // Convert to UTC ISO strings for consistent storage
+  const standardizedSession = {
     ...session,
+    startsAt:
+      session.startsAt instanceof Date
+        ? session.startsAt.toISOString()
+        : session.startsAt,
+    endsAt:
+      session.endsAt instanceof Date
+        ? session.endsAt.toISOString()
+        : session.endsAt,
     sessionId: sessionRef.id,
-    createdAt: new Date(),
-  })
+    createdAt: new Date().toISOString(), // Also standardize createdAt
+  }
+
+  await setDoc(sessionRef, standardizedSession)
   return sessionRef.id
 }
 
+// Update multiple sessions creation similarly
 export async function createMultipleSessions(
   sessions: Omit<Session, 'sessionId' | 'createdAt'>[],
 ) {
@@ -121,8 +166,16 @@ export async function createMultipleSessions(
     const sessionRef = doc(collection(portalDb, 'sessions'))
     batch.set(sessionRef, {
       ...sessionData,
+      startsAt:
+        sessionData.startsAt instanceof Date
+          ? sessionData.startsAt.toISOString()
+          : sessionData.startsAt,
+      endsAt:
+        sessionData.endsAt instanceof Date
+          ? sessionData.endsAt.toISOString()
+          : sessionData.endsAt,
       sessionId: sessionRef.id,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
     })
   })
 
