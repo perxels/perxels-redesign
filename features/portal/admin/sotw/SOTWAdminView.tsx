@@ -30,11 +30,13 @@ import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { useSOTWActions } from '../../../../hooks/useSOTW'
 import { CreateSOTWModal } from './CreateSOTWModal'
 import { FiZoomIn } from 'react-icons/fi'
+import { useRouter } from 'next/router'
 
 export const SOTWAdminView = () => {
   const { currentSOTW, loading } = useCurrentSOTW()
   const { portalUser } = usePortalAuth()
   const { deactivateSOTW } = useSOTWActions()
+  const { reload } = useRouter()
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [deactivating, setDeactivating] = useState(false)
   const {
@@ -71,6 +73,7 @@ export const SOTWAdminView = () => {
       })
     }
     setDeactivating(false)
+    reload()
   }
 
   const openImageModal = (imageUrl: string) => {

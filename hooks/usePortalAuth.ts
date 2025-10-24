@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
 import { portalAuth, portalDb } from '../portalFirebaseConfig'
+import { Assignment } from '../types/user'
 
 interface PortalUser {
   uid: string
@@ -26,6 +27,7 @@ interface PortalUser {
   address?: string
   // Fields for profile tracking
   profileCompleted?: boolean
+  assignments?: Assignment[]
 }
 
 interface UsePortalAuthReturn {
@@ -36,6 +38,7 @@ interface UsePortalAuthReturn {
   isEmailVerified: boolean
   isRegistrationComplete: boolean
   isOnboardingComplete: boolean
+  assignments?: Assignment[]
 }
 
 export function usePortalAuth(): UsePortalAuthReturn {
@@ -79,6 +82,8 @@ export function usePortalAuth(): UsePortalAuthReturn {
     return unsubscribe
   }, [])
 
+  const assignments = portalUser?.assignments
+
   // Determine if registration is complete based on actual data
   const isRegistrationComplete = portalUser
     ? portalUser.registrationComplete === true ||
@@ -101,5 +106,6 @@ export function usePortalAuth(): UsePortalAuthReturn {
     isEmailVerified: portalUser?.emailVerified || false,
     isRegistrationComplete,
     isOnboardingComplete,
+    assignments,
   }
 }

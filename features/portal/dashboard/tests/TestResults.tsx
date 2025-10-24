@@ -222,10 +222,17 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
                     color="purple"
                   />
                 )}
+                {attempts.length > 1 && (
+                  <StatCard
+                    label="Best Points"
+                    value={`${bestAttempt?.score}/${bestAttempt?.totalPoints}`}
+                    color="purple"
+                  />
+                )}
 
                 <StatCard
                   label="Your Score"
-                  value={`${latestAttempt?.percentage || 0}%`}
+                  value={`${bestAttempt?.percentage || 0}%`}
                   color="purple"
                 />
                 <StatCard
@@ -277,7 +284,7 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
         )}
 
         {/* Attempt History */}
-        {attempts.length > 1 && (
+        {/* {attempts.length > 1 && (
           <Card>
             <CardBody>
               <Text fontSize="xl" fontWeight="bold" mb={4}>
@@ -344,7 +351,7 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
               )}
             </CardBody>
           </Card>
-        )}
+        )} */}
 
         {/* Question Review */}
         {latestAttempt && questions.length > 0 && (
@@ -352,12 +359,14 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
             <CardBody>
               <Text fontSize="xl" fontWeight="bold" mb={4}>
                 Question Review{' '}
-                {attempts.length > 1 && <span>(Latest Attempt)</span>}
+                {/* {attempts.length > 1 && <span>(Latest Attempt)</span>} */}
               </Text>
               <VStack spacing={4}>
                 {questions.map((question, index) => {
                   const studentAnswer =
-                    latestAttempt.answers[question.questionId]
+                    attempts.length > 1
+                      ? bestAttempt?.answers[question.questionId]
+                      : latestAttempt.answers[question.questionId]
                   const isCorrect = studentAnswer === question.correctAnswer
 
                   return (

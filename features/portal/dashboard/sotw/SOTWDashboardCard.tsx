@@ -46,7 +46,7 @@ export const SOTWDashboardCard = () => {
         shadow="md"
         _hover={{ shadow: 'lg', transform: 'translateY(-2px)' }}
         transition="all 0.2s"
-        width={'70%'}
+        width={'80%'}
       >
         <CardBody>
           <VStack spacing={2} align="stretch">

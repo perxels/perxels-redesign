@@ -162,14 +162,14 @@ export const TakeTestInterface: React.FC<TakeTestInterfaceProps> = ({
 
       if (!isAutoSubmit) {
         onSuccessOpen()
+        router.push(`/portal/dashboard/tests/results/${testId}`)
+      } else {
+        router.push(
+          `/portal/dashboard/tests?submitted=true&message=${encodeURIComponent(
+            autoSubmitMessage,
+          )}`,
+        )
       }
-      //  else {
-      //   router.push(
-      //     `/portal/dashboard/tests?submitted=true&message=${encodeURIComponent(
-      //       autoSubmitMessage,
-      //     )}`,
-      //   )
-      // }
     } catch (error) {
       console.error('Error submitting test:', error)
       setError('Failed to submit test. Please try again.')

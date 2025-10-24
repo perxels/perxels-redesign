@@ -13,6 +13,8 @@ export interface SOTWData {
   studentAvatar?: string
   cohort: string
   classPlan: string
+  projectName?: string
+  igLink?: string
   citation: string
   workHighlight: string
   workImages: SOTWImage[]

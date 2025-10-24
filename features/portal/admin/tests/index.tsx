@@ -65,6 +65,8 @@ export const AdminTestsWrapper = () => {
   const [testToToggle, setTestToToggle] = useState<Test | null>(null)
   const [testToDelete, setTestToDelete] = useState<Test | null>(null)
 
+  const isFacilitator = portalUser?.role === 'facilitator'
+
   const {
     isOpen: isCreateOpen,
     onOpen: onCreateOpen,
@@ -391,14 +393,17 @@ export const AdminTestsWrapper = () => {
                             onClick={() => handleViewAccess(test)}
                           />
                         </Tooltip>
-                        <Tooltip label="Edit Test">
-                          <IconButton
-                            aria-label="Edit test"
-                            icon={<FiEdit />}
-                            size="sm"
-                            onClick={() => handleEditTest(test)}
-                          />
-                        </Tooltip>
+                        {!isFacilitator && (
+                          <Tooltip label="Edit Test">
+                            <IconButton
+                              aria-label="Edit test"
+                              icon={<FiEdit />}
+                              size="sm"
+                              onClick={() => handleEditTest(test)}
+                            />
+                          </Tooltip>
+                        )}
+
                         <Tooltip
                           label={test.isActive ? 'Deactivate' : 'Activate'}
                         >

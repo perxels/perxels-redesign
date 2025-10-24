@@ -71,6 +71,8 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
   const [selectedStudent, setSelectedStudent] = useState<StudentData | null>(
     null,
   )
+  const [igLink, setIgLink] = useState('')
+  const [projectName, setProjectName] = useState('')
   const [citation, setCitation] = useState('')
   const [workHighlight, setWorkHighlight] = useState('')
   const [workImages, setWorkImages] = useState<SOTWImage[]>([])
@@ -167,39 +169,6 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
     return () => clearTimeout(timer)
   }, [searchTerm, isOpen])
 
-  // Replaced handleImageUpload function:
-  // const handleImageUpload = async (files: FileList) => {
-  //   setUploadingImages(true)
-  //   try {
-  //     for (let i = 0; i < files.length; i++) {
-  //       const file = files[i]
-  //       if (file.type.startsWith('image/')) {
-  //         const result = await uploadSOTWImage(file)
-  //         const image: SOTWImage = {
-  //           id: Date.now().toString() + i,
-  //           url: result.url,
-  //           caption: '',
-  //           uploadedAt: new Date(),
-  //         }
-  //         setWorkImages((prev) => [...prev, image])
-  //       }
-  //     }
-  //     toast({
-  //       title: 'Images uploaded successfully',
-  //       status: 'success',
-  //       duration: 3000,
-  //     })
-  //   } catch (error: any) {
-  //     toast({
-  //       title: 'Upload failed',
-  //       description: error.message,
-  //       status: 'error',
-  //       duration: 3000,
-  //     })
-  //   } finally {
-  //     setUploadingImages(false)
-  //   }
-  // }
   // HandleImageUpload function with error logging and detailed steps
   const handleImageUpload = async (files: FileList) => {
     setUploadingImages(true)
@@ -207,9 +176,7 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
         if (file.type.startsWith('image/')) {
-          console.log('📤 Uploading image:', file.name, file.size, file.type)
           const result = await uploadSOTWImage(file)
-          console.log('✅ Image uploaded successfully:', result.url)
 
           const image: SOTWImage = {
             id: Date.now().toString() + i,
@@ -218,7 +185,6 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
             uploadedAt: new Date(),
           }
           setWorkImages((prev) => [...prev, image])
-          console.log('🖼️ Image added to workImages:', image)
         }
       }
       toast({
@@ -275,6 +241,8 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
         studentAvatar: selectedStudent.avatar || '',
         cohort: selectedStudent.cohort || 'Not assigned',
         classPlan: selectedStudent.classPlan || 'Not specified',
+        projectName: projectName.trim(),
+        igLink: igLink.trim(),
         citation: citation.trim(),
         workHighlight: workHighlight.trim(),
         workImages,
@@ -305,6 +273,8 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
 
   const resetForm = () => {
     setSelectedStudent(null)
+    setIgLink('')
+    setProjectName('')
     setCitation('')
     setWorkHighlight('')
     setWorkImages([])
@@ -326,7 +296,7 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
         <ModalHeader>Set Student of the Week</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <VStack spacing={6} align="stretch">
+          <VStack spacing={4} align="stretch">
             {/* Student Search */}
             <Box>
               <FormLabel fontWeight="bold">Search Student</FormLabel>
@@ -440,7 +410,7 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
 
               {/* Selected Student */}
               {selectedStudent && (
-                <Box mt={3} p={3} bg="blue.50" borderRadius="md">
+                <Box mt={4} p={3} bg="blue.100" borderRadius="md">
                   <HStack justify="space-between">
                     <HStack>
                       <Avatar
@@ -479,6 +449,26 @@ export const CreateSOTWModal: React.FC<CreateSOTWModalProps> = ({
               )}
             </Box>
 
+            {/* Project Name */}
+            <FormControl isRequired>
+              <FormLabel fontWeight="bold">Project Name</FormLabel>
+              <Textarea
+                placeholder="e.g - Google Website..."
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                rows={2}
+              />
+            </FormControl>
+            {/* IG Link */}
+            <FormControl>
+              <FormLabel fontWeight="bold">IG Link</FormLabel>
+              <Textarea
+                placeholder="e.g - https://www.instagram.com/fiwa_perxels..."
+                value={igLink}
+                onChange={(e) => setIgLink(e.target.value)}
+                rows={2}
+              />
+            </FormControl>
             {/* Citation */}
             <FormControl isRequired>
               <FormLabel fontWeight="bold">Citation / Remarks</FormLabel>

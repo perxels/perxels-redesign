@@ -1,3 +1,4 @@
+// pages/portal/dashboard/syllabus.tsx
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { StudentAuthGuard } from '../../../components/PortalAuthGuard'
@@ -20,6 +21,11 @@ import {
   ListItem,
   ListIcon,
   useToast,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react'
 import {
   doc,
@@ -31,7 +37,7 @@ import {
 } from 'firebase/firestore'
 import { portalDb } from '../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../hooks/usePortalAuth'
-import { Syllabus } from '../../../types/syllabus.types'
+import { ClassPlanSyllabus, Syllabus } from '../../../types/syllabus.types'
 import {
   MdCheckCircle,
   MdAccessTime,
@@ -42,6 +48,7 @@ import {
   MdCalendarToday,
 } from 'react-icons/md'
 import StudentStatusGuard from '../../../components/StudentStatusGuard'
+import { StudentSyllabusView } from '../../../features/portal/dashboard/syllabus/student-syllabus-view'
 
 interface ClassData {
   id: string
@@ -57,11 +64,51 @@ interface ScheduledDay {
   notes?: string
 }
 
+// Add this utility function at the top
+const convertToDate = (date: any): Date => {
+  if (!date) return new Date()
+
+  // If it's a Firestore timestamp
+  if (date.toDate && typeof date.toDate === 'function') {
+    return date.toDate()
+  }
+
+  // If it's already a Date object
+  if (date instanceof Date) {
+    return date
+  }
+
+  // If it's a string or number
+  try {
+    return new Date(date)
+  } catch {
+    return new Date()
+  }
+}
+
+// Date formatting function
+const formatDateSafely = (date: any): string => {
+  try {
+    const dateObj = convertToDate(date)
+    return dateObj.toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  } catch (error) {
+    console.error('Error formatting date:', error)
+    return 'Invalid Date'
+  }
+}
+
 const StudentSyllabusPage = () => {
   const router = useRouter()
   const { user, portalUser } = usePortalAuth()
   const [syllabus, setSyllabus] = useState<Syllabus | null>(null)
   const [classData, setClassData] = useState<ClassData | null>(null)
+  const [classPlanSyllabus, setClassPlanSyllabus] =
+    useState<ClassPlanSyllabus | null>(null)
   const [scheduledDays, setScheduledDays] = useState<
     Record<string, ScheduledDay>
   >({})
@@ -69,7 +116,7 @@ const StudentSyllabusPage = () => {
   const [error, setError] = useState<string | null>(null)
   const toast = useToast()
 
-  // Fetch student's class and syllabus
+  // Fetch student's class plan syllabus
   const fetchStudentSyllabus = async () => {
     if (!user?.uid || !portalUser) return
 
@@ -77,12 +124,13 @@ const StudentSyllabusPage = () => {
       setLoading(true)
       setError(null)
 
-      // Get student's cohort from their profile
+      // Get student's cohort and class plan from their profile
       const studentCohort = portalUser.schoolFeeInfo?.cohort
+      const studentClassPlan = portalUser.schoolFeeInfo?.classPlan
 
-      if (!studentCohort) {
+      if (!studentCohort || !studentClassPlan) {
         setError(
-          'You are not assigned to any class yet. Please contact your administrator.',
+          'You are not assigned to any class plan yet. Please contact your administrator.',
         )
         return
       }
@@ -110,47 +158,51 @@ const StudentSyllabusPage = () => {
 
       setClassData(classData)
 
-      // Fetch scheduled days
-      const savedScheduledDays = classDoc.data().scheduledDays || {}
-      const convertedScheduledDays: Record<string, ScheduledDay> = {}
+      // Find the class plan syllabus for this student's class plan
+      const classPlanSyllabiQuery = query(
+        collection(portalDb, 'classPlanSyllabi'),
+        where('classId', '==', classDoc.id),
+        where('classPlan', '==', studentClassPlan),
+      )
 
-      Object.keys(savedScheduledDays).forEach((dayId) => {
-        const dayData = savedScheduledDays[dayId]
-        convertedScheduledDays[dayId] = {
-          scheduledDate: dayData.scheduledDate?.toDate() || new Date(),
-          isCompleted: dayData.isCompleted || false,
-          notes: dayData.notes || '',
+      const classPlanSyllabiSnapshot = await getDocs(classPlanSyllabiQuery)
+
+      if (classPlanSyllabiSnapshot.empty) {
+        setError(`No syllabus found for your class plan: ${studentClassPlan}`)
+        return
+      }
+
+      const classPlanSyllabusDoc = classPlanSyllabiSnapshot.docs[0]
+      const classPlanSyllabusData = classPlanSyllabusDoc.data()
+
+      // Convert scheduled days dates
+      const convertedScheduledDays: Record<string, any> = {}
+      Object.keys(classPlanSyllabusData.scheduledDays || {}).forEach((key) => {
+        const dayData = classPlanSyllabusData.scheduledDays[key]
+        convertedScheduledDays[key] = {
+          ...dayData,
+          scheduledDate: convertToDate(dayData.scheduledDate),
         }
       })
 
-      setScheduledDays(convertedScheduledDays)
-
-      // Fetch syllabus if available
-      if (classData.syllabusId) {
-        const syllabusRef = doc(portalDb, 'syllabi', classData.syllabusId)
-        const syllabusSnap = await getDoc(syllabusRef)
-
-        if (syllabusSnap.exists()) {
-          const syllabusData = syllabusSnap.data() as any
-          setSyllabus({
-            id: syllabusSnap.id,
-            name: syllabusData.name,
-            description: syllabusData.description,
-            totalWeeks: syllabusData.totalWeeks,
-            totalDays: syllabusData.totalDays,
-            weeks: syllabusData.weeks,
-            createdAt: syllabusData.createdAt?.toDate() || new Date(),
-            updatedAt: syllabusData.updatedAt?.toDate() || new Date(),
-            createdBy: syllabusData.createdBy,
-            isActive: syllabusData.isActive,
-            version: syllabusData.version,
-          })
-        } else {
-          setError('Syllabus not found for your class')
-        }
-      } else {
-        setError('No syllabus has been assigned to your class yet')
+      const classPlanSyllabus: ClassPlanSyllabus = {
+        id: classPlanSyllabusDoc.id,
+        classId: classPlanSyllabusData.classId,
+        cohortName: classPlanSyllabusData.cohortName,
+        classPlan: classPlanSyllabusData.classPlan,
+        baseSyllabusId: classPlanSyllabusData.baseSyllabusId,
+        syllabus: classPlanSyllabusData.syllabus,
+        startDate: convertToDate(classPlanSyllabusData.startDate),
+        endDate: convertToDate(classPlanSyllabusData.endDate),
+        scheduledDays: convertedScheduledDays,
+        createdAt: convertToDate(classPlanSyllabusData.createdAt),
+        updatedAt: convertToDate(classPlanSyllabusData.updatedAt),
+        createdBy: classPlanSyllabusData.createdBy,
+        isActive: classPlanSyllabusData.isActive,
       }
+
+      setClassPlanSyllabus(classPlanSyllabus)
+      setSyllabus(classPlanSyllabusData.syllabus)
     } catch (err) {
       console.error('Error fetching syllabus:', err)
       setError('Failed to load syllabus. Please try again.')
@@ -211,15 +263,6 @@ const StudentSyllabusPage = () => {
     }
   }
 
-  const formatScheduledDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    })
-  }
-
   if (loading) {
     return (
       <StudentAuthGuard>
@@ -243,9 +286,10 @@ const StudentSyllabusPage = () => {
                 <AlertIcon />
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
-            ) : syllabus ? (
+            ) : syllabus && classPlanSyllabus ? (
               <>
                 {/* Syllabus Header */}
+
                 <Card>
                   <CardHeader>
                     <VStack align="start" spacing={3}>
@@ -257,6 +301,9 @@ const StudentSyllabusPage = () => {
                           </Badge>
                           <Badge colorScheme="green" variant="subtle">
                             Active
+                          </Badge>
+                          <Badge colorScheme="blue" variant="subtle">
+                            {classPlanSyllabus.classPlan}
                           </Badge>
                         </HStack>
                       </HStack>
@@ -295,256 +342,307 @@ const StudentSyllabusPage = () => {
                     </VStack>
                   </CardHeader>
                 </Card>
+                {/* Progress and Content Tabs */}
+                <Tabs variant="enclosed" colorScheme="purple">
+                  <TabList>
+                    <Tab>Progress Overview</Tab>
+                    <Tab>Course Content</Tab>
+                  </TabList>
 
-                {/* Syllabus Content */}
-                <Card>
-                  <CardHeader>
-                    <Heading size="md">Course Content</Heading>
-                  </CardHeader>
-                  <CardBody>
-                    <VStack spacing={4} align="stretch">
-                      {/* Full Syllabus List */}
-                      <VStack spacing={6} align="stretch">
-                        {syllabus.weeks.map((week, weekIndex) => (
-                          <Card key={week.id || weekIndex} variant="outline">
-                            <CardHeader>
-                              <HStack justify="space-between" align="center">
-                                <VStack align="start" spacing={1}>
-                                  <Heading size="md">{week.title}</Heading>
-                                  <Text fontSize="sm" color="gray.600">
-                                    {week.days.length} days • Week{' '}
-                                    {week.weekNumber}
-                                  </Text>
-                                </VStack>
-                                <Badge colorScheme="blue" variant="subtle">
-                                  {week.days.length} days
-                                </Badge>
-                              </HStack>
-                            </CardHeader>
-                            <CardBody>
-                              <VStack spacing={4} align="stretch">
-                                {week.days.map((day, dayIndex) => {
-                                  const status = getDayStatus(day)
-                                  const scheduled = getScheduledDay(day.id)
+                  <TabPanels>
+                    {/* Progress Tab */}
+                    <TabPanel px={0}>
+                      <StudentSyllabusView
+                        classPlanSyllabusId={classPlanSyllabus.id}
+                        studentId={user?.uid || ''}
+                      />
+                    </TabPanel>
 
-                                  return (
-                                    <Box
-                                      key={day.id || dayIndex}
-                                      p={4}
-                                      border="1px solid"
-                                      borderColor="gray.200"
-                                      borderRadius="lg"
-                                      bg="white"
+                    {/* Course Content Tab */}
+                    <TabPanel px={0}>
+                      <Card>
+                        <CardHeader>
+                          <Heading size="md">Course Content</Heading>
+                        </CardHeader>
+                        <CardBody>
+                          <VStack spacing={4} align="stretch">
+                            {/* Full Syllabus List */}
+                            <VStack spacing={6} align="stretch">
+                              {syllabus.weeks.map((week, weekIndex) => (
+                                <Card
+                                  key={week.id || weekIndex}
+                                  variant="outline"
+                                >
+                                  <CardHeader>
+                                    <HStack
+                                      justify="space-between"
+                                      align="center"
                                     >
-                                      <VStack spacing={4} align="stretch">
-                                        {/* Day Header */}
-                                        <HStack
-                                          justify="space-between"
-                                          align="start"
-                                        >
-                                          <VStack
-                                            align="start"
-                                            spacing={1}
-                                            flex="1"
-                                          >
-                                            <Text
-                                              fontWeight="bold"
-                                              fontSize="lg"
-                                              color="purple.600"
-                                            >
-                                              Day {day.dayNumber}: {day.title}
-                                            </Text>
-                                            <Text
-                                              fontSize="sm"
-                                              color="gray.700"
-                                              whiteSpace="pre-line"
-                                              lineHeight="1.5"
-                                            >
-                                              {day.content}
-                                            </Text>
-                                            <HStack spacing={2} mt={2}>
-                                              {day.duration && (
-                                                <Badge
-                                                  colorScheme="purple"
-                                                  variant="subtle"
-                                                  fontSize="xs"
-                                                >
-                                                  <HStack spacing={1}>
-                                                    <MdAccessTime />
-                                                    <Text>{day.duration}</Text>
-                                                  </HStack>
-                                                </Badge>
-                                              )}
-                                              {/* Show class type if available */}
-                                              {(day as any).classType && (
-                                                <Badge
-                                                  colorScheme={
-                                                    (day as any).classType ===
-                                                    'online'
-                                                      ? 'blue'
-                                                      : 'orange'
-                                                  }
-                                                  variant="subtle"
-                                                  fontSize="xs"
-                                                >
-                                                  <HStack spacing={1}>
-                                                    {(day as any).classType ===
-                                                    'online' ? (
-                                                      <MdComputer />
-                                                    ) : (
-                                                      <MdSchool />
-                                                    )}
-                                                    <Text>
-                                                      {(day as any).classType}
-                                                    </Text>
-                                                  </HStack>
-                                                </Badge>
-                                              )}
-                                            </HStack>
-                                          </VStack>
-                                          <VStack align="end" spacing={2}>
-                                            <Badge
-                                              colorScheme={getStatusColor(
-                                                status,
-                                              )}
-                                              variant="subtle"
-                                            >
-                                              {getStatusText(status)}
-                                            </Badge>
-                                          </VStack>
-                                        </HStack>
-
-                                        {/* Scheduled Date Display */}
-                                        {scheduled && (
-                                          <Box
-                                            p={3}
-                                            bg="blue.50"
-                                            borderRadius="md"
-                                            border="1px solid"
-                                            borderColor="blue.200"
-                                          >
-                                            <HStack spacing={2} align="center">
-                                              <MdCalendarToday color="#3182CE" />
-                                              <Text
-                                                fontSize="sm"
-                                                fontWeight="medium"
-                                                color="blue.700"
-                                              >
-                                                Scheduled for:{' '}
-                                                {formatScheduledDate(
-                                                  scheduled.scheduledDate,
-                                                )}
-                                              </Text>
-                                              {scheduled.isCompleted && (
-                                                <Badge
-                                                  colorScheme="green"
-                                                  variant="subtle"
-                                                  size="sm"
-                                                >
-                                                  Completed
-                                                </Badge>
-                                              )}
-                                            </HStack>
-                                            {scheduled.notes && (
-                                              <Text
-                                                fontSize="xs"
-                                                color="blue.600"
-                                                mt={1}
-                                                ml={6}
-                                              >
-                                                Note: {scheduled.notes}
-                                              </Text>
-                                            )}
-                                          </Box>
-                                        )}
-
-                                        {/* Assignments */}
-                                        {day.assignments &&
-                                          day.assignments.length > 0 && (
-                                            <Box>
-                                              <Text
-                                                fontWeight="semibold"
-                                                fontSize="sm"
-                                                color="gray.700"
-                                                mb={2}
-                                              >
-                                                <HStack spacing={1}>
-                                                  <MdAssignment />
-                                                  <Text>Assignments</Text>
-                                                </HStack>
-                                              </Text>
-                                              <List spacing={1}>
-                                                {day.assignments.map(
-                                                  (assignment, idx) => (
-                                                    <ListItem
-                                                      key={idx}
-                                                      fontSize="sm"
-                                                      color="gray.600"
-                                                    >
-                                                      <ListIcon
-                                                        as={MdCheckCircle}
-                                                        color="green.500"
-                                                      />
-                                                      {assignment}
-                                                    </ListItem>
-                                                  ),
-                                                )}
-                                              </List>
-                                            </Box>
-                                          )}
-
-                                        {/* Resources */}
-                                        {day.resources &&
-                                          day.resources.length > 0 && (
-                                            <Box>
-                                              <Text
-                                                fontWeight="semibold"
-                                                fontSize="sm"
-                                                color="gray.700"
-                                                mb={2}
-                                              >
-                                                <HStack spacing={1}>
-                                                  <MdLink />
-                                                  <Text>Resources</Text>
-                                                </HStack>
-                                              </Text>
-                                              <List spacing={1}>
-                                                {day.resources.map(
-                                                  (resource, idx) => (
-                                                    <ListItem
-                                                      key={idx}
-                                                      fontSize="sm"
-                                                      color="blue.600"
-                                                    >
-                                                      <ListIcon
-                                                        as={MdLink}
-                                                        color="blue.500"
-                                                      />
-                                                      <a
-                                                        href={resource}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                      >
-                                                        {resource}
-                                                      </a>
-                                                    </ListItem>
-                                                  ),
-                                                )}
-                                              </List>
-                                            </Box>
-                                          )}
+                                      <VStack align="start" spacing={1}>
+                                        <Heading size="md">
+                                          {week.title}
+                                        </Heading>
+                                        <Text fontSize="sm" color="gray.600">
+                                          {week.days.length} days • Week{' '}
+                                          {week.weekNumber}
+                                        </Text>
                                       </VStack>
-                                    </Box>
-                                  )
-                                })}
-                              </VStack>
-                            </CardBody>
-                          </Card>
-                        ))}
-                      </VStack>
-                    </VStack>
-                  </CardBody>
-                </Card>
+                                      <Badge
+                                        colorScheme="blue"
+                                        variant="subtle"
+                                      >
+                                        {week.days.length} days
+                                      </Badge>
+                                    </HStack>
+                                  </CardHeader>
+                                  <CardBody>
+                                    <VStack spacing={4} align="stretch">
+                                      {week.days.map((day, dayIndex) => {
+                                        const scheduled =
+                                          classPlanSyllabus.scheduledDays[
+                                            day.id
+                                          ]
+                                        const status = scheduled?.isCompleted
+                                          ? 'completed'
+                                          : scheduled?.scheduledDate <
+                                            new Date()
+                                          ? 'overdue'
+                                          : scheduled
+                                          ? 'scheduled'
+                                          : 'unscheduled'
+
+                                        return (
+                                          <Box
+                                            key={day.id || dayIndex}
+                                            p={4}
+                                            border="1px solid"
+                                            borderColor="gray.200"
+                                            borderRadius="lg"
+                                            bg="white"
+                                          >
+                                            <VStack spacing={4} align="stretch">
+                                              {/* Day Header */}
+                                              <HStack
+                                                justify="space-between"
+                                                align="start"
+                                              >
+                                                <VStack
+                                                  align="start"
+                                                  spacing={1}
+                                                  flex="1"
+                                                >
+                                                  <Text
+                                                    fontWeight="bold"
+                                                    fontSize="lg"
+                                                    color="purple.600"
+                                                  >
+                                                    Day {day.dayNumber}:{' '}
+                                                    {day.title}
+                                                  </Text>
+                                                  <Text
+                                                    fontSize="sm"
+                                                    color="gray.700"
+                                                    whiteSpace="pre-line"
+                                                    lineHeight="1.5"
+                                                  >
+                                                    {day.content}
+                                                  </Text>
+                                                  <HStack spacing={2} mt={2}>
+                                                    {day.duration && (
+                                                      <Badge
+                                                        colorScheme="purple"
+                                                        variant="subtle"
+                                                        fontSize="xs"
+                                                      >
+                                                        <HStack spacing={1}>
+                                                          <MdAccessTime />
+                                                          <Text>
+                                                            {day.duration}
+                                                          </Text>
+                                                        </HStack>
+                                                      </Badge>
+                                                    )}
+                                                    {day.isOnline && (
+                                                      <Badge
+                                                        colorScheme="blue"
+                                                        variant="subtle"
+                                                        fontSize="xs"
+                                                      >
+                                                        Online
+                                                      </Badge>
+                                                    )}
+                                                    {day.isPhysical && (
+                                                      <Badge
+                                                        colorScheme="green"
+                                                        variant="subtle"
+                                                        fontSize="xs"
+                                                      >
+                                                        Physical
+                                                      </Badge>
+                                                    )}
+                                                  </HStack>
+                                                </VStack>
+                                                <VStack align="end" spacing={2}>
+                                                  <Badge
+                                                    colorScheme={
+                                                      status === 'completed'
+                                                        ? 'green'
+                                                        : status === 'overdue'
+                                                        ? 'red'
+                                                        : status === 'scheduled'
+                                                        ? 'blue'
+                                                        : 'gray'
+                                                    }
+                                                    variant="subtle"
+                                                  >
+                                                    {status === 'completed'
+                                                      ? 'Completed'
+                                                      : status === 'overdue'
+                                                      ? 'Overdue'
+                                                      : status === 'scheduled'
+                                                      ? 'Scheduled'
+                                                      : 'Not Scheduled'}
+                                                  </Badge>
+                                                </VStack>
+                                              </HStack>
+
+                                              {/* Scheduled Date Display */}
+                                              {scheduled && (
+                                                <Box
+                                                  p={3}
+                                                  bg="blue.50"
+                                                  borderRadius="md"
+                                                  border="1px solid"
+                                                  borderColor="blue.200"
+                                                >
+                                                  <HStack
+                                                    spacing={2}
+                                                    align="center"
+                                                  >
+                                                    <MdCalendarToday color="#3182CE" />
+                                                    <Text
+                                                      fontSize="sm"
+                                                      fontWeight="medium"
+                                                      color="blue.700"
+                                                    >
+                                                      Scheduled for:{' '}
+                                                      {formatDateSafely(
+                                                        scheduled.scheduledDate,
+                                                      )}
+                                                    </Text>
+                                                    {scheduled.isCompleted && (
+                                                      <Badge
+                                                        colorScheme="green"
+                                                        variant="subtle"
+                                                        size="sm"
+                                                      >
+                                                        Completed
+                                                      </Badge>
+                                                    )}
+                                                  </HStack>
+                                                  {scheduled.notes && (
+                                                    <Text
+                                                      fontSize="xs"
+                                                      color="blue.600"
+                                                      mt={1}
+                                                      ml={6}
+                                                    >
+                                                      Note: {scheduled.notes}
+                                                    </Text>
+                                                  )}
+                                                </Box>
+                                              )}
+
+                                              {/* Assignments */}
+                                              {day.assignments &&
+                                                day.assignments.length > 0 && (
+                                                  <Box>
+                                                    <Text
+                                                      fontWeight="semibold"
+                                                      fontSize="sm"
+                                                      color="gray.700"
+                                                      mb={2}
+                                                    >
+                                                      <HStack spacing={1}>
+                                                        <MdAssignment />
+                                                        <Text>Assignments</Text>
+                                                      </HStack>
+                                                    </Text>
+                                                    <List spacing={1}>
+                                                      {day.assignments.map(
+                                                        (assignment, idx) => (
+                                                          <ListItem
+                                                            key={idx}
+                                                            fontSize="sm"
+                                                            color="gray.600"
+                                                          >
+                                                            <ListIcon
+                                                              as={MdCheckCircle}
+                                                              color="green.500"
+                                                            />
+                                                            {assignment}
+                                                          </ListItem>
+                                                        ),
+                                                      )}
+                                                    </List>
+                                                  </Box>
+                                                )}
+
+                                              {/* Resources */}
+                                              {day.resources &&
+                                                day.resources.length > 0 && (
+                                                  <Box>
+                                                    <Text
+                                                      fontWeight="semibold"
+                                                      fontSize="sm"
+                                                      color="gray.700"
+                                                      mb={2}
+                                                    >
+                                                      <HStack spacing={1}>
+                                                        <MdLink />
+                                                        <Text>Resources</Text>
+                                                      </HStack>
+                                                    </Text>
+                                                    <List spacing={1}>
+                                                      {day.resources.map(
+                                                        (resource, idx) => (
+                                                          <ListItem
+                                                            key={idx}
+                                                            fontSize="sm"
+                                                            color="blue.600"
+                                                          >
+                                                            <ListIcon
+                                                              as={MdLink}
+                                                              color="blue.500"
+                                                            />
+                                                            <a
+                                                              href={resource}
+                                                              target="_blank"
+                                                              rel="noopener noreferrer"
+                                                            >
+                                                              {resource}
+                                                            </a>
+                                                          </ListItem>
+                                                        ),
+                                                      )}
+                                                    </List>
+                                                  </Box>
+                                                )}
+                                            </VStack>
+                                          </Box>
+                                        )
+                                      })}
+                                    </VStack>
+                                  </CardBody>
+                                </Card>
+                              ))}
+                            </VStack>
+                          </VStack>
+                        </CardBody>
+                      </Card>
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
               </>
             ) : (
               <Alert status="info">

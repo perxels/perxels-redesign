@@ -1,3 +1,4 @@
+// pages/portal/admin/classes/[id].tsx
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { AdminAuthGuard } from '../../../../components/PortalAuthGuard'
@@ -19,12 +20,24 @@ import {
   StatHelpText,
   useToast,
   Skeleton,
+  Card,
+  CardBody,
+  Button,
+  Text,
 } from '@chakra-ui/react'
-import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore'
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
-import { ClassSyllabusManagement } from '../../../../features/portal/admin/classes/class-syllabus-management'
 import { ClassStudentList } from '../../../../features/portal/admin/classes/class-student-list'
 import { Syllabus } from '../../../../types/syllabus.types'
+import { ClassPlanSyllabusManagement } from '../../../../features/portal/admin/classes/class-plan-syllabus-management'
+import { ClassPlanSyllabusEditor } from '../../../../features/portal/admin/classes/class-plan-syllabus-editor'
 
 interface ClassData {
   id: string
@@ -68,6 +81,10 @@ const ClassDetailsPage = () => {
   const { id } = router.query
   const [klass, setKlass] = useState<ClassData | null>(null)
   const [syllabus, setSyllabus] = useState<Syllabus | null>(null)
+  const [classPlanSyllabi, setClassPlanSyllabi] = useState<any[]>([])
+  const [selectedClassPlanSyllabus, setSelectedClassPlanSyllabus] = useState<
+    any | null
+  >(null)
   const [actualStudentCount, setActualStudentCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -80,29 +97,32 @@ const ClassDetailsPage = () => {
   }, [id])
 
   // Memoized stats
-  const classStats = useMemo((): ClassStats => ({
-    totalStudents: actualStudentCount,
-    courseWeeks: syllabus?.totalWeeks || 0,
-    courseDays: syllabus?.totalDays || 0,
-  }), [actualStudentCount, syllabus])
+  const classStats = useMemo(
+    (): ClassStats => ({
+      totalStudents: actualStudentCount,
+      courseWeeks: syllabus?.totalWeeks || 0,
+      courseDays: syllabus?.totalDays || 0,
+    }),
+    [actualStudentCount, syllabus],
+  )
 
   // Fetch class data
   const fetchClass = useCallback(async () => {
     if (!classId) return
-    
+
     try {
       setLoading(true)
       setError(null)
-      
+
       const ref = doc(portalDb, 'classes', classId)
       const snap = await getDoc(ref)
-      
+
       if (!snap.exists()) {
         setError('Class not found')
         setKlass(null)
         return
       }
-      
+
       const d = snap.data() as any
       const classData: ClassData = {
         id: snap.id,
@@ -117,14 +137,13 @@ const ClassDetailsPage = () => {
         description: d.description || '',
         syllabusId: d.syllabusId || '',
       }
-      
+
       setKlass(classData)
-      
+
       // Fetch syllabus if syllabusId exists
       if (d.syllabusId) {
         await fetchSyllabus(d.syllabusId)
       }
-      
     } catch (e) {
       console.error('Error fetching class:', e)
       setError('Failed to load class details')
@@ -138,7 +157,7 @@ const ClassDetailsPage = () => {
     try {
       const syllabusRef = doc(portalDb, 'syllabi', syllabusId)
       const syllabusSnap = await getDoc(syllabusRef)
-      
+
       if (syllabusSnap.exists()) {
         const syllabusData = syllabusSnap.data() as any
         setSyllabus({
@@ -163,15 +182,15 @@ const ClassDetailsPage = () => {
   // Fetch actual student count
   const fetchActualStudentCount = useCallback(async () => {
     if (!klass?.cohortName) return
-    
+
     try {
       setLoadingStudents(true)
       const studentsQuery = query(
         collection(portalDb, 'users'),
         where('role', '==', 'student'),
-        where('schoolFeeInfo.cohort', '==', klass.cohortName.toUpperCase())
+        where('schoolFeeInfo.cohort', '==', klass.cohortName.toUpperCase()),
       )
-      
+
       const querySnapshot = await getDocs(studentsQuery)
       setActualStudentCount(querySnapshot.size)
     } catch (err) {
@@ -182,6 +201,48 @@ const ClassDetailsPage = () => {
       setLoadingStudents(false)
     }
   }, [klass?.cohortName, klass?.studentsCount])
+
+  // Add function to fetch class plan syllabi
+  const fetchClassPlanSyllabi = useCallback(async () => {
+    if (!classId) return
+
+    try {
+      const q = query(
+        collection(portalDb, 'classPlanSyllabi'),
+        where('classId', '==', classId),
+      )
+      const querySnapshot = await getDocs(q)
+      const syllabiData: any[] = []
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data()
+        syllabiData.push({
+          id: doc.id,
+          ...data,
+          startDate: data.startDate?.toDate(),
+          endDate: data.endDate?.toDate(),
+          createdAt: data.createdAt?.toDate(),
+          updatedAt: data.updatedAt?.toDate(),
+        })
+      })
+
+      setClassPlanSyllabi(syllabiData)
+
+      // Set the first one as selected by default
+      if (syllabiData.length > 0 && !selectedClassPlanSyllabus) {
+        setSelectedClassPlanSyllabus(syllabiData[0])
+      }
+    } catch (err) {
+      console.error('Error fetching class plan syllabi:', err)
+    }
+  }, [classId, selectedClassPlanSyllabus])
+
+  // Call this in your useEffect that fetches class data
+  useEffect(() => {
+    if (klass) {
+      fetchClassPlanSyllabi()
+    }
+  }, [klass, fetchClassPlanSyllabi])
 
   // Main effect to fetch class data
   useEffect(() => {
@@ -250,10 +311,14 @@ const ClassDetailsPage = () => {
 
   // Main content component
   const MainContent = () => (
-    <Tabs variant="enclosed" colorScheme="purple" defaultIndex={syllabus ? 1 : 0}>
+    <Tabs
+      variant="enclosed"
+      colorScheme="purple"
+      defaultIndex={syllabus ? 1 : 0}
+    >
       <TabList>
         <Tab>Students</Tab>
-        <Tab>Syllabus</Tab>
+        <Tab>Class Plans & Syllabus</Tab>
       </TabList>
 
       <TabPanels>
@@ -266,17 +331,69 @@ const ClassDetailsPage = () => {
         </TabPanel>
 
         {/* Syllabus Tab */}
-        <TabPanel px={0} py={0}>
-          <ClassSyllabusManagement
-            classId={klass!.id}
-            currentSyllabusId={klass!.syllabusId}
-            classStartDate={convertTimestamp(klass!.startDate)}
-            classEndDate={convertTimestamp(klass!.endDate)}
-            onSyllabusUpdate={(syllabusId) => {
-              // Refresh the page to get updated data
-              window.location.reload()
-            }}
-          />
+        {/* Class Plans & Syllabus Tab */}
+        {/* <TabPanel px={0} py={0}>
+            <ClassPlanSyllabusManagement
+              classId={klass!.id}
+              cohortName={klass!.cohortName}
+            />
+        </TabPanel> */}
+        {/* Class Plans & Syllabus Tab - Updated */}
+        <TabPanel px={0}>
+          <VStack spacing={6} align="stretch">
+            {/* Class Plan Selector */}
+            {classPlanSyllabi.length > 0 && (
+              <Card>
+                <CardBody>
+                  <VStack align="start" spacing={4}>
+                    <Text fontWeight="semibold">
+                      Select Class Plan to Edit:
+                    </Text>
+                    <HStack spacing={4} wrap="wrap">
+                      {classPlanSyllabi.map((cps) => (
+                        <Button
+                          key={cps.id}
+                          colorScheme={
+                            selectedClassPlanSyllabus?.id === cps.id
+                              ? 'purple'
+                              : 'gray'
+                          }
+                          variant={
+                            selectedClassPlanSyllabus?.id === cps.id
+                              ? 'solid'
+                              : 'outline'
+                          }
+                          onClick={() => setSelectedClassPlanSyllabus(cps)}
+                        >
+                          {cps.classPlan}
+                        </Button>
+                      ))}
+                    </HStack>
+                  </VStack>
+                </CardBody>
+              </Card>
+            )}
+
+            {/* Syllabus Editor */}
+            {selectedClassPlanSyllabus && (
+              <ClassPlanSyllabusEditor
+                classPlanSyllabusId={selectedClassPlanSyllabus.id}
+                classPlan={selectedClassPlanSyllabus.classPlan}
+                onUpdate={fetchClassPlanSyllabi}
+              />
+            )}
+
+            {/* Fallback if no class plan syllabi exist */}
+            {classPlanSyllabi.length === 0 && !loading && (
+              <Alert status="info">
+                <AlertIcon />
+                <AlertDescription>
+                  No class plan syllabi found. A syllabus needs to be assigned
+                  to this class first.
+                </AlertDescription>
+              </Alert>
+            )}
+          </VStack>
         </TabPanel>
       </TabPanels>
     </Tabs>
@@ -309,5 +426,3 @@ const ClassDetailsPage = () => {
 }
 
 export default ClassDetailsPage
-
-

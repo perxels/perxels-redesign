@@ -22,8 +22,14 @@ export const SOTWHistory = () => {
 
   if (history.length === 0) {
     return (
-      <Box>
-        <Heading size="md" mt={7} mb={2}>
+      <Box px={6} py={4}>
+        <Heading
+          size="md"
+          mt={7}
+          mb={2}
+          color={'brand.white'}
+          fontWeight={'bold'}
+        >
           Previous Students of the Week
         </Heading>
         <Text color="gray.500">No history available yet.</Text>
@@ -32,13 +38,19 @@ export const SOTWHistory = () => {
   }
 
   return (
-    <Box>
-      <Heading size="md" mt={6} mb={2}>
+    <Box px={6} py={6}>
+      <Heading
+        size="md"
+        mt={6}
+        mb={2}
+        color={'brand.white'}
+        fontWeight={'bold'}
+      >
         Previous Students of the Week
       </Heading>
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
         {history.map((item) => (
-          <Card key={item.id} variant="outline">
+          <Card key={item.id} variant="outline" bg={'gray.200'}>
             <CardBody>
               <HStack spacing={3}>
                 <Avatar

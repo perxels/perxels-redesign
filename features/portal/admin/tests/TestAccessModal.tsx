@@ -738,7 +738,8 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                             <Th>Cohort</Th>
                             <Th>Class Plan</Th>
                             <Th>First Access</Th>
-                            <Th>Attempts</Th>
+                            {/* <Th>Attempts</Th> */}
+                            <Th>Score Points</Th>
                             <Th>Best Score</Th>
                             <Th>Status</Th>
                             <Th>Remarks</Th>
@@ -775,9 +776,14 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                                   {formatDate(participant.accessedAt)}
                                 </Text>
                               </Td>
-                              <Td>
+                              {/* <Td>
                                 <Text fontWeight="medium">
                                   {participant.attempts}
+                                </Text>
+                              </Td> */}
+                              <Td>
+                                <Text fontWeight="medium">
+                                  {participant.bestScore}
                                 </Text>
                               </Td>
                               <Td>
