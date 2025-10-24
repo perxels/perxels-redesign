@@ -30,10 +30,12 @@ import {
 import { useSOTWHistory } from '../../../../hooks/useSOTW'
 import { useSOTWActions } from '../../../../hooks/useSOTW'
 import { FiZoomIn, FiTrash2, FiEdit, FiSearch } from 'react-icons/fi'
+import { useRouter } from 'next/router'
 
 export const SOTWHistoryAdmin = () => {
   const { history, loading } = useSOTWHistory()
   const { deleteSOTWHistory } = useSOTWActions()
+  const { reload } = useRouter()
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedHistory, setSelectedHistory] = useState<any>(null)
@@ -101,6 +103,7 @@ export const SOTWHistoryAdmin = () => {
 
     setDeletingId(null)
     setSelectedHistory(null)
+    reload()
     onDeleteClose()
   }
 
@@ -151,7 +154,7 @@ export const SOTWHistoryAdmin = () => {
             </CardBody>
           </Card>
         ) : (
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={6}>
             {filteredHistory.map((item) => (
               <Card
                 key={item.id}

@@ -31,11 +31,11 @@ const menuItems = [
     href: '/portal/facilitator/assigned',
     icon: '/assets/icons/facilAsign.svg',
   },
-  // {
-  //   title: 'Student Of The Week',
-  //   href: '/portal/facilitator/sotw',
-  //   icon: '/assets/icons/sotw.png',
-  // },
+  {
+    title: 'Student Of The Week',
+    href: '/portal/facilitator/sotw',
+    icon: '/assets/icons/sotw.png',
+  },
   // {
   //   title: 'Notifications',
   //   href: '/portal/facilitator/notifications',

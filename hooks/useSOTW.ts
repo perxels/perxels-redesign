@@ -44,6 +44,8 @@ export function useCurrentSOTW() {
               studentAvatar: data.studentAvatar,
               cohort: data.cohort,
               classPlan: data.classPlan,
+              projectName: data.projectName,
+              igLink: data.igLink,
               citation: data.citation,
               workHighlight: data.workHighlight,
               workImages:
@@ -138,6 +140,8 @@ export function useSOTWActions() {
       studentAvatar?: string
       cohort: string
       classPlan: string
+      projectName?: string
+      igLink?: string
       citation: string
       workHighlight: string
       workImages: SOTWImage[]
@@ -172,6 +176,8 @@ export function useSOTWActions() {
         studentAvatar: studentData.studentAvatar || '', // Ensure not undefined
         cohort: studentData.cohort,
         classPlan: studentData.classPlan,
+        projectName: studentData.projectName,
+        igLink: studentData.igLink,
         citation: studentData.citation,
         workHighlight: studentData.workHighlight,
         workImages: studentData.workImages.map((img) => ({

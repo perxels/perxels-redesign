@@ -113,6 +113,7 @@ export const DashboardSidebar = () => {
       alignItems="center"
       gap={8}
       py={8}
+      mx={'auto'}
       overflowY="auto"
     >
       {sidebarItems.map((item) => {

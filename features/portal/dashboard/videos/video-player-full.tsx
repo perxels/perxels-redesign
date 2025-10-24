@@ -38,8 +38,9 @@ export const VideoPlayerFull: React.FC<VideoPlayerFullProps> = ({
 
     const updateInterval = setInterval(() => {
       if (progressPercentage > 0) {
-        updateVideoProgress(video.id, studentId, progressPercentage)
-          .catch(error => console.error('Error updating progress:', error))
+        updateVideoProgress(video.id, studentId, progressPercentage).catch(
+          (error) => console.error('Error updating progress:', error),
+        )
       }
     }, 30000) // Update every 30 seconds
 
@@ -61,14 +62,18 @@ export const VideoPlayerFull: React.FC<VideoPlayerFullProps> = ({
               })
             }
           })
-          .catch(error => console.error('Error updating final progress:', error))
+          .catch((error) =>
+            console.error('Error updating final progress:', error),
+          )
       }
     }
   }, [progressPercentage, video.id, studentId, toast])
 
   const getEmbedUrl = (url: string) => {
     // YouTube URL conversion
-    const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
+    const youtubeMatch = url.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+    )
     if (youtubeMatch) {
       return `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`
     }
@@ -84,7 +89,11 @@ export const VideoPlayerFull: React.FC<VideoPlayerFullProps> = ({
   }
 
   const isDirectVideo = (url: string) => {
-    return !url.includes('youtube.com') && !url.includes('youtu.be') && !url.includes('vimeo.com')
+    return (
+      !url.includes('youtube.com') &&
+      !url.includes('youtu.be') &&
+      !url.includes('vimeo.com')
+    )
   }
 
   const formatDuration = (seconds: number) => {
@@ -125,11 +134,7 @@ export const VideoPlayerFull: React.FC<VideoPlayerFullProps> = ({
               Your browser does not support the video tag.
             </video>
           ) : (
-            <Box
-              w="full"
-              style={{ aspectRatio: '16/9' }}
-              position="relative"
-            >
+            <Box w="full" style={{ aspectRatio: '16/9' }} position="relative">
               <iframe
                 width="100%"
                 height="100%"
@@ -206,4 +211,4 @@ export const VideoPlayerFull: React.FC<VideoPlayerFullProps> = ({
       </VStack>
     </Box>
   )
-} 
+}

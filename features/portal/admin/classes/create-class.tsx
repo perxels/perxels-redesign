@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 import {
   ModalHeader,
   ModalContent,
@@ -22,16 +23,32 @@ import {
   AlertDescription,
   Select,
   Spinner,
+  Box,
+  Badge,
 } from '@chakra-ui/react'
 import { CustomDatePicker } from '../../../../components'
-import React, { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { format } from 'date-fns'
-import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore'
+import {
+  collection,
+  serverTimestamp,
+  getDocs,
+  writeBatch,
+  doc,
+  getDoc,
+} from 'firebase/firestore'
 import { portalDb } from '../../../../portalFirebaseConfig'
 import { usePortalAuth } from '../../../../hooks/usePortalAuth'
 import { Syllabus } from '../../../../types/syllabus.types'
+import { classPlans } from '../../../../constant/adminConstants'
+import { CLASS_PLAN_CONFIGS } from '../../../../constant/classPlans'
+import {
+  calculateClassSchedule,
+  calculateEndDate,
+  calculateEndDateForAllPlans,
+} from '../../../../utils/scheduleCalculator'
+import { useRouter } from 'next/router'
 
 interface CreateClassFormValues {
   cohortName: string
@@ -57,16 +74,11 @@ const validationSchema = Yup.object().shape({
     .min(2, 'Cohort name must be at least 2 characters')
     .max(50, 'Cohort name must not exceed 50 characters')
     .trim(),
-
-  startDate: Yup.date()
-    .required('Start date is required'),
-
+  startDate: Yup.date().required('Start date is required'),
   endDate: Yup.date()
     .required('End date is required')
     .min(Yup.ref('startDate'), 'End date must be after start date'),
-
-  syllabusId: Yup.string()
-    .required('Syllabus is required'),
+  syllabusId: Yup.string().required('Syllabus is required'),
 })
 
 export const CreateClass = () => {
@@ -75,35 +87,37 @@ export const CreateClass = () => {
   const [authError, setAuthError] = useState<string | null>(null)
   const [syllabi, setSyllabi] = useState<Syllabus[]>([])
   const [loadingSyllabi, setLoadingSyllabi] = useState(false)
+  const [calculatedEndDate, setCalculatedEndDate] = useState<Date | null>(null)
   const toast = useToast()
   const { portalUser, user, loading } = usePortalAuth()
+  const router = useRouter()
 
-  // Check if user is admin
   const isAdmin = portalUser?.role === 'admin'
 
-  // Fetch syllabi
   const fetchSyllabi = async () => {
     if (!isAdmin) return
-    
+
     setLoadingSyllabi(true)
     try {
       const querySnapshot = await getDocs(collection(portalDb, 'syllabi'))
-      const syllabiData: Syllabus[] = querySnapshot.docs.map(doc => {
-        const data = doc.data()
-        return {
-          id: doc.id,
-          name: data.name,
-          description: data.description,
-          totalWeeks: data.totalWeeks,
-          totalDays: data.totalDays,
-          weeks: data.weeks,
-          createdAt: data.createdAt?.toDate() || new Date(),
-          updatedAt: data.updatedAt?.toDate() || new Date(),
-          createdBy: data.createdBy,
-          isActive: data.isActive,
-          version: data.version,
-        }
-      }).filter(s => s.isActive) // Only show active syllabi
+      const syllabiData: Syllabus[] = querySnapshot.docs
+        .map((doc) => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            name: data.name,
+            description: data.description,
+            totalWeeks: data.totalWeeks,
+            totalDays: data.totalDays,
+            weeks: data.weeks,
+            createdAt: data.createdAt?.toDate() || new Date(),
+            updatedAt: data.updatedAt?.toDate() || new Date(),
+            createdBy: data.createdBy,
+            isActive: data.isActive,
+            version: data.version,
+          }
+        })
+        .filter((s) => s.isActive)
       setSyllabi(syllabiData)
     } catch (err) {
       console.error('Error fetching syllabi:', err)
@@ -118,15 +132,76 @@ export const CreateClass = () => {
     }
   }, [isOpen, isAdmin])
 
-  const handleCreateClass = async (values: CreateClassFormValues) => {
-    // Double-check admin role before proceeding
-    if (!isAdmin) {
-      setAuthError('Only administrators can create classes')
-      return
-    }
+  // Handle syllabus template application
+  const applySyllabusTemplate = async (
+    syllabusId: string,
+    classId: string,
+    cohortName: string,
+    startDate: Date,
+  ) => {
+    if (!isAdmin || !user) return
 
-    if (!user) {
-      setAuthError('You must be logged in to create classes')
+    try {
+      // Fetch the syllabus template
+      const syllabusRef = doc(portalDb, 'syllabi', syllabusId)
+      const syllabusSnap = await getDoc(syllabusRef)
+
+      if (!syllabusSnap.exists()) {
+        throw new Error('Selected syllabus not found')
+      }
+
+      const syllabusData = syllabusSnap.data() as Syllabus
+      const batch = writeBatch(portalDb)
+
+      // Create class plan syllabi for each class plan
+      for (const classPlanKey of Object.keys(CLASS_PLAN_CONFIGS)) {
+        const classPlanConfig =
+          CLASS_PLAN_CONFIGS[classPlanKey as keyof typeof CLASS_PLAN_CONFIGS]
+
+        // Calculate specific schedule for this class plan
+        const scheduledDays = calculateClassSchedule({
+          startDate: new Date(startDate),
+          syllabus: syllabusData,
+          classPlan: classPlanKey,
+        })
+
+        const classPlanSyllabusData = {
+          classId: classId,
+          cohortName: cohortName.trim().toUpperCase(),
+          classPlan: classPlanConfig.name, // Use the display name instead of key
+          classPlanKey: classPlanKey, // Store the key separately for reference
+          baseSyllabusId: syllabusId,
+          syllabus: syllabusData, // Full syllabus copy
+          startDate: new Date(startDate),
+          endDate: calculateEndDate(
+            new Date(startDate),
+            syllabusData,
+            classPlanKey,
+          ),
+          scheduledDays: scheduledDays,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+          createdBy: user.uid,
+          isActive: true,
+        }
+
+        const classPlanSyllabusRef = doc(
+          collection(portalDb, 'classPlanSyllabi'),
+        )
+        batch.set(classPlanSyllabusRef, classPlanSyllabusData)
+      }
+
+      await batch.commit()
+      return true
+    } catch (error) {
+      console.error('Error applying syllabus template:', error)
+      throw error
+    }
+  }
+
+  const handleCreateClass = async (values: CreateClassFormValues) => {
+    if (!isAdmin || !user) {
+      setAuthError('Only administrators can create classes')
       return
     }
 
@@ -134,11 +209,19 @@ export const CreateClass = () => {
     setAuthError(null)
 
     try {
-      // Prepare class data
+      const selectedSyllabus = syllabi.find((s) => s.id === values.syllabusId)
+      if (!selectedSyllabus) {
+        throw new Error('Selected syllabus not found')
+      }
+
+      // Use calculated end date if available, otherwise use user input
+      const finalEndDate = calculatedEndDate || new Date(values.endDate)
+
+      // Prepare main class data
       const classData: ClassData = {
         cohortName: values.cohortName.trim().toUpperCase(),
         startDate: new Date(values.startDate),
-        endDate: new Date(values.endDate),
+        endDate: finalEndDate,
         syllabusId: values.syllabusId,
         createdBy: user.uid,
         createdAt: serverTimestamp(),
@@ -146,12 +229,27 @@ export const CreateClass = () => {
         studentsCount: 0,
       }
 
-      // Save to Firestore
-      const docRef = await addDoc(collection(portalDb, 'classes'), classData)
+      // Use batch write for atomic operations
+      const batch = writeBatch(portalDb)
+
+      // Create the main class document
+      const classRef = doc(collection(portalDb, 'classes'))
+      batch.set(classRef, classData)
+
+      // Apply syllabus template to all class plans
+      await applySyllabusTemplate(
+        values.syllabusId,
+        classRef.id,
+        values.cohortName,
+        new Date(values.startDate),
+      )
+
+      // Commit all operations
+      await batch.commit()
 
       toast({
         title: 'Class Created Successfully! 🎉',
-        description: `${values.cohortName} has been created and is now active`,
+        description: `${values.cohortName} has been created with syllabi for all class plans`,
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -159,9 +257,9 @@ export const CreateClass = () => {
       })
 
       onClose()
+      router.reload()
     } catch (error: any) {
       console.error('Error creating class:', error)
-
       let errorMessage = 'Failed to create class. Please try again.'
 
       if (error.code) {
@@ -172,16 +270,12 @@ export const CreateClass = () => {
           case 'network-request-failed':
             errorMessage = 'Network error. Please check your connection.'
             break
-          case 'unavailable':
-            errorMessage = 'Service temporarily unavailable. Please try again later.'
-            break
           default:
             errorMessage = error.message || errorMessage
         }
       }
 
       setAuthError(errorMessage)
-
       toast({
         title: 'Failed to Create Class',
         description: errorMessage,
@@ -195,29 +289,6 @@ export const CreateClass = () => {
     }
   }
 
-  const formatDateForInput = (date: string) => {
-    if (!date) return ''
-    return new Date(date).toISOString().split('T')[0]
-  }
-
-  const calculateDuration = (startDate: string, endDate: string) => {
-    if (!startDate || !endDate) return ''
-
-    const start = new Date(startDate)
-    const end = new Date(endDate)
-    const diffTime = Math.abs(end.getTime() - start.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    const weeks = Math.floor(diffDays / 7)
-    const days = diffDays % 7
-
-    if (weeks === 0) return `${days} day${days === 1 ? '' : 's'}`
-    if (days === 0) return `${weeks} week${weeks === 1 ? '' : 's'}`
-    return `${weeks} week${weeks === 1 ? '' : 's'} and ${days} day${
-      days === 1 ? '' : 's'
-    }`
-  }
-
-  // Show loading while checking auth
   if (loading) {
     return (
       <Button h="64px" isLoading disabled>
@@ -226,7 +297,6 @@ export const CreateClass = () => {
     )
   }
 
-  // Hide button if not admin
   if (!isAdmin) {
     return null
   }
@@ -234,7 +304,7 @@ export const CreateClass = () => {
   return (
     <>
       <Button
-        h={["40px", "64px"]}
+        h={['40px', '64px']}
         onClick={onOpen}
         colorScheme="purple"
         size="lg"
@@ -305,33 +375,60 @@ export const CreateClass = () => {
                     {/* Syllabus Selection */}
                     <FormControl
                       isInvalid={
-                        !!(formik.touched.syllabusId && formik.errors.syllabusId)
+                        !!(
+                          formik.touched.syllabusId && formik.errors.syllabusId
+                        )
                       }
                       isRequired
                     >
-                      <FormLabel fontWeight="semibold">Course Syllabus</FormLabel>
+                      <FormLabel fontWeight="semibold">
+                        Course Syllabus
+                      </FormLabel>
                       {loadingSyllabi ? (
                         <HStack justify="center" py={4}>
                           <Spinner size="sm" />
-                          <Text fontSize="sm" color="gray.600">Loading syllabi...</Text>
+                          <Text fontSize="sm" color="gray.600">
+                            Loading syllabi...
+                          </Text>
                         </HStack>
                       ) : syllabi.length === 0 ? (
                         <Text fontSize="sm" color="red.500" py={2}>
-                          No active syllabi found. Please create a syllabus first.
+                          No active syllabi found. Please create a syllabus
+                          first.
                         </Text>
                       ) : (
                         <Select
                           name="syllabusId"
                           placeholder="Select a syllabus"
                           value={formik.values.syllabusId}
-                          onChange={formik.handleChange}
+                          onChange={(e) => {
+                            formik.handleChange(e)
+                            // Don't calculate end date here - wait until we have start date
+                            if (formik.values.startDate) {
+                              const selectedSyllabus = syllabi.find(
+                                (s) => s.id === e.target.value,
+                              )
+                              if (selectedSyllabus) {
+                                const endDate = calculateEndDateForAllPlans(
+                                  new Date(formik.values.startDate),
+                                  selectedSyllabus,
+                                )
+                                setCalculatedEndDate(endDate)
+                                formik.setFieldValue(
+                                  'endDate',
+                                  format(endDate, 'yyyy-MM-dd'),
+                                )
+                              }
+                            }
+                          }}
                           onBlur={formik.handleBlur}
                           isDisabled={isSubmitting}
                           size="lg"
                         >
                           {syllabi.map((syllabus) => (
                             <option key={syllabus.id} value={syllabus.id}>
-                              {syllabus.name} ({syllabus.totalWeeks} weeks, {syllabus.totalDays} days)
+                              {syllabus.name} ({syllabus.totalWeeks} weeks,{' '}
+                              {syllabus.totalDays} days)
                             </option>
                           ))}
                         </Select>
@@ -367,13 +464,38 @@ export const CreateClass = () => {
                             name="startDate"
                             value={formik.values.startDate}
                             onChange={(date) => {
-                              const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
+                              const formattedDate = date
+                                ? format(date, 'yyyy-MM-dd')
+                                : ''
                               formik.setFieldValue('startDate', formattedDate)
+
+                              // Calculate end date only if we have both start date and syllabus
+                              if (formattedDate && formik.values.syllabusId) {
+                                const selectedSyllabus = syllabi.find(
+                                  (s) => s.id === formik.values.syllabusId,
+                                )
+                                if (selectedSyllabus) {
+                                  const endDate = calculateEndDateForAllPlans(
+                                    new Date(formattedDate),
+                                    selectedSyllabus,
+                                  )
+                                  setCalculatedEndDate(endDate)
+                                  formik.setFieldValue(
+                                    'endDate',
+                                    format(endDate, 'yyyy-MM-dd'),
+                                  )
+                                }
+                              }
                             }}
                             onBlur={() => formik.handleBlur('startDate')}
                             isDisabled={isSubmitting}
                             size="lg"
-                            isInvalid={!!(formik.touched.startDate && formik.errors.startDate)}
+                            isInvalid={
+                              !!(
+                                formik.touched.startDate &&
+                                formik.errors.startDate
+                              )
+                            }
                             errorMessage={formik.errors.startDate}
                           />
                         </FormControl>
@@ -390,39 +512,91 @@ export const CreateClass = () => {
                           </FormLabel>
                           <CustomDatePicker
                             name="endDate"
-                            value={formik.values.endDate}
+                            value={
+                              calculatedEndDate
+                                ? format(calculatedEndDate, 'yyyy-MM-dd')
+                                : formik.values.endDate
+                            }
                             onChange={(date) => {
-                              const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
+                              const formattedDate = date
+                                ? format(date, 'yyyy-MM-dd')
+                                : ''
                               formik.setFieldValue('endDate', formattedDate)
+                              setCalculatedEndDate(date)
                             }}
                             onBlur={() => formik.handleBlur('endDate')}
                             isDisabled={isSubmitting}
                             size="lg"
-                            minDate={formik.values.startDate ? new Date(formik.values.startDate) : undefined}
-                            isInvalid={!!(formik.touched.endDate && formik.errors.endDate)}
+                            minDate={
+                              formik.values.startDate
+                                ? new Date(formik.values.startDate)
+                                : undefined
+                            }
+                            isInvalid={
+                              !!(
+                                formik.touched.endDate && formik.errors.endDate
+                              )
+                            }
                             errorMessage={formik.errors.endDate}
                           />
                         </FormControl>
                       </HStack>
 
-                      {/* Duration Display */}
-                      {formik.values.startDate && formik.values.endDate && (
+                      {/* Auto-calculation notice */}
+                      {calculatedEndDate && (
+                        <Alert status="info" borderRadius="md" size="sm">
+                          <AlertIcon />
+                          <Box>
+                            <Text fontSize="sm" fontWeight="medium">
+                              End Date Calculated Automatically
+                            </Text>
+                            <Text fontSize="xs">
+                              Based on{' '}
+                              {
+                                syllabi.find(
+                                  (s) => s.id === formik.values.syllabusId,
+                                )?.totalWeeks
+                              }{' '}
+                              weeks from start date. You can modify this if
+                              needed.
+                            </Text>
+                          </Box>
+                        </Alert>
+                      )}
+
+                      {/* Class Plans Info */}
+                      <Box
+                        p={3}
+                        bg="purple.50"
+                        borderRadius="md"
+                        border="1px solid"
+                        borderColor="purple.200"
+                      >
                         <Text
                           fontSize="sm"
-                          color="gray.600"
-                          fontStyle="italic"
-                          textAlign="center"
-                          p={2}
-                          bg="gray.50"
-                          borderRadius="md"
+                          fontWeight="medium"
+                          color="purple.700"
+                          mb={2}
                         >
-                          Duration:{' '}
-                          {calculateDuration(
-                            formik.values.startDate,
-                            formik.values.endDate,
-                          )}
+                          Class Plans That Will Be Created:
                         </Text>
-                      )}
+                        <HStack spacing={2} flexWrap="wrap">
+                          {classPlans.map((plan) => (
+                            <Badge
+                              key={plan}
+                              colorScheme="purple"
+                              variant="subtle"
+                              fontSize="xs"
+                            >
+                              {plan}
+                            </Badge>
+                          ))}
+                        </HStack>
+                        <Text fontSize="xs" color="purple.600" mt={2}>
+                          Each class plan will have its own customized syllabus
+                          schedule
+                        </Text>
+                      </Box>
                     </VStack>
                   </VStack>
                 </ModalBody>

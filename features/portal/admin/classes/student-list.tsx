@@ -28,6 +28,7 @@ import { ReminderConfirmationModal } from './student-payment-reminder'
 import { FiBell } from 'react-icons/fi'
 import { ExportStudentsButton } from '../../../../components/ExportStudentsButton'
 import { StudentActivationModal } from './StudentActivationModal'
+import { Assignment } from '../../../../types/user'
 
 interface StudentData {
   uid: string
@@ -112,6 +113,37 @@ export const StudentList = () => {
   const isAdmin = portalUser?.role === 'admin'
   const isFacilitator = portalUser?.role === 'facilitator'
 
+  // Extract facilitator's assigned cohort:classPlan combinations
+  const facilitatorAssignments = useMemo((): Assignment[] => {
+    if (!isFacilitator || !portalUser?.assignments) return []
+    return portalUser?.assignments as Assignment[]
+  }, [isFacilitator, portalUser?.assignments])
+
+  const allowedCohortClassPlans = useMemo(() => {
+    const combinations = new Set<string>()
+    facilitatorAssignments.forEach((assignment) => {
+      const key = `${assignment.cohort}:${assignment.classPlan}`
+      combinations.add(key)
+    })
+    return combinations
+  }, [facilitatorAssignments])
+
+  const studentMatchesFacilitatorAssignment = (
+    student: StudentData,
+  ): boolean => {
+    if (isAdmin) return true // Admins see all students
+
+    if (!isFacilitator || facilitatorAssignments.length === 0) {
+      return false // Facilitators with no assignments see no students
+    }
+
+    const studentCohort = student.schoolFeeInfo?.cohort || ''
+    const studentClassPlan = student.schoolFeeInfo?.classPlan || ''
+    const studentKey = `${studentCohort}:${studentClassPlan}`
+
+    return allowedCohortClassPlans.has(studentKey)
+  }
+
   // Modal disclosures
   const {
     isOpen: isReminderOpen,
@@ -150,6 +182,11 @@ export const StudentList = () => {
   // Apply filters to students
   const filteredStudents = useMemo(() => {
     let filtered = [...students]
+
+    // For facilitators Only
+    if (isFacilitator) {
+      filtered = filtered.filter(studentMatchesFacilitatorAssignment)
+    }
 
     // Filter by search term (name, email, phone)
     if (filters.search) {
@@ -310,8 +347,8 @@ export const StudentList = () => {
 
   // Fetch students from Firebase
   const fetchStudents = async () => {
-    if (!isAdmin && isFacilitator) {
-      setError('Only administrators can view student list')
+    if (!isAdmin && !isFacilitator) {
+      setError('Only administrators and facilitators can view student list')
       setIsLoading(false)
       return
     }
@@ -364,15 +401,25 @@ export const StudentList = () => {
       })
 
       // Sort by creation date (newest first) on client side
+      // const sortedStudents = studentsData.sort((a, b) => {
+      //   if (!a.createdAt || !b.createdAt) return 0
+      //   const dateA = a.createdAt.toDate
+      //     ? a.createdAt.toDate()
+      //     : new Date(a.createdAt)
+      //   const dateB = b.createdAt.toDate
+      //     ? b.createdAt.toDate()
+      //     : new Date(b.createdAt)
+      //   return dateB.getTime() - dateA.getTime()
+      // })
       const sortedStudents = studentsData.sort((a, b) => {
-        if (!a.createdAt || !b.createdAt) return 0
-        const dateA = a.createdAt.toDate
-          ? a.createdAt.toDate()
-          : new Date(a.createdAt)
-        const dateB = b.createdAt.toDate
-          ? b.createdAt.toDate()
-          : new Date(b.createdAt)
-        return dateB.getTime() - dateA.getTime()
+        try {
+          const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt || 0)
+          const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt || 0)
+          return dateB.getTime() - dateA.getTime()
+        } catch (error) {
+          console.warn('Error sorting students by date:', error)
+          return 0
+        }
       })
 
       setStudents(sortedStudents)
@@ -387,7 +434,7 @@ export const StudentList = () => {
   // Load students on component mount
   useEffect(() => {
     fetchStudents()
-  }, [isAdmin])
+  }, [isAdmin, isFacilitator])
 
   // Get student status key for filtering
   const getStudentStatusKey = (student: StudentData) => {
@@ -435,13 +482,33 @@ export const StudentList = () => {
     return pages
   }
 
+  // Show assignment info for facilitators
+  const renderFacilitatorAssignmentInfo = () => {
+    if (!isFacilitator) return null
+
+    if (facilitatorAssignments.length === 0) {
+      return (
+        <Alert status="info" mb={4}>
+          <AlertIcon />
+          <Box>
+            <Text fontWeight="bold">No Class Assignments</Text>
+            <Text fontSize="sm">
+              You haven&apos;t been assigned to any cohorts yet. You will see
+              students here once an administrator assigns you to a class.
+            </Text>
+          </Box>
+        </Alert>
+      )
+    }
+  }
+
   return (
     <VStack w="full" spacing={6} align="stretch">
       {/* Header with Stats and Actions */}
       <Flex justify="space-between" align="center" wrap="wrap" gap={4}>
         <Box>
           <Text fontSize="2xl" fontWeight="bold" color="gray.800">
-            Student Management
+            {isFacilitator ? 'My Students' : 'Student Management'}
           </Text>
           <Text fontSize="sm" color="gray.600">
             {loading
@@ -471,6 +538,9 @@ export const StudentList = () => {
           </Box>
         )}
       </Flex>
+
+      {/* Facilitator Assignment Info */}
+      {renderFacilitatorAssignmentInfo()}
 
       {/* Loading State */}
       {loading ? (
@@ -591,20 +661,23 @@ export const StudentList = () => {
                     </Badge>
                   </Flex>
 
-                  <Flex justify="space-between" align="center">
-                    <Text fontSize="sm" color="gray.600">
-                      Status:
-                    </Text>
-                    <Badge
-                      colorScheme={
-                        student.owingStatus === 'Paid' ? 'green' : 'red'
-                      }
-                      variant="subtle"
-                      fontSize="xs"
-                    >
-                      {student.owingStatus || 'Owing'}
-                    </Badge>
-                  </Flex>
+                  {isAdmin && (
+                    <Flex justify="space-between" align="center">
+                      <Text fontSize="sm" color="gray.600">
+                        Status:
+                      </Text>
+                      <Badge
+                        colorScheme={
+                          student.owingStatus === 'Paid' ? 'green' : 'red'
+                        }
+                        variant="subtle"
+                        fontSize="xs"
+                      >
+                        {student.owingStatus || 'Owing'}
+                      </Badge>
+                    </Flex>
+                  )}
+
                   <Flex justify="space-between" align="center">
                     <Badge
                       colorScheme={
@@ -704,61 +777,68 @@ export const StudentList = () => {
                 </Box>
 
                 {/* Payment Progress */}
-                <Box minW="120px" textAlign="center">
-                  {student.schoolFeeInfo ? (
-                    <VStack spacing={1}>
-                      <Text fontSize="sm" fontWeight="medium" color="gray.800">
-                        {calculateOwingStatus(student)}
-                      </Text>
-                      <HStack spacing={2} fontSize="xs">
-                        <VStack spacing={0}>
-                          <Text color="red.600" fontWeight="medium">
-                            Owing
-                          </Text>
-                          <Text color="red.600">
-                            ₦
-                            {getPaymentDetails(
-                              student,
-                            ).remaining.toLocaleString()}
-                          </Text>
-                        </VStack>
-                        <Text color="gray.400">|</Text>
-                        <VStack spacing={0}>
-                          <Text color="green.600" fontWeight="medium">
-                            Paid
-                          </Text>
-                          <Text color="green.600">
-                            ₦{getPaymentDetails(student).paid.toLocaleString()}
-                          </Text>
-                        </VStack>
-                      </HStack>
-                      {/* Progress Bar */}
-                      <Box
-                        w="full"
-                        bg="gray.200"
-                        borderRadius="full"
-                        h="2px"
-                        mt={1}
-                      >
+                {isAdmin && (
+                  <Box minW="120px" textAlign="center">
+                    {student.schoolFeeInfo ? (
+                      <VStack spacing={1}>
+                        <Text
+                          fontSize="sm"
+                          fontWeight="medium"
+                          color="gray.800"
+                        >
+                          {calculateOwingStatus(student)}
+                        </Text>
+                        <HStack spacing={2} fontSize="xs">
+                          <VStack spacing={0}>
+                            <Text color="red.600" fontWeight="medium">
+                              Owing
+                            </Text>
+                            <Text color="red.600">
+                              ₦
+                              {getPaymentDetails(
+                                student,
+                              ).remaining.toLocaleString()}
+                            </Text>
+                          </VStack>
+                          <Text color="gray.400">|</Text>
+                          <VStack spacing={0}>
+                            <Text color="green.600" fontWeight="medium">
+                              Paid
+                            </Text>
+                            <Text color="green.600">
+                              ₦
+                              {getPaymentDetails(student).paid.toLocaleString()}
+                            </Text>
+                          </VStack>
+                        </HStack>
+                        {/* Progress Bar */}
                         <Box
-                          bg="green.500"
-                          h="2px"
+                          w="full"
+                          bg="gray.200"
                           borderRadius="full"
-                          w={`${getPaymentDetails(student).progress}%`}
-                          transition="width 0.3s ease"
-                        />
-                      </Box>
-                      <Text fontSize="xs" color="gray.500">
-                        {getPaymentDetails(student).progress.toFixed(0)}%
-                        Complete
+                          h="2px"
+                          mt={1}
+                        >
+                          <Box
+                            bg="green.500"
+                            h="2px"
+                            borderRadius="full"
+                            w={`${getPaymentDetails(student).progress}%`}
+                            transition="width 0.3s ease"
+                          />
+                        </Box>
+                        <Text fontSize="xs" color="gray.500">
+                          {getPaymentDetails(student).progress.toFixed(0)}%
+                          Complete
+                        </Text>
+                      </VStack>
+                    ) : (
+                      <Text fontSize="sm" color="gray.500">
+                        No Payment Info
                       </Text>
-                    </VStack>
-                  ) : (
-                    <Text fontSize="sm" color="gray.500">
-                      No Payment Info
-                    </Text>
-                  )}
-                </Box>
+                    )}
+                  </Box>
+                )}
 
                 {/* Action Buttons */}
                 <HStack spacing={2}>
@@ -905,6 +985,7 @@ export const StudentList = () => {
           onClose={onDetailsClose}
           student={selectedStudent}
           adminUser={portalUser}
+          onCohortChanged={fetchStudents}
         />
       )}
 

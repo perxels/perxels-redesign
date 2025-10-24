@@ -1,3 +1,4 @@
+// pages/portal/admin/syllabus.tsx
 import React from 'react'
 import { AdminAuthGuard } from '../../../components/PortalAuthGuard'
 import { PortalAdminLayout } from '../../../features/portal/admin/admin-layout'

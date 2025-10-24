@@ -671,6 +671,7 @@ export const ClassStudentList: React.FC<ClassStudentListProps> = ({
           onClose={onDetailsClose}
           student={selectedStudent}
           adminUser={portalUser}
+          onCohortChanged={fetchStudents}
         />
       )}
 

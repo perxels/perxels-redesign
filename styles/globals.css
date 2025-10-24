@@ -256,3 +256,16 @@ video {
 .btnQuestsolidG:hover {
   opacity: 0.9;
 }
+
+.scroll-container {
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}

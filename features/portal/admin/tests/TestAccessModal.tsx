@@ -457,7 +457,7 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
   }
 
   const getPerformanceLabel = (percentage: any) => {
-    if (percentage >= 80) {
+    if (percentage >= 70) {
       return '🏅 Excellent'
     } else if (percentage >= 60) {
       return '💪🏽 Good'
@@ -469,7 +469,7 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
   }
 
   const getPerformanceColor = (percentage: any) => {
-    if (percentage >= 80) return 'green'
+    if (percentage >= 70) return 'green'
     if (percentage >= 60) return 'blue'
     if (percentage >= 40) return 'orange'
     return 'red'
@@ -478,7 +478,7 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
   const getScoreColor = (percentage?: number) => {
     if (!percentage) return 'gray'
     if (percentage < test.passingScore) return 'red'
-    if (percentage < 80) return 'yellow'
+    if (percentage < 70) return 'yellow'
     return 'green'
   }
 
@@ -738,7 +738,8 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                             <Th>Cohort</Th>
                             <Th>Class Plan</Th>
                             <Th>First Access</Th>
-                            <Th>Attempts</Th>
+                            {/* <Th>Attempts</Th> */}
+                            <Th>Score Points</Th>
                             <Th>Best Score</Th>
                             <Th>Status</Th>
                             <Th>Remarks</Th>
@@ -775,9 +776,14 @@ export const TestAccessModal: React.FC<TestAccessModalProps> = ({
                                   {formatDate(participant.accessedAt)}
                                 </Text>
                               </Td>
-                              <Td>
+                              {/* <Td>
                                 <Text fontWeight="medium">
                                   {participant.attempts}
+                                </Text>
+                              </Td> */}
+                              <Td>
+                                <Text fontWeight="medium">
+                                  {participant.bestScore}
                                 </Text>
                               </Td>
                               <Td>

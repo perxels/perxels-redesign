@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import { portalAuth } from '../../../portalFirebaseConfig'
 import { useRouter } from 'next/navigation'
-import { RxHamburgerMenu } from "react-icons/rx";
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 interface DashboardHeaderProps {
   onOpenSidebar?: () => void
@@ -27,12 +27,16 @@ export const DashboardHeader = ({ onOpenSidebar }: DashboardHeaderProps) => {
       w="100%"
       h="6rem"
       p="2rem"
-      px={{ base: "1rem", md:"4rem"}}
+      px={{ base: '1rem', md: '4rem' }}
       justifyContent="space-between"
       alignItems="center"
     >
       {onOpenSidebar && (
-        <Button onClick={onOpenSidebar} display={{ base: 'flex', md: 'none' }} variant="outline">
+        <Button
+          onClick={onOpenSidebar}
+          display={{ base: 'flex', md: 'none' }}
+          variant="outline"
+        >
           <RxHamburgerMenu />
         </Button>
       )}

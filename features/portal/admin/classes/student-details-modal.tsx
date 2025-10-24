@@ -105,6 +105,7 @@ interface AttendanceRecord {
 interface StudentDetailsModalProps {
   isOpen: boolean
   onClose: () => void
+  onCohortChanged: () => void
   student: StudentData
   adminUser: any // Add admin user prop
 }
@@ -123,6 +124,7 @@ interface CohortChange {
 export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
   isOpen,
   onClose,
+  onCohortChanged,
   student,
   adminUser,
 }) => {
@@ -405,6 +407,8 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
       return false
     } finally {
       setIsChangingCohort(false)
+      onCohortChanged()
+      onClose()
       onCohortDialogClose()
     }
   }
@@ -817,91 +821,95 @@ export const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({
                   </Box>
 
                   {/* Stats Overview */}
-                  <Box>
-                    <Text fontSize="lg" fontWeight="bold" mb={4}>
-                      Quick Stats
-                    </Text>
-                    <Flex gap={4} wrap="wrap">
-                      <Stat
-                        bg="white"
-                        p={4}
-                        borderRadius="lg"
-                        shadow="sm"
-                        minW="150px"
-                      >
-                        <StatLabel>Payment Progress</StatLabel>
-                        <StatNumber>
-                          {paymentStats.paymentProgress.toFixed(1)}%
-                        </StatNumber>
-                        <StatHelpText>
-                          {formatCurrency(paymentStats.totalPaid)} /{' '}
-                          {formatCurrency(paymentStats.totalOwed)}
-                        </StatHelpText>
-                      </Stat>
-                      <Stat
-                        bg="white"
-                        p={4}
-                        borderRadius="lg"
-                        shadow="sm"
-                        minW="150px"
-                      >
-                        <StatLabel>Attendance Rate</StatLabel>
-                        <StatNumber>
-                          {attendanceStats.attendanceRate.toFixed(1)}%
-                        </StatNumber>
-                        <StatHelpText>
-                          {attendanceStats.present + attendanceStats.late} /{' '}
-                          {attendanceStats.total} classes
-                        </StatHelpText>
-                      </Stat>
-                      <Stat
-                        bg="white"
-                        p={4}
-                        borderRadius="lg"
-                        shadow="sm"
-                        minW="150px"
-                      >
-                        <StatLabel>Balance</StatLabel>
-                        <StatNumber
-                          color={
-                            paymentStats.balance > 0 ? 'red.500' : 'green.500'
-                          }
+                  {!isFacilitator && (
+                    <Box>
+                      <Text fontSize="lg" fontWeight="bold" mb={4}>
+                        Quick Stats
+                      </Text>
+                      <Flex gap={4} wrap="wrap">
+                        <Stat
+                          bg="white"
+                          p={4}
+                          borderRadius="lg"
+                          shadow="sm"
+                          minW="150px"
                         >
-                          {formatCurrency(paymentStats.balance)}
-                        </StatNumber>
-                        <StatHelpText>
-                          {paymentStats.balance > 0
-                            ? 'Outstanding'
-                            : 'Fully Paid'}
-                        </StatHelpText>
-                      </Stat>
-                      <Stat
-                        bg="white"
-                        p={4}
-                        borderRadius="lg"
-                        shadow="sm"
-                        minW="150px"
-                      >
-                        <StatLabel>Registration Status</StatLabel>
-                        <StatNumber>
-                          <Badge
-                            colorScheme={
-                              student.registrationComplete ? 'green' : 'orange'
+                          <StatLabel>Payment Progress</StatLabel>
+                          <StatNumber>
+                            {paymentStats.paymentProgress.toFixed(1)}%
+                          </StatNumber>
+                          <StatHelpText>
+                            {formatCurrency(paymentStats.totalPaid)} /{' '}
+                            {formatCurrency(paymentStats.totalOwed)}
+                          </StatHelpText>
+                        </Stat>
+                        <Stat
+                          bg="white"
+                          p={4}
+                          borderRadius="lg"
+                          shadow="sm"
+                          minW="150px"
+                        >
+                          <StatLabel>Attendance Rate</StatLabel>
+                          <StatNumber>
+                            {attendanceStats.attendanceRate.toFixed(1)}%
+                          </StatNumber>
+                          <StatHelpText>
+                            {attendanceStats.present + attendanceStats.late} /{' '}
+                            {attendanceStats.total} classes
+                          </StatHelpText>
+                        </Stat>
+                        <Stat
+                          bg="white"
+                          p={4}
+                          borderRadius="lg"
+                          shadow="sm"
+                          minW="150px"
+                        >
+                          <StatLabel>Balance</StatLabel>
+                          <StatNumber
+                            color={
+                              paymentStats.balance > 0 ? 'red.500' : 'green.500'
                             }
                           >
-                            {student.registrationComplete
-                              ? 'Complete'
-                              : 'Incomplete'}
-                          </Badge>
-                        </StatNumber>
-                        <StatHelpText>
-                          {student.emailVerified
-                            ? 'Email Verified'
-                            : 'Email Pending'}
-                        </StatHelpText>
-                      </Stat>
-                    </Flex>
-                  </Box>
+                            {formatCurrency(paymentStats.balance)}
+                          </StatNumber>
+                          <StatHelpText>
+                            {paymentStats.balance > 0
+                              ? 'Outstanding'
+                              : 'Fully Paid'}
+                          </StatHelpText>
+                        </Stat>
+                        <Stat
+                          bg="white"
+                          p={4}
+                          borderRadius="lg"
+                          shadow="sm"
+                          minW="150px"
+                        >
+                          <StatLabel>Registration Status</StatLabel>
+                          <StatNumber>
+                            <Badge
+                              colorScheme={
+                                student.registrationComplete
+                                  ? 'green'
+                                  : 'orange'
+                              }
+                            >
+                              {student.registrationComplete
+                                ? 'Complete'
+                                : 'Incomplete'}
+                            </Badge>
+                          </StatNumber>
+                          <StatHelpText>
+                            {student.emailVerified
+                              ? 'Email Verified'
+                              : 'Email Pending'}
+                          </StatHelpText>
+                        </Stat>
+                      </Flex>
+                    </Box>
+                  )}
 
                   {/* Account Status */}
                   <Box bg="gray.50" p={4} borderRadius="lg">
