@@ -143,7 +143,7 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
   }
 
   const getPerformanceLabel = (percentage: any) => {
-    if (percentage >= 80) {
+    if (percentage >= 70) {
       return '🏅 Excellent'
     } else if (percentage >= 60) {
       return '💪🏽 Good'
@@ -155,7 +155,7 @@ export const TestResults: React.FC<TestResultsProps> = ({ testId }) => {
   }
 
   const getPerformanceColor = (percentage: any) => {
-    if (percentage >= 80) return 'green'
+    if (percentage >= 70) return 'green'
     if (percentage >= 60) return 'blue'
     if (percentage >= 40) return 'orange'
     return 'red'
