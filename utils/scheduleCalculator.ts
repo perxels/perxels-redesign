@@ -8,6 +8,32 @@ interface ScheduleConfig {
   includeWeekends?: boolean
 }
 
+// Type guard to validate class plan configuration
+const isValidClassPlanConfig = (classPlan: string): boolean => {
+  const config =
+    CLASS_PLAN_CONFIGS[classPlan as keyof typeof CLASS_PLAN_CONFIGS]
+  return !!config?.defaultSchedule?.sessionDays?.length
+}
+
+// Get validated configuration with fallbacks
+const getValidatedConfig = (classPlan: string) => {
+  const config =
+    CLASS_PLAN_CONFIGS[classPlan as keyof typeof CLASS_PLAN_CONFIGS]
+
+  if (!config?.defaultSchedule?.sessionDays?.length) {
+    return null
+  }
+
+  return {
+    ...config,
+    defaultSchedule: {
+      sessionDays: config.defaultSchedule.sessionDays,
+      sessionTime: config.defaultSchedule.sessionTime || '09:00',
+      timezone: config.defaultSchedule.timezone || 'UTC',
+    },
+  }
+}
+
 export const calculateClassSchedule = ({
   startDate,
   syllabus,
@@ -15,36 +41,41 @@ export const calculateClassSchedule = ({
   includeWeekends = false,
 }: ScheduleConfig): Record<string, ScheduledDay> => {
   const scheduledDays: Record<string, ScheduledDay> = {}
-  const config =
-    CLASS_PLAN_CONFIGS[classPlan as keyof typeof CLASS_PLAN_CONFIGS]
+  const config = getValidatedConfig(classPlan)
 
   if (!config) {
-    console.warn(`No configuration found for class plan: ${classPlan}`)
+    console.warn(`No valid configuration found for class plan: ${classPlan}`)
     return scheduledDays
   }
 
   const { sessionDays, sessionTime, timezone } = config.defaultSchedule
   let currentDate = new Date(startDate)
 
-  // Convert session days to numbers (0 = Sunday, 1 = Monday, etc.)
-  const sessionDayNumbers = sessionDays.map((day: any) => {
-    const dayMap: Record<string, number> = {
-      sunday: 0,
-      monday: 1,
-      tuesday: 2,
-      wednesday: 3,
-      thursday: 4,
-      friday: 5,
-      saturday: 6,
-    }
-    return dayMap[day.toLowerCase()]
-  })
+  // Convert session days to numbers with validation
+  const sessionDayNumbers = sessionDays
+    .map((day: string) => {
+      const dayMap: Record<string, number> = {
+        sunday: 0,
+        monday: 1,
+        tuesday: 2,
+        wednesday: 3,
+        thursday: 4,
+        friday: 5,
+        saturday: 6,
+      }
+      return dayMap[day.toLowerCase()]
+    })
+    .filter((day) => day !== undefined)
+
+  if (sessionDayNumbers.length === 0) {
+    console.warn('No valid session days found after conversion')
+    return scheduledDays
+  }
 
   // Schedule each day in the syllabus
   syllabus.weeks.forEach((week) => {
     week.days.forEach((day) => {
-      // Find the next available session day
-      let scheduledDate = findNextSessionDay(
+      const scheduledDate = findNextSessionDay(
         currentDate,
         sessionDayNumbers,
         includeWeekends,
@@ -76,7 +107,7 @@ const findNextSessionDay = (
 ): Date => {
   let currentDate = new Date(startDate)
   let attempts = 0
-  const maxAttempts = 14 // Prevent infinite loop
+  const maxAttempts = 14
 
   while (attempts < maxAttempts) {
     const dayOfWeek = currentDate.getDay()
@@ -89,7 +120,6 @@ const findNextSessionDay = (
     attempts++
   }
 
-  // Fallback: return the original date if no session day found
   console.warn('Could not find valid session day, using fallback')
   return new Date(startDate)
 }
@@ -99,16 +129,14 @@ export const calculateEndDate = (
   syllabus: Syllabus,
   classPlan: string,
 ): Date => {
-  const config =
-    CLASS_PLAN_CONFIGS[classPlan as keyof typeof CLASS_PLAN_CONFIGS]
-
-  if (!config) {
-    // Fallback calculation
+  if (!isValidClassPlanConfig(classPlan)) {
     return calculateEndDateForAllPlans(startDate, syllabus)
   }
 
+  const config =
+    CLASS_PLAN_CONFIGS[classPlan as keyof typeof CLASS_PLAN_CONFIGS]
   const totalDays = syllabus.totalDays
-  const sessionsPerWeek = config.defaultSchedule.sessionDays.length
+  const sessionsPerWeek = config!.defaultSchedule!.sessionDays!.length
   const estimatedWeeks = Math.ceil(totalDays / sessionsPerWeek)
 
   const endDate = new Date(startDate)
@@ -121,7 +149,6 @@ export const calculateEndDateForAllPlans = (
   startDate: Date,
   syllabus: Syllabus,
 ): Date => {
-  // Conservative estimate: 2 sessions per week
   const sessionsPerWeek = 2
   const totalWeeks = Math.ceil(syllabus.totalDays / sessionsPerWeek)
 
