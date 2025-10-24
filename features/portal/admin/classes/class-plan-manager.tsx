@@ -55,10 +55,10 @@ export const ClassPlanManager: React.FC<ClassPlanManagerProps> = ({
       setCohort({
         ...cohortData,
         id: cohortSnap.id,
-        startDate: cohortData.startDate.toDate(),
-        endDate: cohortData.endDate.toDate(),
-        createdAt: cohortData.createdAt.toDate(),
-        updatedAt: cohortData.updatedAt.toDate(),
+        startDate: cohortData.startDate,
+        endDate: cohortData.endDate,
+        createdAt: cohortData.createdAt,
+        updatedAt: cohortData.updatedAt,
       })
 
       // Find the specific class plan
