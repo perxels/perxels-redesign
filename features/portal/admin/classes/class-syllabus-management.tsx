@@ -27,11 +27,11 @@ import {
 import { MdAdd, MdSchedule } from 'react-icons/md'
 import { Syllabus } from '../../../../types/syllabus.types'
 import { useSyllabusManager } from './hooks/useSyllabusManager'
-import { 
-  SyllabusHeader, 
-  SyllabusDayCard, 
+import {
+  SyllabusHeader,
+  SyllabusDayCard,
   EmptySyllabusState,
-  getDayStatus 
+  getDayStatus,
 } from './components/SyllabusComponents'
 
 interface ClassSyllabusManagementProps {
@@ -39,14 +39,20 @@ interface ClassSyllabusManagementProps {
   currentSyllabusId?: string
   classStartDate?: Date
   classEndDate?: Date
+  classPlan?: any
+  classPlanSyllabusId?: any
   onSyllabusUpdate?: (syllabusId: string) => void
 }
 
-export const ClassSyllabusManagement: React.FC<ClassSyllabusManagementProps> = ({
+export const ClassSyllabusManagement: React.FC<
+  ClassSyllabusManagementProps
+> = ({
   classId,
   currentSyllabusId,
   classStartDate,
   classEndDate,
+  classPlan,
+  classPlanSyllabusId,
   onSyllabusUpdate,
 }) => {
   // Use custom hook for all syllabus management logic
@@ -94,12 +100,15 @@ export const ClassSyllabusManagement: React.FC<ClassSyllabusManagementProps> = (
   }, [isAssignOpen, isAdmin, fetchAvailableSyllabi])
 
   // Memoized handlers
-  const handleAssignSyllabusWithClose = useMemo(() => async (syllabusId: string) => {
-    const success = await handleAssignSyllabus(syllabusId)
-    if (success) {
-      onAssignClose()
-    }
-  }, [handleAssignSyllabus, onAssignClose])
+  const handleAssignSyllabusWithClose = useMemo(
+    () => async (syllabusId: string) => {
+      const success = await handleAssignSyllabus(syllabusId)
+      if (success) {
+        onAssignClose()
+      }
+    },
+    [handleAssignSyllabus, onAssignClose],
+  )
 
   // Loading state
   if (loading) {
@@ -126,7 +135,7 @@ export const ClassSyllabusManagement: React.FC<ClassSyllabusManagementProps> = (
       {/* Syllabus Content */}
       {syllabus ? (
         <>
-          <SyllabusHeader 
+          <SyllabusHeader
             syllabus={syllabus}
             onRemoveSyllabus={handleRemoveSyllabus}
           />
@@ -166,7 +175,11 @@ export const ClassSyllabusManagement: React.FC<ClassSyllabusManagementProps> = (
                           editDayContent={editDayContent}
                           editDayAssignments={editDayAssignments}
                           onEditStart={() => {
-                            handleAssignmentChange(Array.isArray(day.assignments) ? day.assignments.join('\n') : '')
+                            handleAssignmentChange(
+                              Array.isArray(day.assignments)
+                                ? day.assignments.join('\n')
+                                : '',
+                            )
                             startEditingDay(day)
                           }}
                           onEditSave={() => {
@@ -174,7 +187,10 @@ export const ClassSyllabusManagement: React.FC<ClassSyllabusManagementProps> = (
                               .split('\n')
                               .map((s) => s.trim())
                               .filter(Boolean)
-                            saveDayEdit({ ...day, assignments: assignmentsArray })
+                            saveDayEdit({
+                              ...day,
+                              assignments: assignmentsArray,
+                            })
                           }}
                           onEditCancel={() => {
                             handleAssignmentChange('')

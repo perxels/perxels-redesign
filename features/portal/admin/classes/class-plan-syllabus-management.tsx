@@ -169,9 +169,15 @@ export const ClassPlanSyllabusManagement: React.FC<
                     <VStack align="start" spacing={2}>
                       <Text fontWeight="semibold">{config?.name}</Text>
                       <Text fontSize="sm" color="gray.600">
-                        {config?.location} •{' '}
-                        {config?.defaultSchedule.sessionDays.join(', ')}
+                        {config.location} •{' '}
+                        {config.defaultSchedule?.sessionDays && (
+                          <>
+                            {' '}
+                            • {config.defaultSchedule.sessionDays.join(', ')}
+                          </>
+                        )}
                       </Text>
+
                       <Badge colorScheme="blue">
                         {Object.keys(syllabus.scheduledDays).length} days
                         scheduled

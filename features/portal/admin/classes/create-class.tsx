@@ -289,11 +289,6 @@ export const CreateClass = () => {
     }
   }
 
-  const formatDateForInput = (date: string) => {
-    if (!date) return ''
-    return new Date(date).toISOString().split('T')[0]
-  }
-
   if (loading) {
     return (
       <Button h="64px" isLoading disabled>
