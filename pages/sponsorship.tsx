@@ -28,7 +28,7 @@ const SponsorshipPage = () => {
       <SponsorHero heroData={heroData} />
       <Instructions heroData={heroData[0]||[]} />
       <MarqueeComp  />
-      <ClassPlan  />
+      <ClassPlan isSponsorship={true} />
       <TestimonialSch />
     </MainLayout>
   )

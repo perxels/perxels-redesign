@@ -34,9 +34,8 @@ const RegisterForm = ({isApply}: registerInt) => {
 
   const { onCopy, value, setValue } = useClipboard("https://perxels.com/sponorship");
 
-  // const scriptUrlApply="https://script.google.com/macros/s/AKfycbxUIlH3eoxZ_8iY2BQp4VxSd_JvaNJkmtjTtCwTAB9UDrAiY9l93ymcOSuxQljwK50dNg/exec"
   const scriptUrl =
-    'https://script.google.com/macros/s/AKfycbwoSKtp0rqkYGNtJD7F4OUSKO31FM9mxAHkJfPkYifG62-uNMg4EvblwA5v_AFPeuBb/exec'
+    'https://script.google.com/macros/s/AKfycbxzsOQH95-yyGL9inctObXvxFgiK8r-9la0gYqFAew5-LSzx-RRId9KyBNUSi6Q4NbHvw/exec'
 
     // const actualUrl =  isApply ? scriptUrlApply : scriptUrl
     

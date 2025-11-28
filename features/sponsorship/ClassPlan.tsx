@@ -6,12 +6,13 @@ import { MainContainer } from '../../layouts'
 import { ClassDetails } from '../classGroup/ClassDetails'
 import { useSponsorshipClass } from '../../hooks/useSponsorship'
 
-interface classInt{
-  isApply ?:boolean
+interface classInt {
+  isApply?: boolean
+  isSponsorship?: boolean
 }
 
-export const  ClassPlan = ({isApply}: classInt) => {
-  const {classData,loading,refetchClass} = useSponsorshipClass()
+export const ClassPlan = ({ isApply, isSponsorship }: classInt) => {
+  const { classData, loading, refetchClass } = useSponsorshipClass()
   return (
     // <Box my="3.625rem">
     //   <SectionHeader
@@ -21,24 +22,26 @@ export const  ClassPlan = ({isApply}: classInt) => {
     //   <ClassLists show isSponsor />
     // </Box>
     <MainContainer>
-    <Box id="pricing" />
-    <SectionHeader
-      title="It’s everything you’ll ever need."
-      subTitle="Class Plan"
-    />
+      <Box id="pricing" />
+      <SectionHeader
+        title="It’s everything you’ll ever need."
+        subTitle="Class Plan"
+      />
 
-    {classData?.map((item,i)=>{
-      return <Box mt='60px'>
-        <ClassDetails
-      key={i}
-      {...item}
-      address={item.stateLocation}
-    />
-      </Box>
-    }) }
+      {classData?.map((item, i) => {
+        return (
+          <Box mt="60px" key={item.id}>
+            <ClassDetails
+              key={i}
+              {...item}
+              address={item.stateLocation}
+              isSponsor={isSponsorship}
+            />
+          </Box>
+        )
+      })}
 
-
-    <Box mt="60px" />
-  </MainContainer>
+      <Box mt="60px" />
+    </MainContainer>
   )
 }

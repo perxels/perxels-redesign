@@ -6,8 +6,16 @@ import EnrolForm from './EnrolForm'
 import SideImage from './SideImage'
 import YabaEnrollForm from './YabaEnrollForm'
 import YabaTutorialEnrollForm from './YabaTutorialEnrollForm'
+import SponsorshipForm from './SponsorshipForm'
 
-export const EnrolWrapper = ({isYaba= false, isYabaTutorial = false}:any) => {
+function getEnrollForm({ isYaba, isYabaTutorial, isSponsorship }: { isYaba: boolean; isYabaTutorial: boolean; isSponsorship: boolean }) {
+  if (isYaba) return <YabaEnrollForm />
+  if (isYabaTutorial) return <YabaTutorialEnrollForm />
+  if (isSponsorship) return <SponsorshipForm />
+  return <EnrolForm />
+}
+
+export const EnrolWrapper = ({isYaba= false, isYabaTutorial = false, isSponsorship = false}:any) => {
   const mainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -31,7 +39,7 @@ export const EnrolWrapper = ({isYaba= false, isYabaTutorial = false}:any) => {
         <Logo />
       </Box>
       <SideImage />
-      {isYaba ? <YabaEnrollForm/>: isYabaTutorial ? <YabaTutorialEnrollForm /> : <EnrolForm />}
+      {getEnrollForm({ isYaba, isYabaTutorial, isSponsorship })}
     </SimpleGrid> 
   )
 }
