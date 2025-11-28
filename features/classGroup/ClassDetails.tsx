@@ -372,7 +372,7 @@ export const ClassDetails = ({
             textAlign="center"
             href={
               isSponsor
-                ? '/signup/sponsorship'
+                ? '/sponsorship/signup'
                 : isPhysical
                 ? enrolRoute
                 : '/signup'
