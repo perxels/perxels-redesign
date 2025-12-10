@@ -14,7 +14,6 @@ import {
   Text,
   VStack,
   HStack,
-  keyframes,
   Flex,
 } from '@chakra-ui/react'
 import Link from 'next/link'
@@ -24,6 +23,7 @@ import { ClassGroupDetailsProps } from '../../constant'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { ImLocation2 } from 'react-icons/im'
+import { keyframes } from '@emotion/react'
 // added class details props
 
 const glow = keyframes`
@@ -58,7 +58,7 @@ export const ClassDetails = ({
   stateLocation,
   enrolRoute,
   isPhysical,
-  isTitleSmall
+  isTitleSmall,
 }: ClassGroupDetailsProps) => {
   const [tabState, setTabState] = useState('virtual')
   const [location, setLocation] = useState('lagos')
@@ -79,7 +79,11 @@ export const ClassDetails = ({
         >
           <Heading
             as="span"
-            fontSize={isTitleSmall ? ['2rem', '2rem', '2rem', '2.5rem'] : ['2rem', '2rem', '2rem', '2.8rem']}
+            fontSize={
+              isTitleSmall
+                ? ['2rem', '2rem', '2rem', '2.5rem']
+                : ['2rem', '2rem', '2rem', '2.8rem']
+            }
             color="white"
             pos="relative"
           >
@@ -92,7 +96,6 @@ export const ClassDetails = ({
             />
           </Heading>
         </Box>
-
 
         <Box
           px={['.75rem', '.75rem', '.75rem', '1.875rem']}
@@ -284,10 +287,16 @@ export const ClassDetails = ({
                 >
                   <Heading
                     fontSize={
-                      isSponsor || physicalTuition ? '20px' : ['6xl', '6xl', '7xl']
+                      isSponsor || physicalTuition
+                        ? '20px'
+                        : ['6xl', '6xl', '7xl']
                     }
-                    textDecoration={physicalTuition  ? 'line-through' : ' '}
-                    color={stateLocation === 'discount' || physicalTuition ? '#9C9C9C' : ' '}
+                    textDecoration={physicalTuition ? 'line-through' : ' '}
+                    color={
+                      stateLocation === 'discount' || physicalTuition
+                        ? '#9C9C9C'
+                        : ' '
+                    }
                   >
                     {tabState === 'virtual' || location !== 'ibadan'
                       ? // location === 'lagos' && tabState === 'physical' ? '₦210,000' : ''

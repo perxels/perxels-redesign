@@ -1,20 +1,12 @@
 import React, { useEffect, useRef } from 'react'
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Img,
-  Text,
-  Spacer,
-  keyframes,
-} from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Img, Text, Spacer } from '@chakra-ui/react'
 import { RiTimer2Line } from 'react-icons/ri'
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { IoLocationOutline } from 'react-icons/io5'
 import { MainContainer } from '../../layouts'
 import Link from 'next/link'
 import { formatDate, formatTime } from '../../utils/banner'
+import { keyframes } from '@emotion/react'
 export const Banner = ({ data }: any) => {
   const [visibility, setVisibility] = React.useState(false)
 

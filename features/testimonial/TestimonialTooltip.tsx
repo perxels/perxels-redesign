@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
-import {
-  Box,
-  Center,
-  HStack,
-  Text,
-  SlideFade,
-  keyframes,
-  Img,
-} from '@chakra-ui/react'
+import { Box, Center, HStack, Text, SlideFade, Img } from '@chakra-ui/react'
 import { AiOutlineArrowRight } from 'react-icons/ai'
+import { keyframes } from '@emotion/react'
 
 const pulsate = keyframes`
   0% {
