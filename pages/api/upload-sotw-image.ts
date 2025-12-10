@@ -72,7 +72,8 @@ export default async function handler(
     const formData = new FormData()
 
     // Create a blob from the buffer
-    const blob = new Blob([buffer], { type: fileType })
+    // const blob = new Blob([buffer], { type: fileType })
+    const blob = new Blob([new Uint8Array(buffer)], { type: fileType })
     formData.append('file', blob, fileName)
     formData.append('upload_preset', uploadPreset)
     formData.append('folder', 'portal/sotw-work-images')

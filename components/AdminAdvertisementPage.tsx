@@ -15,12 +15,12 @@ import { deleteObject, ref } from 'firebase/storage'
 
 const AdminAdvertisementPage = () => {
   const [currentAdvertisement, setCurrentAdvertisement] =
-    useState<Advertisement | null>(null);
+    useState<Advertisement | null>(null)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [deleteLoader, setDeleteLoader] = useState(false)
 
-  const toast = useToast();
+  const toast = useToast()
 
   const {
     isOpen: isDeleteOpen,
@@ -45,28 +45,28 @@ const AdminAdvertisementPage = () => {
   }
 
   const deleteVideo = async () => {
-    if (!currentAdvertisement) return;
+    if (!currentAdvertisement) return
 
-    setDeleteLoader(true);
+    setDeleteLoader(true)
 
     try {
-        if(currentAdvertisement.id) {
-            await deleteDoc(doc(db, 'advertisements', currentAdvertisement.id))
+      if (currentAdvertisement.id) {
+        await deleteDoc(doc(db, 'advertisements', currentAdvertisement.id))
 
-            const advertisementRef = ref(storage, currentAdvertisement.imageUrl);
-            await deleteObject(advertisementRef);
+        const advertisementRef = ref(storage, currentAdvertisement.imageUrl)
+        await deleteObject(advertisementRef)
 
-            refetchAdvertisements()
-        }
+        refetchAdvertisements()
+      }
 
-        onDeleteClose()
+      onDeleteClose()
     } catch (error) {
-        console.error('Failed to delete video:', error);
-        toast({
-            title: "Something went wrong!"
-        });
+      console.error('Failed to delete video:', error)
+      toast({
+        title: 'Something went wrong!',
+      })
     } finally {
-        setDeleteLoader(false);
+      setDeleteLoader(false)
     }
   }
 
@@ -94,14 +94,23 @@ const AdminAdvertisementPage = () => {
               },
             },
             {
-                Header: 'Should open new tab?',
-                accessor: 'openNewTab',
-                Cell: ({ row }: any) => {
-                    return (
-                        <Badge size="lg" px={2} py={1} colorScheme={row.original.openAnotherTab ? 'green' : 'yellow'}>{row.original.openAnotherTab ? "Yes" : "No"}</Badge>
-                    )
-                }
-            }
+              Header: 'Should open new tab?',
+              accessor: 'openNewTab',
+              Cell: ({ row }: any) => {
+                return (
+                  <Badge
+                    size="lg"
+                    px={2}
+                    py={1}
+                    colorScheme={
+                      row.original.openAnotherTab ? 'green' : 'yellow'
+                    }
+                  >
+                    {row.original.openAnotherTab ? 'Yes' : 'No'}
+                  </Badge>
+                )
+              },
+            },
           ]}
           pageSize={8}
           isLoading={loading}

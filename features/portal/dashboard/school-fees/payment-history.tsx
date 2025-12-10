@@ -11,7 +11,6 @@ import {
   Grid,
   Alert,
   AlertIcon,
-  keyframes,
 } from '@chakra-ui/react'
 import { usePaymentData } from '../../../../hooks/usePaymentData'
 import { getRemainingBalance } from '../../../../types/school-fee.types'
@@ -19,6 +18,7 @@ import {
   ImagePreviewModal,
   useImagePreview,
 } from '../../../../components/ImagePreviewModal'
+import { keyframes } from '@emotion/react'
 
 interface PaymentRecord {
   id: string

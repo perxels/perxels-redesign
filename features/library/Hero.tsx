@@ -7,10 +7,10 @@ import {
   Image,
   Center,
   VStack,
-  keyframes,
 } from '@chakra-ui/react'
 import { CgChevronDoubleDownO } from 'react-icons/cg'
 import { MainContainer } from '../../layouts'
+import { keyframes } from '@emotion/react'
 export const Hero = () => {
   // Define keyframes for the jump animation
   const jump = keyframes`
@@ -27,7 +27,7 @@ export const Hero = () => {
       <Box py={['5%', '5%']}>
         <Box
           background="url('/assets/images/library/heroBg.png') no-repeat center center"
-          height={["320px", "431px"]}
+          height={['320px', '431px']}
           backgroundSize="cover"
           padding={['0 5%', '0 21%']}
           rounded="lg"
@@ -36,14 +36,14 @@ export const Hero = () => {
             h="100%"
             flexDir="column"
             alignItems={['flex-start', 'center', 'center']}
-            justifyContent={"center"}
+            justifyContent={'center'}
             gap={4}
           >
             <Center
               alignItems={['flex-start', 'center', 'center']}
               background="#DFDFDF"
-              padding={["6px 16px", "8px 16px"]}
-              rounded={["full", "full"]}
+              padding={['6px 16px', '8px 16px']}
+              rounded={['full', 'full']}
             >
               <Text fontSize={['12px', '1rem']}>
                 WELCOME TO PERXELS LIBRARY
