@@ -606,12 +606,10 @@ export function NotificationsPage() {
       }
 
       toast({
-        title: `Payment ${
-          actionType === 'approve' ? 'Approved' : 'Rejected'
-        }! ✅`,
-        description: `The payment has been ${
-          actionType === 'approve' ? 'approved' : 'rejected'
-        } successfully. The student will be notified via email.`,
+        title: `Payment ${actionType === 'approve' ? 'Approved' : 'Rejected'
+          }! ✅`,
+        description: `The payment has been ${actionType === 'approve' ? 'approved' : 'rejected'
+          } successfully. The student will be notified via email.`,
         status: 'success',
         duration: 5000,
         isClosable: true,

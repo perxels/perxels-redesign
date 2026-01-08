@@ -116,22 +116,31 @@ const AttendancePageV2 = () => {
           s.status === 'open',
       )
 
+      console.log("matchingSession", matchingSession)
+
       if (matchingSession) {
+        console.log("matchingSession", matchingSession, "reached here")
         setSession(matchingSession)
 
         // Check if student has already checked in for this session
         if (user?.uid) {
-          const checkinData = await didStudentCheckInToSession(
-            matchingSession.sessionId,
-            user.uid,
-          )
-          setCheckedIn(checkinData !== null && checkinData.checkedIn === true)
+          try {
+            const checkinData = await didStudentCheckInToSession(
+              matchingSession.sessionId,
+              user.uid,
+            )
+            setCheckedIn(checkinData !== null && checkinData.checkedIn === true)
+          } catch (checkinError) {
+            console.error('Error checking check-in status:', checkinError)
+            setCheckedIn(false)
+          }
         }
       } else {
         setSession(null)
         setCheckedIn(false)
       }
     } catch (error) {
+      console.error('Error in fetchSession:', error)
       setSession(null)
       setCheckedIn(false)
     } finally {
