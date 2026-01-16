@@ -88,7 +88,7 @@ const formSchema = Yup.object().shape({
     .required('Password is required')
     .min(8, 'Password must be at least 8 characters')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._#^~-])[A-Za-z\d@$!%*?&._#^~-]{8,}$/,
       'Password must contain: uppercase letter, lowercase letter, number, and special character',
     ),
 
@@ -458,12 +458,12 @@ export function SignUpForm() {
                     <Text
                       fontSize="xs"
                       color={
-                        /[@$!%*?&.]/.test(formik.values.password)
+                        /[@$!%*?&._#^~-]/.test(formik.values.password)
                           ? 'green.500'
                           : 'gray.400'
                       }
                     >
-                      ✓ One special character (@$!%*?&.)
+                      ✓ One special character (@$!%*?&._#^~-)
                     </Text>
                   </VStack>
                 </Box>
