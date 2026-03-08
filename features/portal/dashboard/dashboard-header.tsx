@@ -47,6 +47,7 @@ export const DashboardHeader = ({ onOpenSidebar }: DashboardHeaderProps) => {
           width={180}
           height={40}
           style={{ width: '100%', height: 'auto' }}
+          priority
         />
       </Box>
 

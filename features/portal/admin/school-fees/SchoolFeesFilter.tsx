@@ -152,10 +152,10 @@ export const SchoolFeesFilter = ({ onChange }: SchoolFeesFilterProps) => {
   const isMobile = useBreakpointValue({ base: true, md: false })
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  // Transform classes data for select options - sort alphabetically
+  // Transform classes data for select options - sort alphabetically and ensure unique labels/values
   const classOptions = [
     { value: 'all', label: 'All Classes' },
-    ...classes
+    ...Array.from(new Map(classes.map((c) => [c.cohortName, c])).values())
       .map((c) => ({ value: c.cohortName, label: c.cohortName }))
       .sort((a, b) => a.label.localeCompare(b.label)),
   ]
