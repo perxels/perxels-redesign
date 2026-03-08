@@ -8,6 +8,7 @@ import {
   Textarea,
   VStack,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { SuccessModal } from '../../components'
@@ -19,18 +20,20 @@ const EnrolForm = () => {
   // const scriptUrl = "https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec"
 
   // const scriptUrl = 'https://script.google.com/macros/s/AKfycbx9DjAuNLrQ2G8wcxLlh70j9gv7JJ3jSu5OGMc2UwJxfSyGpr0y6Tb_fEBrfWHT0T7H/exec'
-  const scriptUrl = 'https://script.google.com/macros/s/AKfycbwHFgcgDUyRqBfNryJ4Kw3uYtdmARvIbn2-cUUivkFJP228-rrNKs_L-qzkxsMuVABO6Q/exec'
   // last url const scriptUrl = "https://script.google.com/macros/s/AKfycbwftTI2bqcYNfUCIHBtiY8r_5nwL-VEsz4lR9pv97ORO-h6YLo7vQ0ksKEm7Oc1ZVA/exec"
+  // const scriptUrl = 'https://script.google.com/macros/s/AKfycbwHFgcgDUyRqBfNryJ4Kw3uYtdmARvIbn2-cUUivkFJP228-rrNKs_L-qzkxsMuVABO6Q/exec'
+  // new url
+  const scriptUrl =
+    'https://script.google.com/macros/s/AKfycbyH7pE6xC2znlJuYTuNoLU1bLbqHoeIQhsdlCglOrzTX_LeefUkI_v8S9bi8fyhLTQW/exec'
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [errorBorder, setErrorBorder] = useState()
-  const [loading, setLoading] = useState(false)
+  const toast = useToast()
   const [classVal, setClassValue] = useState<string>('')
   return (
     <>
       <SuccessModal
         isOpen={isOpen}
         onClose={onClose}
-        title={`Thank you for your registering for the ${classVal} Masterclass!`}
+        title="Thank you for registering for the Masterclass!"
         description="Join the Class by clicking on the button."
         buttonTitle="Join Class"
         buttonHref={'https://chat.whatsapp.com/DAXHpJ4OSAMD50VDSwmguX'}
@@ -77,8 +80,7 @@ const EnrolForm = () => {
             category: Yup.string().required('Category is required'),
             laptop: Yup.string().required('Laptop is Required'),
           })}
-          onSubmit={(values, action) => {
-            setLoading(true)
+          onSubmit={async (values, action) => {
             // setClassValue(values.class)
 
             const formData = new FormData()
@@ -98,17 +100,56 @@ const EnrolForm = () => {
             formData.append('created_at', new Date().toLocaleString())
 
             //continue form submission
-            fetch(scriptUrl, {
-              method: 'POST',
-              body: formData,
-            }).then((response) => {
-              if (response.status === 201 || 200) {
+            try {
+              const response = await fetch(scriptUrl, {
+                method: 'POST',
+                body: formData,
+              })
+
+              // Google Apps Script will often return HTTP 200 OK even if an error is caught in its try/catch!
+              // Because of that, we must extract and read the JSON to see if it returned {"result": "error", "error": "..."}
+              const responseText = await response.text()
+              let responseData
+              try {
+                responseData = JSON.parse(responseText)
+              } catch (e) {
+                console.error("Failed to parse JSON response:", responseText)
+                toast({
+                  title: 'Submission Error',
+                  description: 'The server returned an invalid response. Please check your connection.',
+                  status: 'error',
+                  duration: 6000,
+                  isClosable: true,
+                  position: 'top-right',
+                })
+                return
+              }
+
+              if (response.ok && responseData.result === 'success') {
                 action.resetForm()
                 onOpen()
               } else {
-                alert('Something went wrong, please try again')
+                console.error("Google Apps Script Error:", responseData.error)
+                toast({
+                  title: 'Registration Failed',
+                  description: 'Something went wrong while saving your details. Please try again.',
+                  status: 'error',
+                  duration: 6000,
+                  isClosable: true,
+                  position: 'top-right',
+                })
               }
-            })
+            } catch (error) {
+              console.error("Network Fetch Error:", error)
+              toast({
+                title: 'Network Error',
+                description: 'Please check your internet connection and try again.',
+                status: 'warning',
+                duration: 6000,
+                isClosable: true,
+                position: 'top-right',
+              })
+            }
           }}
         >
           {(formik) => (
